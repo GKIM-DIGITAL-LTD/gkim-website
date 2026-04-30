@@ -292,9 +292,8 @@ def build(target_langs=None, include_drafts=False):
         # Extra fonts
         extra_fonts = build_extra_fonts(lang_config)
 
-        # Language switcher — always pass all three active langs so switcher
-        # appears even when building one language at a time
-        active_codes = ["en", "de", "vi"]
+        # Language switcher — read live languages from XLS
+        active_codes = [l["code"] for l in languages if l["status"] == "live"]
         switcher_langs = [l for l in languages if l["code"] in active_codes]
         lang_switcher = build_lang_switcher(languages, lang, switcher_langs)
 
