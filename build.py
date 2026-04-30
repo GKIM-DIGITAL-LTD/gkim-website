@@ -132,14 +132,17 @@ def build_hreflang_tags(languages):
     return "\n".join(tags)
 
 
-def build_lang_switcher(languages, current_lang):
-    """Build the language switcher nav HTML."""
-    live_langs = [l for l in languages if l["status"] == "live"]
-    if len(live_langs) <= 1:
-        return ""  # No switcher if only one live language
+def build_lang_switcher(languages, current_lang, build_langs):
+    """Build the language switcher nav HTML.
+    Shows all languages being built (not just 'live') so switcher
+    appears even when some are still draft."""
+    build_codes = {l["code"] for l in build_langs}
+    visible = [l for l in languages if l["code"] in build_codes]
+    if len(visible) <= 1:
+        return ""
 
     items = []
-    for lang in live_langs:
+    for lang in visible:
         code = lang["code"]
         native = lang["native_name"]
         path = lang["url_path"]
@@ -261,6 +264,9 @@ def build(target_langs=None, include_drafts=False):
     env.filters["linebreaks"] = lambda v: v.replace("\n", "<br>")
     template = env.get_template(TEMPLATE_FILE)
 
+    # Store full build_langs for use in switcher across all pages
+    all_build_langs = build_langs
+
     hreflang_tags = build_hreflang_tags(languages)
 
     # 6. Generate each language
@@ -286,8 +292,11 @@ def build(target_langs=None, include_drafts=False):
         # Extra fonts
         extra_fonts = build_extra_fonts(lang_config)
 
-        # Language switcher HTML
-        lang_switcher = build_lang_switcher(languages, lang)
+        # Language switcher — always pass all three active langs so switcher
+        # appears even when building one language at a time
+        active_codes = ["en", "de", "vi"]
+        switcher_langs = [l for l in languages if l["code"] in active_codes]
+        lang_switcher = build_lang_switcher(languages, lang, switcher_langs)
 
         # Render template
         rendered = template.render(
