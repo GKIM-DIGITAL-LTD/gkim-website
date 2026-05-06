@@ -133,9 +133,15 @@ def build_hreflang_tags(languages):
 
 
 def build_lang_switcher(languages, current_lang, build_langs):
-    """Build the language switcher nav HTML.
-    Shows all languages being built (not just 'live') so switcher
-    appears even when some are still draft."""
+    """Build the language switcher nav HTML using emoji flags."""
+    FLAGS = {
+        'en': '🇬🇧',
+        'de': '🇩🇪',
+        'fr': '🇫🇷',
+        'nl': '🇳🇱',
+        'zh': '🇨🇳',
+        'vi': '🇻🇳',
+    }
     build_codes = {l["code"] for l in build_langs}
     visible = [l for l in languages if l["code"] in build_codes]
     if len(visible) <= 1:
@@ -144,10 +150,16 @@ def build_lang_switcher(languages, current_lang, build_langs):
     items = []
     for lang in visible:
         code = lang["code"]
-        native = lang["native_name"]
+        flag = FLAGS.get(code, code.upper())
         path = lang["url_path"]
         active = ' class="lang-active"' if code == current_lang else ""
-        items.append(f'    <a href="{path}"{active}>{native}</a>')
+        # Flag + 2-letter code for screen readers / clarity
+        items.append(
+            f'    <a href="{path}"{active} title="{lang["language_name"]}" aria-label="{lang["language_name"]}">'
+            f'<span aria-hidden="true">{flag}</span>'
+            f'<span class="lang-code">{code.upper()}</span>'
+            f'</a>'
+        )
 
     return (
         '  <div class="lang-switcher">\n'
@@ -191,18 +203,27 @@ def add_lang_switcher_css(html):
     css = """
 /* ——— LANGUAGE SWITCHER ——— */
 .lang-switcher {
-  display: flex; gap: 0.75rem; align-items: center;
-  margin-right: 1.5rem;
+  display: flex; gap: 0.3rem; align-items: center;
+  border-left: 1px solid rgba(10,10,9,0.1);
+  padding-left: 1rem; margin-left: 0.5rem;
 }
 .lang-switcher a {
-  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-muted); padding: 0.2rem 0.4rem;
-  border: 1px solid transparent; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-muted); padding: 0.2rem 0.45rem;
+  border: 1px solid transparent; border-radius: 2px;
+  transition: all 0.2s; text-decoration: none;
+  white-space: nowrap;
 }
-.lang-switcher a:hover { color: var(--ink); border-color: var(--chalk-mid); }
-.lang-switcher a.lang-active {
+.lang-switcher a span[aria-hidden] { font-size: 1rem; line-height: 1; }
+.lang-switcher .lang-code { font-size: 0.58rem; letter-spacing: 0.06em; }
+.lang-switcher a:hover {
   color: var(--ink); border-color: var(--chalk-mid);
   background: var(--chalk-warm);
+}
+.lang-switcher a.lang-active {
+  color: var(--ink); border-color: var(--chalk-mid);
+  background: var(--chalk-warm); font-weight: 500;
 }
 @media (max-width: 900px) {
   .lang-switcher { display: none; }

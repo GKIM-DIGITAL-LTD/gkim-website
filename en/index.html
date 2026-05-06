@@ -887,18 +887,27 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 
 /* ——— LANGUAGE SWITCHER ——— */
 .lang-switcher {
-  display: flex; gap: 0.75rem; align-items: center;
-  margin-right: 1.5rem;
+  display: flex; gap: 0.3rem; align-items: center;
+  border-left: 1px solid rgba(10,10,9,0.1);
+  padding-left: 1rem; margin-left: 0.5rem;
 }
 .lang-switcher a {
-  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-muted); padding: 0.2rem 0.4rem;
-  border: 1px solid transparent; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-muted); padding: 0.2rem 0.45rem;
+  border: 1px solid transparent; border-radius: 2px;
+  transition: all 0.2s; text-decoration: none;
+  white-space: nowrap;
 }
-.lang-switcher a:hover { color: var(--ink); border-color: var(--chalk-mid); }
-.lang-switcher a.lang-active {
+.lang-switcher a span[aria-hidden] { font-size: 1rem; line-height: 1; }
+.lang-switcher .lang-code { font-size: 0.58rem; letter-spacing: 0.06em; }
+.lang-switcher a:hover {
   color: var(--ink); border-color: var(--chalk-mid);
   background: var(--chalk-warm);
+}
+.lang-switcher a.lang-active {
+  color: var(--ink); border-color: var(--chalk-mid);
+  background: var(--chalk-warm); font-weight: 500;
 }
 @media (max-width: 900px) {
   .lang-switcher { display: none; }
@@ -912,12 +921,12 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 <nav id="nav">
   <a href="#home" class="nav-logo" style="display:flex;align-items:center;line-height:1"><svg xmlns="http://www.w3.org/2000/svg" width="130" viewBox="0 0 600 210" role="img" aria-label="GKIM Digital" style="display:inline-block;vertical-align:middle"><path d="M263.93,13.78L264.88,10.7L267.12,10.7L268.07,13.78L270.32,14.39L272.68,12.19L274.62,13.31L273.9,16.45L275.55,18.1L278.69,17.38L279.81,19.32L277.61,21.68L278.22,23.93L281.3,24.88L281.3,27.12L278.22,28.07L277.61,30.32L279.81,32.68L278.69,34.62L275.55,33.9L273.9,35.55L274.62,38.69L272.68,39.81L270.32,37.61L268.07,38.22L267.12,41.3L264.88,41.3L263.93,38.22L261.68,37.61L259.32,39.81L257.38,38.69L258.1,35.55L256.45,33.9L253.31,34.62L252.19,32.68L254.39,30.32L253.78,28.07L250.7,27.12L250.7,24.88L253.78,23.93L254.39,21.68L252.19,19.32L253.31,17.38L256.45,18.1L258.1,16.45L257.38,13.31L259.32,12.19L261.68,14.39Z" fill="#ffdd00"/><circle cx="266" cy="26" r="9.44" fill="#f5f4f0"/><path d="M272.14,20.84 A8.02,8.02 0 1 0 272.14,31.16 L269.88,29.26 A5.07,5.07 0 1 1 269.88,22.74 Z" fill="#ffdd00" fill-rule="nonzero"/><rect x="266" y="24.52" width="8.02" height="2.95" fill="#ffdd00"/><path d="M275.24,9.13L275.62,7.97L276.86,7.97L277.24,9.13L278.19,9.53L279.28,8.97L280.16,9.85L279.6,10.94L280.0,11.89L281.16,12.27L281.16,13.51L280.0,13.89L279.6,14.84L280.16,15.93L279.28,16.81L278.19,16.25L277.24,16.65L276.86,17.81L275.62,17.81L275.24,16.65L274.29,16.25L273.2,16.81L272.32,15.93L272.88,14.84L272.48,13.89L271.32,13.51L271.32,12.27L272.48,11.89L272.88,10.94L272.32,9.85L273.2,8.97L274.29,9.53Z" fill="#ffdd00"/><circle cx="276.24" cy="12.89" r="2.36" fill="#f5f4f0"/><path d="M279.96,18.04L280.24,17.13L281.26,17.13L281.54,18.04L282.28,18.4L283.17,18.05L283.81,18.84L283.27,19.63L283.45,20.44L284.28,20.92L284.05,21.9L283.1,21.98L282.59,22.62L282.73,23.57L281.81,24.01L281.16,23.31L280.34,23.31L279.69,24.01L278.77,23.57L278.91,22.62L278.4,21.98L277.45,21.9L277.22,20.92L278.05,20.44L278.23,19.63L277.69,18.84L278.33,18.05L279.22,18.4Z" fill="#ffdd00"/><circle cx="280.75" cy="20.63" r="1.65" fill="#f5f4f0"/><text x="50" y="148" font-family="'Arial Black','Impact',sans-serif" font-size="118" font-weight="900" letter-spacing="-2" fill="#202020">GKIM</text><text x="65" y="182" font-family="'Figtree','Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="400" letter-spacing="42" fill="#202020">DIGITAL</text></svg></a>
     <div class="lang-switcher">
-    <a href="/en/" class="lang-active">English</a>
-    <a href="/de/">Deutsch</a>
-    <a href="/fr/">Français</a>
-    <a href="/nl/">Nederlands</a>
-    <a href="/zh/">中文</a>
-    <a href="/vi/">Tiếng Việt</a>
+    <a href="/en/" class="lang-active" title="English" aria-label="English"><span aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></a>
+    <a href="/de/" title="German" aria-label="German"><span aria-hidden="true">🇩🇪</span><span class="lang-code">DE</span></a>
+    <a href="/fr/" title="French" aria-label="French"><span aria-hidden="true">🇫🇷</span><span class="lang-code">FR</span></a>
+    <a href="/nl/" title="Dutch" aria-label="Dutch"><span aria-hidden="true">🇳🇱</span><span class="lang-code">NL</span></a>
+    <a href="/zh/" title="Chinese (Simplified)" aria-label="Chinese (Simplified)"><span aria-hidden="true">🇨🇳</span><span class="lang-code">ZH</span></a>
+    <a href="/vi/" title="Vietnamese" aria-label="Vietnamese"><span aria-hidden="true">🇻🇳</span><span class="lang-code">VI</span></a>
   </div>
   <ul class="nav-links">
     <li><a href="#vision">Vision</a></li>
