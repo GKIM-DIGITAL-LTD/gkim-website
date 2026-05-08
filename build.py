@@ -41,6 +41,7 @@ except ImportError:
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 WORKBOOK_PATH  = Path(__file__).parent / "gkim-content.xlsx"
 TEMPLATE_DIR   = Path(__file__).parent / "template"
 TEMPLATE_FILE  = "index.html"
