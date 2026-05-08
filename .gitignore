@@ -1,1 +1,8 @@
 .claude/
+eco-byte-*.json
+*-service-account.json
+*-credentials.json
+.env
+.env.local
+node_modules/
+~$*

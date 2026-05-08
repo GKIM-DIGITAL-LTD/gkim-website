@@ -4,30 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GKIM Digital — KI-natives Unternehmen systematisch gestalten</title>
+<link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="alternate" hreflang="en" href="https://gkim.digital/en/">
   <link rel="alternate" hreflang="de" href="https://gkim.digital/de/">
-  <link rel="alternate" hreflang="fr" href="https://gkim.digital/fr/">
-  <link rel="alternate" hreflang="nl" href="https://gkim.digital/nl/">
-  <link rel="alternate" hreflang="zh-Hans" href="https://gkim.digital/zh/">
   <link rel="alternate" hreflang="vi" href="https://gkim.digital/vi/">
   <link rel="alternate" hreflang="x-default" href="https://gkim.digital/en/">
 <style>
 :root {
-  --ink: #0a0a09;
-  --ink-soft: #2c2c2a;
-  --ink-muted: #6b6a64;
-  --chalk: #f5f4f0;
-  --chalk-warm: #ede9e0;
-  --chalk-mid: #d4cfc2;
-  --accent: #c8401a;
-  --accent-warm: #e05c30;
-  --gold: #b8922a;
-  --type-display: 'DM Serif Display', Georgia, serif;
+  /* ── GKIM Brand tokens ── */
+  --bg-dark:   #0A0A09;
+  --bg-light:  #F2F2F2;
+  --bg-accent: #FFDD00;
+  --surface-white:  #FFFFFF;
+  --surface-dark:   #202020;
+  --surface-header-scrolled: #202020eb;
+  --text-on-dark:       #FFFFFF;
+  --text-on-dark-muted: #D6D6D6;
+  --text-on-light:      #202020;
+  --text-on-light-muted:#5C5C5C;
+  --border-on-dark:  #5C5C5C;
+  --border-on-light: #D6D6D6;
+  --border-strong:   #333533;
+  /* Spacing */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px;
+  --space-12: 48px;--space-16: 64px;--space-18: 72px;--space-20: 80px;
+  /* Layout */
+  --container-max: 1120px;
+  --header-height-desktop: 116px;
+  --header-height-mobile:  84px;
+  /* Typography */
+  --type-display: 'League Gothic', Impact, sans-serif;
   --type-body: 'Figtree', 'Helvetica Neue', sans-serif;
   --type-serif: 'Instrument Serif', Georgia, serif;
+  /* Legacy aliases — kept for backward compatibility */
+  --ink:        #0a0a09;
+  --ink-soft:   #2c2c2a;
+  --ink-muted:  #6b6a64;
+  --chalk:      #F2F2F2;
+  --chalk-warm: #ede9e0;
+  --chalk-mid:  #d4cfc2;
+  --accent:     #FFDD00;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -42,47 +62,76 @@ a { color: inherit; text-decoration: none; }
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.2rem 2.5rem;
-  background: rgba(245,244,240,0.93); backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(10,10,9,0.07);
-  transition: padding 0.3s;
+  padding: 0 var(--space-20);
+  height: var(--header-height-desktop);
+  background: transparent;
+  transition: background 0.3s, backdrop-filter 0.3s;
 }
-nav.scrolled { padding: 0.85rem 2.5rem; }
-.nav-logo { font-family: var(--type-display); font-size: 1.2rem; color: var(--ink); }
-.nav-logo em { font-style: normal; color: var(--accent); }
-.nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; }
-.nav-links a { font-size: 0.8rem; letter-spacing: 0.03em; color: var(--ink-soft); transition: color 0.2s; }
-.nav-links a:hover { color: var(--ink); }
+nav.scrolled {
+  background: var(--surface-header-scrolled);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.nav-logo { display: flex; align-items: center; }
+.nav-logo svg { height: 40px; width: auto; display: block; }
+.nav-links { display: flex; align-items: center; gap: var(--space-5); list-style: none; }
+.nav-links a { font-family: var(--type-body); font-size: 1rem; color: var(--text-on-dark); transition: color 0.2s; }
+.nav-links a:hover { color: var(--text-on-dark-muted); }
 .nav-cta {
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
-  padding: 0.55rem 1.3rem; background: var(--ink); color: var(--chalk) !important;
-  transition: background 0.2s;
+  font-family: var(--type-body); font-size: 1.25rem; font-weight: 600;
+  padding: 6px var(--space-6);
+  background: var(--bg-accent); color: var(--text-on-light) !important;
+  border: 2px solid var(--border-strong); border-radius: 0;
+  transition: opacity 0.2s; cursor: pointer;
 }
-.nav-cta:hover { background: var(--accent) !important; }
+.nav-cta:hover { opacity: 0.88; }
 
 /* ——— BUTTONS ——— */
+/* Brand button base */
 .btn {
-  display: inline-block; font-size: 0.75rem; font-weight: 500;
-  letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer;
-  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--type-body); font-size: 1.25rem; font-weight: 600;
+  border-radius: 0; border: 2px solid; cursor: pointer;
+  text-decoration: none; transition: opacity 0.2s, transform 0.1s;
 }
-.btn-dark {
-  padding: 0.85rem 1.9rem; background: var(--ink); color: var(--chalk);
-  border: 1px solid var(--ink);
+.btn:active { transform: translateY(1px); }
+
+/* Primary — yellow. Use on dark or gray sections. Never on yellow. */
+.btn-primary {
+  padding: var(--space-2) var(--space-5);
+  background: var(--bg-accent); color: var(--text-on-light);
+  border-color: var(--border-strong);
 }
-.btn-dark:hover { background: var(--accent); border-color: var(--accent); }
-.btn-outline-dark {
-  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
-  border: 1px solid rgba(245,244,240,0.2);
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary:focus-visible { outline: 2px solid var(--bg-accent); outline-offset: 2px; }
+
+/* Secondary on dark sections */
+.btn-secondary-dark {
+  padding: var(--space-2) var(--space-5);
+  background: var(--surface-dark); color: var(--text-on-dark);
+  border-color: var(--border-on-light);
 }
-.btn-outline-dark:hover { border-color: rgba(245,244,240,0.5); color: var(--chalk); }
-.btn-red { padding: 0.85rem 1.9rem; background: var(--chalk); color: var(--accent); border: 1px solid var(--chalk); }
-.btn-red:hover { background: var(--ink); border-color: var(--ink); color: var(--chalk); }
-.btn-outline-light {
-  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
-  border: 1px solid rgba(245,244,240,0.25);
+.btn-secondary-dark:hover { opacity: 0.85; }
+.btn-secondary-dark:focus-visible { outline: 2px solid var(--bg-accent); outline-offset: 2px; }
+
+/* Secondary on light/gray sections */
+.btn-secondary-light {
+  padding: var(--space-2) var(--space-5);
+  background: var(--surface-white); color: var(--text-on-light);
+  border-color: var(--border-strong);
 }
-.btn-outline-light:hover { border-color: rgba(245,244,240,0.6); color: var(--chalk); }
+.btn-secondary-light:hover { opacity: 0.85; }
+.btn-secondary-light:focus-visible { outline: 2px solid var(--bg-dark); outline-offset: 2px; }
+
+/* Legacy aliases — kept so existing page sections don't break */
+.btn-dark { padding: var(--space-2) var(--space-5); background: var(--surface-dark); color: var(--text-on-dark); border-color: var(--border-on-light); }
+.btn-dark:hover { opacity: 0.85; }
+.btn-outline-dark { padding: var(--space-2) var(--space-5); background: transparent; color: var(--text-on-dark-muted); border-color: var(--border-on-dark); }
+.btn-outline-dark:hover { color: var(--text-on-dark); border-color: var(--border-on-light); }
+.btn-red { padding: var(--space-2) var(--space-5); background: var(--bg-accent); color: var(--text-on-light); border-color: var(--border-strong); }
+.btn-red:hover { opacity: 0.9; }
+.btn-outline-light { padding: var(--space-2) var(--space-5); background: transparent; color: var(--text-on-dark-muted); border-color: var(--border-on-dark); }
+.btn-outline-light:hover { color: var(--text-on-dark); border-color: var(--border-on-light); }
 
 /* ——— HERO ——— */
 .hero {
@@ -93,11 +142,9 @@ nav.scrolled { padding: 0.85rem 2.5rem; }
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none;
   background-image:
-    repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(245,244,240,0.03) 79px,rgba(245,244,240,0.03) 80px),
-    repeating-linear-gradient(90deg,transparent,transparent 119px,rgba(245,244,240,0.03) 119px,rgba(245,244,240,0.03) 120px);
-}
-.hero-stripe {
-  position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent);
+    linear-gradient(to right,  rgb(255 255 255 / 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.1) 1px, transparent 1px);
+  background-size: 72px 72px;
 }
 .hero-main {
   flex: 1; display: flex; align-items: center;
@@ -120,12 +167,12 @@ nav.scrolled { padding: 0.85rem 2.5rem; }
 .hero-h1 em { font-style: italic; color: rgba(245,244,240,0.45); }
 .hero-sub {
   font-size: 1rem; color: rgba(245,244,240,0.5); line-height: 1.65;
-  margin-bottom: 0.85rem; max-width: 100%;
+  margin-bottom: 0.85rem; max-width: 44ch;
   opacity: 0; animation: up 0.9s var(--ease-out) 0.45s forwards;
 }
 .hero-support {
   font-size: 0.875rem; color: rgba(245,244,240,0.32); line-height: 1.7;
-  margin-bottom: 3rem; max-width: 100%;
+  margin-bottom: 3rem; max-width: 52ch;
   opacity: 0; animation: up 0.9s var(--ease-out) 0.55s forwards;
 }
 .hero-ctas {
@@ -622,7 +669,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 .ladder-note strong { color: var(--ink); font-weight: 500; }
 @media (max-width: 900px) {
   .ladder-top { grid-template-columns: 1fr; gap: 2rem; }
-  .ladder-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem; }
+  .ladder-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .ladder-grid::before { display: none; }
   .ladder-step { padding: 0; }
 }
@@ -810,28 +857,12 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
   .case-nums { grid-template-columns: 1fr; }
 }
 
-/* ——— HERO BELOW — full width text beneath headline+yy grid ——— */
-.hero-below {
-  padding: 0 2.5rem 3rem;
-  max-width: 1160px; margin: 0 auto; width: 100%;
-  opacity: 0; animation: up 0.9s var(--ease-out) 0.5s forwards;
-}
-.hero-below .hero-sub {
-  font-size: 1.05rem; color: rgba(245,244,240,0.5); line-height: 1.65;
-  margin-bottom: 0.85rem; max-width: 100%;
-  opacity: 1; animation: none;
-}
-.hero-below .hero-support {
-  font-size: 0.9rem; color: rgba(245,244,240,0.32); line-height: 1.7;
-  margin-bottom: 2.5rem; max-width: 100%;
-  opacity: 1; animation: none;
-}
-.hero-below .hero-ctas { opacity: 1; animation: none; }
+/* ——— YIN-YANG HERO GRAPHIC ——— */
 .hero-main {
   display: grid !important;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  align-items: flex-start;
+  align-items: center;
 }
 .hero-yy {
   display: flex;
@@ -839,7 +870,6 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
   align-items: center;
   opacity: 0;
   animation: up 1.1s var(--ease-out) 0.6s forwards;
-  padding-top: 2rem;
 }
 #yy { display: block; }
 .yy-caption-row {
@@ -887,27 +917,18 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 
 /* ——— LANGUAGE SWITCHER ——— */
 .lang-switcher {
-  display: flex; gap: 0.3rem; align-items: center;
-  border-left: 1px solid rgba(10,10,9,0.1);
-  padding-left: 1rem; margin-left: 0.5rem;
+  display: flex; gap: 0.75rem; align-items: center;
+  margin-right: 1.5rem;
 }
 .lang-switcher a {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-muted); padding: 0.2rem 0.45rem;
-  border: 1px solid transparent; border-radius: 2px;
-  transition: all 0.2s; text-decoration: none;
-  white-space: nowrap;
+  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--ink-muted); padding: 0.2rem 0.4rem;
+  border: 1px solid transparent; transition: all 0.2s;
 }
-.lang-switcher a span[aria-hidden] { font-size: 1rem; line-height: 1; }
-.lang-switcher .lang-code { font-size: 0.58rem; letter-spacing: 0.06em; }
-.lang-switcher a:hover {
-  color: var(--ink); border-color: var(--chalk-mid);
-  background: var(--chalk-warm);
-}
+.lang-switcher a:hover { color: var(--ink); border-color: var(--chalk-mid); }
 .lang-switcher a.lang-active {
   color: var(--ink); border-color: var(--chalk-mid);
-  background: var(--chalk-warm); font-weight: 500;
+  background: var(--chalk-warm);
 }
 @media (max-width: 900px) {
   .lang-switcher { display: none; }
@@ -919,22 +940,35 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#home" class="nav-logo" style="display:flex;align-items:center;line-height:1"><svg xmlns="http://www.w3.org/2000/svg" width="130" viewBox="0 0 600 210" role="img" aria-label="GKIM Digital" style="display:inline-block;vertical-align:middle"><path d="M263.93,13.78L264.88,10.7L267.12,10.7L268.07,13.78L270.32,14.39L272.68,12.19L274.62,13.31L273.9,16.45L275.55,18.1L278.69,17.38L279.81,19.32L277.61,21.68L278.22,23.93L281.3,24.88L281.3,27.12L278.22,28.07L277.61,30.32L279.81,32.68L278.69,34.62L275.55,33.9L273.9,35.55L274.62,38.69L272.68,39.81L270.32,37.61L268.07,38.22L267.12,41.3L264.88,41.3L263.93,38.22L261.68,37.61L259.32,39.81L257.38,38.69L258.1,35.55L256.45,33.9L253.31,34.62L252.19,32.68L254.39,30.32L253.78,28.07L250.7,27.12L250.7,24.88L253.78,23.93L254.39,21.68L252.19,19.32L253.31,17.38L256.45,18.1L258.1,16.45L257.38,13.31L259.32,12.19L261.68,14.39Z" fill="#ffdd00"/><circle cx="266" cy="26" r="9.44" fill="#f5f4f0"/><path d="M272.14,20.84 A8.02,8.02 0 1 0 272.14,31.16 L269.88,29.26 A5.07,5.07 0 1 1 269.88,22.74 Z" fill="#ffdd00" fill-rule="nonzero"/><rect x="266" y="24.52" width="8.02" height="2.95" fill="#ffdd00"/><path d="M275.24,9.13L275.62,7.97L276.86,7.97L277.24,9.13L278.19,9.53L279.28,8.97L280.16,9.85L279.6,10.94L280.0,11.89L281.16,12.27L281.16,13.51L280.0,13.89L279.6,14.84L280.16,15.93L279.28,16.81L278.19,16.25L277.24,16.65L276.86,17.81L275.62,17.81L275.24,16.65L274.29,16.25L273.2,16.81L272.32,15.93L272.88,14.84L272.48,13.89L271.32,13.51L271.32,12.27L272.48,11.89L272.88,10.94L272.32,9.85L273.2,8.97L274.29,9.53Z" fill="#ffdd00"/><circle cx="276.24" cy="12.89" r="2.36" fill="#f5f4f0"/><path d="M279.96,18.04L280.24,17.13L281.26,17.13L281.54,18.04L282.28,18.4L283.17,18.05L283.81,18.84L283.27,19.63L283.45,20.44L284.28,20.92L284.05,21.9L283.1,21.98L282.59,22.62L282.73,23.57L281.81,24.01L281.16,23.31L280.34,23.31L279.69,24.01L278.77,23.57L278.91,22.62L278.4,21.98L277.45,21.9L277.22,20.92L278.05,20.44L278.23,19.63L277.69,18.84L278.33,18.05L279.22,18.4Z" fill="#ffdd00"/><circle cx="280.75" cy="20.63" r="1.65" fill="#f5f4f0"/><text x="50" y="148" font-family="'Arial Black','Impact',sans-serif" font-size="118" font-weight="900" letter-spacing="-2" fill="#202020">GKIM</text><text x="65" y="182" font-family="'Figtree','Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="400" letter-spacing="42" fill="#202020">DIGITAL</text></svg></a>
+  <a href="#home" class="nav-logo" aria-label="GKIM Digital — home">
+    <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+      <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+      <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+      <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+      <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+      <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+      <path d="M41.0336 162.512C39.9887 162.062 38.4689 161.792 36.5692 161.792H30.8701V183.676H36.7592C38.5639 183.676 39.9887 183.406 41.0336 182.866C42.0784 182.325 42.9333 181.515 43.4082 180.344C43.8831 179.263 44.0731 177.913 44.0731 176.382V168.727C44.0731 167.196 43.8831 165.845 43.4082 164.854C42.9333 163.863 42.0784 163.053 41.0336 162.512ZM35.9043 165.394H36.5692C37.5191 165.394 37.994 165.574 38.279 165.665C38.5639 165.845 38.7539 166.115 38.8489 166.565C38.9439 167.015 39.0389 167.736 39.0389 168.546V176.562C39.0389 177.372 39.0389 178.093 38.9439 178.723C38.8489 179.173 38.6589 179.534 38.374 179.804C38.089 180.074 37.5191 180.164 36.6642 180.164H35.9043V165.394Z" fill="white"/>
+      <path d="M91.6609 161.792H86.7217V183.676H91.6609V161.792Z" fill="white"/>
+      <path d="M140.768 175.391H143.143V176.922C143.143 177.642 143.048 178.273 142.953 178.813C142.858 179.263 142.668 179.623 142.383 179.894C142.098 180.164 141.718 180.254 141.243 180.254C140.768 180.254 140.293 180.164 140.103 179.894C139.818 179.714 139.628 179.353 139.534 178.903C139.439 178.363 139.344 177.822 139.344 177.102V168.276C139.344 167.646 139.344 167.105 139.439 166.565C139.534 166.115 139.628 165.754 139.913 165.484C140.103 165.214 140.578 165.124 141.148 165.124C141.718 165.124 142.098 165.214 142.288 165.394C142.478 165.574 142.668 165.844 142.763 166.205C142.858 166.655 142.858 167.195 142.858 167.826V169.447H147.702V167.916C147.702 166.565 147.512 165.394 147.037 164.404C146.562 163.413 145.898 162.602 144.948 162.062C143.998 161.522 142.668 161.251 141.148 161.251C139.439 161.251 138.109 161.612 137.064 162.152C136.019 162.782 135.354 163.683 134.974 164.854C134.594 166.025 134.404 167.375 134.404 168.906V175.931C134.404 177.462 134.594 178.813 134.974 179.894C135.354 181.064 136.019 181.965 136.969 182.595C137.919 183.226 139.154 183.586 140.768 183.586C141.908 183.586 142.763 183.316 143.523 182.866C143.808 182.685 144.093 182.415 144.283 182.145L144.473 183.316H147.987V171.788H141.053V175.391H140.768Z" fill="white"/>
+      <path d="M195.195 161.792H190.256V183.676H195.195V161.792Z" fill="white"/>
+      <path d="M238.508 165.484H242.022V183.676H247.056V165.484H250.571V161.792H238.508V165.484Z" fill="white"/>
+      <path d="M293.694 161.792L289.04 183.676H293.789L294.739 178.813H297.779L298.634 183.676H303.383L298.729 161.792H293.694ZM297.304 175.481H295.404L296.354 169.897L297.304 175.481Z" fill="white"/>
+      <path d="M347.837 180.164V161.792H342.897V183.676H353.251V180.164H347.837Z" fill="white"/>
+    </svg>
+  </a>
     <div class="lang-switcher">
-    <a href="/en/" title="English" aria-label="English"><span aria-hidden="true">🇬🇧</span><span class="lang-code">EN</span></a>
-    <a href="/de/" class="lang-active" title="German" aria-label="German"><span aria-hidden="true">🇩🇪</span><span class="lang-code">DE</span></a>
-    <a href="/fr/" title="French" aria-label="French"><span aria-hidden="true">🇫🇷</span><span class="lang-code">FR</span></a>
-    <a href="/nl/" title="Dutch" aria-label="Dutch"><span aria-hidden="true">🇳🇱</span><span class="lang-code">NL</span></a>
-    <a href="/zh/" title="Chinese (Simplified)" aria-label="Chinese (Simplified)"><span aria-hidden="true">🇨🇳</span><span class="lang-code">ZH</span></a>
-    <a href="/vi/" title="Vietnamese" aria-label="Vietnamese"><span aria-hidden="true">🇻🇳</span><span class="lang-code">VI</span></a>
+    <a href="/en/">English</a>
+    <a href="/de/" class="lang-active">Deutsch</a>
+    <a href="/vi/">Tiếng Việt</a>
   </div>
   <ul class="nav-links">
     <li><a href="#vision">Vision</a></li>
     <li><a href="#gears">GEARS™</a></li>
-    <li><a href="#outputs">Liefergegenstände</a></li>
-    <li><a href="#case-study">Fallstudie</a></li>
+    <li><a href="#outputs">Outputs</a></li>
+    <li><a href="#case-study">Case Study</a></li>
     <li><a href="#about">Über uns</a></li>
-    <li><a href="#start" class="nav-cta">Kontakt aufnehmen</a></li>
+    <li><a href="#start" class="nav-cta">Mit GKIM sprechen</a></li>
   </ul>
 </nav>
 
@@ -943,11 +977,16 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
      ═══════════════════════════════════════ -->
 <section id="home" class="hero">
   <div class="hero-grid"></div>
-  <div class="hero-stripe"></div>
   <div class="hero-main">
     <div class="hero-text">
-      <p class="hero-eyebrow">AI-Native Business Design &amp; Delivery</p>
-      <h1 class="hero-h1">Design it. <em>Build it.</em> Run it.</h1>
+      <p class="hero-eyebrow">Business System Design</p>
+      <h1 class="hero-h1">Gestalten Sie Ihr KI-natives Geschäft</h1>
+      <p class="hero-sub">Wettbewerbsvorteil ist nicht länger strategisch. Er ist strukturell.</p>
+      <p class="hero-support">Wir definieren die fehlende Schicht zwischen Strategie und Technik — wie Ihr Geschäft tatsächlich als System funktioniert, das Wert schafft.</p>
+      <div class="hero-ctas">
+        <a href="#start" class="btn btn-dark">Mit GKIM sprechen</a>
+        <a href="#outputs" class="btn btn-outline-dark">Sehen Sie, was Sie erhalten</a>
+      </div>
     </div>
 
     <div class="hero-yy">
@@ -980,34 +1019,24 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
       </div>
     </div>
   </div>
-
-  <!-- Hero sub/support/ctas — full width below the two-column headline -->
-  <div class="hero-below">
-    <p class="hero-sub">Most AI initiatives produce tools. We build businesses — designed from the ground up to create measurable value.</p>
-    <p class="hero-support">GKIM partners with founders and operators to design, build, and run AI-native businesses. We use GEARS&#8482; — our proprietary system design methodology — to define exactly how your business creates value before a line of code is written.</p>
-    <div class="hero-ctas">
-      <a href="#start" class="btn btn-dark">Kontakt aufnehmen</a>
-      <a href="#outputs" class="btn btn-outline-dark">Ergebnisse ansehen</a>
-    </div>
-  </div>
   <div class="hero-stats container">
     <div class="stat">
       <span class="stat-n">$1B+</span>
-      <span class="stat-l">Entworfene Unternehmenssysteme</span>
+      <span class="stat-l">Entworfene Business Systeme</span>
     </div>
     <div class="stat">
       <span class="stat-n">100K+</span>
-      <span class="stat-l">Täglich strukturierte Transaktionen</span>
+      <span class="stat-l">Strukturierte tägliche Transaktionen</span>
     </div>
     <div class="stat">
       <span class="stat-n">120+</span>
-      <span class="stat-l">Umgesetzte Systeme</span>
+      <span class="stat-l">Bereitgestellte Systeme</span>
     </div>
     <div class="stat">
       <span class="stat-n">16 Yrs</span>
-      <span class="stat-l">Jahre an der Schnittstelle von Strategie & Engineering</span>
+      <span class="stat-l">Schnittstelle zwischen Strategie und Technik</span>
     </div>
-    <p class="stat-tag">Von Anfang an für Skalierung konzipiert — nicht nachträglich angepasst.</p>
+    <p class="stat-tag">Von Tag eins für Skalierbarkeit ausgelegt — nicht später umgestaltet.</p>
   </div>
 </section>
 
@@ -1045,27 +1074,27 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="shift-grid">
       <div class="rv">
         <p class="sec-label">The Shift</p>
-        <h2 class="display shift-h">Unternehmen beginnen, anders auszusehen</h2>
+        <h2 class="display shift-h">Unternehmen beginnen anders auszusehen</h2>
         <div class="shift-body">
-          <p>Most AI initiatives fail to become real businesses.</p>
-          <p>Organisations build tools instead of systems. They automate without structure. They invest in AI without a clear line to revenue, margin, or operational performance.</p>
-          <p>The constraint is not technology. It is the ability to design and run the business.</p>
+          <p>KI hat jedem Unternehmen die gleiche Entwicklungsgeschwindigkeit gegeben.</p>
+          <p>Aber Geschwindigkeit spielt keine Rolle, wenn das Geschäft nie richtig als System definiert wurde. Dort scheitern die meisten digitalen Unternehmen.</p>
+          <p>Die Einschränkung hat sich von der Entwicklung zur Definition verschoben.</p>
         </div>
       </div>
       <div class="rv d2">
         <ul class="shift-list">
-          <li>Tools get built — but no coherent business system behind them</li>
-          <li>AI investments fail to translate into measurable performance</li>
-          <li>Automation without structure creates complexity, not efficiency</li>
-          <li>Stakeholders remain misaligned until execution exposes the gaps</li>
-          <li>The business was never properly defined as a system</li>
+          <li>Most companies still discover what's wrong after they build it</li>
+          <li>Requirements are incomplete before the first line of code</li>
+          <li>Logic is inconsistent across teams and systems</li>
+          <li>Stakeholders remain misaligned until execution exposes it</li>
+          <li>Validation happens through building instead of before it</li>
         </ul>
-        <blockquote class="keyline shift-quote">Geschwindigkeit ist kein Vorteil.<br>Design ist es.</blockquote>
+        <blockquote class="keyline shift-quote">Geschwindigkeit ist nicht der Vorteil.<br>Design ist.</blockquote>
         <div class="struct-box">
           <div class="struct-box-bar"></div>
           <div class="struct-box-text">
-            <p class="struct-box-label">Das Grundprinzip von GEARS™</p>
-            <p class="struct-box-quote">KI implementiert Struktur, keine Absicht. Geschäftsmodelle müssen als explizite Hierarchien ausgedrückt werden.</p>
+            <p class="struct-box-label">Das Kernprinzip von GEARS™</p>
+            <p class="struct-box-quote">KI implementiert Struktur, nicht Absicht. Geschäftsmodelle müssen als explizite Hierarchien ausgedrückt werden.</p>
           </div>
         </div>
       </div>
@@ -1205,7 +1234,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="gears-top">
       <div class="rv">
         <p class="sec-label lt">GEARS&#8482; — Business-Led System Design</p>
-        <h2 class="display gears-h">Definieren Sie das System, bevor Sie es bauen</h2>
+        <h2 class="display gears-h">Definieren Sie das System, bevor Sie es aufbauen</h2>
       </div>
       <div class="rv d2">
         <p class="gears-intro">
@@ -1239,7 +1268,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
       </div>
       <div class="g-step rv d2">
         <div class="g-num">03</div>
-        <h3 class="g-title"><em>Deliver</em> — Design Deliverables</h3>
+        <h3 class="g-title"><em>Deliver</em> — Build-Ready Outputs</h3>
         <ul class="g-list">
           <li>Gear hierarchy with contracts per capability</li>
           <li>Workflow architecture and process specifications</li>
@@ -1323,48 +1352,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
       </div>
     </div>
 
-    <p class="gears-kl rv" style="margin-top: 3rem;">GEARS™ hört nicht bei der Erkenntnis auf. Es liefert die Struktur, die zum Aufbau erforderlich ist.</p>
-
-    <!-- Platform-Agnostic Callout -->
-    <div class="rv" style="margin-top: 2.5rem; padding: 2rem 2.25rem; border: 1px solid rgba(245,244,240,0.09); background: rgba(245,244,240,0.03);">
-      <p style="font-size: 0.63rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,244,240,0.3); margin-bottom: 1rem;">Platform-Agnostic by Design</p>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
-        <div>
-          <p style="font-family: var(--type-display); font-size: 1.05rem; color: var(--chalk); line-height: 1.35; margin-bottom: 0.75rem; letter-spacing: -0.01em;">GEARS&#8482; operates above the platform layer. The same system design deploys to any infrastructure — no lock-in.</p>
-          <p style="font-size: 0.8rem; color: rgba(245,244,240,0.38); line-height: 1.65;">You own the architecture. You choose the execution environment. GEARS&#8482; defines the business system that runs on whichever platform you select.</p>
-        </div>
-        <!-- Partner logos — left aligned -->
-        <div style="display: flex; flex-direction: column; gap: 0.85rem; align-items: flex-start;">
-          <p style="font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(245,244,240,0.22); margin-bottom: 0.15rem;">Compatible with</p>
-          <!-- AWS -->
-          <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(245,244,240,0.04); border: 1px solid rgba(245,244,240,0.1); padding: 0.5rem 0.9rem; min-width: 160px;">
-            <svg width="32" height="20" viewBox="0 0 60 38" xmlns="http://www.w3.org/2000/svg" aria-label="AWS">
-              <path d="M17.2 14.3c0 .7.1 1.3.2 1.7.2.4.4.9.7 1.4.1.2.2.4.2.5 0 .2-.1.4-.4.6l-1.2.8c-.2.1-.3.2-.5.2-.2 0-.4-.1-.5-.3-.2-.3-.4-.7-.6-1-.2-.4-.4-.8-.6-1.3-1.4 1.7-3.2 2.5-5.4 2.5-1.5 0-2.8-.4-3.6-1.3-.9-.9-1.3-2-1.3-3.5 0-1.5.5-2.8 1.6-3.7 1.1-.9 2.5-1.4 4.4-1.4.6 0 1.2.1 1.9.2.7.1 1.4.3 2.1.5V9.4c0-1.4-.3-2.4-.9-3-.6-.6-1.6-.9-3-.9-.6 0-1.3.1-2 .3-.7.2-1.3.4-1.9.7-.3.1-.5.2-.6.3-.1.1-.2.1-.3.1-.3 0-.4-.2-.4-.6V5.2c0-.3 0-.5.1-.7.1-.2.3-.3.6-.4.6-.3 1.3-.6 2.2-.8.9-.2 1.8-.4 2.8-.4 2.1 0 3.7.5 4.7 1.5 1 1 1.5 2.5 1.5 4.5v6zm-7.3 2.7c.6 0 1.2-.1 1.8-.3.6-.2 1.2-.6 1.7-1.1.3-.3.5-.7.6-1.1.1-.4.2-.9.2-1.5v-.7c-.5-.1-1.1-.2-1.7-.3-.6-.1-1.1-.1-1.7-.1-1.2 0-2.1.2-2.6.7-.6.5-.8 1.1-.8 2 0 .8.2 1.4.6 1.8.5.4 1.1.6 1.9.6zm13.7 1.9c-.3 0-.5-.1-.7-.2-.2-.1-.3-.4-.4-.7l-4.5-14.8c-.1-.4-.2-.6-.2-.8 0-.3.2-.5.5-.5h2c.3 0 .6.1.7.2.2.1.3.4.4.7l3.2 12.7 3-12.7c.1-.4.2-.6.4-.7.2-.1.4-.2.8-.2h1.6c.3 0 .6.1.8.2.2.1.3.4.4.7l3 12.9L37.7 3.5c.1-.4.2-.6.4-.7.2-.1.4-.2.7-.2h1.9c.3 0 .5.2.5.5 0 .1 0 .2-.1.4l-.1.4-4.6 14.8c-.1.4-.2.6-.4.7-.2.1-.4.2-.7.2h-1.7c-.3 0-.6-.1-.8-.2-.2-.1-.3-.4-.4-.7l-3-12.4-3 12.3c-.1.4-.2.6-.4.7-.2.1-.4.2-.8.2zm24.8.5c-1 0-2.1-.1-3.1-.4-1-.3-1.8-.6-2.3-.9-.3-.2-.5-.4-.6-.6-.1-.2-.1-.4-.1-.6v-1.1c0-.4.1-.6.4-.6.1 0 .2 0 .4.1.1.1.3.1.5.2.7.3 1.4.5 2.2.7.8.2 1.5.3 2.3.3 1.2 0 2.2-.2 2.8-.7.7-.4 1-1.1 1-1.9 0-.6-.2-1-.6-1.4-.4-.4-1.1-.7-2.1-1l-3-.9c-1.5-.5-2.6-1.2-3.3-2.1-.7-.9-1-1.9-1-3 0-.9.2-1.6.6-2.3.4-.7.9-1.2 1.5-1.7.6-.4 1.4-.8 2.2-1 .8-.2 1.7-.3 2.6-.3.5 0 .9 0 1.4.1.5.1.9.2 1.3.3.4.1.8.2 1.1.4.3.1.6.3.8.4.3.2.5.3.6.5.1.2.2.4.2.7v1c0 .4-.1.6-.4.6-.2 0-.4-.1-.8-.3-.6-.3-1.3-.5-2-.7-.7-.2-1.4-.2-2.2-.2-1.1 0-2 .2-2.6.6-.6.4-.9 1-.9 1.8 0 .6.2 1 .6 1.4.4.4 1.2.8 2.3 1.1l2.9.9c1.5.5 2.5 1.1 3.2 2 .7.8 1 1.8 1 2.9 0 .9-.2 1.7-.5 2.4-.4.7-.9 1.3-1.5 1.8-.7.5-1.4.8-2.3 1.1-.9.3-1.9.4-3 .4z" fill="#FF9900"/>
-              <path d="M51.5 29.6c-6.3 4.6-15.4 7.1-23.3 7.1C18.1 36.7 9.7 33.4 3.4 27.7c-.5-.4-.1-1 .5-.7 6.8 4 15.3 6.3 24 6.3 5.9 0 12.3-1.2 18.2-3.8.9-.4 1.6.6.4 1.1zm2.3-2.7c-.6-.8-4.2-.4-5.8-.2-.5.1-.6-.4-.1-.7 2.8-2 7.5-1.4 8-.7.6.7-.1 5.4-2.8 7.6-.4.3-.8.1-.6-.3.6-1.5 2-4.8 1.3-5.7z" fill="#FF9900"/>
-            </svg>
-            <span style="font-size: 0.72rem; color: rgba(245,244,240,0.6); letter-spacing: 0.04em;">Amazon Web Services</span>
-          </div>
-          <!-- Microsoft -->
-          <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(245,244,240,0.04); border: 1px solid rgba(245,244,240,0.1); padding: 0.5rem 0.9rem; min-width: 160px;">
-            <svg width="20" height="20" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-label="Microsoft">
-              <rect x="1" y="1" width="9" height="9" fill="#F25022"/>
-              <rect x="11" y="1" width="9" height="9" fill="#7FBA00"/>
-              <rect x="1" y="11" width="9" height="9" fill="#00A4EF"/>
-              <rect x="11" y="11" width="9" height="9" fill="#FFB900"/>
-            </svg>
-            <span style="font-size: 0.72rem; color: rgba(245,244,240,0.6); letter-spacing: 0.04em;">Microsoft Azure</span>
-          </div>
-          <!-- Google -->
-          <div style="display: flex; align-items: center; gap: 0.6rem; background: rgba(245,244,240,0.04); border: 1px solid rgba(245,244,240,0.1); padding: 0.5rem 0.9rem; min-width: 160px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Google Cloud">
-              <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" fill="#4285F4"/>
-            </svg>
-            <span style="font-size: 0.72rem; color: rgba(245,244,240,0.6); letter-spacing: 0.04em;">Google Cloud</span>
-          </div>
-        </div>
-      </div>
-      <p style="font-size: 0.72rem; color: rgba(245,244,240,0.2); margin-top: 1.25rem; font-style: italic;">GKIM is a registered partner with AWS, Microsoft, and Google Cloud. Replace with your official partner badge assets from each partner portal.</p>
-    </div>
+    <p class="gears-kl rv" style="margin-top: 3rem;">GEARS™ endet nicht bei Erkenntnissen. Es produziert die Struktur, die zum Bauen erforderlich ist.</p>
     <div class="rv d1" style="margin-top:1rem;">
       <a href="#start" class="btn btn-outline-dark" style="display:inline-block; margin-top:0.75rem;">Talk to GKIM →</a>
     </div>
@@ -1378,12 +1366,12 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
   <div class="container">
     <div class="out-top">
       <div class="rv">
-        <p class="sec-label">Design Deliverables</p>
-        <h2 class="display out-h">Keine Beratung.<br>Liefergegenstände.</h2>
+        <p class="sec-label">What You Actually Get</p>
+        <h2 class="display out-h">Nicht Beratung.<br>Produktion.</h2>
       </div>
       <div class="rv d2">
         <p class="out-intro">
-          Each engagement produces six connected design deliverables that together define how your business works as a system.<br><br>
+          Each engagement produces a set of connected outputs that together define how your business works as a system.<br><br>
           The hierarchy is the source of truth. <strong>Everything else is a projection of it</strong> — readable by stakeholders, usable by engineers, consumable by AI tools. Each output serves a different audience from the same structured foundation.
         </p>
       </div>
@@ -1391,45 +1379,45 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 
     <div class="out-grid">
       <div class="out-card rv">
-        <p class="out-n">Liefergegenstand 01 — Fähigkeitskarte</p>
-        <h3 class="out-title">Definition der Unternehmensmaschine</h3>
+        <p class="out-n">Output 01 — Capability Map</p>
+        <h3 class="out-title">Definition der Geschäftsmaschine</h3>
         <p class="out-body">The gear hierarchy: a structured, named decomposition of how your business creates value. Every capability defined at the right level of abstraction. Every stakeholder identified. Every dependency made explicit.</p>
         <p class="out-kl">If this is wrong, everything built on top of it will be wrong.</p>
       </div>
       <div class="out-card rv d1">
-        <p class="out-n">Liefergegenstand 02 — Workflow-Architektur</p>
-        <h3 class="out-title">Prozess- & Autoritätsdesign</h3>
+        <p class="out-n">Output 02 — Workflow-Architektur</p>
+        <h3 class="out-title">Prozess- und Autoritätsdesign</h3>
         <p class="out-body">Step-by-step process flows with execution types assigned to every gear — human, automated, agent, or workflow. Authority flows, approval gates, and escalation paths defined. Ambiguity removed before the first line is written.</p>
         <p class="out-kl">Removes ambiguity. Enables automation. Reveals inefficiencies.</p>
       </div>
       <div class="out-card rv d2">
-        <p class="out-n">Deliverable 03 — System Logic</p>
-        <h3 class="out-title">Entscheidungsstrukturen & Regeln</h3>
+        <p class="out-n">Output 03 — System Logic</p>
+        <h3 class="out-title">Entscheidungsstrukturen und Regeln</h3>
         <p class="out-body">The explicit logic that governs how the system behaves: conditions, triggers, responses, and decision pathways per gear. Consistent across teams. Scalable under volume. No logic drift over time.</p>
         <p class="out-kl">Clear logic creates predictable systems.</p>
       </div>
       <div class="out-card rv">
-        <p class="out-n">Deliverable 04 — Project Breakdown</p>
-        <h3 class="out-title">Bauspezifikation (PRD)</h3>
+        <p class="out-n">Output 04 — Project Breakdown</p>
+        <h3 class="out-title">Build-Spezifikation (PRD)</h3>
         <p class="out-body">The gear hierarchy projected into engineering terms: requirements, system behaviours, integration points, and implementation sequencing. Built from the same source of truth — no translation loss between design intent and what gets built.</p>
         <p class="out-kl">Better structure in → better systems out.</p>
       </div>
       <div class="out-card rv d1">
-        <p class="out-n">Deliverable 05 — Performance Framework</p>
-        <h3 class="out-title">KPIs & Observability-Design</h3>
+        <p class="out-n">Output 05 — Performance Framework</p>
+        <h3 class="out-title">KPIs und Observability-Design</h3>
         <p class="out-body">Core KPIs and operational metrics derived from the gear structure — not guessed at after build. Conversion metrics, feedback loops, and performance indicators that reflect how the system actually operates.</p>
         <p class="out-kl">If you cannot measure it, you cannot improve it.</p>
       </div>
       <div class="out-card rv d2">
-        <p class="out-n">Deliverable 06 — AI-Ready Structured Inputs</p>
-        <h3 class="out-title">Maschinenlesbare Systemspezifikation</h3>
+        <p class="out-n">Output 06 — AI-Ready Structured Inputs</p>
+        <h3 class="out-title">Maschinenlesbarer Systemspec</h3>
         <p class="out-body">The gear contracts expressed in structured form: inputs, outputs, execution types, dependencies, and authority flows. Directly usable by engineering teams, AI coding tools, and build partners. Accelerates development. Eliminates interpretation.</p>
         <p class="out-kl">The foundation for AI-native execution.</p>
       </div>
     </div>
 
     <div class="out-foot rv">
-      <p class="out-foot-text">Für die meisten Teams ist es das erste Mal, dass das Unternehmen zu etwas wird, das tatsächlich getestet und durchdacht werden kann.</p>
+      <p class="out-foot-text">Für die meisten Teams ist es das erste Mal, dass das Geschäft zu etwas wird, das tatsächlich getestet und durchdacht werden kann.</p>
       <a href="#start" class="btn btn-dark">Talk to GKIM</a>
     </div>
   </div>
@@ -1445,8 +1433,8 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="case-grid">
       <div class="rv">
         <span class="case-tag">Flagship Case Study</span>
-        <h2 class="display case-h">Gestaltung eines Genetikunternehmenssystems im Milliardenmaßstab</h2>
-        <p class="case-sub">Wie eine komplexe, mehrschichtige Gesundheitsplattform so strukturiert wurde, dass sie skaliert — bevor das Volumen ihre Schwächen aufdeckte.</p>
+        <h2 class="display case-h">Gestaltung eines 1-Milliarden-Dollar-Genetik-Geschäftssystems</h2>
+        <p class="case-sub">Wie eine komplexe, mehrakteurige Healthcare-Plattform strukturiert wurde, um zu skalieren — bevor das Volumen ihre Schwächen enthüllte.</p>
         <div class="case-flow">
           <div class="cf-s hi">Demand</div>
           <div class="cf-s">Qualify</div>
@@ -1468,7 +1456,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
           <p>Data is too complex to use in practice. Workflows break under real clinical conditions. Administrative overhead destroys economics.</p>
           <p>For this business to work, the full patient journey had to operate as one coordinated system — from marketing through to long-term care. Each stage depended on the others. If any part failed, the system broke.</p>
         </div>
-        <p class="case-kl">Das System skalierte, weil es so konzipiert wurde, dass es funktioniert — nicht weil es schrittweise verbessert wurde.</p>
+        <p class="case-kl">Das System skalierte, weil es zum Funktionieren entworfen wurde — nicht weil es iterativ in Form gebracht wurde.</p>
         <div class="case-body">
           <p>Before building, the system was made explicit: how value flows from acquisition to care, how decisions are made at each qualification stage, how actors interact across providers, labs, and patients, and how the system scales under volume.</p>
           <p>This is not a story about building software. It is a story about designing the system that made it work.</p>
@@ -1553,14 +1541,14 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
 <section class="sec for-sec">
   <div class="container">
     <p class="sec-label lt rv">Who This Is For</p>
-    <h2 class="display for-h rv d1">Für die Menschen, die es richtig machen müssen</h2>
+    <h2 class="display for-h rv d1">Gebaut für diejenigen, die es richtig machen müssen</h2>
     <div class="for-grid">
       <div class="fc rv">
         <h3 class="fc-role">Gründer</h3>
         <p class="fc-body">Turn ideas into structured, buildable systems. Build the right business, not just fast software. Understand how your business creates value before committing to build.</p>
       </div>
       <div class="fc rv d1">
-        <h3 class="fc-role">Betreiber</h3>
+        <h3 class="fc-role">Operatoren</h3>
         <p class="fc-body">Create clarity, structure, and performance in complex systems. Understand and improve how the business actually runs. Replace coordination overhead with designed systems.</p>
       </div>
       <div class="fc rv d2">
@@ -1579,16 +1567,16 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="ladder-top">
       <div class="rv">
         <p class="sec-label" style="margin-bottom:0.75rem;">How We Work</p>
-        <h2 class="display ladder-h">Design it.<br>Build it.<br>Run it.</h2>
+        <h2 class="display ladder-h">Beginnen Sie überall.<br>Gehen Sie so weit wie nötig.</h2>
       </div>
       <div class="rv d2">
         <p class="ladder-sub">
-          Start with a single session. Each step produces real, owned outputs before you decide whether to go further. The full journey — from idea to operating business — runs through five stages. <strong>You are never locked in. You always own what is produced.</strong>
+          Most clients begin with a single session. No commitment beyond that. Each step produces real outputs — so you always know what you have before deciding whether to go further. <strong>You are never locked in. You always own what is produced.</strong>
         </p>
       </div>
     </div>
 
-    <div class="ladder-grid" style="grid-template-columns: repeat(5,1fr);">
+    <div class="ladder-grid">
       <div class="ladder-step rv">
         <div class="ls-dot"></div>
         <p class="ls-num">Step 01 · Entry point</p>
@@ -1600,14 +1588,14 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
       <div class="ladder-step rv d1">
         <div class="ls-dot"></div>
         <p class="ls-num">Step 02 · Core engagement</p>
-        <h3 class="ls-title">GEARS&#8482; System Design</h3>
+        <h3 class="ls-title">GEARS™ System Design</h3>
         <p class="ls-body">A full GEARS&#8482; engagement. We define your business as a working system — producing all six structured outputs: business engine, workflows, decision logic, PRD, KPI framework, and AI-ready build inputs.</p>
         <p class="ls-signal">At the end, your business exists as a real, testable system definition — not a deck.</p>
         <a href="#start" class="ls-cta">Talk to GKIM</a>
       </div>
       <div class="ladder-step rv d2">
         <div class="ls-dot"></div>
-        <p class="ls-num">Step 03 · Build</p>
+        <p class="ls-num">Step 03 · Optional</p>
         <h3 class="ls-title">Build Partnership</h3>
         <p class="ls-body">We implement the system we designed. Because we defined it, we build it with unusual precision — no translation loss between design intent and what gets built. Engineering and delivery aligned from day one.</p>
         <p class="ls-signal">The system gets built the way it was designed — not interpreted.</p>
@@ -1615,19 +1603,11 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
       </div>
       <div class="ladder-step rv d3">
         <div class="ls-dot"></div>
-        <p class="ls-num">Step 04 · Operate</p>
-        <h3 class="ls-title">Operate &amp; Evolve</h3>
+        <p class="ls-num">Step 04 · Long-term</p>
+        <h3 class="ls-title">Betreiben & Weiterentwickeln</h3>
         <p class="ls-body">We stay as your long-term system partner — running, monitoring, and continuously improving the business system. As conditions change, the system adapts. Performance compounds. You focus on leading the business.</p>
         <p class="ls-signal">The system becomes a durable, evolving asset — not a fixed deliverable.</p>
         <a href="#start" class="ls-cta">Talk to GKIM</a>
-      </div>
-      <div class="ladder-step rv d3">
-        <div class="ls-dot" style="border-color: var(--gold); background: transparent;"></div>
-        <p class="ls-num" style="color: var(--gold);">Step 05 · Partnership</p>
-        <h3 class="ls-title" style="color: var(--ink);">Co-invest &amp; Partner</h3>
-        <p class="ls-body">For the right ventures, we go further. We co-invest in what we design and build — aligning our incentives entirely with yours. This is not services. It is structured participation in the business we help create.</p>
-        <p class="ls-signal" style="color: var(--gold);">Available to ventures where system design meets investment conviction.</p>
-        <a href="#start" class="ls-cta" style="color: var(--gold); border-color: var(--gold);">Talk to GKIM</a>
       </div>
     </div>
 
@@ -1646,7 +1626,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="testi-inner rv d1">
       <div class="testi-bar"></div>
       <div>
-        <p class="testi-quote">„GKIM hat mir geholfen, meine Vision zu entwickeln und sie in ein durchdachtes Geschäfts-, Produkt- und Technologieangebot umzusetzen. Das Team hat bei der Ausführung hervorragende Arbeit geleistet."</p>
+        <p class="testi-quote">"GKIM hat mir geholfen, meine Vision zu entwickeln und sie in ein durchdachtes Geschäfts-, Produkt- und Technologieangebot umzuwandeln. Das Team hat sich bei der Umsetzung hervorgetan."</p>
         <p class="testi-attr">Gründer & CEO</p>
       </div>
     </div>
@@ -1661,22 +1641,16 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="about-grid">
       <div class="rv">
         <p class="about-lbl">Why GKIM Exists</p>
-        <h2 class="display about-h">Aufgebaut von jemandem, der dies bereits getan hat</h2>
+        <h2 class="display about-h">Gebaut von jemandem, der dies schon einmal getan hat</h2>
         <div class="about-letter">
           <p>To the Founders and Leaders Building the Future,</p>
           <p>I started my career in engineering and game development. Very early, I learned something that still holds true: technology is only as good as the judgment behind it.</p>
           <p>I saw brilliant ideas stall — not because the code was wrong, but because the system behind it had never been properly defined. There was always a gap between the creative ambition of a business and the structure required to make it work.</p>
           <p>In 2010, I founded GKIM to close that gap. Not by adding more process, but by making the business itself explicit as a system.</p>
           <p>Over the last 15 years, we've applied that discipline in environments where failure is expensive — from telehealth platforms to systems handling 100,000+ daily transactions. The principle has remained the same: define the system properly, and everything else becomes easier.</p>
-          <p>Today, we operate from Cambridge and Ho Chi Minh City. The thinking behind GEARS&#8482; was developed in Cambridge — where academic rigour and commercial application have always been held together, not treated as opposites.</p>
+          <p>Today, we operate from Cambridge and Ho Chi Minh City — combining strategic design with deep engineering capability.</p>
         </div>
         <p class="about-sig">— Ian Morrison</p>
-        <div class="about-papers" style="margin-top: 1.5rem; border-left-color: var(--accent);">
-          <p class="ap-label" style="color: var(--accent);">Thought Leadership</p>
-          <p class="ap-title">GEARS&#8482; and the McKinsey Agentic Infrastructure Stack</p>
-          <p class="ap-body">McKinsey describes the infrastructure required to run agentic AI at scale. GEARS&#8482; operates one layer above — defining the business system, value logic, and operating model that determines what gets built, automated, and measured. Read our analysis of where these frameworks meet.</p>
-          <a href="#" class="ap-link" onclick="showPapers('s1'); return false;">Read the analysis →</a>
-        </div>
       </div>
 
       <div class="rv d2">
@@ -1725,8 +1699,8 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     <div class="start-grid">
       <div class="rv">
         <p class="sec-label lt">Talk to GKIM</p>
-        <h2 class="display start-h">Bevor Sie aufbauen oder skalieren, verstehen Sie, wie Ihr Unternehmen tatsächlich funktioniert.</h2>
-        <p class="start-sub">Dies ist kein Verkaufsgespräch. Es ist eine Arbeitssitzung, um Ihr Geschäftsmodell zu verstehen, die aktuelle Funktionsweise des Systems zu erkunden und Lücken, Risiken und Annahmen zu identifizieren.</p>
+        <h2 class="display start-h">Bevor Sie bauen oder skalieren, verstehen Sie, wie Ihr Geschäft tatsächlich funktioniert.</h2>
+        <p class="start-sub">Dies ist kein Verkaufsgespräch. Es ist eine Arbeitssitzung, um Ihr Geschäftsmodell zu verstehen, zu erkunden, wie das System derzeit funktioniert, und Lücken, Risiken und Annahmen zu identifizieren.</p>
         <p style="font-size:0.67rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.28); margin-bottom:1rem;">A short session typically surfaces:</p>
         <ul class="start-items">
           <li class="si"><div class="si-dot"></div><p class="si-text">Hidden dependencies in your current system</p></li>
@@ -1734,12 +1708,12 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
           <li class="si"><div class="si-dot"></div><p class="si-text">Unclear decision logic creating downstream inconsistency</p></li>
           <li class="si"><div class="si-dot"></div><p class="si-text">Risks that only become visible under scale</p></li>
         </ul>
-        <p class="keyline start-kl">Klarheit ersetzt Annahme.</p>
+        <p class="keyline start-kl">Klarheit ersetzt Annahmen.</p>
       </div>
 
       <div class="rv d2">
         <div class="form-box">
-          <p class="form-intro">Erzählen Sie uns, was Sie aufbauen, wo Sie sich auf dem Weg befinden und was sich unklar oder nicht funktionierend anfühlt.</p>
+          <p class="form-intro">Erzählen Sie uns, was Sie bauen, wo Sie sich auf der Reise befinden und was unklar oder nicht funktionierend wirkt.</p>
           <div class="form-g">
             <label class="form-lbl" for="f-name">Name</label>
             <input class="form-in" type="text" id="f-name" placeholder="Your name">
@@ -1770,11 +1744,11 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
   <div class="container">
     <div class="cta-inner">
       <div class="rv">
-        <h2 class="display cta-h">Design it. Build it. Run it.</h2>
-        <p class="cta-body">Most teams start with code. The best teams start with a system. If you're building or evolving an AI-native business, the conversation starts with how your business actually creates value — before committing to any platform or technology.</p>
+        <h2 class="display cta-h">Gestalten Sie das Geschäft, bevor Sie es bauen</h2>
+        <p class="cta-body">Die meisten Teams beginnen mit Code. Die besten Teams beginnen mit Klarheit.</p>
       </div>
       <div class="cta-btns rv d2">
-        <a href="#start" class="btn btn-red">Kontakt aufnehmen</a>
+        <a href="#start" class="btn btn-red">Mit GKIM sprechen</a>
         <a href="mailto:hello@gkim.digital" class="btn btn-outline-light">hello@gkim.digital</a>
       </div>
     </div>
@@ -1788,15 +1762,31 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
   <div class="container">
     <div class="foot-grid">
       <div>
-        <div class="foot-brand" style="line-height:1;margin-bottom:0.65rem"><svg xmlns="http://www.w3.org/2000/svg" width="120" viewBox="0 0 600 210" role="img" aria-label="GKIM Digital" style="display:inline-block;vertical-align:middle"><path d="M263.93,13.78L264.88,10.7L267.12,10.7L268.07,13.78L270.32,14.39L272.68,12.19L274.62,13.31L273.9,16.45L275.55,18.1L278.69,17.38L279.81,19.32L277.61,21.68L278.22,23.93L281.3,24.88L281.3,27.12L278.22,28.07L277.61,30.32L279.81,32.68L278.69,34.62L275.55,33.9L273.9,35.55L274.62,38.69L272.68,39.81L270.32,37.61L268.07,38.22L267.12,41.3L264.88,41.3L263.93,38.22L261.68,37.61L259.32,39.81L257.38,38.69L258.1,35.55L256.45,33.9L253.31,34.62L252.19,32.68L254.39,30.32L253.78,28.07L250.7,27.12L250.7,24.88L253.78,23.93L254.39,21.68L252.19,19.32L253.31,17.38L256.45,18.1L258.1,16.45L257.38,13.31L259.32,12.19L261.68,14.39Z" fill="#ffdd00"/><circle cx="266" cy="26" r="9.44" fill="#0a0a09"/><path d="M272.14,20.84 A8.02,8.02 0 1 0 272.14,31.16 L269.88,29.26 A5.07,5.07 0 1 1 269.88,22.74 Z" fill="#ffdd00" fill-rule="nonzero"/><rect x="266" y="24.52" width="8.02" height="2.95" fill="#ffdd00"/><path d="M275.24,9.13L275.62,7.97L276.86,7.97L277.24,9.13L278.19,9.53L279.28,8.97L280.16,9.85L279.6,10.94L280.0,11.89L281.16,12.27L281.16,13.51L280.0,13.89L279.6,14.84L280.16,15.93L279.28,16.81L278.19,16.25L277.24,16.65L276.86,17.81L275.62,17.81L275.24,16.65L274.29,16.25L273.2,16.81L272.32,15.93L272.88,14.84L272.48,13.89L271.32,13.51L271.32,12.27L272.48,11.89L272.88,10.94L272.32,9.85L273.2,8.97L274.29,9.53Z" fill="#ffdd00"/><circle cx="276.24" cy="12.89" r="2.36" fill="#0a0a09"/><path d="M279.96,18.04L280.24,17.13L281.26,17.13L281.54,18.04L282.28,18.4L283.17,18.05L283.81,18.84L283.27,19.63L283.45,20.44L284.28,20.92L284.05,21.9L283.1,21.98L282.59,22.62L282.73,23.57L281.81,24.01L281.16,23.31L280.34,23.31L279.69,24.01L278.77,23.57L278.91,22.62L278.4,21.98L277.45,21.9L277.22,20.92L278.05,20.44L278.23,19.63L277.69,18.84L278.33,18.05L279.22,18.4Z" fill="#ffdd00"/><circle cx="280.75" cy="20.63" r="1.65" fill="#0a0a09"/><text x="50" y="148" font-family="'Arial Black','Impact',sans-serif" font-size="118" font-weight="900" letter-spacing="-2" fill="#f5f4f0">GKIM</text><text x="65" y="182" font-family="'Figtree','Helvetica Neue',Arial,sans-serif" font-size="21" font-weight="400" letter-spacing="42" fill="#f5f4f0">DIGITAL</text></svg></div>
-        <p class="foot-tag">Wir definieren die fehlende Schicht zwischen Strategie und Engineering — wie Ihr Unternehmen tatsächlich als System funktioniert.</p>
+        <div class="foot-brand">
+          <svg style="height:40px;width:auto;display:block;" viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM Digital" role="img">
+            <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+            <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+            <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+            <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+            <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+            <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+            <path d="M41.0336 162.512C39.9887 162.062 38.4689 161.792 36.5692 161.792H30.8701V183.676H36.7592C38.5639 183.676 39.9887 183.406 41.0336 182.866C42.0784 182.325 42.9333 181.515 43.4082 180.344C43.8831 179.263 44.0731 177.913 44.0731 176.382V168.727C44.0731 167.196 43.8831 165.845 43.4082 164.854C42.9333 163.863 42.0784 163.053 41.0336 162.512ZM35.9043 165.394H36.5692C37.5191 165.394 37.994 165.574 38.279 165.665C38.5639 165.845 38.7539 166.115 38.8489 166.565C38.9439 167.015 39.0389 167.736 39.0389 168.546V176.562C39.0389 177.372 39.0389 178.093 38.9439 178.723C38.8489 179.173 38.6589 179.534 38.374 179.804C38.089 180.074 37.5191 180.164 36.6642 180.164H35.9043V165.394Z" fill="white"/>
+            <path d="M91.6609 161.792H86.7217V183.676H91.6609V161.792Z" fill="white"/>
+            <path d="M140.768 175.391H143.143V176.922C143.143 177.642 143.048 178.273 142.953 178.813C142.858 179.263 142.668 179.623 142.383 179.894C142.098 180.164 141.718 180.254 141.243 180.254C140.768 180.254 140.293 180.164 140.103 179.894C139.818 179.714 139.628 179.353 139.534 178.903C139.439 178.363 139.344 177.822 139.344 177.102V168.276C139.344 167.646 139.344 167.105 139.439 166.565C139.534 166.115 139.628 165.754 139.913 165.484C140.103 165.214 140.578 165.124 141.148 165.124C141.718 165.124 142.098 165.214 142.288 165.394C142.478 165.574 142.668 165.844 142.763 166.205C142.858 166.655 142.858 167.195 142.858 167.826V169.447H147.702V167.916C147.702 166.565 147.512 165.394 147.037 164.404C146.562 163.413 145.898 162.602 144.948 162.062C143.998 161.522 142.668 161.251 141.148 161.251C139.439 161.251 138.109 161.612 137.064 162.152C136.019 162.782 135.354 163.683 134.974 164.854C134.594 166.025 134.404 167.375 134.404 168.906V175.931C134.404 177.462 134.594 178.813 134.974 179.894C135.354 181.064 136.019 181.965 136.969 182.595C137.919 183.226 139.154 183.586 140.768 183.586C141.908 183.586 142.763 183.316 143.523 182.866C143.808 182.685 144.093 182.415 144.283 182.145L144.473 183.316H147.987V171.788H141.053V175.391H140.768Z" fill="white"/>
+            <path d="M195.195 161.792H190.256V183.676H195.195V161.792Z" fill="white"/>
+            <path d="M238.508 165.484H242.022V183.676H247.056V165.484H250.571V161.792H238.508V165.484Z" fill="white"/>
+            <path d="M293.694 161.792L289.04 183.676H293.789L294.739 178.813H297.779L298.634 183.676H303.383L298.729 161.792H293.694ZM297.304 175.481H295.404L296.354 169.897L297.304 175.481Z" fill="white"/>
+            <path d="M347.837 180.164V161.792H342.897V183.676H353.251V180.164H347.837Z" fill="white"/>
+          </svg>
+        </div>
+        <p class="foot-tag">Wir definieren die fehlende Schicht zwischen Strategie und Technik — wie Ihr Geschäft tatsächlich als System funktioniert.</p>
       </div>
       <div>
         <p class="foot-col-h">Explore</p>
         <ul class="foot-links">
           <li><a href="#vision">Vision</a></li>
           <li><a href="#gears">GEARS&#8482;</a></li>
-          <li><a href="#outputs">Deliverables</a></li>
+          <li><a href="#outputs">Outputs</a></li>
           <li><a href="#case-study">Case Study</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#" onclick="showPapers('s1'); return false;">GKIM Papers</a></li>
@@ -1815,7 +1805,7 @@ footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid r
     </div>
     <div class="foot-bottom">
       <p class="foot-copy">© GKIM Digital Ltd.</p>
-      <p class="foot-copy">Systemdefinition. KI-natives Unternehmensdesign.</p>
+      <p class="foot-copy">Systemdefinition. KI-natives Business Design.</p>
     </div>
   </div>
 </footer>

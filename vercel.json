@@ -4,6 +4,14 @@
   "outputDirectory": ".",
   "routes": [
     {
+      "src": "^/discovery/?$",
+      "dest": "/discovery/index.html"
+    },
+    {
+      "src": "^/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "^/$",
       "dest": "/en/index.html"
     },
