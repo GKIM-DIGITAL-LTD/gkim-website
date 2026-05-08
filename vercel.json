@@ -2,46 +2,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "outputDirectory": ".",
-  "routes": [
+  "redirects": [
     {
-      "src": "^/discovery/?$",
-      "dest": "/discovery/index.html"
-    },
-    {
-      "src": "^/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "^/$",
-      "dest": "/en/index.html"
-    },
-    {
-      "src": "^/en/?$",
-      "dest": "/en/index.html"
-    },
-    {
-      "src": "^/de/?$",
-      "dest": "/de/index.html"
-    },
-    {
-      "src": "^/fr/?$",
-      "dest": "/fr/index.html"
-    },
-    {
-      "src": "^/nl/?$",
-      "dest": "/nl/index.html"
-    },
-    {
-      "src": "^/zh/?$",
-      "dest": "/zh/index.html"
-    },
-    {
-      "src": "^/vi/?$",
-      "dest": "/vi/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/",
+      "destination": "/en",
+      "permanent": false
     }
   ],
   "headers": [
