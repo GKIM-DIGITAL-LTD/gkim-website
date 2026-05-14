@@ -29,7 +29,7 @@
   --space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;
   --space-12:48px;--space-16:64px;--space-20:80px;
   --container-max:1120px;
-  --header-h:84px;
+  --header-h:72px;
   --type-display:'League Gothic',Impact,sans-serif;
   --type-body:'Figtree','Helvetica Neue',sans-serif;
   --type-serif:'Instrument Serif',Georgia,serif;
@@ -40,7 +40,7 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--type-body);background:var(--bg-light);color:var(--text-on-light);line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
 /* ── NAV ── */
 nav{
@@ -52,178 +52,89 @@ nav{
 }
 nav.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 .nav-logo{display:flex;align-items:center}
-.nav-logo svg{height:36px;width:auto;display:block}
+.nav-logo svg{height:32px;width:auto;display:block}
 .nav-back{
-  font-family:var(--type-body);font-size:0.875rem;color:var(--text-on-dark-muted);
+  font-family:var(--type-body);font-size:0.85rem;color:var(--text-on-dark-muted);
   display:flex;align-items:center;gap:6px;transition:color 0.2s;
 }
 .nav-back:hover{color:var(--text-on-dark)}
-.nav-back svg{width:16px;height:16px}
-.nav-cta{
-  font-family:var(--type-body);font-size:1rem;font-weight:600;
-  padding:6px var(--space-6);
-  background:var(--bg-accent);color:var(--text-on-light);
-  border:2px solid var(--border-strong);border-radius:0;
-  transition:opacity 0.2s;cursor:pointer;
-}
-.nav-cta:hover{opacity:0.88}
+.nav-back svg{width:14px;height:14px}
 
-/* ── CONTAINER ── */
-.container{max-width:var(--container-max);margin:0 auto;padding:0 2rem}
-
-/* ── HERO ── */
-.hero{
-  min-height:92vh;background:var(--bg-dark);
-  display:flex;flex-direction:column;
-  position:relative;overflow:hidden;
+/* ── COMPACT HEADER ── */
+.page-header{
+  background:var(--bg-dark);
   padding-top:var(--header-h);
+  position:relative;overflow:hidden;
 }
-.hero-grid{
+.page-header-grid{
   position:absolute;inset:0;pointer-events:none;
   background-image:
-    linear-gradient(to right,rgb(255 255 255/0.07)1px,transparent 1px),
-    linear-gradient(to bottom,rgb(255 255 255/0.07)1px,transparent 1px);
+    linear-gradient(to right,rgb(255 255 255/0.06)1px,transparent 1px),
+    linear-gradient(to bottom,rgb(255 255 255/0.06)1px,transparent 1px);
   background-size:72px 72px;
 }
-.hero-main{
-  flex:1;display:flex;align-items:center;
-  padding:5rem 2rem 4rem;
-  max-width:var(--container-max);margin:0 auto;width:100%;
+.page-header-inner{
+  max-width:var(--container-max);margin:0 auto;
+  padding:3.5rem 2rem 3rem;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:3rem;flex-wrap:wrap;
 }
-.hero-text{max-width:720px}
-.hero-eyebrow{
-  font-size:0.68rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--bg-accent);margin-bottom:1.5rem;
-  opacity:0;animation:up 0.8s var(--ease-out) 0.1s forwards;
+.page-header-left{flex:1;min-width:280px}
+.page-header-eyebrow{
+  font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--bg-accent);margin-bottom:1rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.1s forwards;
 }
-.hero-h1{
-  font-family:var(--type-display);
-  font-size:clamp(3.2rem,8vw,7rem);
-  line-height:0.93;letter-spacing:-0.01em;color:var(--text-on-dark);
-  margin-bottom:2rem;text-transform:uppercase;
-  opacity:0;animation:up 0.9s var(--ease-out) 0.25s forwards;
-}
-.hero-h1 em{font-style:normal;color:var(--bg-accent)}
-.hero-sub{
-  font-size:1.05rem;color:var(--text-on-dark-muted);line-height:1.65;
-  margin-bottom:2.5rem;max-width:52ch;
-  opacity:0;animation:up 0.9s var(--ease-out) 0.4s forwards;
-}
-.hero-meta{
-  display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
-  opacity:0;animation:up 0.9s var(--ease-out) 0.55s forwards;
-}
-.hero-badge{
-  display:flex;align-items:center;gap:0.5rem;
-  font-size:0.78rem;color:var(--text-on-dark-dim);letter-spacing:0.04em;
-}
-.hero-badge svg{width:14px;height:14px;opacity:0.5}
-.hero-scroll-cue{
-  border-top:1px solid rgba(255,255,255,0.07);
-  padding:1.75rem 2rem;
-  max-width:var(--container-max);margin:0 auto;width:100%;
-  display:flex;align-items:center;gap:0.75rem;
-  font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--text-on-dark-dim);
-  opacity:0;animation:up 0.9s var(--ease-out) 0.7s forwards;
-}
-.hero-scroll-cue .line{flex:1;height:1px;background:rgba(255,255,255,0.08)}
-.scroll-arrow{
-  width:28px;height:28px;border:1px solid rgba(255,255,255,0.15);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  animation:bounce 2s ease-in-out 1.5s infinite;
-}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-
-/* ── WHY SECTION ── */
-.why{background:var(--bg-dark);padding:6rem 2rem;border-top:1px solid rgba(255,255,255,0.05)}
-.why .container{max-width:var(--container-max);margin:0 auto}
-.section-label{
-  font-size:0.68rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--bg-accent);margin-bottom:2rem;
-}
-.why-h2{
+.page-header-h1{
   font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2.2rem,5vw,4rem);color:var(--text-on-dark);
-  line-height:0.95;margin-bottom:3rem;max-width:18ch;
+  font-size:clamp(2.8rem,6vw,5.5rem);
+  line-height:0.92;color:var(--text-on-dark);
+  margin-bottom:1.25rem;
+  opacity:0;animation:up 0.8s var(--ease-out) 0.2s forwards;
 }
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,0.06)}
-.why-item{background:var(--bg-dark);padding:2rem 1.75rem}
-.why-num{
-  font-family:var(--type-display);font-size:1.4rem;color:rgba(255,255,255,0.15);
-  margin-bottom:0.75rem;
-}
-.why-title{font-size:0.95rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.5rem}
-.why-body{font-size:0.85rem;color:var(--text-on-dark-muted);line-height:1.6}
-.why-close{
-  margin-top:3rem;
-  font-family:var(--type-serif);font-style:italic;
-  font-size:1.35rem;color:rgba(255,255,255,0.55);
-  max-width:52ch;line-height:1.5;
-  padding-top:2.5rem;border-top:1px solid rgba(255,255,255,0.08);
-}
-.why-close strong{color:var(--text-on-dark);font-style:normal;font-family:var(--type-body);font-weight:600}
-
-/* ── WHAT WE COVER ── */
-.cover{background:var(--bg-light);padding:6rem 2rem}
-.cover .container{max-width:var(--container-max);margin:0 auto}
-.cover-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:3rem}
-.cover-h2{
-  font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2.2rem,5vw,4rem);color:var(--text-on-light);
-  line-height:0.95;
-}
-.cover-sub{font-size:0.9rem;color:var(--text-on-light-muted);max-width:38ch}
-.cover-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border-on-light)}
-.cover-item{
-  background:var(--bg-light);padding:2rem 1.75rem;
-  transition:background 0.2s;
-}
-.cover-item:hover{background:var(--surface-white)}
-.cover-icon{font-size:1.4rem;margin-bottom:1rem;line-height:1}
-.cover-name{font-size:1rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.4rem}
-.cover-desc{font-size:0.82rem;color:var(--text-on-light-muted);line-height:1.55}
-
-/* ── DIAGRAM ── */
-.diagram{background:var(--bg-dark);padding:5rem 2rem;overflow:hidden}
-.diagram .container{max-width:var(--container-max);margin:0 auto}
-.diagram-label{font-size:0.68rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:2.5rem}
-.diagram-flow{
-  display:flex;align-items:center;gap:0;
-  overflow-x:auto;padding-bottom:1rem;
-  -ms-overflow-style:none;scrollbar-width:none;
-}
-.diagram-flow::-webkit-scrollbar{display:none}
-.diagram-node{
+.page-header-h1 em{font-style:normal;color:var(--bg-accent)}
+.page-header-right{
   flex-shrink:0;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  padding:1.25rem 1.5rem;min-width:130px;text-align:center;
+  opacity:0;animation:up 0.8s var(--ease-out) 0.3s forwards;
 }
-.diagram-node.accent{background:rgba(255,221,0,0.08);border-color:rgba(255,221,0,0.3)}
-.diagram-node-label{font-size:0.72rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-on-dark-muted);margin-bottom:0.3rem}
-.diagram-node-name{font-size:0.88rem;font-weight:600;color:var(--text-on-dark);line-height:1.25}
-.diagram-arrow{
-  flex-shrink:0;padding:0 0.5rem;
-  color:rgba(255,255,255,0.2);font-size:1.2rem;
+.page-header-sub{
+  font-size:0.95rem;color:var(--text-on-dark-muted);line-height:1.6;
+  max-width:38ch;margin-bottom:1.5rem;
+}
+.page-header-badges{
+  display:flex;flex-wrap:wrap;gap:1rem;
+}
+.badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:0.75rem;color:var(--text-on-dark-dim);letter-spacing:0.03em;
+}
+.badge svg{width:13px;height:13px;flex-shrink:0}
+
+/* Arrow pointing down into the form */
+.page-header-cue{
+  border-top:1px solid rgba(255,255,255,0.07);
+  padding:1rem 2rem;
+  max-width:var(--container-max);margin:0 auto;
+  display:flex;align-items:center;gap:0.75rem;
+  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-on-dark-dim);
+  opacity:0;animation:up 0.8s var(--ease-out) 0.4s forwards;
+}
+.page-header-cue .line{flex:1;height:1px;background:rgba(255,255,255,0.07)}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.cue-arrow{
+  width:24px;height:24px;border:1px solid rgba(255,255,255,0.12);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  animation:bounce 2s ease-in-out 1s infinite;
 }
 
-/* ── BOOKING SECTION ── */
-.booking{background:var(--bg-light);padding:5rem 2rem 6rem}
-.booking .container{max-width:1280px;margin:0 auto}
-.booking-intro{margin-bottom:3.5rem}
-.booking-intro .section-label{color:var(--border-strong);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;margin-bottom:1rem}
-.booking-h2{
-  font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2.2rem,5vw,3.8rem);color:var(--text-on-light);
-  line-height:0.95;margin-bottom:1rem;
-}
-.booking-subtitle{font-size:0.95rem;color:var(--text-on-light-muted);max-width:52ch}
-
+/* ── BOOKING SECTION (comes first now) ── */
+.booking{background:var(--bg-light);padding:0 2rem 5rem}
 .booking-grid{
+  max-width:1280px;margin:0 auto;
   display:grid;grid-template-columns:1fr 1fr;gap:2px;
   background:var(--border-on-light);
-  min-height:700px;
+  min-height:740px;
 }
 @media(max-width:900px){.booking-grid{grid-template-columns:1fr}}
 
@@ -231,73 +142,57 @@ nav.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px
 .form-col{
   background:var(--surface-white);
   padding:2.5rem 2rem;
-  overflow-y:auto;
 }
 .form-col-header{
-  padding-bottom:1.5rem;margin-bottom:1.5rem;
+  padding-bottom:1.25rem;margin-bottom:1.5rem;
   border-bottom:1px solid var(--border-on-light);
 }
-.form-col-title{font-size:1.05rem;font-weight:600;color:var(--text-on-light)}
-.form-col-sub{font-size:0.82rem;color:var(--text-on-light-muted);margin-top:0.25rem}
-.form-step{
-  margin-bottom:1.5rem;
-  padding-bottom:1.5rem;
-  border-bottom:1px solid var(--border-on-light);
-}
+.form-col-title{font-size:1rem;font-weight:600;color:var(--text-on-light)}
+.form-col-sub{font-size:0.8rem;color:var(--text-on-light-muted);margin-top:0.2rem}
+.form-step{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border-on-light)}
 .form-step:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .form-step-label{
-  font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--text-on-light-muted);margin-bottom:1rem;
+  font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-on-light-muted);margin-bottom:0.9rem;
 }
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem}
 @media(max-width:600px){.form-row{grid-template-columns:1fr}}
-.field{margin-bottom:0.75rem}
+.field{margin-bottom:0.65rem}
 .field:last-child{margin-bottom:0}
-label{display:block;font-size:0.78rem;font-weight:500;color:var(--text-on-light);margin-bottom:0.3rem}
+label{display:block;font-size:0.76rem;font-weight:500;color:var(--text-on-light);margin-bottom:0.28rem}
 label .req{color:#c0392b;margin-left:2px}
 input,select,textarea{
-  width:100%;
-  font-family:var(--type-body);font-size:0.9rem;
-  padding:0.6rem 0.75rem;
+  width:100%;font-family:var(--type-body);font-size:0.88rem;
+  padding:0.55rem 0.7rem;
   background:var(--bg-light);color:var(--text-on-light);
   border:1px solid var(--border-on-light);border-radius:0;
   transition:border-color 0.2s,background 0.2s;
   appearance:none;-webkit-appearance:none;
 }
 input:focus,select:focus,textarea:focus{
-  outline:none;
-  border-color:var(--border-strong);
-  background:var(--surface-white);
+  outline:none;border-color:var(--border-strong);background:var(--surface-white);
 }
-input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.3)}
-textarea{resize:vertical;min-height:88px;line-height:1.55}
+input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.28)}
+textarea{resize:vertical;min-height:80px;line-height:1.5}
 select{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C5C5C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 0.75rem center;
-  padding-right:2.25rem;cursor:pointer;
+  background-repeat:no-repeat;background-position:right 0.7rem center;
+  padding-right:2.1rem;cursor:pointer;
 }
 .conditional-field{display:none}
 .conditional-field.visible{display:block}
-
-/* Radio group */
 .radio-group{display:flex;gap:0.5rem;flex-wrap:wrap}
 .radio-opt{
-  flex:1;min-width:120px;
+  flex:1;min-width:110px;
   display:flex;align-items:center;justify-content:center;
-  padding:0.55rem 0.75rem;
+  padding:0.5rem 0.65rem;
   border:1px solid var(--border-on-light);
-  font-size:0.82rem;cursor:pointer;transition:all 0.15s;
-  color:var(--text-on-light-muted);
-  text-align:center;
+  font-size:0.8rem;cursor:pointer;transition:all 0.15s;
+  color:var(--text-on-light-muted);text-align:center;
 }
 .radio-opt input{display:none}
-.radio-opt.checked{
-  background:var(--bg-dark);color:var(--text-on-dark);
-  border-color:var(--bg-dark);
-}
+.radio-opt.checked{background:var(--bg-dark);color:var(--text-on-dark);border-color:var(--bg-dark)}
 .radio-opt:hover:not(.checked){background:var(--bg-light);border-color:var(--border-strong)}
-
-/* Submit button */
 .form-submit-wrap{margin-top:1.5rem}
 .btn-submit{
   width:100%;
@@ -311,76 +206,147 @@ select{
 .btn-submit:hover{opacity:0.85}
 .btn-submit:disabled{opacity:0.4;cursor:not-allowed}
 .btn-submit .spinner{
-  width:16px;height:16px;
-  border:2px solid rgba(255,255,255,0.3);
-  border-top-color:#fff;border-radius:50%;
-  animation:spin 0.7s linear infinite;display:none;
+  width:15px;height:15px;
+  border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;
+  border-radius:50%;animation:spin 0.7s linear infinite;display:none;
 }
 .btn-submit.loading .spinner{display:block}
-.btn-submit.loading .btn-label{opacity:0.6}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-.form-note{margin-top:0.75rem;font-size:0.72rem;color:var(--text-on-light-muted);text-align:center}
+.form-note{margin-top:0.65rem;font-size:0.7rem;color:var(--text-on-light-muted);text-align:center}
 .form-error{
-  display:none;margin-top:1rem;
-  padding:0.75rem 1rem;
+  display:none;margin-top:0.9rem;
+  padding:0.7rem 0.9rem;
   background:#fff0f0;border:1px solid #f5c6c6;
-  font-size:0.82rem;color:#c0392b;
+  font-size:0.8rem;color:#c0392b;
 }
 .form-success{display:none}
-.form-success-inner{padding:2rem;text-align:center}
+.form-success-inner{padding:2.5rem 2rem;text-align:center}
 .form-success-icon{font-size:2rem;margin-bottom:1rem}
-.form-success-title{font-size:1.1rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.5rem}
-.form-success-body{font-size:0.9rem;color:var(--text-on-light-muted)}
+.form-success-title{font-size:1.05rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.5rem}
+.form-success-body{font-size:0.88rem;color:var(--text-on-light-muted);line-height:1.6}
 
 /* Cal column */
 .cal-col{
   background:var(--surface-white);
-  position:relative;
-  display:flex;flex-direction:column;
+  position:relative;display:flex;flex-direction:column;
 }
 .cal-overlay{
   position:absolute;inset:0;z-index:10;
-  background:rgba(242,242,242,0.92);
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  background:rgba(242,242,242,0.94);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
   display:flex;align-items:center;justify-content:center;
   transition:opacity 0.4s,visibility 0.4s;
 }
 .cal-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.cal-overlay-inner{text-align:center;padding:2rem;max-width:280px}
+.cal-overlay-inner{text-align:center;padding:2rem;max-width:260px}
 .cal-overlay-icon{
-  width:48px;height:48px;margin:0 auto 1rem;
+  width:44px;height:44px;margin:0 auto 1rem;
   border:1px solid var(--border-on-light);border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   background:var(--surface-white);
 }
-.cal-overlay-icon svg{width:22px;height:22px;color:var(--text-on-light-muted)}
-.cal-overlay-title{font-size:0.95rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.4rem}
-.cal-overlay-body{font-size:0.8rem;color:var(--text-on-light-muted);line-height:1.55}
+.cal-overlay-icon svg{width:20px;height:20px;color:var(--text-on-light-muted)}
+.cal-overlay-title{font-size:0.9rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.35rem}
+.cal-overlay-body{font-size:0.78rem;color:var(--text-on-light-muted);line-height:1.5}
 .cal-embed-wrap{flex:1;min-height:600px}
 
-/* ── FOOTER ── */
-footer{
-  background:var(--bg-dark);padding:3rem 2rem;
-  border-top:1px solid rgba(255,255,255,0.06);
+/* ── DIVIDER between booking and context sections ── */
+.section-divider{
+  background:var(--bg-dark);
+  padding:2.5rem 2rem;
+  border-top:3px solid var(--bg-accent);
 }
+.section-divider-inner{
+  max-width:var(--container-max);margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+}
+.section-divider-text{
+  font-family:var(--type-serif);font-style:italic;
+  font-size:1.2rem;color:rgba(255,255,255,0.5);
+  max-width:60ch;line-height:1.5;
+}
+.section-divider-text strong{
+  color:var(--text-on-dark);font-style:normal;
+  font-family:var(--type-body);font-weight:600;
+}
+.section-divider-label{
+  font-size:0.65rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;
+  color:rgba(255,255,255,0.28);flex-shrink:0;
+}
+
+/* ── WHY SECTION ── */
+.why{background:var(--bg-dark);padding:5rem 2rem}
+.why .container{max-width:var(--container-max);margin:0 auto}
+.section-label{
+  font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--bg-accent);margin-bottom:1.75rem;
+}
+.why-h2{
+  font-family:var(--type-display);text-transform:uppercase;
+  font-size:clamp(2rem,4.5vw,3.5rem);color:var(--text-on-dark);
+  line-height:0.95;margin-bottom:2.5rem;max-width:20ch;
+}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,0.06)}
+.why-item{background:var(--bg-dark);padding:1.75rem}
+.why-num{font-family:var(--type-display);font-size:1.3rem;color:rgba(255,255,255,0.13);margin-bottom:0.6rem}
+.why-title{font-size:0.9rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.4rem}
+.why-body{font-size:0.82rem;color:var(--text-on-dark-muted);line-height:1.55}
+
+/* ── WHAT WE COVER ── */
+.cover{background:var(--bg-light);padding:5rem 2rem}
+.cover .container{max-width:var(--container-max);margin:0 auto}
+.cover-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.cover-h2{
+  font-family:var(--type-display);text-transform:uppercase;
+  font-size:clamp(2rem,4.5vw,3.5rem);color:var(--text-on-light);line-height:0.95;
+}
+.cover-sub{font-size:0.88rem;color:var(--text-on-light-muted);max-width:38ch}
+.cover-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border-on-light)}
+.cover-item{background:var(--bg-light);padding:1.75rem;transition:background 0.2s}
+.cover-item:hover{background:var(--surface-white)}
+.cover-icon{font-size:1.3rem;margin-bottom:0.85rem;line-height:1}
+.cover-name{font-size:0.95rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.35rem}
+.cover-desc{font-size:0.8rem;color:var(--text-on-light-muted);line-height:1.5}
+
+/* ── DIAGRAM ── */
+.diagram{background:var(--bg-dark);padding:4rem 2rem;overflow:hidden}
+.diagram .container{max-width:var(--container-max);margin:0 auto}
+.diagram-label{font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:2rem}
+.diagram-flow{
+  display:flex;align-items:center;
+  overflow-x:auto;padding-bottom:0.75rem;
+  -ms-overflow-style:none;scrollbar-width:none;
+}
+.diagram-flow::-webkit-scrollbar{display:none}
+.diagram-node{
+  flex-shrink:0;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:1rem 1.25rem;min-width:120px;text-align:center;
+}
+.diagram-node.accent{background:rgba(255,221,0,0.07);border-color:rgba(255,221,0,0.28)}
+.diagram-node-label{font-size:0.65rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-on-dark-muted);margin-bottom:0.25rem}
+.diagram-node-name{font-size:0.82rem;font-weight:600;color:var(--text-on-dark);line-height:1.2}
+.diagram-arrow{flex-shrink:0;padding:0 0.4rem;color:rgba(255,255,255,0.18);font-size:1.1rem}
+
+/* ── FOOTER ── */
+footer{background:var(--bg-dark);padding:2.5rem 2rem;border-top:1px solid rgba(255,255,255,0.06)}
 footer .container{
   max-width:var(--container-max);margin:0 auto;
   display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
 }
-.footer-logo svg{height:28px;width:auto;display:block}
+.footer-logo svg{height:26px;width:auto;display:block}
 .footer-links{display:flex;gap:2rem;list-style:none}
-.footer-links a{font-size:0.8rem;color:var(--text-on-dark-muted);transition:color 0.2s}
+.footer-links a{font-size:0.78rem;color:var(--text-on-dark-muted);transition:color 0.2s}
 .footer-links a:hover{color:var(--text-on-dark)}
-.footer-copy{font-size:0.75rem;color:var(--text-on-dark-dim)}
+.footer-copy{font-size:0.72rem;color:var(--text-on-dark-dim)}
 
-/* ── UTILITIES ── */
 @media(max-width:768px){
   nav{padding:0 1.25rem}
-  .hero-main{padding:3rem 1.25rem 2.5rem}
-  .why,.cover,.diagram,.booking{padding-left:1.25rem;padding-right:1.25rem}
-  .booking-grid{grid-template-columns:1fr}
-  .form-col{max-height:none}
+  .page-header-inner{padding:2.5rem 1.25rem 2rem;flex-direction:column;gap:1.5rem}
+  .page-header-right{width:100%}
+  .booking{padding:0 1.25rem 4rem}
+  .why,.cover,.diagram{padding-left:1.25rem;padding-right:1.25rem}
+  .section-divider{padding-left:1.25rem;padding-right:1.25rem}
 }
 </style>
 </head>
@@ -389,7 +355,7 @@ footer .container{
 <!-- ═══ NAV ═══ -->
 <nav id="nav">
   <a href="/" class="nav-logo" aria-label="GKIM Digital — home">
-    <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
       <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
       <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
@@ -402,42 +368,240 @@ footer .container{
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
     Back to GKIM
   </a>
-  <a href="#booking" class="nav-cta">Book a Session</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section class="hero" id="home">
-  <div class="hero-grid"></div>
-  <div class="hero-main container">
-    <div class="hero-text">
-      <p class="hero-eyebrow">GKIM Discovery Session</p>
-      <h1 class="hero-h1">Design the<br><em>Business</em><br>Before You<br>Build</h1>
-      <p class="hero-sub">A 30-minute strategic session for founders and leadership teams designing AI-native business systems. We define what you're building before a line of code is written.</p>
-      <div class="hero-meta">
-        <span class="hero-badge">
+<!-- ═══ COMPACT HEADER ═══ -->
+<header class="page-header">
+  <div class="page-header-grid"></div>
+  <div class="page-header-inner">
+    <div class="page-header-left">
+      <p class="page-header-eyebrow">GKIM Discovery Session</p>
+      <h1 class="page-header-h1">Design the <em>Business</em><br>Before You Build</h1>
+    </div>
+    <div class="page-header-right">
+      <p class="page-header-sub">A 30-minute strategic session for founders and leadership teams. Complete the intake form, then select your time — we'll come prepared.</p>
+      <div class="page-header-badges">
+        <span class="badge">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3l2 2"/></svg>
           30 minutes
         </span>
-        <span class="hero-badge">
+        <span class="badge">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="11" height="10" rx="1"/><path d="M1.5 5.5h11M4.5 1v3M9.5 1v3"/></svg>
           Google Meet
         </span>
-        <span class="hero-badge">
+        <span class="badge">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1l1.5 3.5L12 5l-2.5 2.5.5 3.5L7 9.5 4 11l.5-3.5L2 5l3.5-.5z"/></svg>
           No pitch. Strategic only.
         </span>
       </div>
     </div>
   </div>
-  <div class="hero-scroll-cue container">
+  <div class="page-header-cue">
     <span class="line"></span>
-    <span>Tell us about your business</span>
-    <div class="scroll-arrow">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"><path d="M5 2v6M2 5l3 3 3-3"/></svg>
+    <span>Complete the intake &amp; select your time below</span>
+    <div class="cue-arrow">
+      <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"><path d="M4.5 1.5v5M2 4.5l2.5 2.5 2.5-2.5"/></svg>
     </div>
     <span class="line"></span>
   </div>
+</header>
+
+<!-- ═══ BOOKING — FORM + CALENDAR (first content after header) ═══ -->
+<section class="booking" id="booking">
+  <div class="booking-grid">
+
+    <!-- LEFT: INTAKE FORM -->
+    <div class="form-col">
+      <div class="form-col-header">
+        <div class="form-col-title">Step 1 — Tell us about your business</div>
+        <div class="form-col-sub">Takes about 4 minutes. Used to prepare a focused session, not for sales.</div>
+      </div>
+
+      <form id="intakeForm" novalidate>
+        <input type="hidden" name="utm_source" id="utmSource">
+        <input type="hidden" name="utm_medium" id="utmMedium">
+        <input type="hidden" name="utm_campaign" id="utmCampaign">
+        <input type="hidden" name="utm_content" id="utmContent">
+        <input type="hidden" name="utm_term" id="utmTerm">
+
+        <div class="form-step">
+          <div class="form-step-label">01 — Contact</div>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Full name<span class="req">*</span></label>
+              <input type="text" id="name" name="name" placeholder="Ian Morrison" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="email">Business email<span class="req">*</span></label>
+              <input type="email" id="email" name="email" placeholder="ian@company.com" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="company">Company<span class="req">*</span></label>
+              <input type="text" id="company" name="company" placeholder="Acme Corp" required>
+            </div>
+            <div class="field">
+              <label for="website">Website</label>
+              <input type="url" id="website" name="website" placeholder="https://acme.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="form-step-label">02 — About you</div>
+          <div class="field">
+            <label for="role">Your role<span class="req">*</span></label>
+            <select id="role" name="role" required>
+              <option value="">Select your role</option>
+              <option value="Founder">Founder / Co-founder</option>
+              <option value="CEO">CEO</option>
+              <option value="CTO">CTO / CPO</option>
+              <option value="COO">COO / Head of Operations</option>
+              <option value="Investor">Investor / PE / VC</option>
+              <option value="Operator">Operator / GM</option>
+              <option value="Executive">Executive / VP</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="field conditional-field" id="cond-founder">
+            <label for="founderStage">Which stage are you at?</label>
+            <select id="founderStage" name="founderStage">
+              <option value="">Select stage</option>
+              <option value="Pre-build">Pre-build — defining before development starts</option>
+              <option value="Post-MVP">Post-MVP — refining what we launched</option>
+              <option value="Scaling">Scaling — systems breaking under growth</option>
+              <option value="Restructuring">Restructuring — redesigning existing business</option>
+            </select>
+          </div>
+          <div class="field conditional-field" id="cond-investor">
+            <label for="investorContext">What is the context?</label>
+            <select id="investorContext" name="investorContext">
+              <option value="">Select context</option>
+              <option value="Portfolio evaluation">Evaluating a portfolio company</option>
+              <option value="New venture">New venture or thesis</option>
+              <option value="Operating platform">Operating platform design</option>
+            </select>
+          </div>
+          <div class="field conditional-field" id="cond-operator">
+            <label for="operatorArea">Which area is most constrained?</label>
+            <input type="text" id="operatorArea" name="operatorArea" placeholder="e.g. fulfilment, onboarding, finance ops">
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="form-step-label">03 — Company context</div>
+          <div class="form-row">
+            <div class="field">
+              <label for="stage">Company stage<span class="req">*</span></label>
+              <select id="stage" name="stage" required>
+                <option value="">Select</option>
+                <option value="Pre-revenue">Pre-revenue</option>
+                <option value="Early revenue">Early revenue (&lt;$500K ARR)</option>
+                <option value="Growing">Growing ($500K–$5M ARR)</option>
+                <option value="Scaling">Scaling ($5M–$50M ARR)</option>
+                <option value="Established">Established ($50M+ ARR)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="teamSize">Team size<span class="req">*</span></label>
+              <select id="teamSize" name="teamSize" required>
+                <option value="">Select</option>
+                <option value="1–5">1–5</option>
+                <option value="6–15">6–15</option>
+                <option value="16–50">16–50</option>
+                <option value="51–200">51–200</option>
+                <option value="200+">200+</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="form-step-label">04 — What you're working on</div>
+          <div class="field">
+            <label for="designing">What are you designing or improving?<span class="req">*</span></label>
+            <textarea id="designing" name="designing" placeholder="Describe the system, product, or process you're working on." required></textarea>
+          </div>
+          <div class="field">
+            <label for="bottleneck">Biggest operational or system bottleneck?</label>
+            <textarea id="bottleneck" name="bottleneck" placeholder="What is slowing you down or breaking under load?"></textarea>
+          </div>
+          <div class="field">
+            <label>New build or redesign?<span class="req">*</span></label>
+            <div class="radio-group" id="buildTypeGroup">
+              <label class="radio-opt"><input type="radio" name="buildType" value="New build">New build</label>
+              <label class="radio-opt"><input type="radio" name="buildType" value="Redesign">Redesign</label>
+              <label class="radio-opt"><input type="radio" name="buildType" value="Both">Both</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="form-step-label">05 — Session prep</div>
+          <div class="field">
+            <label for="aiRole">What role do you expect AI to play?</label>
+            <textarea id="aiRole" name="aiRole" placeholder="e.g. automate back-office, augment decision-making, replace a workflow entirely"></textarea>
+          </div>
+          <div class="field">
+            <label for="valuable">What would make this session most valuable?</label>
+            <textarea id="valuable" name="valuable" placeholder="What outcome would mean this session was worthwhile?"></textarea>
+          </div>
+          <div class="field">
+            <label for="attendees">Who else should attend?</label>
+            <input type="text" id="attendees" name="attendees" placeholder="e.g. CTO, Head of Ops — names or roles">
+          </div>
+        </div>
+
+        <div id="formError" class="form-error"></div>
+
+        <div class="form-submit-wrap">
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <div class="spinner"></div>
+            <span class="btn-label">Submit &amp; Unlock Booking →</span>
+          </button>
+          <p class="form-note">Kept confidential. Used only to prepare your session.</p>
+        </div>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-inner">
+          <div class="form-success-icon">✓</div>
+          <div class="form-success-title">Intake received</div>
+          <div class="form-success-body">Thank you. Your booking slot is now unlocked — select a time on the right.<br><br>A confirmation will follow from ian@gkim.digital once booked.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: CAL.COM EMBED -->
+    <div class="cal-col">
+      <div class="cal-overlay" id="calOverlay">
+        <div class="cal-overlay-inner">
+          <div class="cal-overlay-icon">
+            <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="18" height="16" rx="1.5"/><path d="M2 8h18M7 2v4M15 2v4"/></svg>
+          </div>
+          <div class="cal-overlay-title">Step 2 — Select your time</div>
+          <div class="cal-overlay-body">Complete the intake form on the left first. Takes about 4 minutes.</div>
+        </div>
+      </div>
+      <div class="cal-embed-wrap">
+        <cal-inline
+          style="width:100%;height:100%;min-height:600px;overflow:scroll"
+          calLink="ian-morrison-ri6tnc/gkim-discovery-session">
+        </cal-inline>
+      </div>
+    </div>
+
+  </div>
 </section>
+
+<!-- ═══ DIVIDER ═══ -->
+<div class="section-divider">
+  <div class="section-divider-inner">
+    <p class="section-divider-text">This is not a development problem. It is a <strong>system definition problem</strong> — and it is solvable before a single line of code is written.</p>
+    <span class="section-divider-label">Why this matters</span>
+  </div>
+</div>
 
 <!-- ═══ WHY SYSTEMS FAIL ═══ -->
 <section class="why" id="why">
@@ -445,38 +609,13 @@ footer .container{
     <p class="section-label">The problem</p>
     <h2 class="why-h2">Most systems fail before they are built</h2>
     <div class="why-grid">
-      <div class="why-item">
-        <div class="why-num">01</div>
-        <div class="why-title">Incomplete requirements</div>
-        <div class="why-body">What the business needs is never fully captured before development begins.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-num">02</div>
-        <div class="why-title">Inconsistent workflow logic</div>
-        <div class="why-body">Processes are designed in isolation. Integration reveals gaps only under pressure.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-num">03</div>
-        <div class="why-title">Stakeholder misalignment</div>
-        <div class="why-body">Different teams hold different mental models of the same system.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-num">04</div>
-        <div class="why-title">Complexity discovered too late</div>
-        <div class="why-body">Operational edge cases emerge during build, not before — doubling the cost.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-num">05</div>
-        <div class="why-title">Validation happens in code</div>
-        <div class="why-body">Business logic is tested through software, not through structured thinking beforehand.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-num">06</div>
-        <div class="why-title">AI is added, not designed</div>
-        <div class="why-body">Automation is layered onto broken processes. The output is faster chaos.</div>
-      </div>
+      <div class="why-item"><div class="why-num">01</div><div class="why-title">Incomplete requirements</div><div class="why-body">What the business needs is never fully captured before development begins.</div></div>
+      <div class="why-item"><div class="why-num">02</div><div class="why-title">Inconsistent workflow logic</div><div class="why-body">Processes designed in isolation. Integration reveals gaps only under pressure.</div></div>
+      <div class="why-item"><div class="why-num">03</div><div class="why-title">Stakeholder misalignment</div><div class="why-body">Different teams hold different mental models of the same system.</div></div>
+      <div class="why-item"><div class="why-num">04</div><div class="why-title">Complexity discovered too late</div><div class="why-body">Operational edge cases emerge during build, not before — doubling the cost.</div></div>
+      <div class="why-item"><div class="why-num">05</div><div class="why-title">Validation happens in code</div><div class="why-body">Business logic is tested through software, not structured thinking beforehand.</div></div>
+      <div class="why-item"><div class="why-num">06</div><div class="why-title">AI is added, not designed</div><div class="why-body">Automation is layered onto broken processes. The output is faster chaos.</div></div>
     </div>
-    <p class="why-close">This is not a development problem. It is a <strong>system definition problem</strong> — and it is solvable before a single line of code is written.</p>
   </div>
 </section>
 
@@ -488,302 +627,38 @@ footer .container{
         <p class="section-label" style="color:var(--text-on-light-muted)">What we work through</p>
         <h2 class="cover-h2">Six dimensions<br>of business design</h2>
       </div>
-      <p class="cover-sub">Each session is structured around the six layers of a functioning business system — from vision through automation.</p>
+      <p class="cover-sub">Each session covers the six layers of a functioning business system — from vision through automation.</p>
     </div>
     <div class="cover-grid">
-      <div class="cover-item">
-        <div class="cover-icon">◎</div>
-        <div class="cover-name">Business Engine</div>
-        <div class="cover-desc">How your business creates, delivers, and captures value — defined as a system, not an idea.</div>
-      </div>
-      <div class="cover-item">
-        <div class="cover-icon">⇄</div>
-        <div class="cover-name">Workflow Architecture</div>
-        <div class="cover-desc">The sequence of operations that makes your model function. Where work flows, where it breaks.</div>
-      </div>
-      <div class="cover-item">
-        <div class="cover-icon">⊹</div>
-        <div class="cover-name">Decision Logic</div>
-        <div class="cover-desc">The conditional rules that govern how your business responds to inputs, exceptions, and edge cases.</div>
-      </div>
-      <div class="cover-item">
-        <div class="cover-icon">◫</div>
-        <div class="cover-name">Data &amp; State Logic</div>
-        <div class="cover-desc">What gets tracked, why it matters, and how state changes move through your system over time.</div>
-      </div>
-      <div class="cover-item">
-        <div class="cover-icon">◈</div>
-        <div class="cover-name">KPI Structure</div>
-        <div class="cover-desc">The metrics that prove the system is working — designed from first principles, not convention.</div>
-      </div>
-      <div class="cover-item">
-        <div class="cover-icon">⟡</div>
-        <div class="cover-name">AI-Native Opportunity</div>
-        <div class="cover-desc">Where intelligence should be embedded versus where human judgement is the actual competitive advantage.</div>
-      </div>
+      <div class="cover-item"><div class="cover-icon">◎</div><div class="cover-name">Business Engine</div><div class="cover-desc">How your business creates, delivers, and captures value — as a system, not an idea.</div></div>
+      <div class="cover-item"><div class="cover-icon">⇄</div><div class="cover-name">Workflow Architecture</div><div class="cover-desc">The sequence of operations that makes your model function. Where work flows, where it breaks.</div></div>
+      <div class="cover-item"><div class="cover-icon">⊹</div><div class="cover-name">Decision Logic</div><div class="cover-desc">The conditional rules governing how your business responds to inputs, exceptions, and edge cases.</div></div>
+      <div class="cover-item"><div class="cover-icon">◫</div><div class="cover-name">Data &amp; State Logic</div><div class="cover-desc">What gets tracked, why it matters, and how state changes move through your system.</div></div>
+      <div class="cover-item"><div class="cover-icon">◈</div><div class="cover-name">KPI Structure</div><div class="cover-desc">Metrics that prove the system is working — designed from first principles, not convention.</div></div>
+      <div class="cover-item"><div class="cover-icon">⟡</div><div class="cover-name">AI-Native Opportunity</div><div class="cover-desc">Where intelligence should be embedded versus where human judgement is the competitive advantage.</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SYSTEM DIAGRAM ═══ -->
+<!-- ═══ DIAGRAM ═══ -->
 <section class="diagram">
   <div class="container">
     <p class="diagram-label">The GKIM design sequence</p>
     <div class="diagram-flow">
-      <div class="diagram-node accent">
-        <div class="diagram-node-label">Start</div>
-        <div class="diagram-node-name">Vision</div>
-      </div>
+      <div class="diagram-node accent"><div class="diagram-node-label">Start</div><div class="diagram-node-name">Vision</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node">
-        <div class="diagram-node-label">Layer 1</div>
-        <div class="diagram-node-name">Business Engine</div>
-      </div>
+      <div class="diagram-node"><div class="diagram-node-label">Layer 1</div><div class="diagram-node-name">Business Engine</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node">
-        <div class="diagram-node-label">Layer 2</div>
-        <div class="diagram-node-name">Workflows</div>
-      </div>
+      <div class="diagram-node"><div class="diagram-node-label">Layer 2</div><div class="diagram-node-name">Workflows</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node">
-        <div class="diagram-node-label">Layer 3</div>
-        <div class="diagram-node-name">Data + State</div>
-      </div>
+      <div class="diagram-node"><div class="diagram-node-label">Layer 3</div><div class="diagram-node-name">Data + State</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node">
-        <div class="diagram-node-label">Layer 4</div>
-        <div class="diagram-node-name">AI / Automation</div>
-      </div>
+      <div class="diagram-node"><div class="diagram-node-label">Layer 4</div><div class="diagram-node-name">AI / Automation</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node">
-        <div class="diagram-node-label">Layer 5</div>
-        <div class="diagram-node-name">KPI Dashboard</div>
-      </div>
+      <div class="diagram-node"><div class="diagram-node-label">Layer 5</div><div class="diagram-node-name">KPI Dashboard</div></div>
       <div class="diagram-arrow">→</div>
-      <div class="diagram-node accent">
-        <div class="diagram-node-label">Output</div>
-        <div class="diagram-node-name">Build-Ready</div>
-      </div>
+      <div class="diagram-node accent"><div class="diagram-node-label">Output</div><div class="diagram-node-name">Build-Ready</div></div>
     </div>
-  </div>
-</section>
-
-<!-- ═══ BOOKING + INTAKE FORM ═══ -->
-<section class="booking" id="booking">
-  <div class="container">
-    <div class="booking-intro">
-      <p class="section-label">Book your session</p>
-      <h2 class="booking-h2">Tell us about<br>your business</h2>
-      <p class="booking-subtitle">Complete the intake below. We use your responses to prepare a focused session — no wasted time, no generic questions.</p>
-    </div>
-
-    <div class="booking-grid">
-
-      <!-- ── LEFT: INTAKE FORM ── -->
-      <div class="form-col">
-        <div class="form-col-header">
-          <div class="form-col-title">Intake form</div>
-          <div class="form-col-sub">Takes about 4 minutes. Required to unlock booking.</div>
-        </div>
-
-        <form id="intakeForm" novalidate>
-          <!-- Hidden UTM fields -->
-          <input type="hidden" name="utm_source" id="utmSource">
-          <input type="hidden" name="utm_medium" id="utmMedium">
-          <input type="hidden" name="utm_campaign" id="utmCampaign">
-          <input type="hidden" name="utm_content" id="utmContent">
-          <input type="hidden" name="utm_term" id="utmTerm">
-
-          <!-- Step 1: Contact -->
-          <div class="form-step">
-            <div class="form-step-label">01 — Contact</div>
-            <div class="form-row">
-              <div class="field">
-                <label for="name">Full name<span class="req">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Ian Morrison" required autocomplete="name">
-              </div>
-              <div class="field">
-                <label for="email">Business email<span class="req">*</span></label>
-                <input type="email" id="email" name="email" placeholder="ian@company.com" required autocomplete="email">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="field">
-                <label for="company">Company name<span class="req">*</span></label>
-                <input type="text" id="company" name="company" placeholder="Acme Corp" required>
-              </div>
-              <div class="field">
-                <label for="website">Website</label>
-                <input type="url" id="website" name="website" placeholder="https://acme.com">
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2: About you -->
-          <div class="form-step">
-            <div class="form-step-label">02 — About you</div>
-            <div class="field">
-              <label for="role">Your role<span class="req">*</span></label>
-              <select id="role" name="role" required>
-                <option value="">Select your role</option>
-                <option value="Founder">Founder / Co-founder</option>
-                <option value="CEO">CEO</option>
-                <option value="CTO">CTO / CPO</option>
-                <option value="COO">COO / Head of Operations</option>
-                <option value="Investor">Investor / PE / VC</option>
-                <option value="Operator">Operator / GM</option>
-                <option value="Executive">Executive / VP</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <!-- Conditional: Founder -->
-            <div class="field conditional-field" id="cond-founder">
-              <label for="founderStage">Which stage are you at?</label>
-              <select id="founderStage" name="founderStage">
-                <option value="">Select stage</option>
-                <option value="Pre-build">Pre-build — defining before development starts</option>
-                <option value="Post-MVP">Post-MVP — refining what we launched</option>
-                <option value="Scaling">Scaling — systems breaking under growth</option>
-                <option value="Restructuring">Restructuring — redesigning existing business</option>
-              </select>
-            </div>
-
-            <!-- Conditional: Investor/PE -->
-            <div class="field conditional-field" id="cond-investor">
-              <label for="investorContext">What is the context?</label>
-              <select id="investorContext" name="investorContext">
-                <option value="">Select context</option>
-                <option value="Portfolio evaluation">Evaluating a portfolio company</option>
-                <option value="New venture">New venture or thesis</option>
-                <option value="Operating platform">Operating platform design</option>
-              </select>
-            </div>
-
-            <!-- Conditional: Operator -->
-            <div class="field conditional-field" id="cond-operator">
-              <label for="operatorArea">Which operational area is most constrained?</label>
-              <input type="text" id="operatorArea" name="operatorArea" placeholder="e.g. fulfilment, onboarding, finance ops">
-            </div>
-          </div>
-
-          <!-- Step 3: Company -->
-          <div class="form-step">
-            <div class="form-step-label">03 — Company context</div>
-            <div class="form-row">
-              <div class="field">
-                <label for="stage">Company stage<span class="req">*</span></label>
-                <select id="stage" name="stage" required>
-                  <option value="">Select</option>
-                  <option value="Pre-revenue">Pre-revenue</option>
-                  <option value="Early revenue">Early revenue (&lt;$500K ARR)</option>
-                  <option value="Growing">Growing ($500K–$5M ARR)</option>
-                  <option value="Scaling">Scaling ($5M–$50M ARR)</option>
-                  <option value="Established">Established ($50M+ ARR)</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="teamSize">Team size<span class="req">*</span></label>
-                <select id="teamSize" name="teamSize" required>
-                  <option value="">Select</option>
-                  <option value="1–5">1–5</option>
-                  <option value="6–15">6–15</option>
-                  <option value="16–50">16–50</option>
-                  <option value="51–200">51–200</option>
-                  <option value="200+">200+</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 4: Session context -->
-          <div class="form-step">
-            <div class="form-step-label">04 — What you're working on</div>
-            <div class="field">
-              <label for="designing">What are you designing or improving?<span class="req">*</span></label>
-              <textarea id="designing" name="designing" placeholder="Describe the system, product, or process you're working on." required></textarea>
-            </div>
-            <div class="field">
-              <label for="bottleneck">What is your biggest operational or system bottleneck?<span class="req">*</span></label>
-              <textarea id="bottleneck" name="bottleneck" placeholder="What is slowing you down or breaking under load?"></textarea>
-            </div>
-            <div class="field">
-              <label>Are you building something new or redesigning existing?<span class="req">*</span></label>
-              <div class="radio-group" id="buildType">
-                <label class="radio-opt">
-                  <input type="radio" name="buildType" value="New build">
-                  New build
-                </label>
-                <label class="radio-opt">
-                  <input type="radio" name="buildType" value="Redesign">
-                  Redesign existing
-                </label>
-                <label class="radio-opt">
-                  <input type="radio" name="buildType" value="Both">
-                  Both
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 5: Session prep -->
-          <div class="form-step">
-            <div class="form-step-label">05 — Session preparation</div>
-            <div class="field">
-              <label for="aiRole">What role do you expect AI to play?</label>
-              <textarea id="aiRole" name="aiRole" placeholder="e.g. automate back-office, augment decision-making, replace a workflow entirely"></textarea>
-            </div>
-            <div class="field">
-              <label for="valuable">What would make this session most valuable to you?</label>
-              <textarea id="valuable" name="valuable" placeholder="What outcome would mean this session was worthwhile?"></textarea>
-            </div>
-            <div class="field">
-              <label for="attendees">Who else should attend?</label>
-              <input type="text" id="attendees" name="attendees" placeholder="e.g. CTO, Head of Ops — names or roles">
-            </div>
-          </div>
-
-          <div id="formError" class="form-error"></div>
-
-          <div class="form-submit-wrap">
-            <button type="submit" class="btn-submit" id="submitBtn">
-              <div class="spinner"></div>
-              <span class="btn-label">Submit &amp; Proceed to Booking</span>
-            </button>
-            <p class="form-note">Your responses are kept confidential and used only to prepare your session.</p>
-          </div>
-        </form>
-
-        <div class="form-success" id="formSuccess">
-          <div class="form-success-inner">
-            <div class="form-success-icon">✓</div>
-            <div class="form-success-title">Intake received</div>
-            <div class="form-success-body">Thank you. Your booking slot is now unlocked — please select a time on the right.<br><br>You will receive a confirmation email from ian@gkim.digital once your session is booked.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── RIGHT: CAL.COM EMBED ── -->
-      <div class="cal-col">
-        <div class="cal-overlay" id="calOverlay">
-          <div class="cal-overlay-inner">
-            <div class="cal-overlay-icon">
-              <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="18" height="16" rx="1.5"/><path d="M2 8h18M7 2v4M15 2v4"/></svg>
-            </div>
-            <div class="cal-overlay-title">Select your session time</div>
-            <div class="cal-overlay-body">Complete the intake form on the left to unlock your booking slot. Takes about 4 minutes.</div>
-          </div>
-        </div>
-        <div class="cal-embed-wrap" id="calEmbed">
-          <!-- Cal.com inline embed -->
-          <cal-inline
-            style="width:100%;height:100%;min-height:600px;overflow:scroll"
-            calLink="ian-morrison-ri6tnc/gkim-discovery-session">
-          </cal-inline>
-        </div>
-      </div>
-
-    </div><!-- /booking-grid -->
   </div>
 </section>
 
@@ -807,15 +682,11 @@ footer .container{
   </div>
 </footer>
 
-<!-- ═══ SCRIPTS ═══ -->
-
 <!-- Cal.com embed -->
 <script type="text/javascript">
 (function(C,A,L){
-  let p=function(a,ar){a.q.push(ar)};
-  let d=C.document;
-  C.Cal=C.Cal||function(){
-    let cal=C.Cal;let ar=arguments;
+  let p=function(a,ar){a.q.push(ar)};let d=C.document;
+  C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;
     if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}
     if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];
     if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,[L,ns,ar[2]])}else p(cal,ar);return}p(cal,ar)
@@ -827,11 +698,7 @@ Cal("inline",{
   calLink:"ian-morrison-ri6tnc/gkim-discovery-session",
   layout:"month_view"
 });
-Cal("ui",{
-  styles:{branding:{brandColor:"#FFDD00"}},
-  hideEventTypeDetails:false,
-  layout:"month_view"
-});
+Cal("ui",{styles:{branding:{brandColor:"#FFDD00"}},hideEventTypeDetails:false,layout:"month_view"});
 </script>
 
 <!-- GA4 -->
@@ -841,70 +708,50 @@ window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments)}
 gtag('js',new Date());
 gtag('config','G-SH3YGTBKWL');
+gtag('event','page_view',{page_title:'Discovery',page_location:window.location.href});
 </script>
 
 <script>
-// ── UTM capture ──
+// UTM capture
 (function(){
   const p=new URLSearchParams(window.location.search);
-  const utmFields=['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
-  utmFields.forEach(function(k){
-    const v=p.get(k);
-    if(v){
-      const el=document.getElementById(k.replace('_','').replace('_',''));
-      // map to input IDs
-    }
-  });
-  // Map UTM params to hidden fields
-  const map={
-    utm_source:'utmSource',utm_medium:'utmMedium',
-    utm_campaign:'utmCampaign',utm_content:'utmContent',utm_term:'utmTerm'
-  };
-  Object.keys(map).forEach(function(k){
-    const v=p.get(k);
-    if(v){const el=document.getElementById(map[k]);if(el)el.value=v}
-  });
+  const map={utm_source:'utmSource',utm_medium:'utmMedium',utm_campaign:'utmCampaign',utm_content:'utmContent',utm_term:'utmTerm'};
+  Object.keys(map).forEach(function(k){const v=p.get(k);if(v){const el=document.getElementById(map[k]);if(el)el.value=v}});
 })();
 
-// ── Scroll-based nav ──
+// Nav scroll state
 (function(){
   const nav=document.getElementById('nav');
-  window.addEventListener('scroll',function(){
-    nav.classList.toggle('scrolled',window.scrollY>40);
-  },{passive:true});
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
 })();
 
-// ── GA4 page_view ──
-gtag('event','page_view',{page_title:'Discovery',page_location:window.location.href});
-
-// ── Radio group visual state ──
-document.querySelectorAll('.radio-group').forEach(function(group){
-  group.querySelectorAll('.radio-opt').forEach(function(opt){
-    opt.addEventListener('click',function(){
-      group.querySelectorAll('.radio-opt').forEach(function(o){o.classList.remove('checked')});
-      opt.classList.add('checked');
+// Radio group
+document.querySelectorAll('.radio-group').forEach(function(g){
+  g.querySelectorAll('.radio-opt').forEach(function(o){
+    o.addEventListener('click',function(){
+      g.querySelectorAll('.radio-opt').forEach(function(x){x.classList.remove('checked')});
+      o.classList.add('checked');
     });
   });
 });
 
-// ── Conditional role fields ──
+// Conditional role fields
 (function(){
   const roleEl=document.getElementById('role');
   const condFounder=document.getElementById('cond-founder');
   const condInvestor=document.getElementById('cond-investor');
   const condOperator=document.getElementById('cond-operator');
-
-  function updateConditionals(){
+  function update(){
     const v=roleEl.value;
     condFounder.classList.toggle('visible',v==='Founder'||v==='CEO');
     condInvestor.classList.toggle('visible',v==='Investor');
     condOperator.classList.toggle('visible',v==='Operator');
   }
-  roleEl.addEventListener('change',updateConditionals);
-  updateConditionals();
+  roleEl.addEventListener('change',update);
+  update();
 })();
 
-// ── Form submission ──
+// Form submission
 (function(){
   const form=document.getElementById('intakeForm');
   const btn=document.getElementById('submitBtn');
@@ -913,38 +760,24 @@ document.querySelectorAll('.radio-group').forEach(function(group){
   const overlay=document.getElementById('calOverlay');
 
   function showError(msg){
-    errEl.textContent=msg;
-    errEl.style.display='block';
-    btn.disabled=false;
-    btn.classList.remove('loading');
+    errEl.textContent=msg;errEl.style.display='block';
+    btn.disabled=false;btn.classList.remove('loading');
+    btn.querySelector('.btn-label').textContent='Submit & Unlock Booking →';
   }
-
-  function getRadioValue(name){
-    const checked=document.querySelector('input[name="'+name+'"]:checked');
-    return checked?checked.value:'';
+  function getRadio(name){
+    const c=document.querySelector('input[name="'+name+'"]:checked');return c?c.value:'';
   }
 
   form.addEventListener('submit',async function(e){
     e.preventDefault();
     errEl.style.display='none';
-
-    // Basic validation
     const required=['name','email','company','role','stage','teamSize','designing'];
     for(const id of required){
       const el=document.getElementById(id);
-      if(!el||!el.value.trim()){
-        showError('Please complete all required fields.');
-        el&&el.focus();
-        return;
-      }
+      if(!el||!el.value.trim()){showError('Please complete all required fields.');el&&el.focus();return;}
     }
-    if(!getRadioValue('buildType')){
-      showError('Please indicate whether this is a new build or redesign.');
-      return;
-    }
-
-    btn.disabled=true;
-    btn.classList.add('loading');
+    if(!getRadio('buildType')){showError('Please select new build or redesign.');return;}
+    btn.disabled=true;btn.classList.add('loading');
     btn.querySelector('.btn-label').textContent='Submitting…';
 
     const data={
@@ -960,7 +793,7 @@ document.querySelectorAll('.radio-group').forEach(function(group){
       teamSize:document.getElementById('teamSize').value,
       designing:document.getElementById('designing').value.trim(),
       bottleneck:document.getElementById('bottleneck').value.trim(),
-      buildType:getRadioValue('buildType'),
+      buildType:getRadio('buildType'),
       aiRole:document.getElementById('aiRole').value.trim(),
       valuable:document.getElementById('valuable').value.trim(),
       attendees:document.getElementById('attendees').value.trim(),
@@ -972,35 +805,19 @@ document.querySelectorAll('.radio-group').forEach(function(group){
     };
 
     try{
-      const res=await fetch('/api/submit',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(data)
-      });
+      const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
       const json=await res.json();
-
-      if(!res.ok){
-        showError(json.error||'Something went wrong. Please try again.');
-        return;
-      }
-
-      // Success
+      if(!res.ok){showError(json.error||'Something went wrong. Please try again.');return;}
       gtag('event','intake_submitted',{company:data.company,role:data.role});
       form.style.display='none';
       successEl.style.display='block';
       overlay.classList.add('hidden');
-
-      // Scroll cal into view on mobile
-      if(window.innerWidth<900){
-        document.querySelector('.cal-col').scrollIntoView({behavior:'smooth',block:'start'});
-      }
-
+      if(window.innerWidth<900){document.querySelector('.cal-col').scrollIntoView({behavior:'smooth',block:'start'});}
     }catch(err){
       showError('Network error. Please check your connection and try again.');
     }
   });
 })();
 </script>
-
 </body>
 </html>
