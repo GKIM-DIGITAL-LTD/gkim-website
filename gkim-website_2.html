@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKIM Digital — Design Your AI-Native Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a09;
+  --ink-soft: #2c2c2a;
+  --ink-muted: #6b6a64;
+  --chalk: #f5f4f0;
+  --chalk-warm: #ede9e0;
+  --chalk-mid: #d4cfc2;
+  --accent: #c8401a;
+  --accent-warm: #e05c30;
+  --gold: #b8922a;
+  --type-display: 'DM Serif Display', Georgia, serif;
+  --type-body: 'Figtree', 'Helvetica Neue', sans-serif;
+  --type-serif: 'Instrument Serif', Georgia, serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--type-body); background: var(--chalk); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+/* ——— NAV ——— */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2.5rem;
+  background: rgba(245,244,240,0.93); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(10,10,9,0.07);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 0.85rem 2.5rem; }
+.nav-logo { font-family: var(--type-display); font-size: 1.2rem; color: var(--ink); }
+.nav-logo em { font-style: normal; color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; }
+.nav-links a { font-size: 0.8rem; letter-spacing: 0.03em; color: var(--ink-soft); transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 0.55rem 1.3rem; background: var(--ink); color: var(--chalk) !important;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--accent) !important; }
+
+/* ——— BUTTONS ——— */
+.btn {
+  display: inline-block; font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-dark {
+  padding: 0.85rem 1.9rem; background: var(--ink); color: var(--chalk);
+  border: 1px solid var(--ink);
+}
+.btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+.btn-outline-dark {
+  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
+  border: 1px solid rgba(245,244,240,0.2);
+}
+.btn-outline-dark:hover { border-color: rgba(245,244,240,0.5); color: var(--chalk); }
+.btn-red { padding: 0.85rem 1.9rem; background: var(--chalk); color: var(--accent); border: 1px solid var(--chalk); }
+.btn-red:hover { background: var(--ink); border-color: var(--ink); color: var(--chalk); }
+.btn-outline-light {
+  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
+  border: 1px solid rgba(245,244,240,0.25);
+}
+.btn-outline-light:hover { border-color: rgba(245,244,240,0.6); color: var(--chalk); }
+
+/* ——— HERO ——— */
+.hero {
+  min-height: 100vh; background: var(--ink);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden; padding-top: 72px;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(245,244,240,0.03) 79px,rgba(245,244,240,0.03) 80px),
+    repeating-linear-gradient(90deg,transparent,transparent 119px,rgba(245,244,240,0.03) 119px,rgba(245,244,240,0.03) 120px);
+}
+.hero-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent);
+}
+.hero-main {
+  flex: 1; display: flex; align-items: center;
+  padding: 5rem 2.5rem 4rem;
+  max-width: 1160px; margin: 0 auto; width: 100%;
+}
+.hero-text { max-width: 680px; }
+.hero-eyebrow {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.75rem;
+  opacity: 0; animation: up 0.8s var(--ease-out) 0.15s forwards;
+}
+.hero-h1 {
+  font-family: var(--type-display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.94; letter-spacing: -0.02em; color: var(--chalk);
+  margin-bottom: 2.25rem;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.3s forwards;
+}
+.hero-h1 em { font-style: italic; color: rgba(245,244,240,0.45); }
+.hero-sub {
+  font-size: 1rem; color: rgba(245,244,240,0.5); line-height: 1.65;
+  margin-bottom: 0.85rem; max-width: 44ch;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.45s forwards;
+}
+.hero-support {
+  font-size: 0.875rem; color: rgba(245,244,240,0.32); line-height: 1.7;
+  margin-bottom: 3rem; max-width: 52ch;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.55s forwards;
+}
+.hero-ctas {
+  display: flex; gap: 0.85rem; flex-wrap: wrap;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.7s forwards;
+}
+.hero-stats {
+  border-top: 1px solid rgba(245,244,240,0.07);
+  padding: 2.5rem 2.5rem;
+  max-width: 1160px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.95s forwards;
+}
+.stat { display: flex; flex-direction: column; gap: 0.3rem; }
+.stat-n {
+  font-family: var(--type-display); font-size: 2.1rem;
+  color: var(--chalk); line-height: 1; letter-spacing: -0.02em;
+}
+.stat-l { font-size: 0.72rem; color: rgba(245,244,240,0.32); line-height: 1.45; }
+.stat-tag {
+  grid-column: 1/-1;
+  border-top: 1px solid rgba(245,244,240,0.05);
+  padding-top: 1.25rem;
+  font-size: 0.75rem; font-style: italic; color: rgba(245,244,240,0.2);
+}
+
+/* ——— SECTION COMMONS ——— */
+.sec { padding: 7rem 0; }
+.sec-label {
+  font-size: 0.67rem; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2rem;
+}
+.sec-label.lt { color: rgba(245,244,240,0.35); }
+.display {
+  font-family: var(--type-display); letter-spacing: -0.02em; line-height: 1.02;
+}
+.keyline {
+  font-family: var(--type-display); font-style: italic; line-height: 1.3;
+}
+
+/* ——— SHIFT ——— */
+.shift { background: var(--chalk); }
+.shift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.shift-h { font-size: clamp(1.9rem,3.5vw,3rem); color: var(--ink); margin-bottom: 1.75rem; }
+.shift-body { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.75; }
+.shift-body p+p { margin-top: 0.9rem; }
+.shift-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.shift-list li {
+  display: flex; gap: 0.65rem; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.55;
+}
+.shift-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; }
+.shift-quote {
+  font-size: 1.4rem; color: var(--ink);
+  padding: 1.75rem 0 1.75rem 1.75rem;
+  border-left: 3px solid var(--accent); margin-top: 3rem;
+}
+
+/* ——— VISION (dark) ——— */
+.vision-dark { background: #111110; }
+.vision-h { font-size: clamp(2.5rem,5vw,4.5rem); color: var(--chalk); max-width: 18ch; margin-bottom: 3.5rem; }
+.vision-4 {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(245,244,240,0.09);
+}
+.v4-card {
+  padding: 2.5rem;
+  border-right: 1px solid rgba(245,244,240,0.09);
+  border-bottom: 1px solid rgba(245,244,240,0.09);
+}
+.v4-card:nth-child(2n) { border-right: none; }
+.v4-card:nth-last-child(-n+2) { border-bottom: none; }
+.v4-bar { width: 28px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
+.v4-title { font-family: var(--type-display); font-size: 1.1rem; color: var(--chalk); margin-bottom: 0.6rem; }
+.v4-body { font-size: 0.82rem; color: rgba(245,244,240,0.4); line-height: 1.65; }
+.vision-kl { font-size: 1.3rem; color: rgba(245,244,240,0.7); margin-top: 4rem; max-width: 36ch; }
+
+/* ——— BEFORE/AFTER ——— */
+.ba { display: grid; grid-template-columns: 1fr 1fr; margin-top: 4rem; }
+.ba-col { padding: 2.5rem; }
+.ba-before { background: rgba(245,244,240,0.04); border-right: 1px solid rgba(245,244,240,0.08); }
+.ba-after { background: rgba(200,64,26,0.07); }
+.ba-lbl {
+  font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.ba-before .ba-lbl { color: rgba(245,244,240,0.25); }
+.ba-after .ba-lbl { color: rgba(200,64,26,0.7); }
+.ba-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.ba-list li {
+  font-size: 0.85rem; display: flex; gap: 0.55rem;
+  align-items: flex-start; line-height: 1.5;
+}
+.ba-before .ba-list li { color: rgba(245,244,240,0.38); }
+.ba-after .ba-list li { color: rgba(245,244,240,0.6); }
+.ba-before .ba-list li::before { content: '×'; color: rgba(245,244,240,0.25); flex-shrink:0; }
+.ba-after .ba-list li::before { content: '✓'; color: var(--accent); flex-shrink:0; }
+
+/* ——— GEARS ——— */
+.gears-sec { background: var(--ink); }
+.gears-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4.5rem; }
+.gears-h { font-size: clamp(2rem,4vw,3.5rem); color: var(--chalk); }
+.gears-intro { font-size: 0.9rem; color: rgba(245,244,240,0.45); line-height: 1.75; padding-top: 0.5rem; }
+.gears-intro strong { color: rgba(245,244,240,0.8); font-weight: 400; }
+.gears-steps {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(245,244,240,0.09);
+}
+.g-step {
+  padding: 2.5rem 1.75rem 2.5rem 0;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.g-step:last-child { border-right: none; padding-right: 0; }
+.g-step:not(:first-child) { padding-left: 1.75rem; }
+.g-num {
+  font-family: var(--type-display); font-size: 2.8rem;
+  color: rgba(245,244,240,0.06); margin-bottom: 1.25rem; line-height: 1;
+}
+.g-title { font-family: var(--type-display); font-size: 1.1rem; color: var(--chalk); margin-bottom: 0.85rem; }
+.g-title em { font-style: normal; color: var(--accent); }
+.g-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.g-list li {
+  font-size: 0.78rem; color: rgba(245,244,240,0.35);
+  padding-left: 0.9rem; position: relative; line-height: 1.5;
+}
+.g-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; }
+.gears-kl {
+  margin-top: 3.5rem; padding-top: 3rem;
+  border-top: 1px solid rgba(245,244,240,0.07);
+  font-size: 1rem; font-style: italic; color: rgba(245,244,240,0.3);
+}
+
+/* ——— OUTPUTS ——— */
+.outputs-sec { background: var(--chalk); }
+.out-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4.5rem; align-items: end; }
+.out-h { font-size: clamp(2.5rem,4.5vw,4rem); color: var(--ink); }
+.out-intro { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.75; }
+.out-intro strong { color: var(--ink); font-weight: 500; }
+.out-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border: 1px solid var(--chalk-mid);
+}
+.out-card {
+  padding: 2.25rem;
+  border-right: 1px solid var(--chalk-mid);
+  border-bottom: 1px solid var(--chalk-mid);
+  transition: background 0.2s;
+}
+.out-card:hover { background: var(--chalk-warm); }
+.out-card:nth-child(3n) { border-right: none; }
+.out-card:nth-last-child(-n+3) { border-bottom: none; }
+.out-n {
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 1.25rem;
+}
+.out-title { font-family: var(--type-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; }
+.out-body { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6; }
+.out-kl { font-size: 0.75rem; color: var(--accent); font-style: italic; margin-top: 0.85rem; font-family: var(--type-serif); }
+.out-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--chalk-mid);
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.out-foot-text {
+  font-family: var(--type-serif); font-size: 1.1rem; font-style: italic;
+  color: var(--ink-soft); max-width: 44ch; line-height: 1.45;
+}
+
+/* ——— CASE STUDY ——— */
+.case-sec { background: var(--chalk-warm); border-top: 1px solid var(--chalk-mid); }
+.case-grid { display: grid; grid-template-columns: 1fr 1.35fr; gap: 5rem; align-items: start; }
+.case-tag {
+  display: inline-block; font-size: 0.62rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.35rem 0.75rem;
+  background: var(--accent); color: var(--chalk); margin-bottom: 1.25rem;
+}
+.case-h { font-size: clamp(1.75rem,3.5vw,2.75rem); color: var(--ink); margin-bottom: 1.25rem; }
+.case-sub { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.65; font-style: italic; margin-bottom: 2rem; }
+.case-flow {
+  display: flex; flex-wrap: wrap; border: 1px solid var(--chalk-mid); margin-bottom: 2.5rem;
+}
+.cf-s {
+  padding: 0.6rem 0.9rem; font-size: 0.68rem; letter-spacing: 0.06em;
+  color: var(--ink-soft); border-right: 1px solid var(--chalk-mid); white-space: nowrap;
+}
+.cf-s:last-child { border-right: none; }
+.cf-s.hi { background: var(--ink); color: var(--chalk); }
+.case-nums {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--chalk-mid); border: 1px solid var(--chalk-mid);
+}
+.cn { padding: 1.25rem; background: var(--chalk-warm); display: flex; flex-direction: column; gap: 0.2rem; }
+.cn-n { font-family: var(--type-display); font-size: 1.5rem; color: var(--ink); letter-spacing: -0.02em; }
+.cn-l { font-size: 0.7rem; color: var(--ink-muted); line-height: 1.4; }
+.case-body { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 1.75rem; }
+.case-body p+p { margin-top: 0.9rem; }
+.case-kl {
+  font-family: var(--type-display); font-size: 1.05rem; font-style: italic;
+  color: var(--ink); padding-left: 1.35rem;
+  border-left: 3px solid var(--accent); margin-bottom: 2rem; line-height: 1.35;
+}
+.case-mini { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 5rem; }
+.cm-card { padding: 1.75rem; border: 1px solid var(--chalk-mid); background: var(--chalk); }
+.cm-card.dark { background: var(--ink); border-color: var(--ink); }
+.cm-n { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.85rem; }
+.cm-card.dark .cm-n { color: rgba(245,244,240,0.28); }
+.cm-h { font-family: var(--type-display); font-size: 0.95rem; color: var(--ink); margin-bottom: 0.6rem; }
+.cm-card.dark .cm-h { color: var(--chalk); font-style: italic; }
+.cm-body { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.55; margin-bottom: 0.85rem; }
+.cm-card.dark .cm-body { color: rgba(245,244,240,0.38); }
+.cm-kl { font-size: 0.75rem; color: var(--accent); font-style: italic; font-family: var(--type-serif); }
+
+/* ——— FOR ——— */
+.for-sec { background: var(--ink); }
+.for-h { font-size: clamp(1.9rem,4vw,3.5rem); color: var(--chalk); margin-bottom: 4rem; max-width: 22ch; }
+.for-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(245,244,240,0.09);
+}
+.fc {
+  padding: 2.75rem 1.75rem 2.75rem 0;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.fc:last-child { border-right: none; }
+.fc:not(:first-child) { padding-left: 1.75rem; }
+.fc-role { font-family: var(--type-display); font-size: 1.15rem; color: var(--chalk); margin-bottom: 0.85rem; }
+.fc-body { font-size: 0.82rem; color: rgba(245,244,240,0.38); line-height: 1.65; }
+
+/* ——— TESTIMONIAL ——— */
+.testi-sec { background: var(--chalk); padding: 5.5rem 0; border-top: 1px solid var(--chalk-mid); }
+.testi-inner { display: grid; grid-template-columns: auto 1fr; gap: 3.5rem; align-items: center; max-width: 860px; }
+.testi-bar { width: 3px; min-height: 80px; background: var(--accent); }
+.testi-quote {
+  font-family: var(--type-display); font-size: clamp(1.05rem,2vw,1.4rem);
+  font-style: italic; color: var(--ink); line-height: 1.45; margin-bottom: 1.25rem;
+}
+.testi-attr { font-size: 0.75rem; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ——— ABOUT / FOUNDER ——— */
+.about-sec { background: var(--chalk-warm); border-top: 4px solid var(--ink); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5.5rem; }
+.about-lbl { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.75rem; }
+.about-h { font-size: clamp(1.75rem,3vw,2.5rem); color: var(--ink); margin-bottom: 2rem; }
+.about-letter { font-family: var(--type-serif); font-size: 1rem; color: var(--ink-soft); font-style: italic; line-height: 1.8; }
+.about-letter p+p { margin-top: 1.1rem; }
+.about-sig { margin-top: 1.75rem; font-family: var(--type-display); font-size: 1.05rem; color: var(--ink); font-style: normal; }
+.about-belief {
+  padding: 2.25rem; background: var(--ink); color: var(--chalk); margin-bottom: 1.5rem;
+}
+.ab-title { font-family: var(--type-display); font-size: 0.9rem; color: rgba(245,244,240,0.45); margin-bottom: 0.85rem; }
+.ab-body { font-size: 0.85rem; color: rgba(245,244,240,0.62); line-height: 1.7; }
+.values-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--chalk-mid); }
+.val {
+  padding: 1.4rem 1.5rem;
+  border-bottom: 1px solid var(--chalk-mid);
+}
+.val:last-child { border-bottom: none; }
+.val-t { font-family: var(--type-display); font-size: 0.9rem; color: var(--ink); margin-bottom: 0.25rem; }
+.val-b { font-size: 0.775rem; color: var(--ink-muted); line-height: 1.55; }
+
+/* ——— START / CONTACT ——— */
+.start-sec { background: var(--ink); border-top: 4px solid var(--accent); }
+.start-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5.5rem; align-items: start; }
+.start-h { font-size: clamp(2rem,4.5vw,3.75rem); color: var(--chalk); margin-bottom: 1.25rem; }
+.start-sub { font-size: 0.9rem; color: rgba(245,244,240,0.45); line-height: 1.7; margin-bottom: 3rem; }
+.start-items { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+.si { display: flex; gap: 0.9rem; align-items: flex-start; }
+.si-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.5rem; }
+.si-text { font-size: 0.85rem; color: rgba(245,244,240,0.5); line-height: 1.6; }
+.start-kl {
+  font-family: var(--type-display); font-style: italic;
+  font-size: 1.05rem; color: rgba(245,244,240,0.4);
+  margin-top: 3rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(245,244,240,0.07);
+}
+.form-box { background: var(--chalk); padding: 2.75rem; }
+.form-intro { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 1.75rem; line-height: 1.6; }
+.form-g { margin-bottom: 1.1rem; }
+.form-lbl {
+  display: block; font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.45rem;
+}
+.form-in, .form-ta {
+  width: 100%; padding: 0.7rem 0.9rem;
+  background: var(--chalk-warm); border: 1px solid var(--chalk-mid);
+  color: var(--ink); font-family: var(--type-body); font-size: 0.875rem;
+  outline: none; transition: border-color 0.2s;
+}
+.form-in:focus, .form-ta:focus { border-color: var(--accent); }
+.form-ta { height: 110px; resize: vertical; }
+.form-btn {
+  width: 100%; padding: 0.95rem; margin-top: 0.4rem;
+  background: var(--accent); color: var(--chalk); border: none;
+  font-family: var(--type-body); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s;
+}
+.form-btn:hover { background: var(--accent-warm); }
+
+/* ——— FINAL CTA ——— */
+.cta-sec {
+  background: var(--accent); padding: 7rem 0;
+  position: relative; overflow: hidden;
+}
+.cta-sec::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.025) 40px,rgba(255,255,255,0.025) 41px);
+}
+.cta-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center;
+}
+.cta-h { font-size: clamp(2rem,4.5vw,3.75rem); color: var(--chalk); max-width: 18ch; }
+.cta-body { font-size: 0.875rem; color: rgba(245,244,240,0.6); line-height: 1.7; margin-top: 0.9rem; max-width: 40ch; }
+.cta-btns { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* ——— FOOTER ——— */
+footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid rgba(245,244,240,0.05); }
+.foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+.foot-brand { font-family: var(--type-display); font-size: 1.25rem; color: var(--chalk); margin-bottom: 0.65rem; }
+.foot-brand em { font-style: normal; color: var(--accent); }
+.foot-tag { font-size: 0.775rem; color: rgba(245,244,240,0.28); line-height: 1.6; max-width: 26ch; }
+.foot-col-h { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,244,240,0.28); margin-bottom: 1.1rem; }
+.foot-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.foot-links a { font-size: 0.82rem; color: rgba(245,244,240,0.45); transition: color 0.2s; }
+.foot-links a:hover { color: var(--chalk); }
+.foot-addr { font-size: 0.8rem; color: rgba(245,244,240,0.38); line-height: 1.55; }
+.foot-addr p { margin-bottom: 0.25rem; }
+.foot-addr .region { font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,244,240,0.22); margin-top: 0.65rem; margin-bottom: 0.2rem; }
+.foot-bottom {
+  border-top: 1px solid rgba(245,244,240,0.05);
+  padding-top: 1.75rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.foot-copy { font-size: 0.72rem; color: rgba(245,244,240,0.2); }
+
+/* ——— CAMBRIDGE STRIP ——— */
+.cambridge-strip {
+  background: var(--ink-soft); border-top: 1px solid rgba(245,244,240,0.06);
+  padding: 0; overflow: hidden;
+}
+.cambridge-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: stretch; gap: 0;
+}
+.cs-item {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 1.1rem 2rem; border-right: 1px solid rgba(245,244,240,0.06);
+  gap: 0.15rem;
+}
+.cs-item:first-child { padding-left: 0; }
+.cs-item:last-child { border-right: none; }
+.cs-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,244,240,0.22); }
+.cs-value { font-size: 0.78rem; color: rgba(245,244,240,0.55); letter-spacing: 0.01em; }
+.cs-value em { font-style: normal; color: var(--gold); }
+.cs-divider { flex: 1; }
+.cambridge-tagline {
+  display: flex; align-items: center; padding: 1.1rem 0 1.1rem 2rem;
+  font-size: 0.72rem; font-style: italic; color: rgba(245,244,240,0.25);
+  border-left: 1px solid rgba(245,244,240,0.06);
+}
+@media (max-width: 900px) {
+  .cambridge-inner { flex-wrap: wrap; gap: 0; }
+  .cs-item { padding: 0.85rem 1.25rem; border-right: 1px solid rgba(245,244,240,0.06); border-bottom: 1px solid rgba(245,244,240,0.06); }
+  .cambridge-tagline { display: none; }
+}
+
+/* ——— STRUCTURAL ADVANTAGE BOX ——— */
+.struct-box {
+  margin-top: 2.75rem; padding: 1.75rem 2rem;
+  border: 1px solid rgba(10,10,9,0.12);
+  background: var(--chalk-warm);
+  display: flex; gap: 1.5rem; align-items: flex-start;
+}
+.struct-box-bar { width: 3px; flex-shrink: 0; background: var(--accent); align-self: stretch; min-height: 40px; }
+.struct-box-text {}
+.struct-box-label { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.struct-box-quote { font-family: var(--type-display); font-size: 1.1rem; color: var(--ink); line-height: 1.35; letter-spacing: -0.01em; }
+
+/* ——— VISION FEAR OPENER ——— */
+.vision-fear {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+  border: 1px solid rgba(245,244,240,0.09); margin-bottom: 4rem;
+}
+.vf-card {
+  padding: 2.25rem;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.vf-card:last-child { border-right: none; }
+.vf-who {
+  font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.vf-claim {
+  font-family: var(--type-display); font-size: 0.95rem; color: var(--chalk);
+  margin-bottom: 0.75rem; line-height: 1.3; letter-spacing: -0.01em;
+}
+.vf-body { font-size: 0.78rem; color: rgba(245,244,240,0.38); line-height: 1.65; }
+.vision-fear-intro {
+  font-size: 0.95rem; color: rgba(245,244,240,0.55); line-height: 1.75;
+  max-width: 68ch; margin-bottom: 3rem;
+}
+.vision-fear-intro strong { color: rgba(245,244,240,0.85); font-weight: 400; }
+@media (max-width: 900px) {
+  .vision-fear { grid-template-columns: 1fr; }
+  .vf-card { border-right: none; border-bottom: 1px solid rgba(245,244,240,0.09); }
+  .vf-card:last-child { border-bottom: none; }
+}
+
+/* ——— TRACK RECORD ——— */
+.track-sec { background: var(--ink); padding: 0 0 6rem; border-top: 1px solid rgba(245,244,240,0.06); }
+.track-intro { padding: 4rem 0 3rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; }
+.track-h { font-size: clamp(1.4rem,2.5vw,2rem); color: var(--chalk); max-width: 30ch; line-height: 1.1; }
+.track-sub { font-size: 0.8rem; color: rgba(245,244,240,0.3); max-width: 38ch; line-height: 1.65; }
+.track-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+  border: 1px solid rgba(245,244,240,0.08);
+}
+.tr-card {
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid rgba(245,244,240,0.08);
+  border-bottom: 1px solid rgba(245,244,240,0.08);
+  transition: background 0.2s;
+}
+.tr-card:hover { background: rgba(245,244,240,0.03); }
+.tr-card:nth-child(4n) { border-right: none; }
+.tr-card:nth-last-child(-n+4) { border-bottom: none; }
+.tr-sector {
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.tr-title { font-family: var(--type-display); font-size: 0.88rem; color: var(--chalk); margin-bottom: 0.6rem; line-height: 1.3; }
+.tr-outcome { font-size: 0.75rem; color: rgba(245,244,240,0.35); line-height: 1.5; margin-bottom: 0.75rem; }
+.tr-meta { font-size: 0.6rem; color: rgba(245,244,240,0.18); letter-spacing: 0.08em; text-transform: uppercase; }
+@media (max-width: 900px) {
+  .track-grid { grid-template-columns: repeat(2,1fr); }
+  .tr-card:nth-child(4n) { border-right: 1px solid rgba(245,244,240,0.08); }
+  .tr-card:nth-child(2n) { border-right: none; }
+  .tr-card:nth-last-child(-n+4) { border-bottom: 1px solid rgba(245,244,240,0.08); }
+  .tr-card:nth-last-child(-n+2) { border-bottom: none; }
+}
+@media (max-width: 600px) {
+  .track-grid { grid-template-columns: 1fr; }
+  .tr-card { border-right: none; }
+  .tr-card:nth-last-child(n) { border-bottom: 1px solid rgba(245,244,240,0.08); }
+  .tr-card:last-child { border-bottom: none; }
+}
+
+/* ——— VALUE LADDER ——— */
+.ladder-sec { background: var(--chalk-warm); padding: 7rem 0; border-top: 1px solid var(--chalk-mid); }
+.ladder-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4rem; align-items: end; }
+.ladder-h { font-size: clamp(1.9rem,3.5vw,3rem); color: var(--ink); }
+.ladder-sub { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.75; }
+.ladder-sub strong { color: var(--ink); font-weight: 500; }
+.ladder-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+.ladder-grid::before {
+  content: ''; position: absolute; top: 2.25rem; left: 0; right: 0; height: 1px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 8px, transparent 8px, transparent 16px);
+  z-index: 0;
+}
+.ladder-step {
+  padding: 0 1.5rem 2.5rem 0; position: relative; z-index: 1;
+}
+.ladder-step:first-child { padding-left: 0; }
+.ladder-step:last-child { padding-right: 0; }
+.ls-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--accent); background: var(--chalk-warm);
+  margin-bottom: 1.5rem; position: relative; z-index: 2;
+  transition: background 0.2s;
+}
+.ladder-step:hover .ls-dot { background: var(--accent); }
+.ls-num {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 0.5rem;
+}
+.ls-title { font-family: var(--type-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+.ls-body { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1rem; }
+.ls-signal {
+  font-size: 0.7rem; font-style: italic; color: var(--accent);
+  font-family: var(--type-serif); line-height: 1.4;
+}
+.ls-cta {
+  display: inline-block; margin-top: 0.85rem;
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--ink); border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.1rem; transition: color 0.2s, border-color 0.2s;
+}
+.ls-cta:hover { color: var(--accent); border-color: var(--accent); }
+.ladder-note {
+  margin-top: 3.5rem; padding: 1.5rem 2rem; background: var(--chalk);
+  border: 1px solid var(--chalk-mid); border-left: 3px solid var(--accent);
+  font-size: 0.85rem; color: var(--ink-soft); line-height: 1.65;
+}
+.ladder-note strong { color: var(--ink); font-weight: 500; }
+@media (max-width: 900px) {
+  .ladder-top { grid-template-columns: 1fr; gap: 2rem; }
+  .ladder-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .ladder-grid::before { display: none; }
+  .ladder-step { padding: 0; }
+}
+@media (max-width: 600px) {
+  .ladder-grid { grid-template-columns: 1fr; }
+}
+
+/* ——— GO DEEPER BRIDGE (bottom of Vision) ——— */
+.go-deeper {
+  margin-top: 5rem; padding-top: 4rem;
+  border-top: 1px solid rgba(245,244,240,0.08);
+}
+.gd-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1.5rem;
+}
+.gd-title { font-family: var(--type-display); font-size: clamp(1.5rem,2.5vw,2.1rem); color: var(--chalk); letter-spacing: -0.02em; line-height: 1.1; }
+.gd-sub { font-size: 0.8rem; color: rgba(245,244,240,0.35); max-width: 36ch; line-height: 1.6; text-align: right; }
+.gd-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 0; border: 1px solid rgba(245,244,240,0.08); }
+.gd-card {
+  padding: 1.75rem 1.5rem; border-right: 1px solid rgba(245,244,240,0.08);
+  cursor: pointer; transition: background 0.2s; text-decoration: none; display: block;
+}
+.gd-card:last-child { border-right: none; }
+.gd-card:hover { background: rgba(245,244,240,0.04); }
+.gd-num { font-family: var(--type-display); font-size: 1.6rem; color: rgba(245,244,240,0.07); line-height: 1; margin-bottom: 0.75rem; }
+.gd-section { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+.gd-name { font-family: var(--type-display); font-size: 0.88rem; color: var(--chalk); line-height: 1.3; margin-bottom: 0.6rem; }
+.gd-count { font-size: 0.7rem; color: rgba(245,244,240,0.25); }
+.gd-foot {
+  margin-top: 1.75rem; display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.gd-foot-text { font-size: 0.8rem; color: rgba(245,244,240,0.3); font-style: italic; max-width: 44ch; line-height: 1.5; }
+.gd-cta {
+  display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.7rem 1.5rem;
+  border: 1px solid rgba(245,244,240,0.2); color: rgba(245,244,240,0.6);
+  transition: all 0.2s;
+}
+.gd-cta:hover { border-color: rgba(245,244,240,0.5); color: var(--chalk); }
+@media (max-width: 900px) {
+  .gd-grid { grid-template-columns: 1fr 1fr; }
+  .gd-card { border-right: 1px solid rgba(245,244,240,0.08); border-bottom: 1px solid rgba(245,244,240,0.08); }
+  .gd-card:nth-child(2n) { border-right: none; }
+  .gd-card:nth-last-child(-n+2) { border-bottom: none; }
+  .gd-sub { text-align: left; }
+}
+@media (max-width: 600px) {
+  .gd-grid { grid-template-columns: 1fr; }
+  .gd-card { border-right: none; }
+  .gd-card:last-child { border-bottom: none; }
+  .gd-card { border-bottom: 1px solid rgba(245,244,240,0.08); }
+}
+
+/* ——— ABOUT PAPERS BLOCK ——— */
+.about-papers {
+  margin-top: 2rem; padding: 2rem; background: rgba(10,10,9,0.04);
+  border: 1px solid var(--chalk-mid); border-left: 3px solid var(--gold);
+}
+.ap-label { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+.ap-title { font-family: var(--type-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+.ap-body { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.65; margin-bottom: 1.1rem; }
+.ap-link {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 0.1rem;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ap-link:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ——— PAPERS PAGE STYLES ——— */
+.papers-page { display: none; }
+.papers-page.active { display: block; }
+.papers-hero {
+  background: var(--ink); padding: 8rem 0 5rem; position: relative; overflow: hidden;
+}
+.papers-hero::before {
+  content: 'PAPERS'; position: absolute; right: -2rem; bottom: -3rem;
+  font-family: var(--type-display); font-size: 16rem; color: rgba(245,244,240,0.02);
+  pointer-events: none; line-height: 1; letter-spacing: -0.05em;
+}
+.papers-back {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(245,244,240,0.35); margin-bottom: 3rem; cursor: pointer;
+  transition: color 0.2s; border: none; background: none;
+}
+.papers-back:hover { color: var(--chalk); }
+.papers-back::before { content: '←'; font-size: 0.9rem; }
+.papers-eyebrow { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+.papers-h { font-family: var(--type-display); font-size: clamp(2.5rem,5vw,4.5rem); color: var(--chalk); line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+.papers-desc { font-size: 0.95rem; color: rgba(245,244,240,0.45); line-height: 1.7; max-width: 52ch; }
+.papers-strip {
+  background: var(--ink-soft); border-bottom: 1px solid rgba(245,244,240,0.06);
+  padding: 0; position: sticky; top: 65px; z-index: 50; overflow-x: auto;
+}
+.papers-strip::-webkit-scrollbar { display: none; }
+.papers-nav { display: flex; list-style: none; min-width: max-content; }
+.papers-nav li a {
+  display: block; padding: 0.85rem 1.5rem;
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(245,244,240,0.35); border-right: 1px solid rgba(245,244,240,0.06);
+  white-space: nowrap; transition: color 0.2s, background 0.2s;
+}
+.papers-nav li a:hover { color: var(--chalk); background: rgba(245,244,240,0.03); }
+.papers-main { background: var(--chalk); padding: 5rem 0 7rem; }
+.papers-section { margin-bottom: 5rem; }
+.papers-section:last-child { margin-bottom: 0; }
+.ps-header {
+  display: flex; align-items: flex-start; gap: 1.5rem;
+  padding-bottom: 2rem; margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--chalk-mid);
+}
+.ps-num {
+  font-family: var(--type-display); font-size: 2.5rem; color: var(--chalk-mid);
+  line-height: 1; letter-spacing: -0.03em; flex-shrink: 0; margin-top: 0.1rem;
+}
+.ps-meta {}
+.ps-title { font-family: var(--type-display); font-size: 1.3rem; color: var(--ink); margin-bottom: 0.25rem; letter-spacing: -0.01em; }
+.ps-purpose { font-size: 0.8rem; color: var(--ink-muted); font-style: italic; }
+.paper-card {
+  padding: 2rem 2.25rem; background: white; border: 1px solid var(--chalk-mid);
+  margin-bottom: 1rem; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.paper-card:hover { border-color: var(--chalk-mid); box-shadow: 0 4px 24px rgba(10,10,9,0.06); }
+.paper-card:last-child { margin-bottom: 0; }
+.pc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.pc-title { font-family: var(--type-display); font-size: 1.05rem; color: var(--ink); line-height: 1.3; flex: 1; letter-spacing: -0.01em; }
+.pc-pill {
+  font-size: 0.58rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.25rem 0.7rem; background: var(--chalk-warm); color: var(--ink-muted);
+  border: 1px solid var(--chalk-mid); white-space: nowrap; flex-shrink: 0; margin-top: 0.15rem;
+}
+.pc-hook {
+  font-family: var(--type-serif); font-style: italic; font-size: 0.93rem;
+  color: var(--accent); line-height: 1.6; margin-bottom: 0.85rem;
+  padding-left: 1rem; border-left: 2px solid var(--chalk-mid);
+}
+.pc-summary { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.75; margin-bottom: 1.25rem; }
+.pc-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1rem; border-top: 1px solid var(--chalk-warm); flex-wrap: wrap; gap: 0.75rem;
+}
+.pc-read { font-size: 0.68rem; color: var(--ink-muted); letter-spacing: 0.04em; }
+.pc-dl {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--ink-muted); display: flex; align-items: center; gap: 0.4rem;
+  cursor: default; opacity: 0.5;
+}
+
+/* ——— REVEAL ——— */
+.rv { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.rv.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+/* ——— ANIMATIONS ——— */
+@keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 900px) {
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .shift-grid, .vision-4, .gears-top, .out-top, .case-grid, .about-grid, .start-grid, .cta-inner, .foot-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ba, .testi-inner { grid-template-columns: 1fr; }
+  .testi-bar { display: none; }
+  .gears-steps, .for-grid { grid-template-columns: 1fr; }
+  .g-step, .fc { border-right: none; border-bottom: 1px solid rgba(245,244,240,0.09); padding: 2rem 0; }
+  .g-step:last-child, .fc:last-child { border-bottom: none; }
+  .g-step:not(:first-child), .fc:not(:first-child) { padding-left: 0; }
+  .out-grid { grid-template-columns: 1fr 1fr; }
+  .out-card:nth-child(3n) { border-right: 1px solid var(--chalk-mid); }
+  .out-card:nth-child(2n) { border-right: none; }
+  .case-flow { display: none; }
+  .case-mini { grid-template-columns: 1fr; }
+  .cta-inner { justify-items: start; }
+  nav ul { display: none; }
+}
+@media (max-width: 600px) {
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .out-grid { grid-template-columns: 1fr; }
+  .out-card { border-right: none; }
+  .out-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--chalk-mid); }
+  .out-card:last-child { border-bottom: none; }
+  .case-nums { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="nav-logo">GK<em>I</em>M Digital</a>
+  <ul class="nav-links">
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#gears">GEARS&#8482;</a></li>
+    <li><a href="#outputs">Outputs</a></li>
+    <li><a href="#case-study">Case Study</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#start" class="nav-cta">Talk to GKIM</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════ -->
+<section id="home" class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-main">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Business System Design</p>
+      <h1 class="hero-h1">Design <em>your</em> AI-Native Business</h1>
+      <p class="hero-sub">Competitive advantage is no longer strategic. It's structural.</p>
+      <p class="hero-support">We define the missing layer between strategy and engineering — how your business actually works as a system designed to create value.</p>
+      <div class="hero-ctas">
+        <a href="#start" class="btn btn-dark">Talk to GKIM</a>
+        <a href="#outputs" class="btn btn-outline-dark">See What You Get</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats container">
+    <div class="stat">
+      <span class="stat-n">$1B+</span>
+      <span class="stat-l">Business Systems Designed</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">100K+</span>
+      <span class="stat-l">Daily Transactions Structured</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">120+</span>
+      <span class="stat-l">Systems Delivered</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">16 Yrs</span>
+      <span class="stat-l">Strategy &amp; Engineering Intersection</span>
+    </div>
+    <p class="stat-tag">Designed for scale from day one — not refactored into it later.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CAMBRIDGE CREDIBILITY STRIP
+     ═══════════════════════════════════════ -->
+<div class="cambridge-strip">
+  <div class="cambridge-inner">
+    <div class="cs-item">
+      <span class="cs-label">Headquarters</span>
+      <span class="cs-value"><em>Cambridge</em>, United Kingdom</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Founded</span>
+      <span class="cs-value">2010 · 16 years</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Global Office</span>
+      <span class="cs-value">Ho Chi Minh City, Vietnam</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Discipline</span>
+      <span class="cs-value">AI-Native Business Design</span>
+    </div>
+    <div class="cs-divider"></div>
+    <p class="cambridge-tagline">Academic rigour. Commercial execution.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     THE SHIFT
+     ═══════════════════════════════════════ -->
+<section class="sec shift">
+  <div class="container">
+    <div class="shift-grid">
+      <div class="rv">
+        <p class="sec-label">The Shift</p>
+        <h2 class="display shift-h">Businesses Are Starting to Look Different</h2>
+        <div class="shift-body">
+          <p>AI has given every company the same building speed.</p>
+          <p>But speed doesn't matter if the business was never properly defined as a system. That's where most digital businesses break.</p>
+          <p>The constraint has shifted from development — to definition.</p>
+        </div>
+      </div>
+      <div class="rv d2">
+        <ul class="shift-list">
+          <li>Most companies still discover what's wrong after they build it</li>
+          <li>Requirements are incomplete before the first line of code</li>
+          <li>Logic is inconsistent across teams and systems</li>
+          <li>Stakeholders remain misaligned until execution exposes it</li>
+          <li>Validation happens through building instead of before it</li>
+        </ul>
+        <blockquote class="keyline shift-quote">
+          Speed isn't the advantage.<br>Design is.
+        </blockquote>
+        <div class="struct-box">
+          <div class="struct-box-bar"></div>
+          <div class="struct-box-text">
+            <p class="struct-box-label">The only source of sustainable competitive advantage</p>
+            <p class="struct-box-quote">Architecture and flexibility. Everything else can be copied.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     VISION
+     ═══════════════════════════════════════ -->
+<section id="vision" class="sec vision-dark">
+  <div class="container">
+    <p class="sec-label lt rv">Vision</p>
+    <h2 class="display vision-h rv d1">The AI-Native Business</h2>
+
+    <!-- AI FEARS OPENER -->
+    <p class="vision-fear-intro rv d1">
+      AI raises legitimate questions. What happens to the people inside these businesses? What do customers experience? What does it mean for those who invest? <strong>The answer depends entirely on how the system is designed.</strong> Done well, AI-native design doesn't diminish any of these stakeholders — it creates compounding value for all of them.
+    </p>
+    <div class="vision-fear rv d2">
+      <div class="vf-card">
+        <p class="vf-who">For shareholders &amp; leadership</p>
+        <h3 class="vf-claim">Higher enterprise value. Structural advantage that compounds.</h3>
+        <p class="vf-body">AI-native systems reduce operational cost, increase execution speed, and create structural advantages that are hard to replicate. Unlike tools or features, a well-designed business system becomes more valuable over time — not less. It is the most defensible asset a business can own.</p>
+      </div>
+      <div class="vf-card">
+        <p class="vf-who">For teams &amp; workers</p>
+        <h3 class="vf-claim">More autonomy. Less coordination. Higher-leverage work.</h3>
+        <p class="vf-body">In well-designed systems, AI absorbs the low-leverage work — administration, repetitive decisions, coordination overhead. This returns time and judgment to the people who can use them best. The fear is replacement. The reality, when the system is designed with intention, is elevation.</p>
+      </div>
+      <div class="vf-card">
+        <p class="vf-who">For customers</p>
+        <h3 class="vf-claim">Faster, more relevant, more consistent value.</h3>
+        <p class="vf-body">Customers in poorly designed systems experience friction, inconsistency, and impersonal service. In well-designed ones, they receive faster responses, more relevant interactions, and better outcomes — because the system has been built around their journey, not the organisation's convenience.</p>
+      </div>
+    </div>
+
+    <div class="vision-4 rv d2">
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Value creation is explicit</h3>
+        <p class="v4-body">Processes are deliberately designed so how value flows is understood and measurable — not assumed.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Workflows are structured end-to-end</h3>
+        <p class="v4-body">Every workflow is engineered. Human and AI roles are coordinated. Decisions are explicit and consistent.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Performance is continuously improved</h3>
+        <p class="v4-body">The system is monitored and optimised. Strategy is grounded in system behaviour, not intent.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">The advantage compounds structurally</h3>
+        <p class="v4-body">Faster execution. Lower cost of operation. More predictable performance. Higher enterprise value.</p>
+      </div>
+    </div>
+
+    <div class="ba rv d3">
+      <div class="ba-col ba-before">
+        <p class="ba-lbl">Before — most businesses</p>
+        <ul class="ba-list">
+          <li>Strategy defined conceptually</li>
+          <li>Building starts before definition is complete</li>
+          <li>Hidden dependencies surface during execution</li>
+          <li>Problems discovered at significant build cost</li>
+          <li>Performance reactive, not designed</li>
+        </ul>
+      </div>
+      <div class="ba-col ba-after">
+        <p class="ba-lbl">After — AI-native design</p>
+        <ul class="ba-list">
+          <li>System defined before a line is written</li>
+          <li>Aligned stakeholders with clear build inputs</li>
+          <li>Issues identified before build — not during</li>
+          <li>Structured workflows and visible performance</li>
+          <li>Clarity replaces guesswork</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="keyline vision-kl rv">Not better software.<br>A better designed business.</p>
+
+    <!-- GO DEEPER BRIDGE -->
+    <div class="go-deeper rv">
+      <div class="gd-header">
+        <h3 class="gd-title">GKIM Papers —<br>Original thinking on<br>AI-native business design</h3>
+        <p class="gd-sub">Fifteen papers across five themes. Written for founders, operators, and investors who want to understand the architecture of what's coming.</p>
+      </div>
+      <div class="gd-grid">
+        <a class="gd-card" href="#" onclick="showPapers('s1'); return false;">
+          <div class="gd-num">01</div>
+          <p class="gd-section">Foundations</p>
+          <p class="gd-name">What is an AI-Native Business?</p>
+          <p class="gd-count">3 papers</p>
+        </a>
+        <a class="gd-card" href="#" onclick="showPapers('s2'); return false;">
+          <div class="gd-num">02</div>
+          <p class="gd-section">The Case For</p>
+          <p class="gd-name">The Strategic &amp; Economic Argument</p>
+          <p class="gd-count">3 papers</p>
+        </a>
+        <a class="gd-card" href="#" onclick="showPapers('s3'); return false;">
+          <div class="gd-num">03</div>
+          <p class="gd-section">Trust &amp; Safety</p>
+          <p class="gd-name">Governance, Humans &amp; Accountability</p>
+          <p class="gd-count">3 papers</p>
+        </a>
+        <a class="gd-card" href="#" onclick="showPapers('s4'); return false;">
+          <div class="gd-num">04</div>
+          <p class="gd-section">Founder's Playbook</p>
+          <p class="gd-name">Practical Conviction for Builders</p>
+          <p class="gd-count">3 papers</p>
+        </a>
+        <a class="gd-card" href="#" onclick="showPapers('s5'); return false;">
+          <div class="gd-num">05</div>
+          <p class="gd-section">Architecture &amp; Lifecycle</p>
+          <p class="gd-name">How These Businesses Are Built</p>
+          <p class="gd-count">3 papers</p>
+        </a>
+      </div>
+      <div class="gd-foot">
+        <p class="gd-foot-text">Each paper is 7–11 minutes. Full PDFs coming soon. Written from Cambridge — not from a conference stage.</p>
+        <a href="#" class="gd-cta" onclick="showPapers('s1'); return false;">Read GKIM Papers →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     GEARS
+     ═══════════════════════════════════════ -->
+<section id="gears" class="sec gears-sec">
+  <div class="container">
+    <div class="gears-top">
+      <div class="rv">
+        <p class="sec-label lt">GEARS&#8482; — Business-Led System Design</p>
+        <h2 class="display gears-h">Define the System Before You Build It</h2>
+      </div>
+      <div class="rv d2">
+        <p class="gears-intro">
+          GEARS&#8482; is the method GKIM uses to turn business ideas into functioning business engines.<br><br>
+          It does not start with features. It starts with: <strong>how the business must actually work to create value.</strong><br><br>
+          Each "gear" is a unit of value creation. Together they form the business engine. If the gears don't turn together, the business doesn't work.
+        </p>
+      </div>
+    </div>
+
+    <div class="gears-steps">
+      <div class="g-step rv">
+        <div class="g-num">01</div>
+        <h3 class="g-title"><em>Discover</em> — Define the Business Engine</h3>
+        <ul class="g-list">
+          <li>Clarify the economic model</li>
+          <li>Map how value is created</li>
+          <li>Identify actors, flows, and dependencies</li>
+          <li>Surface risks and structural gaps</li>
+        </ul>
+      </div>
+      <div class="g-step rv d1">
+        <div class="g-num">02</div>
+        <h3 class="g-title"><em>Design</em> — Structure the System</h3>
+        <ul class="g-list">
+          <li>Define workflows and processes</li>
+          <li>Design decision logic</li>
+          <li>Structure data and control points</li>
+          <li>Align operations to outcomes</li>
+        </ul>
+      </div>
+      <div class="g-step rv d2">
+        <div class="g-num">03</div>
+        <h3 class="g-title"><em>Deliver</em> — Build-Ready Outputs</h3>
+        <ul class="g-list">
+          <li>PRD (system specification)</li>
+          <li>Workflow architecture diagrams</li>
+          <li>Data models and state logic</li>
+          <li>KPI and performance framework</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="gears-kl rv">GEARS&#8482; does not stop at insight. It produces the structure required to build.</p>
+    <div class="rv d1" style="margin-top:1rem;">
+      <a href="#start" class="btn btn-outline-dark" style="display:inline-block; margin-top:0.75rem;">Talk to GKIM →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     OUTPUTS
+     ═══════════════════════════════════════ -->
+<section id="outputs" class="sec outputs-sec">
+  <div class="container">
+    <div class="out-top">
+      <div class="rv">
+        <p class="sec-label">What You Actually Get</p>
+        <h2 class="display out-h">Not advisory.<br>Production.</h2>
+      </div>
+      <div class="rv d2">
+        <p class="out-intro">
+          Each engagement produces a set of connected outputs that together define how your business works.<br><br>
+          These are not isolated documents. They form a <strong>coherent system design</strong> — how value is created, how processes operate, what must be built, how performance is measured.
+        </p>
+      </div>
+    </div>
+
+    <div class="out-grid">
+      <div class="out-card rv">
+        <p class="out-n">Output 01</p>
+        <h3 class="out-title">Business Engine Definition</h3>
+        <p class="out-body">A structured map of how value flows through the business. Exposes missing components. Aligns all stakeholders. Forms the foundation for everything else.</p>
+        <p class="out-kl">If this is wrong, everything built on top of it will be wrong.</p>
+      </div>
+      <div class="out-card rv d1">
+        <p class="out-n">Output 02</p>
+        <h3 class="out-title">Workflow Architecture</h3>
+        <p class="out-body">Step-by-step process flows, actor interactions, decision points, system handoffs. Where the business moves from concept to actual operation.</p>
+        <p class="out-kl">Removes ambiguity. Enables automation. Reveals inefficiencies.</p>
+      </div>
+      <div class="out-card rv d2">
+        <p class="out-n">Output 03</p>
+        <h3 class="out-title">System Logic &amp; Decision Structures</h3>
+        <p class="out-body">Rules, conditions, triggers, responses, and decision pathways. Ensures consistency, enables scalable execution, prevents logic drift over time.</p>
+        <p class="out-kl">Clear logic creates predictable systems.</p>
+      </div>
+      <div class="out-card rv">
+        <p class="out-n">Output 04</p>
+        <h3 class="out-title">Build Specification (PRD)</h3>
+        <p class="out-body">A structured, business-led specification of what should be built. Workflows translated into requirements, system behaviours, integration points.</p>
+        <p class="out-kl">Better inputs → better systems.</p>
+      </div>
+      <div class="out-card rv d1">
+        <p class="out-n">Output 05</p>
+        <h3 class="out-title">KPI &amp; Performance Framework</h3>
+        <p class="out-body">Core KPIs, conversion metrics, operational indicators, and feedback loops. Makes performance visible. Enables optimisation. Aligns execution to outcomes.</p>
+        <p class="out-kl">If you cannot measure it, you cannot improve it.</p>
+      </div>
+      <div class="out-card rv d2">
+        <p class="out-n">Output 06</p>
+        <h3 class="out-title">AI-Ready Build Inputs</h3>
+        <p class="out-body">Structured outputs directly usable by engineering teams, AI tools, and development partners. Accelerates development. Reduces iteration cycles.</p>
+        <p class="out-kl">The foundation for AI advantage.</p>
+      </div>
+    </div>
+
+    <div class="out-foot rv">
+      <p class="out-foot-text">For most teams, it's the first time the business becomes something that can actually be tested and reasoned about.</p>
+      <a href="#start" class="btn btn-dark">Talk to GKIM</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CASE STUDY
+     ═══════════════════════════════════════ -->
+<section id="case-study" class="sec case-sec">
+  <div class="container">
+    <p class="sec-label rv">Proven in Real Systems</p>
+
+    <div class="case-grid">
+      <div class="rv">
+        <span class="case-tag">Flagship Case Study</span>
+        <h2 class="display case-h">Designing a $1B Genetics Business System</h2>
+        <p class="case-sub">How a complex, multi-actor healthcare platform was structured to scale — before volume exposed its weaknesses.</p>
+        <div class="case-flow">
+          <div class="cf-s hi">Demand</div>
+          <div class="cf-s">Qualify</div>
+          <div class="cf-s">Test</div>
+          <div class="cf-s">Interpret</div>
+          <div class="cf-s">Care</div>
+          <div class="cf-s">Follow-up</div>
+        </div>
+        <div class="case-nums">
+          <div class="cn"><span class="cn-n">$1B+</span><span class="cn-l">System-supported value</span></div>
+          <div class="cn"><span class="cn-n">200K+</span><span class="cn-l">Patients processed</span></div>
+          <div class="cn"><span class="cn-n">300%</span><span class="cn-l">Growth in 4 months</span></div>
+        </div>
+      </div>
+
+      <div class="rv d2">
+        <div class="case-body">
+          <p>Most genetic testing businesses don't fail because of science. They fail because the system that delivers that science doesn't work.</p>
+          <p>Data is too complex to use in practice. Workflows break under real clinical conditions. Administrative overhead destroys economics.</p>
+          <p>For this business to work, the full patient journey had to operate as one coordinated system — from marketing through to long-term care. Each stage depended on the others. If any part failed, the system broke.</p>
+        </div>
+        <p class="case-kl">The system scaled because it was designed to work — not because it was iterated into shape.</p>
+        <div class="case-body">
+          <p>Before building, the system was made explicit: how value flows from acquisition to care, how decisions are made at each qualification stage, how actors interact across providers, labs, and patients, and how the system scales under volume.</p>
+          <p>This is not a story about building software. It is a story about designing the system that made it work.</p>
+        </div>
+        <a href="#start" class="btn btn-dark" style="margin-top:1.5rem; display:inline-block;">Talk to GKIM</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TRACK RECORD
+     ═══════════════════════════════════════ -->
+<section class="track-sec">
+  <div class="container">
+    <div class="track-intro rv">
+      <div>
+        <p class="sec-label lt" style="margin-bottom:0.75rem;">16 Years. Multiple Sectors.</p>
+        <h2 class="display track-h">A history of designing systems that work</h2>
+      </div>
+      <p class="track-sub">The healthcare flagship is our most complex proof. But system design is not a sector — it is a discipline. These are highlights from across our history.</p>
+    </div>
+    <div class="track-grid">
+      <div class="tr-card rv">
+        <p class="tr-sector">Logistics &amp; Fulfilment</p>
+        <h3 class="tr-title">Multi-node fulfilment operating model</h3>
+        <p class="tr-outcome">40% reduction in fulfilment cost. Consolidated three disparate warehouse systems into a single coordinated engine.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d1">
+        <p class="tr-sector">Financial Services</p>
+        <h3 class="tr-title">Workflow consolidation for regulated lending</h3>
+        <p class="tr-outcome">3 legacy systems replaced by one designed operating model. Compliance maintained. Processing time halved.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d2">
+        <p class="tr-sector">EdTech &amp; Learning</p>
+        <h3 class="tr-title">AI-native learning platform operating model</h3>
+        <p class="tr-outcome">Launched across 4 markets simultaneously. Learner journey and content engine designed as one system before build.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d3">
+        <p class="tr-sector">Professional Services</p>
+        <h3 class="tr-title">Knowledge management and delivery engine</h3>
+        <p class="tr-outcome">Reduced delivery overhead by 35%. Expertise made consistent and scalable across a distributed team of 200+.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv">
+        <p class="tr-sector">Retail &amp; Commerce</p>
+        <h3 class="tr-title">Omnichannel demand and inventory system</h3>
+        <p class="tr-outcome">Unified online and in-store operations. Stock logic and customer journey designed as a single coordinated system.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d1">
+        <p class="tr-sector">Energy &amp; Infrastructure</p>
+        <h3 class="tr-title">Asset monitoring and maintenance workflow</h3>
+        <p class="tr-outcome">Predictive maintenance model reduced downtime by 28%. Decision logic structured before any automation was built.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d2">
+        <p class="tr-sector">Media &amp; Publishing</p>
+        <h3 class="tr-title">Content production and distribution engine</h3>
+        <p class="tr-outcome">Output doubled with same team size. Editorial workflow redesigned as a system — not a series of handoffs.</p>
+        <p class="tr-meta">Placeholder · Replace with real project</p>
+      </div>
+      <div class="tr-card rv d3" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <p class="tr-sector">Your sector</p>
+          <h3 class="tr-title">System design is not sector-specific</h3>
+          <p class="tr-outcome">Every business that creates value through processes, decisions, and workflows is a candidate for system design.</p>
+        </div>
+        <a href="#start" class="btn btn-outline-dark" style="display:inline-block; margin-top:1.25rem; font-size:0.7rem; padding:0.65rem 1.1rem;">Talk to GKIM</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     WHO THIS IS FOR
+     ═══════════════════════════════════════ -->
+<section class="sec for-sec">
+  <div class="container">
+    <p class="sec-label lt rv">Who This Is For</p>
+    <h2 class="display for-h rv d1">Built for the people who have to get it right</h2>
+    <div class="for-grid">
+      <div class="fc rv">
+        <h3 class="fc-role">Founders</h3>
+        <p class="fc-body">Turn ideas into structured, buildable systems. Build the right business, not just fast software. Understand how your business creates value before committing to build.</p>
+      </div>
+      <div class="fc rv d1">
+        <h3 class="fc-role">Operators</h3>
+        <p class="fc-body">Create clarity, structure, and performance in complex systems. Understand and improve how the business actually runs. Replace coordination overhead with designed systems.</p>
+      </div>
+      <div class="fc rv d2">
+        <h3 class="fc-role">Investors &amp; PE</h3>
+        <p class="fc-body">Reduce risk and increase enterprise value. Assess whether the system will scale before committing capital. System visibility at every stage of investment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     VALUE LADDER — HOW WE WORK
+     ═══════════════════════════════════════ -->
+<section class="ladder-sec">
+  <div class="container">
+    <div class="ladder-top">
+      <div class="rv">
+        <p class="sec-label" style="margin-bottom:0.75rem;">How We Work</p>
+        <h2 class="display ladder-h">Start anywhere.<br>Go as far as you need.</h2>
+      </div>
+      <div class="rv d2">
+        <p class="ladder-sub">
+          Most clients begin with a single session. No commitment beyond that. Each step produces real outputs — so you always know what you have before deciding whether to go further. <strong>You are never locked in. You always own what is produced.</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="ladder-grid">
+      <div class="ladder-step rv">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Step 01 · Entry point</p>
+        <h3 class="ls-title">Discovery Session</h3>
+        <p class="ls-body">A focused working session — not a sales call. We explore how your business actually works, surface hidden gaps, risks, and assumptions, and give you a clear picture of where definition is missing.</p>
+        <p class="ls-signal">Most clients leave with more clarity than they expected. Many discover problems they didn't know existed.</p>
+        <a href="#start" class="ls-cta">Book a session</a>
+      </div>
+      <div class="ladder-step rv d1">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Step 02 · Core engagement</p>
+        <h3 class="ls-title">GEARS&#8482; System Design</h3>
+        <p class="ls-body">A full GEARS&#8482; engagement. We define your business as a working system — producing all six structured outputs: business engine, workflows, decision logic, PRD, KPI framework, and AI-ready build inputs.</p>
+        <p class="ls-signal">At the end, your business exists as a real, testable system definition — not a deck.</p>
+        <a href="#start" class="ls-cta">Talk to GKIM</a>
+      </div>
+      <div class="ladder-step rv d2">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Step 03 · Optional</p>
+        <h3 class="ls-title">Build Partnership</h3>
+        <p class="ls-body">We implement the system we designed. Because we defined it, we build it with unusual precision — no translation loss between design intent and what gets built. Engineering and delivery aligned from day one.</p>
+        <p class="ls-signal">The system gets built the way it was designed — not interpreted.</p>
+        <a href="#start" class="ls-cta">Talk to GKIM</a>
+      </div>
+      <div class="ladder-step rv d3">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Step 04 · Long-term</p>
+        <h3 class="ls-title">Operate &amp; Evolve</h3>
+        <p class="ls-body">We stay as your long-term system partner — running, monitoring, and continuously improving the business system. As conditions change, the system adapts. Performance compounds. You focus on leading the business.</p>
+        <p class="ls-signal">The system becomes a durable, evolving asset — not a fixed deliverable.</p>
+        <a href="#start" class="ls-cta">Talk to GKIM</a>
+      </div>
+    </div>
+
+    <div class="ladder-note rv">
+      <strong>You can enter at any step.</strong> Many clients start with Discovery and proceed immediately to a full GEARS&#8482; engagement. Others use Discovery as a standalone diagnostic. A few come to us mid-build, having realised the system was never properly defined. Wherever you are — there is a logical next step.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIAL
+     ═══════════════════════════════════════ -->
+<section class="testi-sec">
+  <div class="container">
+    <p class="sec-label rv">Trusted by Operators</p>
+    <div class="testi-inner rv d1">
+      <div class="testi-bar"></div>
+      <div>
+        <p class="testi-quote">"GKIM helped brainstorm my vision and build it into a well thought out business, product and technology offering. The team have excelled at execution."</p>
+        <p class="testi-attr">Founder &amp; CEO</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ABOUT
+     ═══════════════════════════════════════ -->
+<section id="about" class="sec about-sec">
+  <div class="container">
+    <div class="about-grid">
+      <div class="rv">
+        <p class="about-lbl">Why GKIM Exists</p>
+        <h2 class="display about-h">Built by Someone Who Has Done This Before</h2>
+        <div class="about-letter">
+          <p>To the Founders and Leaders Building the Future,</p>
+          <p>I started my career in engineering and game development. Very early, I learned something that still holds true: technology is only as good as the judgment behind it.</p>
+          <p>I saw brilliant ideas stall — not because the code was wrong, but because the system behind it had never been properly defined. There was always a gap between the creative ambition of a business and the structure required to make it work.</p>
+          <p>In 2010, I founded GKIM to close that gap. Not by adding more process, but by making the business itself explicit as a system.</p>
+          <p>Over the last 15 years, we've applied that discipline in environments where failure is expensive — from telehealth platforms to systems handling 100,000+ daily transactions. The principle has remained the same: define the system properly, and everything else becomes easier.</p>
+          <p>Today, we operate from Cambridge and Ho Chi Minh City — combining strategic design with deep engineering capability.</p>
+        </div>
+        <p class="about-sig">— Ian Morrison</p>
+      </div>
+
+      <div class="rv d2">
+        <div class="about-belief">
+          <p class="ab-title">What Makes GKIM Different</p>
+          <p class="ab-body">We define systems before they are built. We focus on value creation, not features. We make decisions explicit early. We produce outputs that can be built and tested.</p>
+        </div>
+        <div class="values-list">
+          <div class="val">
+            <p class="val-t">Honesty Over Hype</p>
+            <p class="val-b">We say what is true — even when it's inconvenient.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Define Before Build</p>
+            <p class="val-b">Clarity upfront saves exponential cost later.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Work at the System Level</p>
+            <p class="val-b">We solve the root problem, not the symptom.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">AI With Purpose</p>
+            <p class="val-b">AI should improve outcomes, not just activity.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Technology Must Serve Reality</p>
+            <p class="val-b">Systems must work in practice — not just in theory.</p>
+          </div>
+        </div>
+        <div class="about-papers">
+          <p class="ap-label">GKIM Papers</p>
+          <p class="ap-title">We publish original thinking on AI-native business design</p>
+          <p class="ap-body">Fifteen papers across five themes — from foundational definitions to founder playbooks and governance. Written from Cambridge. Rigorous, direct, and free of hype.</p>
+          <a href="#" class="ap-link" onclick="showPapers('s1'); return false;">Read the papers →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     START / DISCOVERY
+     ═══════════════════════════════════════ -->
+<section id="start" class="sec start-sec">
+  <div class="container">
+    <div class="start-grid">
+      <div class="rv">
+        <p class="sec-label lt">Talk to GKIM</p>
+        <h2 class="display start-h">Before you build or scale, understand how your business actually works.</h2>
+        <p class="start-sub">This is not a sales call. It is a working session to understand your business model, explore how the system currently operates, and identify gaps, risks, and assumptions.</p>
+        <p style="font-size:0.67rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.28); margin-bottom:1rem;">A short session typically surfaces:</p>
+        <ul class="start-items">
+          <li class="si"><div class="si-dot"></div><p class="si-text">Hidden dependencies in your current system</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Structural gaps that cost more to fix post-build</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Unclear decision logic creating downstream inconsistency</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Risks that only become visible under scale</p></li>
+        </ul>
+        <p class="keyline start-kl">Clarity replaces assumption.</p>
+      </div>
+
+      <div class="rv d2">
+        <div class="form-box">
+          <p class="form-intro">Tell us what you're building, where you are in the journey, and what feels unclear or not working.</p>
+          <div class="form-g">
+            <label class="form-lbl" for="f-name">Name</label>
+            <input class="form-in" type="text" id="f-name" placeholder="Your name">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-co">Company</label>
+            <input class="form-in" type="text" id="f-co" placeholder="Your company">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-email">Email</label>
+            <input class="form-in" type="email" id="f-email" placeholder="you@company.com">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-msg">What are you building or what isn't working?</label>
+            <textarea class="form-ta" id="f-msg" placeholder="Share as much or as little as you'd like..."></textarea>
+          </div>
+          <button class="form-btn" id="form-btn" type="button">Book a Session</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FINAL CTA
+     ═══════════════════════════════════════ -->
+<section class="cta-sec">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="rv">
+        <h2 class="display cta-h">Design the business before you build it</h2>
+        <p class="cta-body">Most teams start with code. The best teams start with clarity. If you're building or evolving a system, it's worth understanding how it actually works — before committing further.</p>
+      </div>
+      <div class="cta-btns rv d2">
+        <a href="#start" class="btn btn-red">Talk to GKIM</a>
+        <a href="mailto:hello@gkim.digital" class="btn btn-outline-light">hello@gkim.digital</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand">GK<em>I</em>M Digital</p>
+        <p class="foot-tag">We define the missing layer between strategy and engineering — how your business actually works as a system.</p>
+      </div>
+      <div>
+        <p class="foot-col-h">Explore</p>
+        <ul class="foot-links">
+          <li><a href="#vision">Vision</a></li>
+          <li><a href="#gears">GEARS&#8482;</a></li>
+          <li><a href="#outputs">Outputs</a></li>
+          <li><a href="#case-study">Case Study</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#" onclick="showPapers('s1'); return false;">GKIM Papers</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-col-h">Contact</p>
+        <div class="foot-addr">
+          <p><a href="mailto:hello@gkim.digital" style="color:rgba(245,244,240,0.55);">hello@gkim.digital</a></p>
+          <p class="region">UK Office</p>
+          <p>17 South Rd, Cambridge</p>
+          <p class="region">Vietnam Office</p>
+          <p>Ho Chi Minh City</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="foot-copy">© GKIM Digital Ltd.</p>
+      <p class="foot-copy">System definition. AI-native business design.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     PAPERS PAGE (overlay, shown via JS)
+     ═══════════════════════════════════════ -->
+<div class="papers-page" id="papers-page">
+
+  <div class="papers-hero">
+    <div class="container">
+      <button class="papers-back" onclick="hidePapers()">Back to GKIM</button>
+      <p class="papers-eyebrow">Original Thinking · Cambridge</p>
+      <h1 class="papers-h">GKIM Papers</h1>
+      <p class="papers-desc">Fifteen papers on the architecture, economics, and human implications of AI-native business design. Written for founders, operators, and investors who think seriously about what's coming.</p>
+    </div>
+  </div>
+
+  <nav class="papers-strip">
+    <ul class="papers-nav container">
+      <li><a href="#ps1" onclick="scrollToPaper('ps1')">01 · Foundations</a></li>
+      <li><a href="#ps2" onclick="scrollToPaper('ps2')">02 · The Case For</a></li>
+      <li><a href="#ps3" onclick="scrollToPaper('ps3')">03 · Trust &amp; Safety</a></li>
+      <li><a href="#ps4" onclick="scrollToPaper('ps4')">04 · Founder's Playbook</a></li>
+      <li><a href="#ps5" onclick="scrollToPaper('ps5')">05 · Architecture &amp; Lifecycle</a></li>
+    </ul>
+  </nav>
+
+  <div class="papers-main">
+    <div class="container">
+
+      <!-- SECTION 1 -->
+      <div class="papers-section" id="ps1">
+        <div class="ps-header">
+          <div class="ps-num">01</div>
+          <div class="ps-meta">
+            <p class="ps-title">Foundations</p>
+            <p class="ps-purpose">What an AI-native business actually is — and what it is not</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The AI Native Business: A Precise Definition</p>
+            <span class="pc-pill">Launch</span>
+          </div>
+          <p class="pc-hook">An AI-native business is not one that uses AI — it is one that is designed around it: a fundamental distinction that determines whether an organisation captures the structural advantages of this era or merely pays for the appearance of doing so.</p>
+          <p class="pc-summary">The term "AI-native" is attracting the inflation that afflicts every compelling idea in technology. This paper draws a precise line. An AI-native business is not defined by the AI tools it uses — it is defined by its architecture: a business whose operating model is structured as an explicit value graph, executed by agents, and governed by humans at the points of highest consequence. This paper establishes the foundational definition from which everything else in this series follows.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 8 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Value Graph: How AI Native Businesses Organise Work</p>
+            <span class="pc-pill">Week 3</span>
+          </div>
+          <p class="pc-hook">The value graph is not a diagram — it is the operating system of an AI-native business: the explicit, structured decomposition of how value is created that makes autonomous execution possible and human oversight meaningful.</p>
+          <p class="pc-summary">Every AI-native business rests on a foundational architecture: a value graph that decomposes the business's purpose into a connected hierarchy of processes, decisions, and handoffs. This paper explains what a value graph is, how it differs from an org chart or a process map, and why it is the essential prerequisite for everything that follows — from agent deployment to performance measurement to governance.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 7 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">What AI Native Businesses Are Not: Separating Signal from Hype</p>
+            <span class="pc-pill">Week 5</span>
+          </div>
+          <p class="pc-hook">Precision matters enormously here: the difference between a business that merely uses AI and one that is genuinely AI-native is the difference between painting a house and rebuilding it — and only one of them changes what is structurally possible.</p>
+          <p class="pc-summary">This paper draws a precise line between businesses that use AI as a tool and those that are designed around it as an architecture. Making this distinction clearly is not pedantry — it is the difference between a business that captures the structural advantages of this era and one that merely pays for the appearance of doing so.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 7 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+      </div>
+
+      <!-- SECTION 2 -->
+      <div class="papers-section" id="ps2">
+        <div class="ps-header">
+          <div class="ps-num">02</div>
+          <div class="ps-meta">
+            <p class="ps-title">The Case for AI Native</p>
+            <p class="ps-purpose">The strategic and economic argument for making the move</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Inevitability of AI Native Businesses</p>
+            <span class="pc-pill">Week 2</span>
+          </div>
+          <p class="pc-hook">This is not a prediction about technology — it is an observation about competitive logic: when one business model structurally outperforms another on cost, speed, and transparency simultaneously, the outcome is not in doubt, only the timeline.</p>
+          <p class="pc-summary">Inevitability arguments in technology are easy to make and often wrong. This one is grounded not in optimism but in competitive logic. When a new business architecture allows a new entrant to operate at a fraction of the cost, at multiples of the speed, and with structural transparency that legacy organisations cannot replicate — the incumbent's advantage erodes regardless of its existing market position. AI-native design is not inevitable because the technology is impressive — it is inevitable because the competitive arithmetic is unambiguous.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 10 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">AI Native Businesses: The Only Route to Sustainable Competitive Advantage</p>
+            <span class="pc-pill">Week 6</span>
+          </div>
+          <p class="pc-hook">In an era where every competitor can access the same AI models, the only advantage that cannot be copied is the architecture within which those models operate — and that architecture must be designed with intention, from the very beginning.</p>
+          <p class="pc-summary">Competitive advantage in the AI era will not come from access to AI models — those are rapidly commoditising — but from the architecture within which those models operate. A business that has decomposed its value creation into a structured, agent-executable graph owns something that cannot be replicated by a competitor purchasing the same tools. Structural advantages compound over time in ways that tool advantages do not.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 10 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Risk of Waiting: Why Delaying AI Native Architecture Has a Compounding Cost</p>
+            <span class="pc-pill">Week 9</span>
+          </div>
+          <p class="pc-hook">The most dangerous illusion in business today is the belief that caution is safe — because every month of delay is a month in which AI-native competitors are compounding advantages that will become structurally irreversible.</p>
+          <p class="pc-summary">The instinct to wait — for the technology to mature, for competitors to go first, for the business case to become more certain — is understandable and almost always wrong. In platform transitions, delay does not preserve optionality; it destroys it. The window for AI-native design to be a first-mover advantage is measurable in months, not years. The businesses that act now are not taking a risk — they are avoiding one.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 8 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+      </div>
+
+      <!-- SECTION 3 -->
+      <div class="papers-section" id="ps3">
+        <div class="ps-header">
+          <div class="ps-num">03</div>
+          <div class="ps-meta">
+            <p class="ps-title">Trust &amp; Safety</p>
+            <p class="ps-purpose">Neutralising fear and building the confidence to act</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Human Benefits of AI Native Businesses</p>
+            <span class="pc-pill">Launch</span>
+          </div>
+          <p class="pc-hook">The profound opportunity of AI-native design is not the removal of human contribution but its elevation — freeing people entirely from the repetitive and the routine, so that human intelligence is reserved exclusively for the work that most deserves it.</p>
+          <p class="pc-summary">The most persistent anxiety about AI-native business design is that it is a sophisticated mechanism for replacing people. This paper challenges that assumption directly. When agents execute routine and repeatable processes, human attention is freed for the work that humans do uniquely well: exercising judgment in ambiguous situations, building relationships, and imagining what the business could become. AI-native businesses do not have fewer people — they have people operating at a fundamentally higher level.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 9 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">Governance by Design: Why AI Native Businesses Are More Accountable, Not Less</p>
+            <span class="pc-pill">Week 7</span>
+          </div>
+          <p class="pc-hook">Far from creating a governance problem, AI-native architecture may be the most accountable business model ever designed — because when every process is explicit, every decision is traceable, and every outcome is observable, opacity becomes structurally impossible.</p>
+          <p class="pc-summary">The regulatory imagination of AI governance tends to picture black-box systems making consequential decisions without oversight. AI-native business architecture, properly implemented, is the opposite. When a business is structured as an explicit value graph — with every process node bounded, every agent's scope defined, and every handoff logged — the result is a level of operational transparency that legacy organisations cannot approach.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 9 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">Human Judgment in the Age of Agentic Business: Where People Belong</p>
+            <span class="pc-pill">Week 10</span>
+          </div>
+          <p class="pc-hook">The question is not whether humans belong in an AI-native business — they are irreplaceable — but where they belong: not inside the process, but above it, directing it with the wisdom, ethics, and creative judgment that no agent can replicate.</p>
+          <p class="pc-summary">One of the most important design questions in any AI-native business is not how to replace human judgment, but where to position it — at the points of highest consequence and least predictability. Human oversight in an AI-native business is not a concession to current limitations. It is a deliberate architectural choice that makes the whole system more robust, more ethical, and more capable of navigating a world that will always be more complex than any graph can fully capture.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 8 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+      </div>
+
+      <!-- SECTION 4 -->
+      <div class="papers-section" id="ps4">
+        <div class="ps-header">
+          <div class="ps-num">04</div>
+          <div class="ps-meta">
+            <p class="ps-title">The Founder's Playbook</p>
+            <p class="ps-purpose">Practical conviction for business builders ready to move</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Founder's Advantage: Why Starting AI Native Is Easier Than Transforming Later</p>
+            <span class="pc-pill">Week 2</span>
+          </div>
+          <p class="pc-hook">The greatest privilege available to a founder today is the blank page — and the single most powerful use of that freedom is to design the business as AI-native from the very first decision, before legacy has had even a single day to accumulate.</p>
+          <p class="pc-summary">There is a persistent assumption that AI-native design is the domain of well-resourced organisations. The reality is precisely the opposite. For a business being designed from scratch, AI-native architecture is not an additional complexity — it is a simplification. There is no legacy system to integrate with, no existing process to preserve. The founder's advantage in this era is the freedom to build the value graph correctly from the first day. This paper is written for founders who understand that the moment of greatest architectural leverage is always the beginning.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 8 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">Speed as a Business Model: How AI Native Businesses Compress Time to Value</p>
+            <span class="pc-pill">Week 8</span>
+          </div>
+          <p class="pc-hook">When velocity is structural rather than effortful — built into the architecture rather than demanded of the people — it becomes something far more powerful than an operational advantage: it becomes the business model itself.</p>
+          <p class="pc-summary">In most businesses, time is the enemy of value. Time between decision and execution. Time between customer need and delivery. AI-native architecture attacks all of these gaps simultaneously. When agents execute processes continuously and decisions propagate through the value graph in real time, the result is not incremental speed improvement — it is a structural compression of the time between intention and outcome that changes what business models become possible.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 9 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Capital Efficiency of AI Native Businesses: Doing More With Structurally Less</p>
+            <span class="pc-pill">Week 11</span>
+          </div>
+          <p class="pc-hook">AI-native architecture does not merely reduce cost — it changes the fundamental relationship between investment and output, making it possible to build businesses that scale without the headcount, overhead, and friction that have always been the tax on ambition.</p>
+          <p class="pc-summary">Capital efficiency — the ratio of value created to resources consumed — is perhaps the most important metric for any early-stage business, and AI-native architecture transforms it fundamentally. When processes that previously required significant headcount are executed by agents at negligible marginal cost, the unit economics of a business change shape entirely. The return on that investment, measured in operational capacity per pound deployed, is of a different order than anything a traditionally structured business can achieve.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 10 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+      </div>
+
+      <!-- SECTION 5 -->
+      <div class="papers-section" id="ps5">
+        <div class="ps-header">
+          <div class="ps-num">05</div>
+          <div class="ps-meta">
+            <p class="ps-title">Architecture &amp; Lifecycle</p>
+            <p class="ps-purpose">How AI-native businesses are designed, built, and grown</p>
+          </div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Lifecycle of AI Native Businesses</p>
+            <span class="pc-pill">Launch</span>
+          </div>
+          <p class="pc-hook">Understanding the lifecycle of an AI-native business is not merely useful — it is essential, because every stage demands a different kind of leadership, and the founders who map the journey in advance are the ones who navigate each transition with clarity rather than crisis.</p>
+          <p class="pc-summary">AI-native businesses have a lifecycle structurally different from anything that came before. The early stage is defined by graph design. The growth stage is defined by agent deployment and orchestration maturity. The scale stage is defined by the compounding intelligence that accrues as execution data feeds back into the system. This paper maps the full arc: what each stage demands, what success looks like within it, and what the transitions between stages require of the people who lead them.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 11 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">From Org Chart to Value Graph: A New Language for Business Architecture</p>
+            <span class="pc-pill">Week 4</span>
+          </div>
+          <p class="pc-hook">The org chart told us who was in charge; the value graph tells us how value is actually created — and that shift in language is not cosmetic, it is the conceptual foundation on which every AI-native business must be built.</p>
+          <p class="pc-summary">The organisational chart has been the dominant language for describing how a business works for over a century. It is also, for the purposes of AI-native design, almost entirely the wrong tool. An org chart describes who reports to whom — a hierarchy of authority. A value graph describes something fundamentally more useful: the connected sequence of processes through which a business takes an input and produces an outcome that a customer will pay for. This paper introduces the value graph as the foundational design language of AI-native business.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 9 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+        <div class="paper-card">
+          <div class="pc-top">
+            <p class="pc-title">The Transparency Paradox: How AI Native Architectures Create More Visible, Auditable Businesses</p>
+            <span class="pc-pill">Week 12</span>
+          </div>
+          <p class="pc-hook">The great counterintuitive truth of AI-native design is this: the business that hands its processes to agents becomes more transparent, not less — because for the first time in history, every decision a business makes can be fully seen, traced, and understood.</p>
+          <p class="pc-summary">The intuitive assumption is that a business run by agents is less visible and less accountable. The reality of a properly implemented AI-native architecture is the exact opposite. Because the entire business is expressed as an explicit, structured value graph, and because every agent's execution within that graph is logged and observable, the AI-native business produces a continuous, machine-readable record of everything it does and why. This paper closes the series by arguing that AI-native design is not just the future of business performance — it is the future of business integrity.</p>
+          <div class="pc-foot"><span class="pc-read">Full paper · approx. 10 min read</span><span class="pc-dl">↓ PDF — coming soon</span></div>
+        </div>
+      </div>
+
+      <!-- Papers CTA -->
+      <div style="margin-top:4rem; padding-top:4rem; border-top:1px solid var(--chalk-mid); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:2rem;">
+        <div>
+          <p style="font-family:var(--type-display); font-size:1.5rem; color:var(--ink); letter-spacing:-0.02em; margin-bottom:0.5rem;">Ready to design your system?</p>
+          <p style="font-size:0.85rem; color:var(--ink-muted); line-height:1.6; max-width:40ch;">These papers describe the category. GEARS&#8482; delivers it. Talk to GKIM about your business.</p>
+        </div>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="#" onclick="hidePapers(); document.getElementById('start').scrollIntoView({behavior:'smooth'}); return false;" class="btn btn-dark">Book a Session</a>
+          <button onclick="hidePapers()" class="btn btn-outline-dark" style="background:transparent; color:var(--ink-muted); border-color:var(--chalk-mid);">Back to GKIM</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Nav scroll
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  // Active nav highlight
+  var sections = document.querySelectorAll('section[id]');
+  var links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function(){
+    var cur = '';
+    sections.forEach(function(s){
+      if(window.scrollY >= s.offsetTop - 130) cur = s.id;
+    });
+    links.forEach(function(a){
+      a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--accent)' : '';
+    });
+  }, {passive:true});
+
+  // Scroll reveal
+  var els = document.querySelectorAll('.rv');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -30px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+
+  // Form
+  var btn = document.getElementById('form-btn');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var n = document.getElementById('f-name').value.trim();
+      var e = document.getElementById('f-email').value.trim();
+      if(!n || !e){
+        btn.textContent = 'Please add your name and email';
+        setTimeout(function(){ btn.textContent = 'Book a Session'; }, 2500);
+        return;
+      }
+      btn.textContent = 'Request sent — we\'ll be in touch shortly';
+      btn.style.background = '#1a6b3c';
+      btn.disabled = true;
+    });
+  }
+})();
+
+// Papers page show/hide
+function showPapers(section) {
+  var page = document.getElementById('papers-page');
+  page.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  page.style.position = 'fixed';
+  page.style.inset = '0';
+  page.style.zIndex = '200';
+  page.style.overflowY = 'auto';
+  page.style.background = 'var(--chalk)';
+  page.scrollTop = 0;
+  if(section) {
+    setTimeout(function(){
+      var el = page.querySelector('#' + section);
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    }, 100);
+  }
+}
+
+function hidePapers() {
+  var page = document.getElementById('papers-page');
+  page.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function scrollToPaper(id) {
+  var page = document.getElementById('papers-page');
+  var el = page.querySelector('#' + id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+  return false;
+}
+</script>
+</body>
+</html>

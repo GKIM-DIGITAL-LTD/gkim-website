@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKIM Digital — Ihr KI-natives Unternehmen gestalten</title>
+<meta name="description" content="GKIM Digital hilft Gründern und Unternehmern, ihr Geschäftsmodell als KI-natives System zu definieren und zu bauen. Methodik. Struktur. Nachhaltige Wettbewerbsvorteile.">
+<link rel="alternate" hreflang="en" href="/en/">
+<link rel="alternate" hreflang="de" href="/de/">
+<link rel="alternate" hreflang="vi" href="/vi/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a09;
+  --ink-soft: #2c2c2a;
+  --ink-muted: #6b6a64;
+  --chalk: #f5f4f0;
+  --chalk-warm: #ede9e0;
+  --chalk-mid: #d4cfc2;
+  --accent: #c8401a;
+  --accent-warm: #e05c30;
+  --gold: #b8922a;
+  --type-display: 'DM Serif Display', Georgia, serif;
+  --type-body: 'Figtree', 'Helvetica Neue', sans-serif;
+  --type-serif: 'Instrument Serif', Georgia, serif;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--type-body); background: var(--chalk); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+
+/* ——— NAV ——— */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2.5rem;
+  background: rgba(245,244,240,0.93); backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(10,10,9,0.07);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 0.85rem 2.5rem; }
+.nav-logo { font-family: var(--type-display); font-size: 1.2rem; color: var(--ink); }
+.nav-logo em { font-style: normal; color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; }
+.nav-links a { font-size: 0.8rem; letter-spacing: 0.03em; color: var(--ink-soft); transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  padding: 0.55rem 1.3rem; background: var(--ink); color: var(--chalk) !important;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--accent) !important; }
+
+/* Language switcher */
+.lang-switcher {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.7rem; letter-spacing: 0.06em;
+  border-left: 1px solid rgba(10,10,9,0.1); padding-left: 1.25rem; margin-left: 0.5rem;
+}
+.lang-switcher a {
+  color: var(--ink-muted); transition: color 0.2s;
+  padding: 0.15rem 0.3rem;
+}
+.lang-switcher a:hover { color: var(--ink); }
+.lang-switcher a.active { color: var(--accent); font-weight: 500; }
+
+/* ——— BUTTONS ——— */
+.btn {
+  display: inline-block; font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.07em; text-transform: uppercase; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-dark {
+  padding: 0.85rem 1.9rem; background: var(--ink); color: var(--chalk);
+  border: 1px solid var(--ink);
+}
+.btn-dark:hover { background: var(--accent); border-color: var(--accent); }
+.btn-outline-dark {
+  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
+  border: 1px solid rgba(245,244,240,0.2);
+}
+.btn-outline-dark:hover { border-color: rgba(245,244,240,0.5); color: var(--chalk); }
+.btn-red { padding: 0.85rem 1.9rem; background: var(--chalk); color: var(--accent); border: 1px solid var(--chalk); }
+.btn-red:hover { background: var(--ink); border-color: var(--ink); color: var(--chalk); }
+.btn-outline-light {
+  padding: 0.85rem 1.9rem; background: transparent; color: rgba(245,244,240,0.55);
+  border: 1px solid rgba(245,244,240,0.25);
+}
+.btn-outline-light:hover { border-color: rgba(245,244,240,0.6); color: var(--chalk); }
+
+/* ——— HERO ——— */
+.hero {
+  min-height: 100vh; background: var(--ink);
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden; padding-top: 72px;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(245,244,240,0.03) 79px,rgba(245,244,240,0.03) 80px),
+    repeating-linear-gradient(90deg,transparent,transparent 119px,rgba(245,244,240,0.03) 119px,rgba(245,244,240,0.03) 120px);
+}
+.hero-stripe {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent);
+}
+.hero-main {
+  flex: 1; display: flex; align-items: center;
+  padding: 5rem 2.5rem 4rem;
+  max-width: 1160px; margin: 0 auto; width: 100%;
+}
+.hero-text { max-width: 680px; }
+.hero-eyebrow {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1.75rem;
+  opacity: 0; animation: up 0.8s var(--ease-out) 0.15s forwards;
+}
+.hero-h1 {
+  font-family: var(--type-display);
+  font-size: clamp(2.6rem, 6.5vw, 6rem);
+  line-height: 0.96; letter-spacing: -0.02em; color: var(--chalk);
+  margin-bottom: 2.25rem;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.3s forwards;
+}
+.hero-h1 em { font-style: italic; color: rgba(245,244,240,0.45); }
+.hero-sub {
+  font-size: 1rem; color: rgba(245,244,240,0.5); line-height: 1.65;
+  margin-bottom: 0.85rem; max-width: 44ch;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.45s forwards;
+}
+.hero-support {
+  font-size: 0.875rem; color: rgba(245,244,240,0.32); line-height: 1.7;
+  margin-bottom: 3rem; max-width: 52ch;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.55s forwards;
+}
+.hero-ctas {
+  display: flex; gap: 0.85rem; flex-wrap: wrap;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.7s forwards;
+}
+.hero-stats {
+  border-top: 1px solid rgba(245,244,240,0.07);
+  padding: 2.5rem 2.5rem;
+  max-width: 1160px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
+  opacity: 0; animation: up 0.9s var(--ease-out) 0.95s forwards;
+}
+.stat { display: flex; flex-direction: column; gap: 0.3rem; }
+.stat-n {
+  font-family: var(--type-display); font-size: 2.1rem;
+  color: var(--chalk); line-height: 1; letter-spacing: -0.02em;
+}
+.stat-l { font-size: 0.72rem; color: rgba(245,244,240,0.32); line-height: 1.45; }
+.stat-tag {
+  grid-column: 1/-1;
+  border-top: 1px solid rgba(245,244,240,0.05);
+  padding-top: 1.25rem;
+  font-size: 0.75rem; font-style: italic; color: rgba(245,244,240,0.2);
+}
+
+/* ——— SECTION COMMONS ——— */
+.sec { padding: 7rem 0; }
+.sec-label {
+  font-size: 0.67rem; font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 2rem;
+}
+.sec-label.lt { color: rgba(245,244,240,0.35); }
+.display {
+  font-family: var(--type-display); letter-spacing: -0.02em; line-height: 1.02;
+}
+.keyline {
+  font-family: var(--type-display); font-style: italic; line-height: 1.3;
+}
+
+/* ——— SHIFT ——— */
+.shift { background: var(--chalk); }
+.shift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+.shift-h { font-size: clamp(1.9rem,3.5vw,3rem); color: var(--ink); margin-bottom: 1.75rem; }
+.shift-body { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.75; }
+.shift-body p+p { margin-top: 0.9rem; }
+.shift-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.shift-list li {
+  display: flex; gap: 0.65rem; font-size: 0.875rem; color: var(--ink-soft); line-height: 1.55;
+}
+.shift-list li::before { content: '—'; color: var(--accent); flex-shrink: 0; }
+.shift-quote {
+  font-size: 1.4rem; color: var(--ink);
+  padding: 1.75rem 0 1.75rem 1.75rem;
+  border-left: 3px solid var(--accent); margin-top: 3rem;
+}
+
+/* ——— VISION (dark) ——— */
+.vision-dark { background: #111110; }
+.vision-h { font-size: clamp(2.5rem,5vw,4.5rem); color: var(--chalk); max-width: 18ch; margin-bottom: 3.5rem; }
+.vision-4 {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(245,244,240,0.09);
+}
+.v4-card {
+  padding: 2.5rem;
+  border-right: 1px solid rgba(245,244,240,0.09);
+  border-bottom: 1px solid rgba(245,244,240,0.09);
+}
+.v4-card:nth-child(2n) { border-right: none; }
+.v4-card:nth-last-child(-n+2) { border-bottom: none; }
+.v4-bar { width: 28px; height: 2px; background: var(--accent); margin-bottom: 1.25rem; }
+.v4-title { font-family: var(--type-display); font-size: 1.1rem; color: var(--chalk); margin-bottom: 0.6rem; }
+.v4-body { font-size: 0.82rem; color: rgba(245,244,240,0.4); line-height: 1.65; }
+.vision-kl { font-size: 1.3rem; color: rgba(245,244,240,0.7); margin-top: 4rem; max-width: 36ch; }
+
+/* ——— BEFORE/AFTER ——— */
+.ba { display: grid; grid-template-columns: 1fr 1fr; margin-top: 4rem; }
+.ba-col { padding: 2.5rem; }
+.ba-before { background: rgba(245,244,240,0.04); border-right: 1px solid rgba(245,244,240,0.08); }
+.ba-after { background: rgba(200,64,26,0.07); }
+.ba-lbl {
+  font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.ba-before .ba-lbl { color: rgba(245,244,240,0.25); }
+.ba-after .ba-lbl { color: rgba(200,64,26,0.7); }
+.ba-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.ba-list li {
+  font-size: 0.85rem; display: flex; gap: 0.55rem;
+  align-items: flex-start; line-height: 1.5;
+}
+.ba-before .ba-list li { color: rgba(245,244,240,0.38); }
+.ba-after .ba-list li { color: rgba(245,244,240,0.6); }
+.ba-before .ba-list li::before { content: '×'; color: rgba(245,244,240,0.25); flex-shrink:0; }
+.ba-after .ba-list li::before { content: '✓'; color: var(--accent); flex-shrink:0; }
+
+/* ——— GEARS ——— */
+.gears-sec { background: var(--ink); }
+.gears-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4.5rem; }
+.gears-h { font-size: clamp(2rem,4vw,3.5rem); color: var(--chalk); }
+.gears-intro { font-size: 0.9rem; color: rgba(245,244,240,0.45); line-height: 1.75; padding-top: 0.5rem; }
+.gears-intro strong { color: rgba(245,244,240,0.8); font-weight: 400; }
+.gears-steps {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(245,244,240,0.09);
+}
+.g-step {
+  padding: 2.5rem 1.75rem 2.5rem 0;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.g-step:last-child { border-right: none; padding-right: 0; }
+.g-step:not(:first-child) { padding-left: 1.75rem; }
+.g-num {
+  font-family: var(--type-display); font-size: 2.8rem;
+  color: rgba(245,244,240,0.06); margin-bottom: 1.25rem; line-height: 1;
+}
+.g-title { font-family: var(--type-display); font-size: 1.1rem; color: var(--chalk); margin-bottom: 0.85rem; }
+.g-title em { font-style: normal; color: var(--accent); }
+.g-list { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+.g-list li {
+  font-size: 0.78rem; color: rgba(245,244,240,0.35);
+  padding-left: 0.9rem; position: relative; line-height: 1.5;
+}
+.g-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.7rem; }
+.gears-kl {
+  margin-top: 3.5rem; padding-top: 3rem;
+  border-top: 1px solid rgba(245,244,240,0.07);
+  font-size: 1rem; font-style: italic; color: rgba(245,244,240,0.3);
+}
+
+/* ——— OUTPUTS ——— */
+.outputs-sec { background: var(--chalk); }
+.out-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4.5rem; align-items: end; }
+.out-h { font-size: clamp(2.5rem,4.5vw,4rem); color: var(--ink); }
+.out-intro { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.75; }
+.out-intro strong { color: var(--ink); font-weight: 500; }
+.out-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border: 1px solid var(--chalk-mid);
+}
+.out-card {
+  padding: 2.25rem;
+  border-right: 1px solid var(--chalk-mid);
+  border-bottom: 1px solid var(--chalk-mid);
+  transition: background 0.2s;
+}
+.out-card:hover { background: var(--chalk-warm); }
+.out-card:nth-child(3n) { border-right: none; }
+.out-card:nth-last-child(-n+3) { border-bottom: none; }
+.out-n {
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 1.25rem;
+}
+.out-title { font-family: var(--type-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; }
+.out-body { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6; }
+.out-kl { font-size: 0.75rem; color: var(--accent); font-style: italic; margin-top: 0.85rem; font-family: var(--type-serif); }
+.out-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--chalk-mid);
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.out-foot-text {
+  font-family: var(--type-serif); font-size: 1.1rem; font-style: italic;
+  color: var(--ink-soft); max-width: 44ch; line-height: 1.45;
+}
+
+/* ——— CASE STUDY ——— */
+.case-sec { background: var(--chalk-warm); border-top: 1px solid var(--chalk-mid); }
+.case-grid { display: grid; grid-template-columns: 1fr 1.35fr; gap: 5rem; align-items: start; }
+.case-tag {
+  display: inline-block; font-size: 0.62rem; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 0.35rem 0.75rem;
+  background: var(--accent); color: var(--chalk); margin-bottom: 1.25rem;
+}
+.case-h { font-size: clamp(1.75rem,3.5vw,2.75rem); color: var(--ink); margin-bottom: 1.25rem; }
+.case-sub { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.65; font-style: italic; margin-bottom: 2rem; }
+.case-flow {
+  display: flex; flex-wrap: wrap; border: 1px solid var(--chalk-mid); margin-bottom: 2.5rem;
+}
+.cf-s {
+  padding: 0.6rem 0.9rem; font-size: 0.68rem; letter-spacing: 0.06em;
+  color: var(--ink-soft); border-right: 1px solid var(--chalk-mid); white-space: nowrap;
+}
+.cf-s:last-child { border-right: none; }
+.cf-s.hi { background: var(--ink); color: var(--chalk); }
+.case-nums {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--chalk-mid); border: 1px solid var(--chalk-mid);
+}
+.cn { padding: 1.25rem; background: var(--chalk-warm); display: flex; flex-direction: column; gap: 0.2rem; }
+.cn-n { font-family: var(--type-display); font-size: 1.5rem; color: var(--ink); letter-spacing: -0.02em; }
+.cn-l { font-size: 0.7rem; color: var(--ink-muted); line-height: 1.4; }
+.case-body { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 1.75rem; }
+.case-body p+p { margin-top: 0.9rem; }
+.case-kl {
+  font-family: var(--type-display); font-size: 1.05rem; font-style: italic;
+  color: var(--ink); padding-left: 1.35rem;
+  border-left: 3px solid var(--accent); margin-bottom: 2rem; line-height: 1.35;
+}
+
+/* ——— FOR ——— */
+.for-sec { background: var(--ink); }
+.for-h { font-size: clamp(1.9rem,4vw,3.5rem); color: var(--chalk); margin-bottom: 4rem; max-width: 22ch; }
+.for-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid rgba(245,244,240,0.09);
+}
+.fc {
+  padding: 2.75rem 1.75rem 2.75rem 0;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.fc:last-child { border-right: none; }
+.fc:not(:first-child) { padding-left: 1.75rem; }
+.fc-role { font-family: var(--type-display); font-size: 1.15rem; color: var(--chalk); margin-bottom: 0.85rem; }
+.fc-body { font-size: 0.82rem; color: rgba(245,244,240,0.38); line-height: 1.65; }
+
+/* ——— TESTIMONIAL ——— */
+.testi-sec { background: var(--chalk); padding: 5.5rem 0; border-top: 1px solid var(--chalk-mid); }
+.testi-inner { display: grid; grid-template-columns: auto 1fr; gap: 3.5rem; align-items: center; max-width: 860px; }
+.testi-bar { width: 3px; min-height: 80px; background: var(--accent); }
+.testi-quote {
+  font-family: var(--type-display); font-size: clamp(1.05rem,2vw,1.4rem);
+  font-style: italic; color: var(--ink); line-height: 1.45; margin-bottom: 1.25rem;
+}
+.testi-attr { font-size: 0.75rem; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* ——— ABOUT / FOUNDER ——— */
+.about-sec { background: var(--chalk-warm); border-top: 4px solid var(--ink); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5.5rem; }
+.about-lbl { font-size: 0.67rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.75rem; }
+.about-h { font-size: clamp(1.75rem,3vw,2.5rem); color: var(--ink); margin-bottom: 2rem; }
+.about-letter { font-family: var(--type-serif); font-size: 1rem; color: var(--ink-soft); font-style: italic; line-height: 1.8; }
+.about-letter p+p { margin-top: 1.1rem; }
+.about-sig { margin-top: 1.75rem; font-family: var(--type-display); font-size: 1.05rem; color: var(--ink); font-style: normal; }
+.about-belief {
+  padding: 2.25rem; background: var(--ink); color: var(--chalk); margin-bottom: 1.5rem;
+}
+.ab-title { font-family: var(--type-display); font-size: 0.9rem; color: rgba(245,244,240,0.45); margin-bottom: 0.85rem; }
+.ab-body { font-size: 0.85rem; color: rgba(245,244,240,0.62); line-height: 1.7; }
+.values-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--chalk-mid); }
+.val {
+  padding: 1.4rem 1.5rem;
+  border-bottom: 1px solid var(--chalk-mid);
+}
+.val:last-child { border-bottom: none; }
+.val-t { font-family: var(--type-display); font-size: 0.9rem; color: var(--ink); margin-bottom: 0.25rem; }
+.val-b { font-size: 0.775rem; color: var(--ink-muted); line-height: 1.55; }
+
+/* ——— START / CONTACT ——— */
+.start-sec { background: var(--ink); border-top: 4px solid var(--accent); }
+.start-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5.5rem; align-items: start; }
+.start-h { font-size: clamp(2rem,4.5vw,3.75rem); color: var(--chalk); margin-bottom: 1.25rem; }
+.start-sub { font-size: 0.9rem; color: rgba(245,244,240,0.45); line-height: 1.7; margin-bottom: 3rem; }
+.start-items { list-style: none; display: flex; flex-direction: column; gap: 1.1rem; }
+.si { display: flex; gap: 0.9rem; align-items: flex-start; }
+.si-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 0.5rem; }
+.si-text { font-size: 0.85rem; color: rgba(245,244,240,0.5); line-height: 1.6; }
+.start-kl {
+  font-family: var(--type-display); font-style: italic;
+  font-size: 1.05rem; color: rgba(245,244,240,0.4);
+  margin-top: 3rem; padding-top: 2.5rem;
+  border-top: 1px solid rgba(245,244,240,0.07);
+}
+.form-box { background: var(--chalk); padding: 2.75rem; }
+.form-intro { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 1.75rem; line-height: 1.6; }
+.form-g { margin-bottom: 1.1rem; }
+.form-lbl {
+  display: block; font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.45rem;
+}
+.form-in, .form-ta {
+  width: 100%; padding: 0.7rem 0.9rem;
+  background: var(--chalk-warm); border: 1px solid var(--chalk-mid);
+  color: var(--ink); font-family: var(--type-body); font-size: 0.875rem;
+  outline: none; transition: border-color 0.2s;
+}
+.form-in:focus, .form-ta:focus { border-color: var(--accent); }
+.form-ta { height: 110px; resize: vertical; }
+.form-btn {
+  width: 100%; padding: 0.95rem; margin-top: 0.4rem;
+  background: var(--accent); color: var(--chalk); border: none;
+  font-family: var(--type-body); font-size: 0.75rem; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s;
+}
+.form-btn:hover { background: var(--accent-warm); }
+
+/* ——— FINAL CTA ——— */
+.cta-sec {
+  background: var(--accent); padding: 7rem 0;
+  position: relative; overflow: hidden;
+}
+.cta-sec::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.025) 40px,rgba(255,255,255,0.025) 41px);
+}
+.cta-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center;
+}
+.cta-h { font-size: clamp(2rem,4.5vw,3.75rem); color: var(--chalk); max-width: 18ch; }
+.cta-body { font-size: 0.875rem; color: rgba(245,244,240,0.6); line-height: 1.7; margin-top: 0.9rem; max-width: 40ch; }
+.cta-btns { display: flex; flex-direction: column; gap: 0.75rem; }
+
+/* ——— FOOTER ——— */
+footer { background: var(--ink); padding: 4rem 0 2.5rem; border-top: 1px solid rgba(245,244,240,0.05); }
+.foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+.foot-brand { font-family: var(--type-display); font-size: 1.25rem; color: var(--chalk); margin-bottom: 0.65rem; }
+.foot-brand em { font-style: normal; color: var(--accent); }
+.foot-tag { font-size: 0.775rem; color: rgba(245,244,240,0.28); line-height: 1.6; max-width: 26ch; }
+.foot-col-h { font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,244,240,0.28); margin-bottom: 1.1rem; }
+.foot-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.foot-links a { font-size: 0.82rem; color: rgba(245,244,240,0.45); transition: color 0.2s; }
+.foot-links a:hover { color: var(--chalk); }
+.foot-addr { font-size: 0.8rem; color: rgba(245,244,240,0.38); line-height: 1.55; }
+.foot-addr p { margin-bottom: 0.25rem; }
+.foot-addr .region { font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,244,240,0.22); margin-top: 0.65rem; margin-bottom: 0.2rem; }
+.foot-bottom {
+  border-top: 1px solid rgba(245,244,240,0.05);
+  padding-top: 1.75rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.foot-copy { font-size: 0.72rem; color: rgba(245,244,240,0.2); }
+
+/* ——— CAMBRIDGE STRIP ——— */
+.cambridge-strip {
+  background: var(--ink-soft); border-top: 1px solid rgba(245,244,240,0.06);
+  padding: 0; overflow: hidden;
+}
+.cambridge-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: stretch; gap: 0;
+}
+.cs-item {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 1.1rem 2rem; border-right: 1px solid rgba(245,244,240,0.06);
+  gap: 0.15rem;
+}
+.cs-item:first-child { padding-left: 0; }
+.cs-item:last-child { border-right: none; }
+.cs-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,244,240,0.22); }
+.cs-value { font-size: 0.78rem; color: rgba(245,244,240,0.55); letter-spacing: 0.01em; }
+.cs-value em { font-style: normal; color: var(--gold); }
+.cs-divider { flex: 1; }
+.cambridge-tagline {
+  display: flex; align-items: center; padding: 1.1rem 0 1.1rem 2rem;
+  font-size: 0.72rem; font-style: italic; color: rgba(245,244,240,0.25);
+  border-left: 1px solid rgba(245,244,240,0.06);
+}
+
+/* ——— STRUCTURAL ADVANTAGE BOX ——— */
+.struct-box {
+  margin-top: 2.75rem; padding: 1.75rem 2rem;
+  border: 1px solid rgba(10,10,9,0.12);
+  background: var(--chalk-warm);
+  display: flex; gap: 1.5rem; align-items: flex-start;
+}
+.struct-box-bar { width: 3px; flex-shrink: 0; background: var(--accent); align-self: stretch; min-height: 40px; }
+.struct-box-label { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.5rem; }
+.struct-box-quote { font-family: var(--type-display); font-size: 1.1rem; color: var(--ink); line-height: 1.35; letter-spacing: -0.01em; }
+
+/* ——— VISION FEAR OPENER ——— */
+.vision-fear {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 0;
+  border: 1px solid rgba(245,244,240,0.09); margin-bottom: 4rem;
+}
+.vf-card {
+  padding: 2.25rem;
+  border-right: 1px solid rgba(245,244,240,0.09);
+}
+.vf-card:last-child { border-right: none; }
+.vf-who {
+  font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.vf-claim {
+  font-family: var(--type-display); font-size: 0.95rem; color: var(--chalk);
+  margin-bottom: 0.75rem; line-height: 1.3; letter-spacing: -0.01em;
+}
+.vf-body { font-size: 0.78rem; color: rgba(245,244,240,0.38); line-height: 1.65; }
+.vision-fear-intro {
+  font-size: 0.95rem; color: rgba(245,244,240,0.55); line-height: 1.75;
+  max-width: 68ch; margin-bottom: 3rem;
+}
+.vision-fear-intro strong { color: rgba(245,244,240,0.85); font-weight: 400; }
+
+/* ——— TRACK RECORD ——— */
+.track-sec { background: var(--ink); padding: 0 0 6rem; border-top: 1px solid rgba(245,244,240,0.06); }
+.track-intro { padding: 4rem 0 3rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; }
+.track-h { font-size: clamp(1.4rem,2.5vw,2rem); color: var(--chalk); max-width: 30ch; line-height: 1.1; }
+.track-sub { font-size: 0.8rem; color: rgba(245,244,240,0.3); max-width: 38ch; line-height: 1.65; }
+.track-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+  border: 1px solid rgba(245,244,240,0.08);
+}
+.tr-card {
+  padding: 1.75rem 1.5rem;
+  border-right: 1px solid rgba(245,244,240,0.08);
+  border-bottom: 1px solid rgba(245,244,240,0.08);
+  transition: background 0.2s;
+}
+.tr-card:hover { background: rgba(245,244,240,0.03); }
+.tr-card:nth-child(4n) { border-right: none; }
+.tr-card:nth-last-child(-n+4) { border-bottom: none; }
+.tr-sector {
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.6rem;
+}
+.tr-title { font-family: var(--type-display); font-size: 0.88rem; color: var(--chalk); margin-bottom: 0.6rem; line-height: 1.3; }
+.tr-outcome { font-size: 0.75rem; color: rgba(245,244,240,0.35); line-height: 1.5; margin-bottom: 0.75rem; }
+.tr-meta { font-size: 0.6rem; color: rgba(245,244,240,0.18); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ——— VALUE LADDER ——— */
+.ladder-sec { background: var(--chalk-warm); padding: 7rem 0; border-top: 1px solid var(--chalk-mid); }
+.ladder-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4rem; align-items: end; }
+.ladder-h { font-size: clamp(1.9rem,3.5vw,3rem); color: var(--ink); }
+.ladder-sub { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.75; }
+.ladder-sub strong { color: var(--ink); font-weight: 500; }
+.ladder-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+.ladder-grid::before {
+  content: ''; position: absolute; top: 2.25rem; left: 0; right: 0; height: 1px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0, var(--accent) 8px, transparent 8px, transparent 16px);
+  z-index: 0;
+}
+.ladder-step {
+  padding: 0 1.5rem 2.5rem 0; position: relative; z-index: 1;
+}
+.ladder-step:first-child { padding-left: 0; }
+.ladder-step:last-child { padding-right: 0; }
+.ls-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--accent); background: var(--chalk-warm);
+  margin-bottom: 1.5rem; position: relative; z-index: 2;
+  transition: background 0.2s;
+}
+.ladder-step:hover .ls-dot { background: var(--accent); }
+.ls-num {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 0.5rem;
+}
+.ls-title { font-family: var(--type-display); font-size: 1rem; color: var(--ink); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+.ls-body { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1rem; }
+.ls-signal {
+  font-size: 0.7rem; font-style: italic; color: var(--accent);
+  font-family: var(--type-serif); line-height: 1.4;
+}
+.ls-cta {
+  display: inline-block; margin-top: 0.85rem;
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--ink); border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.1rem; transition: color 0.2s, border-color 0.2s;
+}
+.ls-cta:hover { color: var(--accent); border-color: var(--accent); }
+.ladder-note {
+  margin-top: 3.5rem; padding: 1.5rem 2rem; background: var(--chalk);
+  border: 1px solid var(--chalk-mid); border-left: 3px solid var(--accent);
+  font-size: 0.85rem; color: var(--ink-soft); line-height: 1.65;
+}
+.ladder-note strong { color: var(--ink); font-weight: 500; }
+
+/* ——— REVEAL ——— */
+.rv { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.rv.in { opacity: 1; transform: none; }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+
+/* ——— ANIMATIONS ——— */
+@keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
+
+/* ——— RESPONSIVE ——— */
+@media (max-width: 900px) {
+  .hero-stats { grid-template-columns: repeat(2,1fr); }
+  .shift-grid, .gears-top, .out-top, .case-grid, .about-grid, .start-grid, .cta-inner, .foot-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .ba, .testi-inner { grid-template-columns: 1fr; }
+  .testi-bar { display: none; }
+  .gears-steps, .for-grid { grid-template-columns: 1fr; }
+  .g-step, .fc { border-right: none; border-bottom: 1px solid rgba(245,244,240,0.09); padding: 2rem 0; }
+  .g-step:last-child, .fc:last-child { border-bottom: none; }
+  .g-step:not(:first-child), .fc:not(:first-child) { padding-left: 0; }
+  .out-grid { grid-template-columns: 1fr 1fr; }
+  .out-card:nth-child(3n) { border-right: 1px solid var(--chalk-mid); }
+  .out-card:nth-child(2n) { border-right: none; }
+  .vision-fear { grid-template-columns: 1fr; }
+  .vf-card { border-right: none; border-bottom: 1px solid rgba(245,244,240,0.09); }
+  .vf-card:last-child { border-bottom: none; }
+  .cta-inner { justify-items: start; }
+  nav ul { display: none; }
+  .cambridge-inner { flex-wrap: wrap; }
+  .cs-item { padding: 0.85rem 1.25rem; border-right: 1px solid rgba(245,244,240,0.06); border-bottom: 1px solid rgba(245,244,240,0.06); }
+  .cambridge-tagline { display: none; }
+  .ladder-top { grid-template-columns: 1fr; gap: 2rem; }
+  .ladder-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .ladder-grid::before { display: none; }
+  .ladder-step { padding: 0; }
+  .track-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .out-grid { grid-template-columns: 1fr; }
+  .out-card { border-right: none; }
+  .case-nums { grid-template-columns: 1fr; }
+  .ladder-grid { grid-template-columns: 1fr; }
+  .track-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="/de/" class="nav-logo">GK<em>I</em>M Digital</a>
+  <ul class="nav-links">
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#gears">GEARS&#8482;</a></li>
+    <li><a href="#outputs">Leistungen</a></li>
+    <li><a href="#case-study">Fallstudie</a></li>
+    <li><a href="#about">Über uns</a></li>
+    <li><a href="#start" class="nav-cta">Kontakt aufnehmen</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/en/">EN</a>
+    <a href="/de/" class="active">DE</a>
+    <a href="/vi/">VI</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-main">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Unternehmenssystem-Design</p>
+      <h1 class="hero-h1">Gestalten Sie <em>Ihr</em> KI-natives Unternehmen</h1>
+      <p class="hero-sub">Wettbewerbsvorteile entstehen nicht mehr durch Strategie allein. Sie entstehen durch Struktur.</p>
+      <p class="hero-support">Wir schließen die Lücke zwischen Strategie und Ingenieurwesen — und definieren, wie Ihr Unternehmen als System tatsächlich Wert schafft.</p>
+      <div class="hero-ctas">
+        <a href="#start" class="btn btn-dark">Gespräch vereinbaren</a>
+        <a href="#outputs" class="btn btn-outline-dark">Leistungen ansehen</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats container">
+    <div class="stat">
+      <span class="stat-n">$1Mrd+</span>
+      <span class="stat-l">Gestaltete Unternehmenssysteme</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">100.000+</span>
+      <span class="stat-l">Täglich strukturierte Transaktionen</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">120+</span>
+      <span class="stat-l">Ausgelieferte Systeme</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">16 Jahre</span>
+      <span class="stat-l">Strategie &amp; Ingenieurwesen</span>
+    </div>
+    <p class="stat-tag">Von Anfang an auf Skalierung ausgelegt — nicht nachträglich angepasst.</p>
+  </div>
+</section>
+
+<!-- CAMBRIDGE STRIP -->
+<div class="cambridge-strip">
+  <div class="cambridge-inner">
+    <div class="cs-item">
+      <span class="cs-label">Hauptsitz</span>
+      <span class="cs-value"><em>Cambridge</em>, Vereinigtes Königreich</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Gegründet</span>
+      <span class="cs-value">2010 · 16 Jahre</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Globales Büro</span>
+      <span class="cs-value">Ho-Chi-Minh-Stadt, Vietnam</span>
+    </div>
+    <div class="cs-item">
+      <span class="cs-label">Disziplin</span>
+      <span class="cs-value">KI-natives Unternehmensdesign</span>
+    </div>
+    <div class="cs-divider"></div>
+    <p class="cambridge-tagline">Akademische Präzision. Unternehmerische Umsetzung.</p>
+  </div>
+</div>
+
+<!-- THE SHIFT -->
+<section class="sec shift">
+  <div class="container">
+    <div class="shift-grid">
+      <div class="rv">
+        <p class="sec-label">Die Verschiebung</p>
+        <h2 class="display shift-h">Unternehmen beginnen, sich grundlegend zu verändern</h2>
+        <div class="shift-body">
+          <p>KI gibt heute jedem Unternehmen dieselbe Entwicklungsgeschwindigkeit.</p>
+          <p>Aber Geschwindigkeit nützt nichts, wenn das Unternehmen selbst nie als funktionierendes System definiert wurde. Genau hier scheitern die meisten digitalen Unternehmen.</p>
+          <p>Die eigentliche Engstelle ist nicht mehr die Entwicklung — sondern die Definition.</p>
+        </div>
+      </div>
+      <div class="rv d2">
+        <ul class="shift-list">
+          <li>Fehler werden erst nach dem Bau entdeckt — nicht davor</li>
+          <li>Anforderungen sind unvollständig, bevor die erste Zeile Code geschrieben wird</li>
+          <li>Logik ist inkonsistent zwischen Teams und Systemen</li>
+          <li>Stakeholder bleiben uneinig, bis die Umsetzung es offenbart</li>
+          <li>Validierung geschieht durch Bauen — statt vor dem Bauen</li>
+        </ul>
+        <blockquote class="keyline shift-quote">
+          Geschwindigkeit ist kein Vorteil.<br>Design ist es.
+        </blockquote>
+        <div class="struct-box">
+          <div class="struct-box-bar"></div>
+          <div class="struct-box-text">
+            <p class="struct-box-label">Die einzige Quelle nachhaltiger Wettbewerbsvorteile</p>
+            <p class="struct-box-quote">Architektur und Anpassungsfähigkeit. Alles andere lässt sich kopieren.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision" class="sec vision-dark">
+  <div class="container">
+    <p class="sec-label lt rv">Vision</p>
+    <h2 class="display vision-h rv d1">Das KI-native Unternehmen</h2>
+
+    <p class="vision-fear-intro rv d1">
+      KI wirft berechtigte Fragen auf. Was geschieht mit den Menschen in diesen Unternehmen? Was erleben Kunden? Was bedeutet das für Investoren? <strong>Die Antwort hängt vollständig davon ab, wie das System gestaltet ist.</strong> Ein gut durchdachtes KI-natives Design mindert den Wert keiner dieser Gruppen — es schafft für alle nachhaltig mehr davon.
+    </p>
+    <div class="vision-fear rv d2">
+      <div class="vf-card">
+        <p class="vf-who">Für Gesellschafter &amp; Führung</p>
+        <h3 class="vf-claim">Höherer Unternehmenswert. Strukturelle Vorteile, die sich aufbauen.</h3>
+        <p class="vf-body">KI-native Systeme senken Betriebskosten, erhöhen die Ausführungsgeschwindigkeit und schaffen strukturelle Vorteile, die schwer zu replizieren sind. Anders als Einzelwerkzeuge wird ein gut gestaltetes Unternehmenssystem mit der Zeit wertvoller — nicht weniger. Es ist der am besten abgesicherte Vermögenswert, den ein Unternehmen besitzen kann.</p>
+      </div>
+      <div class="vf-card">
+        <p class="vf-who">Für Teams &amp; Mitarbeitende</p>
+        <h3 class="vf-claim">Mehr Eigenverantwortung. Weniger Koordination. Höhere Wirksamkeit.</h3>
+        <p class="vf-body">In gut gestalteten Systemen übernimmt KI die niedrigschwelligen Aufgaben — Administration, Routineentscheidungen, Koordinationsaufwand. Damit kehrt Zeit und Urteilsvermögen zu den Menschen zurück, die es am besten nutzen können. Die Befürchtung ist Ersatz. Die Realität, wenn das System mit Sorgfalt gestaltet wird, ist Aufwertung.</p>
+      </div>
+      <div class="vf-card">
+        <p class="vf-who">Für Kunden</p>
+        <h3 class="vf-claim">Schneller, relevanter, konsistenter Mehrwert.</h3>
+        <p class="vf-body">Kunden schlecht gestalteter Systeme erleben Reibung, Inkonsistenz und unpersönlichen Service. In gut gestalteten Systemen erhalten sie schnellere Antworten, relevantere Interaktionen und bessere Ergebnisse — weil das System um ihre Customer Journey herum gebaut wurde, nicht um die organisatorische Bequemlichkeit.</p>
+      </div>
+    </div>
+
+    <div class="vision-4 rv d2">
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Wertschöpfung ist explizit</h3>
+        <p class="v4-body">Prozesse sind bewusst gestaltet, sodass Wertflüsse verstanden und messbar sind — nicht vorausgesetzt.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Workflows sind durchgängig strukturiert</h3>
+        <p class="v4-body">Jeder Workflow ist ingenieurmäßig durchdacht. Menschliche und KI-Rollen sind koordiniert. Entscheidungen sind explizit und konsistent.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Leistung wird kontinuierlich verbessert</h3>
+        <p class="v4-body">Das System wird überwacht und optimiert. Strategie basiert auf Systemverhalten — nicht auf Absichten.</p>
+      </div>
+      <div class="v4-card">
+        <div class="v4-bar"></div>
+        <h3 class="v4-title">Der Vorteil wächst strukturell</h3>
+        <p class="v4-body">Schnellere Ausführung. Niedrigere Betriebskosten. Vorhersehbarere Leistung. Höherer Unternehmenswert.</p>
+      </div>
+    </div>
+
+    <div class="ba rv d3">
+      <div class="ba-col ba-before">
+        <p class="ba-lbl">Vorher — die meisten Unternehmen</p>
+        <ul class="ba-list">
+          <li>Strategie nur konzeptionell definiert</li>
+          <li>Bau beginnt vor vollständiger Definition</li>
+          <li>Versteckte Abhängigkeiten tauchen in der Umsetzung auf</li>
+          <li>Probleme werden erst nach erheblichem Bauaufwand entdeckt</li>
+          <li>Leistung reaktiv, nicht geplant</li>
+        </ul>
+      </div>
+      <div class="ba-col ba-after">
+        <p class="ba-lbl">Nachher — KI-natives Design</p>
+        <ul class="ba-list">
+          <li>System definiert, bevor eine Zeile geschrieben wird</li>
+          <li>Abgestimmte Stakeholder mit klaren Bauinputs</li>
+          <li>Probleme vor dem Bau identifiziert — nicht während</li>
+          <li>Strukturierte Workflows und sichtbare Leistung</li>
+          <li>Klarheit ersetzt Vermutungen</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="keyline vision-kl rv">Nicht bessere Software.<br>Ein besser gestaltetes Unternehmen.</p>
+  </div>
+</section>
+
+<!-- GEARS -->
+<section id="gears" class="sec gears-sec">
+  <div class="container">
+    <div class="gears-top">
+      <div class="rv">
+        <p class="sec-label lt">GEARS&#8482; — Unternehmensgeführtes Systemdesign</p>
+        <h2 class="display gears-h">Das System definieren, bevor Sie bauen</h2>
+      </div>
+      <div class="rv d2">
+        <p class="gears-intro">
+          GEARS&#8482; ist die Methodik, mit der GKIM Geschäftsideen in funktionierende Unternehmensmaschinen verwandelt.<br><br>
+          Es beginnt nicht mit Funktionen. Es beginnt mit der Frage: <strong>Wie muss das Unternehmen tatsächlich funktionieren, um Wert zu schaffen?</strong><br><br>
+          Jedes „Zahnrad" ist eine Wertschöpfungseinheit. Zusammen bilden sie die Unternehmensmaschine. Wenn die Zahnräder nicht ineinandergreifen, funktioniert das Unternehmen nicht.
+        </p>
+      </div>
+    </div>
+
+    <div class="gears-steps">
+      <div class="g-step rv">
+        <div class="g-num">01</div>
+        <h3 class="g-title"><em>Discover</em> — Die Unternehmensmaschine definieren</h3>
+        <ul class="g-list">
+          <li>Das wirtschaftliche Modell klären</li>
+          <li>Kartieren, wie Wert entsteht</li>
+          <li>Akteure, Flüsse und Abhängigkeiten identifizieren</li>
+          <li>Risiken und strukturelle Lücken aufdecken</li>
+        </ul>
+      </div>
+      <div class="g-step rv d1">
+        <div class="g-num">02</div>
+        <h3 class="g-title"><em>Design</em> — Das System strukturieren</h3>
+        <ul class="g-list">
+          <li>Workflows und Prozesse definieren</li>
+          <li>Entscheidungslogik gestalten</li>
+          <li>Daten und Kontrollpunkte strukturieren</li>
+          <li>Betrieb auf Ergebnisse ausrichten</li>
+        </ul>
+      </div>
+      <div class="g-step rv d2">
+        <div class="g-num">03</div>
+        <h3 class="g-title"><em>Deliver</em> — Baufertige Outputs</h3>
+        <ul class="g-list">
+          <li>PRD (Systemspezifikation)</li>
+          <li>Workflow-Architekturdiagramme</li>
+          <li>Datenmodelle und Zustandslogik</li>
+          <li>KPI- und Leistungsrahmen</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="gears-kl rv">GEARS&#8482; bleibt nicht bei Erkenntnissen stehen. Es liefert die Struktur, die zum Bauen erforderlich ist.</p>
+    <div class="rv d1" style="margin-top:1rem;">
+      <a href="#start" class="btn btn-outline-dark" style="display:inline-block; margin-top:0.75rem;">Gespräch vereinbaren →</a>
+    </div>
+  </div>
+</section>
+
+<!-- OUTPUTS -->
+<section id="outputs" class="sec outputs-sec">
+  <div class="container">
+    <div class="out-top">
+      <div class="rv">
+        <p class="sec-label">Was Sie tatsächlich erhalten</p>
+        <h2 class="display out-h">Keine Beratung.<br>Produktion.</h2>
+      </div>
+      <div class="rv d2">
+        <p class="out-intro">
+          Jedes Engagement liefert eine Reihe verbundener Outputs, die zusammen definieren, wie Ihr Unternehmen funktioniert.<br><br>
+          Das sind keine isolierten Dokumente. Sie bilden ein <strong>kohärentes Systemdesign</strong> — wie Wert entsteht, wie Prozesse laufen, was gebaut werden muss, wie Leistung gemessen wird.
+        </p>
+      </div>
+    </div>
+
+    <div class="out-grid">
+      <div class="out-card rv">
+        <p class="out-n">Output 01</p>
+        <h3 class="out-title">Definition der Unternehmensmaschine</h3>
+        <p class="out-body">Eine strukturierte Karte, wie Wert durch das Unternehmen fließt. Legt fehlende Komponenten offen. Stimmt alle Stakeholder ab. Bildet die Grundlage für alles Weitere.</p>
+        <p class="out-kl">Wenn das falsch ist, wird alles darauf Aufgebaute falsch sein.</p>
+      </div>
+      <div class="out-card rv d1">
+        <p class="out-n">Output 02</p>
+        <h3 class="out-title">Workflow-Architektur</h3>
+        <p class="out-body">Schritt-für-Schritt-Prozessflüsse, Akteurinteraktionen, Entscheidungspunkte, Systemübergaben. Hier bewegt sich das Unternehmen vom Konzept zum tatsächlichen Betrieb.</p>
+        <p class="out-kl">Beseitigt Mehrdeutigkeit. Ermöglicht Automatisierung. Deckt Ineffizienzen auf.</p>
+      </div>
+      <div class="out-card rv d2">
+        <p class="out-n">Output 03</p>
+        <h3 class="out-title">Systemlogik &amp; Entscheidungsstrukturen</h3>
+        <p class="out-body">Regeln, Bedingungen, Auslöser, Reaktionen und Entscheidungspfade. Sichert Konsistenz, ermöglicht skalierbare Ausführung, verhindert Logikdrift im Laufe der Zeit.</p>
+        <p class="out-kl">Klare Logik schafft vorhersehbare Systeme.</p>
+      </div>
+      <div class="out-card rv">
+        <p class="out-n">Output 04</p>
+        <h3 class="out-title">Bauспецификation (PRD)</h3>
+        <p class="out-body">Eine strukturierte, unternehmensgeführte Spezifikation dessen, was gebaut werden soll. Workflows übersetzt in Anforderungen, Systemverhalten, Integrationspunkte.</p>
+        <p class="out-kl">Bessere Inputs → bessere Systeme.</p>
+      </div>
+      <div class="out-card rv d1">
+        <p class="out-n">Output 05</p>
+        <h3 class="out-title">KPI &amp; Leistungsrahmen</h3>
+        <p class="out-body">Kern-KPIs, Konversionsmetriken, operative Indikatoren und Rückkopplungsschleifen. Macht Leistung sichtbar. Ermöglicht Optimierung. Richtet Ausführung auf Ergebnisse aus.</p>
+        <p class="out-kl">Was man nicht messen kann, kann man nicht verbessern.</p>
+      </div>
+      <div class="out-card rv d2">
+        <p class="out-n">Output 06</p>
+        <h3 class="out-title">KI-fähige Bauinputs</h3>
+        <p class="out-body">Strukturierte Outputs, die direkt von Engineering-Teams, KI-Tools und Entwicklungspartnern genutzt werden können. Beschleunigt die Entwicklung. Reduziert Iterationszyklen.</p>
+        <p class="out-kl">Die Grundlage für KI-Vorteile.</p>
+      </div>
+    </div>
+
+    <div class="out-foot rv">
+      <p class="out-foot-text">Für die meisten Teams ist es das erste Mal, dass das Unternehmen etwas wird, das tatsächlich getestet und durchdacht werden kann.</p>
+      <a href="#start" class="btn btn-dark">Gespräch vereinbaren</a>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section id="case-study" class="sec case-sec">
+  <div class="container">
+    <p class="sec-label rv">Bewährt in realen Systemen</p>
+
+    <div class="case-grid">
+      <div class="rv">
+        <span class="case-tag">Leitfallstudie</span>
+        <h2 class="display case-h">Design eines $1-Milliarden-Genetik-Unternehmenssystems</h2>
+        <p class="case-sub">Wie eine komplexe, mehrere Akteure umfassende Healthcare-Plattform strukturiert wurde, um zu skalieren — bevor das Volumen ihre Schwächen offenlegte.</p>
+        <div class="case-flow">
+          <div class="cf-s hi">Nachfrage</div>
+          <div class="cf-s">Qualifizierung</div>
+          <div class="cf-s">Test</div>
+          <div class="cf-s">Interpretation</div>
+          <div class="cf-s">Versorgung</div>
+          <div class="cf-s">Nachsorge</div>
+        </div>
+        <div class="case-nums">
+          <div class="cn"><span class="cn-n">$1Mrd+</span><span class="cn-l">Systemgestützter Wert</span></div>
+          <div class="cn"><span class="cn-n">200.000+</span><span class="cn-l">Verarbeitete Patienten</span></div>
+          <div class="cn"><span class="cn-n">300%</span><span class="cn-l">Wachstum in 4 Monaten</span></div>
+        </div>
+      </div>
+
+      <div class="rv d2">
+        <div class="case-body">
+          <p>Die meisten Gentestunternehmen scheitern nicht an der Wissenschaft. Sie scheitern, weil das System, das diese Wissenschaft liefert, nicht funktioniert.</p>
+          <p>Daten sind zu komplex für die praktische Anwendung. Workflows brechen unter realen klinischen Bedingungen zusammen. Verwaltungsaufwand zerstört die Wirtschaftlichkeit.</p>
+          <p>Damit dieses Unternehmen funktionieren konnte, musste die gesamte Patientenreise als ein koordiniertes System betrieben werden — vom Marketing bis zur Langzeitversorgung. Jede Phase hing von den anderen ab. Wenn ein Teil versagte, brach das gesamte System zusammen.</p>
+        </div>
+        <p class="case-kl">Das System skalierte, weil es darauf ausgelegt war zu funktionieren — nicht weil es iterativ dorthin gebracht wurde.</p>
+        <div class="case-body">
+          <p>Vor dem Bau wurde das System explizit gemacht: wie Wert von der Akquisition bis zur Versorgung fließt, wie Entscheidungen in jeder Qualifizierungsphase getroffen werden, wie Akteure über Anbieter, Labore und Patienten interagieren und wie das System unter Last skaliert.</p>
+          <p>Das ist keine Geschichte über Softwareentwicklung. Es ist eine Geschichte über die Gestaltung des Systems, das es zum Funktionieren brachte.</p>
+        </div>
+        <a href="#start" class="btn btn-dark" style="margin-top:1.5rem; display:inline-block;">Gespräch vereinbaren</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK RECORD -->
+<section class="track-sec">
+  <div class="container">
+    <div class="track-intro rv">
+      <div>
+        <p class="sec-label lt" style="margin-bottom:0.75rem;">16 Jahre. Mehrere Branchen.</p>
+        <h2 class="display track-h">Eine Geschichte der Systeme, die funktionieren</h2>
+      </div>
+      <p class="track-sub">Das Healthcare-Flaggschiff ist unser komplexester Beweis. Aber Systemdesign ist keine Branche — es ist eine Disziplin. Das sind Highlights aus unserer Geschichte.</p>
+    </div>
+    <div class="track-grid">
+      <div class="tr-card rv">
+        <p class="tr-sector">Logistik &amp; Fulfillment</p>
+        <h3 class="tr-title">Multi-Knoten-Fulfillment-Betriebsmodell</h3>
+        <p class="tr-outcome">40% Reduzierung der Fulfillment-Kosten. Drei disparate Lagersysteme zu einer koordinierten Maschine konsolidiert.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d1">
+        <p class="tr-sector">Finanzdienstleistungen</p>
+        <h3 class="tr-title">Workflow-Konsolidierung für regulierte Kreditvergabe</h3>
+        <p class="tr-outcome">3 Legacy-Systeme durch ein gestaltetes Betriebsmodell ersetzt. Compliance aufrechterhalten. Bearbeitungszeit halbiert.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d2">
+        <p class="tr-sector">EdTech &amp; Lernen</p>
+        <h3 class="tr-title">KI-natives Lernplattform-Betriebsmodell</h3>
+        <p class="tr-outcome">Gleichzeitig in 4 Märkten gestartet. Lernerreise und Content-Engine vor dem Bau als ein System gestaltet.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d3">
+        <p class="tr-sector">Professional Services</p>
+        <h3 class="tr-title">Wissensmanagement- und Liefermaschine</h3>
+        <p class="tr-outcome">Lieferaufwand um 35% reduziert. Expertise konsistent und skalierbar über ein verteiltes Team von 200+ gemacht.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv">
+        <p class="tr-sector">Einzelhandel &amp; Commerce</p>
+        <h3 class="tr-title">Omnichannel-Nachfrage- und Bestandssystem</h3>
+        <p class="tr-outcome">Online- und stationären Betrieb vereint. Bestandslogik und Customer Journey als ein koordiniertes System gestaltet.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d1">
+        <p class="tr-sector">Energie &amp; Infrastruktur</p>
+        <h3 class="tr-title">Asset-Monitoring und Wartungs-Workflow</h3>
+        <p class="tr-outcome">Prädiktives Wartungsmodell reduzierte Ausfallzeiten um 28%. Entscheidungslogik strukturiert, bevor Automatisierung gebaut wurde.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d2">
+        <p class="tr-sector">Medien &amp; Publishing</p>
+        <h3 class="tr-title">Content-Produktions- und Distributionsmaschine</h3>
+        <p class="tr-outcome">Output verdoppelt mit gleicher Teamgröße. Redaktioneller Workflow als System neu gestaltet — nicht als Folge von Übergaben.</p>
+        <p class="tr-meta">Platzhalter · Mit echtem Projekt ersetzen</p>
+      </div>
+      <div class="tr-card rv d3" style="display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <p class="tr-sector">Ihre Branche</p>
+          <h3 class="tr-title">Systemdesign ist nicht branchenspezifisch</h3>
+          <p class="tr-outcome">Jedes Unternehmen, das durch Prozesse, Entscheidungen und Workflows Wert schafft, ist ein Kandidat für Systemdesign.</p>
+        </div>
+        <a href="#start" class="btn btn-outline-dark" style="display:inline-block; margin-top:1.25rem; font-size:0.7rem; padding:0.65rem 1.1rem;">Gespräch vereinbaren</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="sec for-sec">
+  <div class="container">
+    <p class="sec-label lt rv">Für wen das ist</p>
+    <h2 class="display for-h rv d1">Gebaut für Menschen, die es richtig machen müssen</h2>
+    <div class="for-grid">
+      <div class="fc rv">
+        <h3 class="fc-role">Gründer</h3>
+        <p class="fc-body">Ideen in strukturierte, baufertige Systeme verwandeln. Das richtige Unternehmen bauen — nicht nur schnelle Software. Verstehen, wie Ihr Unternehmen Wert schafft, bevor Sie sich zum Bau verpflichten.</p>
+      </div>
+      <div class="fc rv d1">
+        <h3 class="fc-role">Operatoren</h3>
+        <p class="fc-body">Klarheit, Struktur und Leistung in komplexen Systemen schaffen. Verstehen und verbessern, wie das Unternehmen tatsächlich funktioniert. Koordinationsaufwand durch gestaltete Systeme ersetzen.</p>
+      </div>
+      <div class="fc rv d2">
+        <h3 class="fc-role">Investoren &amp; PE</h3>
+        <p class="fc-body">Risiko reduzieren und Unternehmenswert steigern. Beurteilen, ob das System skalieren wird, bevor Kapital eingesetzt wird. Systemtransparenz in jeder Investitionsphase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE LADDER -->
+<section class="ladder-sec">
+  <div class="container">
+    <div class="ladder-top">
+      <div class="rv">
+        <p class="sec-label" style="margin-bottom:0.75rem;">Wie wir arbeiten</p>
+        <h2 class="display ladder-h">Beginnen Sie, wo Sie möchten.<br>Gehen Sie so weit wie nötig.</h2>
+      </div>
+      <div class="rv d2">
+        <p class="ladder-sub">
+          Die meisten Kunden beginnen mit einer einzelnen Session. Keine weiteren Verpflichtungen. Jeder Schritt liefert echte Outputs — sodass Sie immer wissen, was Sie haben, bevor Sie entscheiden, ob Sie weitergehen möchten. <strong>Sie sind nie gebunden. Sie besitzen immer, was erstellt wird.</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="ladder-grid">
+      <div class="ladder-step rv">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Schritt 01 · Einstiegspunkt</p>
+        <h3 class="ls-title">Discovery Session</h3>
+        <p class="ls-body">Eine fokussierte Arbeitssitzung — kein Verkaufsgespräch. Wir erkunden, wie Ihr Unternehmen tatsächlich funktioniert, decken versteckte Lücken, Risiken und Annahmen auf und geben Ihnen ein klares Bild davon, wo Definition fehlt.</p>
+        <p class="ls-signal">Die meisten Kunden verlassen die Session mit mehr Klarheit als erwartet. Viele entdecken Probleme, von denen sie nicht wussten, dass sie existieren.</p>
+        <a href="#start" class="ls-cta">Session buchen</a>
+      </div>
+      <div class="ladder-step rv d1">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Schritt 02 · Kern-Engagement</p>
+        <h3 class="ls-title">GEARS&#8482; Systemdesign</h3>
+        <p class="ls-body">Ein vollständiges GEARS&#8482;-Engagement. Wir definieren Ihr Unternehmen als funktionierendes System — und liefern alle sechs strukturierten Outputs: Unternehmensmaschine, Workflows, Entscheidungslogik, PRD, KPI-Rahmen und KI-fähige Bauinputs.</p>
+        <p class="ls-signal">Am Ende existiert Ihr Unternehmen als echte, testbare Systemdefinition — kein Deck.</p>
+        <a href="#start" class="ls-cta">Gespräch vereinbaren</a>
+      </div>
+      <div class="ladder-step rv d2">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Schritt 03 · Optional</p>
+        <h3 class="ls-title">Bau-Partnerschaft</h3>
+        <p class="ls-body">Wir implementieren das System, das wir entworfen haben. Da wir es definiert haben, bauen wir es mit ungewöhnlicher Präzision — kein Übersetzungsverlust zwischen Designabsicht und dem, was gebaut wird.</p>
+        <p class="ls-signal">Das System wird so gebaut, wie es entworfen wurde — nicht interpretiert.</p>
+        <a href="#start" class="ls-cta">Gespräch vereinbaren</a>
+      </div>
+      <div class="ladder-step rv d3">
+        <div class="ls-dot"></div>
+        <p class="ls-num">Schritt 04 · Langfristig</p>
+        <h3 class="ls-title">Betreiben &amp; Weiterentwickeln</h3>
+        <p class="ls-body">Wir bleiben als Ihr langfristiger Systempartner — betreiben, überwachen und verbessern kontinuierlich das Unternehmenssystem. Wenn sich Bedingungen ändern, passt sich das System an. Leistung wächst kumulativ. Sie konzentrieren sich auf die Unternehmensführung.</p>
+        <p class="ls-signal">Das System wird zu einem dauerhaften, sich entwickelnden Asset — kein fixer Liefergegenstand.</p>
+        <a href="#start" class="ls-cta">Gespräch vereinbaren</a>
+      </div>
+    </div>
+
+    <div class="ladder-note rv">
+      <strong>Sie können bei jedem Schritt einsteigen.</strong> Viele Kunden beginnen mit Discovery und gehen unmittelbar in ein vollständiges GEARS&#8482;-Engagement über. Andere nutzen Discovery als eigenständige Diagnose. Einige kommen zu uns mitten im Bau, nachdem sie erkannt haben, dass das System nie richtig definiert wurde. Wo auch immer Sie stehen — es gibt einen logischen nächsten Schritt.
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testi-sec">
+  <div class="container">
+    <p class="sec-label rv">Vertrauen von Operatoren</p>
+    <div class="testi-inner rv d1">
+      <div class="testi-bar"></div>
+      <div>
+        <p class="testi-quote">„GKIM half mir, meine Vision zu durchdenken und sie in ein fundiertes Geschäfts-, Produkt- und Technologieangebot zu verwandeln. Das Team hat in der Umsetzung hervorragende Arbeit geleistet."</p>
+        <p class="testi-attr">Gründer &amp; CEO</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec about-sec">
+  <div class="container">
+    <div class="about-grid">
+      <div class="rv">
+        <p class="about-lbl">Warum GKIM existiert</p>
+        <h2 class="display about-h">Gebaut von jemandem, der das bereits getan hat</h2>
+        <div class="about-letter">
+          <p>An die Gründer und Führungskräfte, die die Zukunft gestalten,</p>
+          <p>Ich begann meine Karriere im Engineering und in der Spieleentwicklung. Sehr früh lernte ich etwas, das bis heute gilt: Technologie ist nur so gut wie das Urteilsvermögen dahinter.</p>
+          <p>Ich sah brillante Ideen scheitern — nicht weil der Code falsch war, sondern weil das System dahinter nie richtig definiert worden war. Es gab immer eine Lücke zwischen dem kreativen Ehrgeiz eines Unternehmens und der Struktur, die erforderlich ist, um es zum Funktionieren zu bringen.</p>
+          <p>2010 gründete ich GKIM, um diese Lücke zu schließen. Nicht durch mehr Prozesse, sondern indem das Unternehmen selbst als System explizit gemacht wird.</p>
+          <p>In den letzten 15 Jahren haben wir diese Disziplin in Umgebungen angewandt, in denen Versagen teuer ist — von Telehealth-Plattformen bis zu Systemen, die täglich über 100.000 Transaktionen verarbeiten. Das Prinzip blieb dasselbe: das System richtig definieren, und alles andere wird einfacher.</p>
+          <p>Heute operieren wir von Cambridge und Ho-Chi-Minh-Stadt aus — akademische Präzision kombiniert mit tiefer Ingenieurfähigkeit.</p>
+        </div>
+        <p class="about-sig">— Ian Morrison</p>
+      </div>
+
+      <div class="rv d2">
+        <div class="about-belief">
+          <p class="ab-title">Was GKIM unterscheidet</p>
+          <p class="ab-body">Wir definieren Systeme, bevor sie gebaut werden. Wir fokussieren uns auf Wertschöpfung, nicht auf Funktionen. Wir machen Entscheidungen früh explizit. Wir liefern Outputs, die gebaut und getestet werden können.</p>
+        </div>
+        <div class="values-list">
+          <div class="val">
+            <p class="val-t">Ehrlichkeit vor Hype</p>
+            <p class="val-b">Wir sagen, was wahr ist — auch wenn es unbequem ist.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Definieren vor Bauen</p>
+            <p class="val-b">Klarheit im Voraus spart exponentiell Kosten später.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Auf Systemebene arbeiten</p>
+            <p class="val-b">Wir lösen das Kernproblem, nicht das Symptom.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">KI mit Zweck</p>
+            <p class="val-b">KI sollte Ergebnisse verbessern, nicht nur Aktivität.</p>
+          </div>
+          <div class="val">
+            <p class="val-t">Technologie muss der Realität dienen</p>
+            <p class="val-b">Systeme müssen in der Praxis funktionieren — nicht nur in der Theorie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- START / CONTACT -->
+<section id="start" class="sec start-sec">
+  <div class="container">
+    <div class="start-grid">
+      <div class="rv">
+        <p class="sec-label lt">Gespräch vereinbaren</p>
+        <h2 class="display start-h">Bevor Sie bauen oder skalieren, verstehen Sie, wie Ihr Unternehmen tatsächlich funktioniert.</h2>
+        <p class="start-sub">Das ist kein Verkaufsgespräch. Es ist eine Arbeitssitzung, um Ihr Geschäftsmodell zu verstehen, zu erkunden, wie das System derzeit betrieben wird, und Lücken, Risiken und Annahmen zu identifizieren.</p>
+        <p style="font-size:0.67rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.28); margin-bottom:1rem;">Eine kurze Session legt typischerweise offen:</p>
+        <ul class="start-items">
+          <li class="si"><div class="si-dot"></div><p class="si-text">Versteckte Abhängigkeiten in Ihrem aktuellen System</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Strukturelle Lücken, die nach dem Bau teurer zu beheben sind</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Unklare Entscheidungslogik, die nachgelagerte Inkonsistenz schafft</p></li>
+          <li class="si"><div class="si-dot"></div><p class="si-text">Risiken, die erst unter Skalierung sichtbar werden</p></li>
+        </ul>
+        <p class="keyline start-kl">Klarheit ersetzt Annahmen.</p>
+      </div>
+
+      <div class="rv d2">
+        <div class="form-box">
+          <p class="form-intro">Teilen Sie uns mit, was Sie aufbauen, wo Sie auf dem Weg sind, und was sich unklar oder nicht funktionierend anfühlt.</p>
+          <div class="form-g">
+            <label class="form-lbl" for="f-name">Name</label>
+            <input class="form-in" type="text" id="f-name" placeholder="Ihr Name">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-co">Unternehmen</label>
+            <input class="form-in" type="text" id="f-co" placeholder="Ihr Unternehmen">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-email">E-Mail</label>
+            <input class="form-in" type="email" id="f-email" placeholder="sie@unternehmen.de">
+          </div>
+          <div class="form-g">
+            <label class="form-lbl" for="f-msg">Was bauen Sie oder was funktioniert nicht?</label>
+            <textarea class="form-ta" id="f-msg" placeholder="Teilen Sie so viel oder so wenig wie Sie möchten..."></textarea>
+          </div>
+          <button class="form-btn" id="form-btn" type="button">Gespräch vereinbaren</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-sec">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="rv">
+        <h2 class="display cta-h">Das Unternehmen gestalten, bevor Sie es bauen</h2>
+        <p class="cta-body">Die meisten Teams beginnen mit Code. Die besten Teams beginnen mit Klarheit. Wenn Sie ein System bauen oder weiterentwickeln, lohnt es sich zu verstehen, wie es tatsächlich funktioniert — bevor Sie sich weiter verpflichten.</p>
+      </div>
+      <div class="cta-btns rv d2">
+        <a href="#start" class="btn btn-red">Gespräch vereinbaren</a>
+        <a href="mailto:hello@gkim.digital" class="btn btn-outline-light">hello@gkim.digital</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <p class="foot-brand">GK<em>I</em>M Digital</p>
+        <p class="foot-tag">Wir schließen die Lücke zwischen Strategie und Ingenieurwesen — und definieren, wie Ihr Unternehmen als System tatsächlich Wert schafft.</p>
+      </div>
+      <div>
+        <p class="foot-col-h">Erkunden</p>
+        <ul class="foot-links">
+          <li><a href="#vision">Vision</a></li>
+          <li><a href="#gears">GEARS&#8482;</a></li>
+          <li><a href="#outputs">Leistungen</a></li>
+          <li><a href="#case-study">Fallstudie</a></li>
+          <li><a href="#about">Über uns</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-col-h">Kontakt</p>
+        <div class="foot-addr">
+          <p><a href="mailto:hello@gkim.digital" style="color:rgba(245,244,240,0.55);">hello@gkim.digital</a></p>
+          <p class="region">UK-Büro</p>
+          <p>17 South Rd, Cambridge</p>
+          <p class="region">Vietnam-Büro</p>
+          <p>Ho-Chi-Minh-Stadt</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="foot-copy">© GKIM Digital Ltd.</p>
+      <p class="foot-copy">Systemdefinition. KI-natives Unternehmensdesign.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  }, {passive:true});
+
+  var sections = document.querySelectorAll('section[id]');
+  var links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function(){
+    var cur = '';
+    sections.forEach(function(s){
+      if(window.scrollY >= s.offsetTop - 130) cur = s.id;
+    });
+    links.forEach(function(a){
+      a.style.color = a.getAttribute('href') === '#'+cur ? 'var(--accent)' : '';
+    });
+  }, {passive:true});
+
+  var els = document.querySelectorAll('.rv');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.1, rootMargin:'0px 0px -30px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+
+  var btn = document.getElementById('form-btn');
+  if(btn){
+    btn.addEventListener('click', function(){
+      var n = document.getElementById('f-name').value.trim();
+      var e = document.getElementById('f-email').value.trim();
+      if(!n || !e){
+        btn.textContent = 'Bitte Name und E-Mail angeben';
+        setTimeout(function(){ btn.textContent = 'Gespräch vereinbaren'; }, 2500);
+        return;
+      }
+      btn.textContent = 'Anfrage gesendet — wir melden uns in Kürze';
+      btn.style.background = '#1a6b3c';
+      btn.disabled = true;
+    });
+  }
+})();
+</script>
+</body>
+</html>
