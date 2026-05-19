@@ -153,7 +153,8 @@ def build_lang_switcher(languages, current_lang):
         native = lang["native_name"]
         path = lang["url_path"]
         active = ' class="lang-active"' if code == current_lang else ""
-        items.append(f'    <a href="{path}"{active}>{native}</a>')
+        flag = lang.get("flag", "")
+        items.append(f'    <a href="{path}"{active}>{flag} {native}</a>')
 
     return (
         '  <div class="lang-switcher">\n'
