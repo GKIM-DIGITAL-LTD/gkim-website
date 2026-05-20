@@ -1,0 +1,55 @@
+name: Deploy Vercel
+
+# Set per-repo: production branch name. Default = "main".
+# Override examples: "prod", "nextjs"
+env:
+  PROD_BRANCH: main
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - review
+    paths-ignore:
+      - '.agents/**'
+      - '.claude/**'
+      - '.github/**'
+      - 'plans/**'
+      - 'docs/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Ian is a Vercel team member — his pushes are auto-deployed by Vercel's
+    # native Git integration. Skip CLI deploy to avoid double deployment.
+    if: github.actor != 'ian-gkxim'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          # Rewrite commit author to hungta@gkim.vn (Vercel team member)
+          git config user.name "Hung Ta"
+          git config user.email "hungta@gkim.vn"
+          GIT_AUTHOR_NAME="Hung Ta" GIT_AUTHOR_EMAIL="hungta@gkim.vn" \
+          GIT_COMMITTER_NAME="Hung Ta" GIT_COMMITTER_EMAIL="hungta@gkim.vn" \
+          git commit --amend --reset-author --no-edit
+          echo "git user: $(git config user.name) <$(git config user.email)>"
+          echo "commit msg: $(git log -1 --pretty=%s)"
+
+          # Single deploy step: --prod if branch matches PROD_BRANCH, else preview
+          if [ "$BRANCH" = "$PROD_BRANCH" ]; then
+            vercel deploy --prod --debug --token=$VERCEL_TOKEN
+          else
+            vercel deploy --target=$BRANCH --debug --token=$VERCEL_TOKEN
+          fi
