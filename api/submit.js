@@ -418,35 +418,59 @@ export default async function handler(req, res) {
 
   const submissionId = `gkim_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
+  // Check required env vars up front so the log is clear
+  const missingEnv = ['ANTHROPIC_API_KEY','RESEND_API_KEY','GOOGLE_SHEET_ID','GOOGLE_SERVICE_ACCOUNT_EMAIL','GOOGLE_PRIVATE_KEY']
+    .filter(k => !process.env[k]);
+  if (missingEnv.length) {
+    console.error('submit.js: missing env vars:', missingEnv.join(', '));
+    return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
+  }
+
   try {
     // 1. Claude analysis (run first — most valuable, fail loudly if broken)
-    const analysis = await analyseIntake(body);
+    let analysis;
+    try {
+      analysis = await analyseIntake(body);
+    } catch (err) {
+      console.error('submit.js: Claude analyseIntake failed:', err?.message || err);
+      throw err;
+    }
 
     // 2. Write to Sheets (non-blocking on failure — don't fail the user request)
     writeToSheet(body, analysis, submissionId).catch(err =>
-      console.error('Sheets write failed:', err)
+      console.error('submit.js: Sheets write failed:', err?.message || err)
     );
 
     // 3. Send prospect acknowledgement email
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: body.email,
-      subject: `Your GKIM Discovery Session — ${body.name.split(' ')[0]}, we're ready`,
-      html: prospectEmailHtml(body, analysis),
-    });
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: body.email,
+        subject: `Your GKIM Discovery Session — ${body.name.split(' ')[0]}, we're ready`,
+        html: prospectEmailHtml(body, analysis),
+      });
+    } catch (err) {
+      console.error('submit.js: prospect email failed:', err?.message || err);
+      throw err;
+    }
 
     // 4. Send internal briefing email
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: INTERNAL_EMAILS,
-      subject: `[${analysis.readinessBand.toUpperCase()}] Discovery intake: ${body.name} — ${body.company}`,
-      html: briefingEmailHtml(body, analysis, submissionId),
-    });
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: INTERNAL_EMAILS,
+        subject: `[${analysis.readinessBand.toUpperCase()}] Discovery intake: ${body.name} — ${body.company}`,
+        html: briefingEmailHtml(body, analysis, submissionId),
+      });
+    } catch (err) {
+      console.error('submit.js: internal briefing email failed:', err?.message || err);
+      throw err;
+    }
 
     return res.status(200).json({ ok: true, submissionId });
 
   } catch (err) {
-    console.error('Submit error:', err);
+    console.error('submit.js: unhandled error:', err?.message || err);
     return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
   }
 }
