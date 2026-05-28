@@ -142,24 +142,38 @@ def build_hreflang_tags(languages):
 
 
 def build_lang_switcher(languages, current_lang):
-    """Build the language switcher nav HTML."""
+    """Build the language switcher dropdown HTML."""
     live_langs = [l for l in languages if l["status"] == "live"]
     if len(live_langs) <= 1:
         return ""  # No switcher if only one live language
+
+    current = next((l for l in live_langs if l["code"] == current_lang), live_langs[0])
+    current_flag = current.get("flag", current["code"].upper())
+
+    chevron = ('<svg class="lang-arrow" viewBox="0 0 24 24" fill="none" '
+               'stroke="currentColor" stroke-width="2.5">'
+               '<path d="M6 9l6 6 6-6"/></svg>')
 
     items = []
     for lang in live_langs:
         code = lang["code"]
         native = lang["native_name"]
         path = lang["url_path"]
-        active = ' class="lang-active"' if code == current_lang else ""
         flag = lang.get("flag", "")
-        items.append(f'    <a href="{path}"{active} title="{native}">{flag}</a>')
+        active = " lang-active" if code == current_lang else ""
+        items.append(
+            f'    <a href="{path}" class="lang-opt{active}" title="{native}">'
+            f'{flag} <span>{code.upper()}</span></a>'
+        )
 
     return (
-        '  <div class="lang-switcher">\n'
+        '<div class="lang-dropdown" id="langDropdown">\n'
+        f'  <button class="lang-btn" aria-haspopup="true" aria-expanded="false" '
+        f'aria-label="Select language">{current_flag} {chevron}</button>\n'
+        '  <div class="lang-menu">\n'
         + "\n".join(items)
-        + '\n  </div>'
+        + '\n  </div>\n'
+        + '</div>'
     )
 
 
@@ -192,26 +206,39 @@ def validate_strings(strings, languages, warn_only=True):
 
 
 def add_lang_switcher_css(html):
-    """Inject language switcher CSS before </style>."""
+    """Inject language switcher dropdown CSS before </style>."""
     css = """
-/* ——— LANGUAGE SWITCHER ——— */
-.lang-switcher {
-  display: flex; gap: 0.75rem; align-items: center;
-  margin-right: 1.5rem;
+/* ——— LANG DROPDOWN ——— */
+.lang-dropdown{position:relative;display:none;}
+@media(min-width:1280px){.lang-dropdown{display:flex;align-items:center;}}
+.lang-btn{
+  background:none;border:1px solid var(--border-on-dark);cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  padding:6px 10px;color:var(--text-on-dark);
+  font-size:18px;line-height:1;border-radius:0;
+  transition:border-color .18s;
 }
-.lang-switcher a {
-  font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ink-muted); padding: 0.2rem 0.4rem;
-  border: 1px solid transparent; transition: all 0.2s;
+.lang-btn:hover{border-color:var(--text-on-dark);}
+.lang-arrow{width:12px;height:12px;transition:transform .2s;flex-shrink:0;}
+.lang-dropdown.open .lang-arrow{transform:rotate(180deg);}
+.lang-menu{
+  position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--surface-dark);
+  border:1px solid var(--border-on-dark);
+  min-width:120px;z-index:200;
+  display:none;flex-direction:column;
 }
-.lang-switcher a:hover { color: var(--ink); border-color: var(--chalk-mid); }
-.lang-switcher a.lang-active {
-  color: var(--ink); border-color: var(--chalk-mid);
-  background: var(--chalk-warm);
+.lang-dropdown.open .lang-menu{display:flex;}
+.lang-opt{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;
+  color:var(--text-on-dark-muted);text-decoration:none;
+  font-size:14px;font-family:'Figtree',sans-serif;
+  transition:background .15s,color .15s;
+  white-space:nowrap;
 }
-@media (max-width: 900px) {
-  .lang-switcher { display: none; }
-}
+.lang-opt:hover{background:rgba(255,255,255,0.08);color:var(--text-on-dark);}
+.lang-opt.lang-active{color:var(--bg-accent);}
 """
     return html.replace("</style>", css + "\n</style>", 1)
 
@@ -356,7 +383,7 @@ Strings:
         try:
             response = client.messages.create(
                 model=CLAUDE_MODEL,
-                max_tokens=4096,
+                max_tokens=8192,
                 messages=[{"role": "user", "content": prompt}]
             )
             raw = response.content[0].text.strip()
@@ -369,7 +396,8 @@ Strings:
             translations = json.loads(raw[start:end])
 
         except Exception as e:
-            print(f"\n  ERROR translating to {lang_name}: {e}")
+            print(f"\n  ERROR translating to {lang_name}: {type(e).__name__}: {e}")
+            import traceback; traceback.print_exc()
             print("  Skipping this language — existing translations unchanged.")
             continue
 
@@ -383,10 +411,20 @@ Strings:
                 written += 1
 
         print(f"✓  ({written}/{len(dirty)} written)")
+        if written == 0:
+            print(f"  WARNING: 0 strings written for {lang_name} — snapshot NOT updated for this language")
 
-    # ── Update snapshot column for all dirty rows
-    for row_num, info in dirty.items():
-        ws.cell(row=row_num, column=snap_col_1, value=info["en"])
+    # ── Update snapshot only if at least one language was successfully translated
+    langs_written = sum(
+        1 for lang in target_langs
+        if lang in lang_col_1 and any(
+            ws.cell(row=rn, column=lang_col_1[lang]).value
+            for rn in dirty
+        )
+    )
+    if langs_written > 0:
+        for row_num, info in dirty.items():
+            ws.cell(row=row_num, column=snap_col_1, value=info["en"])
 
     # ── Save workbook
     wb.save(WORKBOOK_PATH)
