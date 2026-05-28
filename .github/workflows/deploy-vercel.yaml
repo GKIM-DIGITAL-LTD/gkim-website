@@ -51,12 +51,5 @@ jobs:
           if [ "$BRANCH" = "$PROD_BRANCH" ]; then
             vercel deploy --prod --token=$VERCEL_TOKEN
           else
-            DEPLOY_URL=$(vercel deploy --target=$BRANCH --token=$VERCEL_TOKEN)
-            echo "Deployed to: $DEPLOY_URL"
-            # Alias preview branch to its custom domain
-            if [ "$BRANCH" = "preview" ]; then
-              vercel alias set "$DEPLOY_URL" preview-ai-native.gkim.digital --token=$VERCEL_TOKEN
-            elif [ "$BRANCH" = "dev" ]; then
-              vercel alias set "$DEPLOY_URL" dev-ai-native.gkim.digital --token=$VERCEL_TOKEN
-            fi
+            vercel deploy --target=$BRANCH --token=$VERCEL_TOKEN
           fi
