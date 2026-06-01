@@ -176,6 +176,7 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
   .hero-break{display:inline;}
 }
 .hero h1 .accent{color:var(--bg-accent);}
+.hero-subtitle{max-width:48ch;color:#fff;margin-bottom:var(--space-6);font-size:clamp(18px,2vw,24px);line-height:1.4;font-weight:500;}
 .hero-sub{max-width:64ch;color:#A8A8A8;margin-bottom:var(--space-10);font-size:16px;line-height:1.6;}
 .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);}
 
@@ -401,7 +402,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <section class="section bg-dark grid-overlay hero">
   <div class="container">
     <span class="eyebrow reveal">{{ s["hero.eyebrow"] }}</span>
-    <h1 class="h-large reveal" style="transition-delay:.05s">{{ s["hero.h1.part1"] }}<br class="hero-break"> <span class="accent">{{ s["hero.h1.accent"] }}</span> {{ s["hero.h1.part2"] }}</h1>
+    <h1 class="h-large reveal" style="transition-delay:.05s">{{ s["hero.h1.line1"] }}<br class="hero-break"> <span class="accent">{{ s["hero.h1.accent"] }}</span></h1>
+    <p class="hero-subtitle reveal" style="transition-delay:.075s">{{ s["hero.subtitle"] }}</p>
     <p class="hero-sub reveal" style="transition-delay:.1s">{{ s["hero.sub"] }}</p>
     <div class="hero-actions reveal" style="transition-delay:.15s">
       <a href="{{ s["cta.link"] }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">{{ s["hero.cta.primary"] }}
