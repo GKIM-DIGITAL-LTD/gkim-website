@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The AI Adoption Landscape — GKIM</title>
+  <meta name="description" content="The evolution from legacy to AI-native. A more human perspective on the race to become AI-native, and why the first step is understanding your business as a system.">
+  <meta name="author" content="GKIM">
+
+  <link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://gkim.digital/en/insights/ai-adoption-landscape">
+
+  <!-- Open Graph / LinkedIn sharing -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The AI Adoption Landscape — GKIM">
+  <meta property="og:description" content="The evolution from legacy to AI-native. Why tomorrow's winners won't automate their existing business — they'll redesign it.">
+  <meta property="og:image" content="https://gkim.digital/en/insights/ai-adoption-landscape.jpg">
+  <meta property="og:url" content="https://gkim.digital/en/insights/ai-adoption-landscape">
+  <meta property="og:site_name" content="GKIM">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The AI Adoption Landscape — GKIM">
+  <meta name="twitter:description" content="The evolution from legacy to AI-native.">
+  <meta name="twitter:image" content="https://gkim.digital/en/insights/ai-adoption-landscape.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111318;
+      --card: #181b22;
+      --border: #2a2e38;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --text: #e8e8e8;
+      --muted: #8a8f9e;
+      --white: #ffffff;
+      --max-w: 780px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-tagline {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      padding: 7px 16px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 24px 48px;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-meta-author {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .hero-meta-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 50%;
+    }
+
+    /* ── INFOGRAPHIC ── */
+    .infographic-wrap {
+      max-width: 1000px;
+      margin: 0 auto 72px;
+      padding: 0 24px;
+    }
+    .infographic-wrap img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .infographic-caption {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── ARTICLE BODY ── */
+    .article {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .article p {
+      margin-bottom: 1.6em;
+      color: var(--text);
+    }
+    .article p:first-child {
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.7;
+    }
+    .article strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+    .article em {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      border-left: 3px solid var(--gold);
+      margin: 40px 0;
+      padding: 8px 0 8px 28px;
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--white);
+      font-style: italic;
+    }
+
+    /* Stage list */
+    .stage-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 36px;
+      margin: 40px 0;
+      list-style: none;
+    }
+    .stage-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .stage-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .stage-list li:first-child { padding-top: 0; }
+    .stage-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-width: 80px;
+      padding-top: 2px;
+    }
+    .stage-body strong {
+      display: block;
+      color: var(--white);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .stage-body span { color: var(--muted); font-size: 15px; }
+
+    /* Questions block */
+    .questions {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 28px 32px;
+      margin: 40px 0;
+    }
+    .questions p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 10px !important;
+      line-height: 1.6;
+    }
+    .questions p:last-child { margin-bottom: 0 !important; }
+    .questions p strong {
+      color: var(--white) !important;
+    }
+
+    /* ── ABOUT / CTA ── */
+    .about-section {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 56px 24px;
+      margin-top: 0;
+    }
+    .about-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .about-text .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .about-text h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .about-text p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .about-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .cta-btn-primary {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .cta-btn-primary:hover { background: var(--gold-light); }
+    .cta-btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+    .cta-btn-secondary:hover { background: rgba(201,168,76,0.1); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 24px;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    footer .footer-logo span { color: var(--gold); }
+    footer .footer-tag {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    footer a { color: var(--muted); text-decoration: none; font-size: 13px; margin: 0 12px; }
+    footer a:hover { color: var(--gold); }
+    footer .copyright {
+      font-size: 12px;
+      color: var(--border);
+      margin-top: 20px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .nav-tagline { display: none; }
+      .hero { padding: 48px 20px 36px; }
+      .about-inner { grid-template-columns: 1fr; gap: 32px; }
+      .stage-list { padding: 24px 20px; }
+      .pull-quote { font-size: 18px; padding-left: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="https://gkim.digital/en" class="nav-logo">G<span>K</span>IM</a>
+      <span class="nav-tagline">Design the AI-Native Business</span>
+      <a href="https://gkim.digital/en" class="nav-cta">← Back to site</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <p class="hero-label">Insight &nbsp;·&nbsp; AI Strategy</p>
+    <h1>The AI Adoption Landscape</h1>
+    <p class="hero-sub">The evolution from legacy to AI-native — and why the race to design the future of business is already underway.</p>
+    <div class="hero-meta">
+      <span class="hero-meta-author">GKIM</span>
+      <span class="hero-meta-dot"></span>
+      <span>June 2026</span>
+      <span class="hero-meta-dot"></span>
+      <span>5 min read</span>
+    </div>
+  </header>
+
+  <!-- INFOGRAPHIC -->
+  <div class="infographic-wrap">
+    <img src="ai-adoption-landscape.jpg" alt="The AI Adoption Landscape — from Legacy to AI-Native, showing four stages: Shadow AI, Embedded AI, AI-First, and AI-Native">
+    <p class="infographic-caption">The AI Adoption Landscape — GKIM, 2026</p>
+  </div>
+
+  <!-- ARTICLE -->
+  <article class="article">
+
+    <p>Most conversations about artificial intelligence still revolve around tools. People talk about ChatGPT, copilots, agents, automation platforms, and productivity gains. Those discussions matter — but they often miss the bigger question: what kind of company are we actually becoming?</p>
+
+    <p>A useful way to think about the market is as a progression of maturity. The infographic above maps it visually. But let's work through what each stage actually means in practice.</p>
+
+    <ul class="stage-list">
+      <li>
+        <span class="stage-num">Stage 0</span>
+        <div class="stage-body"><strong>Legacy / No AI</strong><span>Manual processes, siloed data, slow and expensive to change. Business as usual.</span></div>
+      </li>
+      <li>
+        <span class="stage-num">Stage 1</span>
+        <div class="stage-body"><strong>Shadow AI</strong><span>Employees use AI tools independently, without governance or architecture. Productivity gains exist, but so does hidden risk.</span></div>
+      </li>
+      <li>
+        <span class="stage-num">Stage 2</span>
+        <div class="stage-body"><strong>Embedded AI</strong><span>AI tools are deliberately integrated into existing workflows. Improved productivity and cost reduction — but still doing the same things a little better.</span></div>
+      </li>
+      <li>
+        <span class="stage-num">Stage 3</span>
+        <div class="stage-body"><strong>AI-First</strong><span>AI becomes a core capability. Key operations are redesigned around it. Data-driven decision-making, AI talent, platforms and governance all in place.</span></div>
+      </li>
+      <li>
+        <span class="stage-num">Stage 4</span>
+        <div class="stage-body"><strong>AI-Native</strong><span>Designed from the ground up for the AI era. Value creation is built for humans and AI together. Intelligent agents execute. New business models emerge.</span></div>
+      </li>
+    </ul>
+
+    <p>Despite the growing use of the term, very few organisations today are genuinely AI-native. Many are AI-enabled. Some are AI-first. Almost none have fully reimagined themselves around the possibilities of intelligent systems.</p>
+
+    <div class="pull-quote">
+      "In reality, we do not yet know exactly what mature AI-native companies will look like."
+    </div>
+
+    <p>The internet era provides a useful comparison. In the mid-1990s, very few people could have predicted the eventual shape of Amazon, Google, Airbnb, or Uber. We are at a similar point in the AI era today.</p>
+
+    <p>What seems increasingly certain is that tomorrow's winners will not simply automate existing businesses. They will redesign them.</p>
+
+    <p>The transition to AI-nativity is not primarily a technology challenge. It is a <strong>business design challenge</strong>.</p>
+
+    <p>An AI-native organisation is one where value creation itself has been intentionally structured so that humans and intelligent systems work together as a coherent operating model. Decisions, workflows, data flows, feedback loops, and customer interactions become part of an integrated system that can continuously learn and improve.</p>
+
+    <p>This raises an important question for every leadership team:</p>
+
+    <div class="pull-quote">
+      How exactly does value flow through your business?
+    </div>
+
+    <p>Most organisations struggle to answer this clearly. They can point to departments, software systems, reporting lines, and processes — but few possess an explicit model of how value is created, transferred, measured, and improved across the enterprise.</p>
+
+    <p>That is why we believe the journey toward AI-nativity begins with a <strong>value graph</strong>.</p>
+
+    <p>A value graph maps the customers, workers, partners, systems, decisions, information flows, and economic exchanges that make the business work. It turns an organisation from something people describe into something they can actually see, analyse, and improve.</p>
+
+    <p>Only once that system is visible can leaders begin asking the next-generation questions:</p>
+
+    <div class="questions">
+      <p><strong>Which decisions should remain human?</strong></p>
+      <p><strong>Which activities can be delegated to agents?</strong></p>
+      <p><strong>Where does intelligence create the greatest leverage?</strong></p>
+      <p><strong>How should information flow?</strong></p>
+      <p><strong>What entirely new business models become possible?</strong></p>
+    </div>
+
+    <p>This is the race now underway.</p>
+
+    <p>Not every organisation will become AI-native. Many will remain AI-assisted. Some will become AI-first. Others will find themselves competing against businesses designed specifically for an AI-accelerated world.</p>
+
+    <p>The challenge is no longer simply adopting AI.</p>
+
+    <p>The challenge is ensuring you are <strong>riding the wave</strong> rather than being caught in the backwash.</p>
+
+    <p>At GKIM, we believe the first step is not selecting an AI tool. It is understanding the business itself as a system. Once that system is visible as a value graph, it can be defined, designed, simulated, built, operated, and continuously evolved.</p>
+
+    <p>That is where the journey toward an AI-native business truly begins.</p>
+
+  </article>
+
+  <!-- ABOUT / CTA -->
+  <section class="about-section">
+    <div class="about-inner">
+      <div class="about-text">
+        <p class="label">About GKIM</p>
+        <h2>We design AI-native businesses.</h2>
+        <p>GKIM works with leadership teams to map how value flows through their organisation — and redesign it for an AI-accelerated world. The first step is always the same: making the system visible.</p>
+      </div>
+      <div class="about-cta">
+        <a href="https://gkim.digital/en" class="cta-btn cta-btn-primary">Visit gkim.digital</a>
+        <a href="https://gkim.digital/discovery" class="cta-btn cta-btn-secondary">Start the conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-logo">G<span>K</span>IM</p>
+    <p class="footer-tag">Design the AI-Native Business</p>
+    <div>
+      <a href="https://gkim.digital/en">Home</a>
+      <a href="https://gkim.digital/en">Insights</a>
+      <a href="https://gkim.digital/discovery">Contact</a>
+    </div>
+    <p class="copyright">&copy; 2026 GKIM. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
