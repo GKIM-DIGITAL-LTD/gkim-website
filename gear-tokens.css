@@ -1,0 +1,425 @@
+/*
+ * gear-tokens.css
+ * GKIM GEARS™ Portal Stylesheet — v1.0
+ * Source of truth: /GEAR-STYLE-GUIDE.md
+ *
+ * Usage:
+ *   <link rel="stylesheet" href="https://gkim.digital/gear-tokens.css">
+ *
+ * This file is the complete shared stylesheet for all GEAR apps.
+ * It covers: design tokens, reset, typography, header bar, buttons,
+ * layout utilities, eyebrows, display headings.
+ *
+ * App-specific styles go in a separate file loaded AFTER this one.
+ */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* ── Colour palette ── */
+  --bg-dark:            #0A0A09;
+  --bg-light:           #F2F2F2;
+  --bg-accent:          #FFDD00;   /* GKIM yellow — primary CTA only */
+
+  --surface-white:      #FFFFFF;
+  --surface-dark:       #202020;
+  --surface-header:     #0A0A09;
+  --surface-header-scrolled: rgba(32, 32, 32, 0.92);
+
+  --text-on-dark:       #FFFFFF;
+  --text-on-dark-muted: #D6D6D6;
+  --text-on-dark-dim:   rgba(255, 255, 255, 0.38);
+  --text-on-light:      #202020;
+  --text-on-light-muted:#5C5C5C;
+
+  --border-on-dark:     #5C5C5C;
+  --border-on-light:    #D6D6D6;
+  --border-strong:      #333533;
+
+  /* ── Legacy / alias tokens ── */
+  --accent:             #FFDD00;
+  --ink:                #0A0A09;
+  --ink-soft:           #2C2C2A;
+  --ink-muted:          #6B6A64;
+  --chalk:              #F2F2F2;
+  --chalk-warm:         #EDE9E0;
+  --chalk-mid:          #D4CFC2;
+
+  /* ── Typography ── */
+  --type-display: 'League Gothic', Impact, 'Arial Narrow', sans-serif;
+  --type-body:    'Figtree', 'Helvetica Neue', Arial, sans-serif;
+  --type-serif:   'Instrument Serif', Georgia, serif;
+
+  /* ── Spacing scale (4 px base) ── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  /* ── Layout ── */
+  --container-max:    1120px;
+  --header-h-desktop: 84px;
+  --header-h-mobile:  64px;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--type-body);
+  background: var(--bg-light);
+  color: var(--text-on-light);
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Offset page content below the fixed header */
+main {
+  padding-top: var(--header-h-desktop);
+}
+
+@media (max-width: 767px) {
+  main {
+    padding-top: var(--header-h-mobile);
+  }
+}
+
+
+/* ============================================================
+   3. FONT LOADING
+   Load in your <head> before this stylesheet:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=League+Gothic
+     &family=Instrument+Serif:ital@0;1
+     &family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+   ============================================================ */
+
+
+/* ============================================================
+   4. HEADER BAR
+   ============================================================ */
+.gear-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: var(--header-h-desktop);
+  background: var(--surface-header);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gear-header {
+    transition: background 0.3s var(--ease-out), backdrop-filter 0.3s var(--ease-out);
+  }
+}
+
+.gear-header.is-scrolled {
+  background: var(--surface-header-scrolled);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.gear-header__inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 var(--sp-10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand lockup (logo + divider + app name) */
+.gear-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  text-decoration: none;
+}
+
+.gear-header__gears-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.gear-header__divider {
+  display: block;
+  width: 1px;
+  height: 20px;
+  background: var(--border-on-dark);
+  flex-shrink: 0;
+}
+
+.gear-header__app-name {
+  font-family: var(--type-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  color: var(--text-on-dark-muted);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@media (max-width: 767px) {
+  .gear-header {
+    height: var(--header-h-mobile);
+  }
+  .gear-header__inner {
+    padding: 0 var(--sp-6);
+  }
+  .gear-header__gears-logo {
+    height: 22px;
+  }
+  .gear-header__app-name {
+    font-size: 0.9rem;
+  }
+}
+
+/*
+ * Scroll listener — add to every GEAR app:
+ *
+ * const header = document.getElementById('gear-header');
+ * window.addEventListener('scroll', () =>
+ *   header.classList.toggle('is-scrolled', window.scrollY > 40),
+ *   { passive: true }
+ * );
+ */
+
+
+/* ============================================================
+   5. BUTTONS
+   No rounded corners — GKIM uses a hard-edged editorial aesthetic.
+   ============================================================ */
+.gear-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--type-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: var(--sp-2) var(--sp-6);
+  border: 2px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gear-btn {
+    transition: opacity 0.2s, transform 0.1s;
+  }
+}
+
+.gear-btn:active {
+  transform: translateY(1px);
+}
+
+.gear-btn:focus-visible {
+  outline: 2px solid var(--bg-accent);
+  outline-offset: 3px;
+}
+
+/* Primary — yellow. Use on dark or neutral sections. */
+.gear-btn--primary {
+  background: var(--bg-accent);
+  color: var(--text-on-light);
+  border-color: var(--border-strong);
+}
+.gear-btn--primary:hover { opacity: 0.88; }
+
+/* Secondary — for dark sections */
+.gear-btn--secondary-dark {
+  background: var(--surface-dark);
+  color: var(--text-on-dark);
+  border-color: var(--border-on-light);
+}
+.gear-btn--secondary-dark:hover { opacity: 0.85; }
+
+/* Secondary — for light / warm sections */
+.gear-btn--secondary-light {
+  background: var(--surface-white);
+  color: var(--text-on-light);
+  border-color: var(--border-strong);
+}
+.gear-btn--secondary-light:hover { opacity: 0.85; }
+
+/* Ghost — transparent, low-priority actions on dark sections */
+.gear-btn--ghost {
+  background: transparent;
+  color: var(--text-on-dark-muted);
+  border-color: var(--border-on-dark);
+}
+.gear-btn--ghost:hover {
+  color: var(--text-on-dark);
+  border-color: var(--border-on-light);
+}
+
+
+/* ============================================================
+   6. LAYOUT UTILITIES
+   ============================================================ */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--sp-10);
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 0 var(--sp-6);
+  }
+}
+
+.section {
+  padding: var(--sp-20) 0;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: var(--sp-12) 0;
+  }
+}
+
+
+/* ============================================================
+   7. EYEBROW / SECTION LABEL
+   ============================================================ */
+.gear-eyebrow {
+  font-family: var(--type-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-on-light-muted);
+  margin-bottom: var(--sp-3);
+}
+
+/* Yellow variant — use on dark backgrounds */
+.gear-eyebrow--accent {
+  color: var(--bg-accent);
+}
+
+/* Muted variant — use on dark backgrounds */
+.gear-eyebrow--muted {
+  color: var(--text-on-dark-muted);
+}
+
+
+/* ============================================================
+   8. DISPLAY HEADINGS  (League Gothic)
+   ============================================================ */
+.display-xl {
+  font-family: var(--type-display);
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 1.0;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.display-lg {
+  font-family: var(--type-display);
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.display-md {
+  font-family: var(--type-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.display-sm {
+  font-family: var(--type-display);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+/* Colour modifiers */
+.display-xl.on-dark,
+.display-lg.on-dark,
+.display-md.on-dark,
+.display-sm.on-dark  { color: var(--text-on-dark); }
+
+.display-xl.on-light,
+.display-lg.on-light,
+.display-md.on-light,
+.display-sm.on-light { color: var(--text-on-light); }
+
+/* Yellow accent — wrap individual words in <span class="display-accent"> */
+.display-accent { color: var(--bg-accent); }
+
+
+/* ============================================================
+   9. BODY TEXT UTILITIES
+   ============================================================ */
+.body-lg {
+  font-family: var(--type-body);
+  font-size: 1.125rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.body-base {
+  font-family: var(--type-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.body-sm {
+  font-family: var(--type-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.body-caption {
+  font-family: var(--type-body);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-on-light-muted);
+}
+
+/* Pull quote / serif accent */
+.pull-quote {
+  font-family: var(--type-serif);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+}

@@ -6,3 +6,6 @@ eco-byte-*.json
 .env.local
 node_modules/
 ~$*
+!.vercel/project.json
+.vercel/
+.env*.local

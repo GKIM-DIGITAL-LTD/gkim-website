@@ -595,73 +595,6 @@ footer .container{
   </div>
 </section>
 
-<!-- ═══ DIVIDER ═══ -->
-<div class="section-divider">
-  <div class="section-divider-inner">
-    <p class="section-divider-text">This is not a development problem. It is a <strong>system definition problem</strong> — and it is solvable before a single line of code is written.</p>
-    <span class="section-divider-label">Why this matters</span>
-  </div>
-</div>
-
-<!-- ═══ WHY SYSTEMS FAIL ═══ -->
-<section class="why" id="why">
-  <div class="container">
-    <p class="section-label">The problem</p>
-    <h2 class="why-h2">Most systems fail before they are built</h2>
-    <div class="why-grid">
-      <div class="why-item"><div class="why-num">01</div><div class="why-title">Incomplete requirements</div><div class="why-body">What the business needs is never fully captured before development begins.</div></div>
-      <div class="why-item"><div class="why-num">02</div><div class="why-title">Inconsistent workflow logic</div><div class="why-body">Processes designed in isolation. Integration reveals gaps only under pressure.</div></div>
-      <div class="why-item"><div class="why-num">03</div><div class="why-title">Stakeholder misalignment</div><div class="why-body">Different teams hold different mental models of the same system.</div></div>
-      <div class="why-item"><div class="why-num">04</div><div class="why-title">Complexity discovered too late</div><div class="why-body">Operational edge cases emerge during build, not before — doubling the cost.</div></div>
-      <div class="why-item"><div class="why-num">05</div><div class="why-title">Validation happens in code</div><div class="why-body">Business logic is tested through software, not structured thinking beforehand.</div></div>
-      <div class="why-item"><div class="why-num">06</div><div class="why-title">AI is added, not designed</div><div class="why-body">Automation is layered onto broken processes. The output is faster chaos.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ WHAT WE COVER ═══ -->
-<section class="cover" id="cover">
-  <div class="container">
-    <div class="cover-header">
-      <div>
-        <p class="section-label" style="color:var(--text-on-light-muted)">What we work through</p>
-        <h2 class="cover-h2">Six dimensions<br>of business design</h2>
-      </div>
-      <p class="cover-sub">Each session covers the six layers of a functioning business system — from vision through automation.</p>
-    </div>
-    <div class="cover-grid">
-      <div class="cover-item"><div class="cover-icon">◎</div><div class="cover-name">Business Engine</div><div class="cover-desc">How your business creates, delivers, and captures value — as a system, not an idea.</div></div>
-      <div class="cover-item"><div class="cover-icon">⇄</div><div class="cover-name">Workflow Architecture</div><div class="cover-desc">The sequence of operations that makes your model function. Where work flows, where it breaks.</div></div>
-      <div class="cover-item"><div class="cover-icon">⊹</div><div class="cover-name">Decision Logic</div><div class="cover-desc">The conditional rules governing how your business responds to inputs, exceptions, and edge cases.</div></div>
-      <div class="cover-item"><div class="cover-icon">◫</div><div class="cover-name">Data &amp; State Logic</div><div class="cover-desc">What gets tracked, why it matters, and how state changes move through your system.</div></div>
-      <div class="cover-item"><div class="cover-icon">◈</div><div class="cover-name">KPI Structure</div><div class="cover-desc">Metrics that prove the system is working — designed from first principles, not convention.</div></div>
-      <div class="cover-item"><div class="cover-icon">⟡</div><div class="cover-name">AI-Native Opportunity</div><div class="cover-desc">Where intelligence should be embedded versus where human judgement is the competitive advantage.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ DIAGRAM ═══ -->
-<section class="diagram">
-  <div class="container">
-    <p class="diagram-label">The GKIM design sequence</p>
-    <div class="diagram-flow">
-      <div class="diagram-node accent"><div class="diagram-node-label">Start</div><div class="diagram-node-name">Vision</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node"><div class="diagram-node-label">Layer 1</div><div class="diagram-node-name">Business Engine</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node"><div class="diagram-node-label">Layer 2</div><div class="diagram-node-name">Workflows</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node"><div class="diagram-node-label">Layer 3</div><div class="diagram-node-name">Data + State</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node"><div class="diagram-node-label">Layer 4</div><div class="diagram-node-name">AI / Automation</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node"><div class="diagram-node-label">Layer 5</div><div class="diagram-node-name">KPI Dashboard</div></div>
-      <div class="diagram-arrow">→</div>
-      <div class="diagram-node accent"><div class="diagram-node-label">Output</div><div class="diagram-node-name">Build-Ready</div></div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="container">
@@ -699,6 +632,17 @@ Cal("inline",{
   layout:"month_view"
 });
 Cal("ui",{styles:{branding:{brandColor:"#FFDD00"}},hideEventTypeDetails:false,layout:"month_view"});
+</script>
+<script>
+// Suppress Cal.com's "Something went wrong." error div that appears when its
+// stylesheet fails to load (shadow DOM style tag renders as "undefined").
+(function suppressCalError() {
+  var host = document.querySelector('cal-inline-container');
+  if (!host || !host.shadowRoot) { setTimeout(suppressCalError, 200); return; }
+  var err = host.shadowRoot.querySelector('#error');
+  if (err) { err.style.display = 'none'; return; }
+  setTimeout(suppressCalError, 200);
+})();
 </script>
 
 <!-- GA4 -->
@@ -756,6 +700,7 @@ document.querySelectorAll('.radio-group').forEach(function(g){
   const form=document.getElementById('intakeForm');
   const btn=document.getElementById('submitBtn');
   const errEl=document.getElementById('formError');
+  errEl.style.display='none'; errEl.textContent='';
   const successEl=document.getElementById('formSuccess');
   const overlay=document.getElementById('calOverlay');
 

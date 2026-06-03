@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEARS × Praison — Collaboration Memorandum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #0A0A09;
+    --bg-light: #F2F2F2;
+    --bg-accent: #FFDD00;
+    --surface-dark: #202020;
+    --text-on-dark: #FFFFFF;
+    --text-on-dark-muted: #D6D6D6;
+    --text-on-light: #202020;
+    --text-on-light-muted: #5C5C5C;
+    --border-on-dark: #5C5C5C;
+    --border-on-light: #D6D6D6;
+    --border-strong: #333533;
+    --container-max: 1120px;
+  }
+
+  @font-face {
+    font-family: 'ZalandoSans';
+    src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+    font-weight: 400;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg-light);
+    color: var(--text-on-light);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .league { font-family: 'League Gothic', Impact, sans-serif; font-weight: 400; }
+
+  /* GRID OVERLAY */
+  .grid-overlay {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.1) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+  .grid-overlay-light {
+    background-image:
+      linear-gradient(to right, rgb(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(0 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  /* CONTAINER */
+  .container { max-width: var(--container-max); margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 768px) { .container { padding: 0 24px; } }
+
+  /* EYEBROW */
+  .eyebrow {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.96px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .eyebrow-yellow { color: var(--bg-accent); }
+  .eyebrow-dark { color: var(--text-on-light); }
+
+  /* ─────────────────────────────────────────────
+     HERO — dark
+  ───────────────────────────────────────────── */
+  .hero {
+    background: var(--bg-dark);
+    padding: 80px 0 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .hero-logo {
+    height: 36px;
+    width: auto;
+  }
+
+  .hero-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--border-on-dark);
+  }
+
+  .hero-praison-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-on-dark-muted);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .praison-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--bg-accent);
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 80px;
+    line-height: 1.0;
+    font-weight: 400;
+    color: var(--text-on-dark);
+    max-width: 860px;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 .accent { color: var(--bg-accent); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-on-dark-muted);
+    max-width: 640px;
+    line-height: 1.6;
+    margin-bottom: 56px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-on-dark);
+    border: 1px solid var(--border-on-dark);
+    max-width: 720px;
+  }
+
+  .hero-stat {
+    background: var(--bg-dark);
+    padding: 24px 28px;
+  }
+
+  .hero-stat-num {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--bg-accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .hero-stat-label {
+    font-size: 13px;
+    color: var(--text-on-dark-muted);
+    line-height: 1.4;
+  }
+
+  .hero-date {
+    margin-top: 48px;
+    font-size: 12px;
+    color: var(--border-on-dark);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'League Gothic', Impact, sans-serif;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHARED
+  ───────────────────────────────────────────── */
+  .section { padding: 80px 0; }
+  .section-dark { background: var(--bg-dark); }
+  .section-light { background: var(--bg-light); }
+  .section-accent { background: var(--bg-accent); }
+
+  .section-header { margin-bottom: 56px; }
+  .section-header h2 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 64px;
+    line-height: 1.05;
+    font-weight: 400;
+    max-width: 780px;
+  }
+  .section-header h2.on-dark { color: var(--text-on-dark); }
+  .section-header h2.on-light { color: var(--text-on-light); }
+
+  .section-header p {
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 620px;
+  }
+  .section-header p.on-dark { color: var(--text-on-dark-muted); }
+  .section-header p.on-light { color: var(--text-on-light-muted); }
+
+  /* ─────────────────────────────────────────────
+     SECTION 1: THE PROBLEM — light
+  ───────────────────────────────────────────── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border-on-light);
+    border: 1px solid var(--border-on-light);
+    margin-bottom: 56px;
+  }
+
+  .problem-card {
+    background: var(--bg-light);
+    padding: 32px 28px;
+    border: none;
+  }
+
+  .problem-card h4 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 22px;
+    color: var(--text-on-light);
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--text-on-light-muted);
+    line-height: 1.6;
+  }
+
+  .problem-card .problem-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* Fragmentation chart */
+  .frag-chart {
+    background: #fff;
+    border: 1px solid var(--border-on-light);
+    padding: 40px;
+    margin-bottom: 0;
+  }
+
+  .frag-chart-title {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-on-light-muted);
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .frag-chart-source {
+    font-size: 11px;
+    font-style: italic;
+    color: #aaa;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: inherit;
+  }
+
+  .adoption-bars { display: flex; flex-direction: column; gap: 14px; }
+
+  .adoption-row { display: flex; align-items: center; gap: 16px; }
+
+  .adoption-label {
+    font-size: 13px;
+    color: var(--text-on-light);
+    width: 180px;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+
+  .adoption-bar-wrap {
+    flex: 1;
+    height: 32px;
+    background: var(--bg-light);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .adoption-bar {
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    justify-content: flex-end;
+  }
+
+  .adoption-bar-val {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bar-yellow { background: var(--bg-accent); }
+  .bar-yellow .adoption-bar-val { color: var(--text-on-light); }
+  .bar-dark { background: var(--bg-dark); }
+  .bar-mid { background: #555; }
+  .bar-red { background: #c0392b; }
+  .bar-green { background: #2c7a4b; }
+
+  /* ─────────────────────────────────────────────
+     SECTION 2: THE PROPOSITION — dark
+  ───────────────────────────────────────────── */
+  .prop-stack {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 64px;
+  }
+
+  .prop-card {
+    border: 1px solid var(--border-on-dark);
+    padding: 40px 36px;
+  }
+
+  .prop-card h3 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 40px;
+    line-height: 1.1;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .prop-card.gears h3 { color: var(--bg-accent); }
+  .prop-card.praison h3 { color: var(--text-on-dark); }
+
+  .prop-card p {
+    font-size: 14px;
+    color: var(--text-on-dark-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .prop-badge {
+    display: inline-block;
+    border: 1px solid var(--border-on-dark);
+    padding: 4px 12px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+    font-family: 'League Gothic', Impact, sans-serif;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  .prop-badge.highlight {
+    border-color: var(--bg-accent);
+    color: var(--bg-accent);
+  }
+
+  .prop-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .prop-arrow-sym {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 32px;
+    color: var(--bg-accent);
+  }
+
+  .prop-arrow-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--border-on-dark);
+    text-align: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: 'League Gothic', Impact, sans-serif;
+  }
+
+  /* layer stack diagram */
+  .layer-stack { margin: 0 auto; max-width: 680px; }
+
+  .layer-row {
+    display: flex;
+    align-items: stretch;
+    margin-bottom: 3px;
+  }
+
+  .layer-num {
+    width: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--border-on-dark);
+  }
+
+  .layer-block {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .layer-l1 { background: #1A2F5E; }
+  .layer-l2 { background: #162543; }
+  .layer-l3 { background: var(--bg-accent); }
+  .layer-l3 .layer-name { color: var(--text-on-light); }
+  .layer-l3 .layer-desc { color: #555; }
+  .layer-l4 { background: #1D9E75; }
+
+  .layer-name {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-on-dark);
+  }
+
+  .layer-owner {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    color: var(--text-on-dark);
+    font-family: 'League Gothic', Impact, sans-serif;
+  }
+  .layer-l3 .layer-owner { color: var(--text-on-light); opacity: 0.6; }
+
+  .layer-desc {
+    font-size: 12px;
+    color: var(--text-on-dark-muted);
+    margin-top: 4px;
+    opacity: 0.8;
+  }
+
+  .layer-detail { text-align: right; }
+
+  /* ─────────────────────────────────────────────
+     MARKET SECTION — light with charts
+  ───────────────────────────────────────────── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .chart-box {
+    background: #fff;
+    border: 1px solid var(--border-on-light);
+    padding: 36px 32px;
+  }
+
+  .chart-box-full {
+    grid-column: 1 / -1;
+  }
+
+  .chart-title {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-on-light-muted);
+    margin-bottom: 6px;
+  }
+
+  .chart-headline {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--text-on-light);
+    margin-bottom: 4px;
+  }
+
+  .chart-sub {
+    font-size: 13px;
+    color: var(--text-on-light-muted);
+    margin-bottom: 28px;
+  }
+
+  .chart-source {
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* Bar chart: market trajectory */
+  .bar-chart-horiz { display: flex; flex-direction: column; gap: 10px; }
+
+  .bar-yr { display: flex; align-items: center; gap: 12px; }
+
+  .bar-yr-label {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 15px;
+    color: var(--text-on-light-muted);
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  .bar-yr-track {
+    flex: 1;
+    height: 28px;
+    background: var(--bg-light);
+    position: relative;
+  }
+
+  .bar-yr-fill {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: flex-end;
+    transition: width 0.3s;
+  }
+
+  .bar-yr-val {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* Donut / ring chart for adoption gap */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-top: 8px;
+  }
+
+  .donut-svg { flex-shrink: 0; }
+
+  .donut-legend { display: flex; flex-direction: column; gap: 12px; }
+
+  .donut-item { display: flex; align-items: center; gap: 10px; }
+
+  .donut-dot {
+    width: 12px; height: 12px;
+    flex-shrink: 0;
+  }
+
+  .donut-item-label { font-size: 13px; color: var(--text-on-light); line-height: 1.3; }
+  .donut-item-val {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 18px;
+    color: var(--text-on-light);
+    display: block;
+    font-weight: 400;
+  }
+
+  /* Gartner slope chart */
+  .slope-chart {
+    margin-top: 16px;
+    position: relative;
+    height: 160px;
+  }
+
+  .slope-svg { width: 100%; height: 100%; }
+
+  /* ROI / value chart */
+  .value-bars { display: flex; gap: 16px; align-items: flex-end; margin-top: 16px; height: 140px; }
+
+  .vbar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
+
+  .vbar {
+    width: 100%;
+    border: none;
+    position: relative;
+  }
+
+  .vbar-val {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .vbar-label {
+    font-size: 11px;
+    text-align: center;
+    color: var(--text-on-light-muted);
+    line-height: 1.3;
+    margin-top: 8px;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION 3: ARCHITECTURE — dark
+  ───────────────────────────────────────────── */
+  .obs-loop {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: transparent;
+    overflow-x: auto;
+    margin-bottom: 48px;
+  }
+
+  .obs-node {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    padding: 24px 12px;
+    border: 1px solid var(--border-on-dark);
+    margin-right: 2px;
+  }
+
+  .obs-node:last-child { margin-right: 0; }
+
+  .obs-node-icon {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .obs-node-name {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 16px;
+    color: var(--text-on-dark);
+    font-weight: 400;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .obs-node-sub {
+    font-size: 11px;
+    color: var(--text-on-dark-muted);
+  }
+
+  .obs-arrow {
+    color: var(--bg-accent);
+    font-size: 20px;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION 4: CASE STUDIES — light
+  ───────────────────────────────────────────── */
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .case-card {
+    background: #fff;
+    border: 1px solid var(--border-on-light);
+    padding: 36px 32px;
+  }
+
+  .case-num {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 80px;
+    line-height: 0.9;
+    color: var(--bg-accent);
+    font-weight: 400;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .case-card h3 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text-on-light);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .case-card p {
+    font-size: 14px;
+    color: var(--text-on-light-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .case-role-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .case-role {
+    border-left: 3px solid;
+    padding-left: 12px;
+  }
+
+  .case-role.gears-role { border-color: var(--bg-accent); }
+  .case-role.praison-role { border-color: #1D9E75; }
+
+  .case-role-title {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-on-light-muted);
+    font-weight: 400;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .case-role p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--text-on-light);
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION 5: OPPORTUNITY BRIEF — accent/yellow
+  ───────────────────────────────────────────── */
+  .opps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: #e0c800; }
+
+  .opp-cell {
+    background: var(--bg-accent);
+    padding: 32px 28px;
+  }
+
+  .opp-num {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    color: var(--text-on-light);
+    line-height: 1;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .opp-title {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-on-light);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .opp-desc {
+    font-size: 13px;
+    color: var(--text-on-light-muted);
+    line-height: 1.6;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION 6: NEXT STEP — dark
+  ───────────────────────────────────────────── */
+  .next-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .next-left h2 {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 72px;
+    line-height: 1.0;
+    font-weight: 400;
+    color: var(--text-on-dark);
+    margin-bottom: 24px;
+  }
+
+  .next-left h2 .accent { color: var(--bg-accent); }
+
+  .next-left p {
+    font-size: 16px;
+    color: var(--text-on-dark-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .next-right {}
+
+  .contact-block {
+    border: 1px solid var(--border-on-dark);
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+
+  .contact-name {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text-on-dark);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .contact-role {
+    font-size: 12px;
+    color: var(--text-on-dark-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'League Gothic', Impact, sans-serif;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .contact-details { display: flex; flex-direction: column; gap: 6px; }
+
+  .contact-detail {
+    font-size: 14px;
+    color: var(--text-on-dark-muted);
+  }
+
+  .contact-detail strong {
+    color: var(--text-on-dark);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--bg-dark);
+    border-top: 1px solid var(--border-on-dark);
+    padding: 32px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--border-on-dark);
+    font-family: 'League Gothic', Impact, sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* CALLOUT QUOTE */
+  .callout-quote {
+    border-left: 4px solid var(--bg-accent);
+    padding: 20px 24px;
+    margin: 32px 0;
+    background: rgba(255,221,0,0.05);
+  }
+
+  .callout-quote p {
+    font-family: 'League Gothic', Impact, sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-on-dark);
+    line-height: 1.2;
+  }
+
+  .callout-quote cite {
+    font-size: 12px;
+    color: var(--border-on-dark);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-style: normal;
+    display: block;
+    margin-top: 8px;
+    font-family: 'League Gothic', Impact, sans-serif;
+  }
+
+  /* divider rule */
+  .rule { border: none; border-top: 1px solid; margin: 48px 0; }
+  .rule-dark { border-color: var(--border-on-dark); }
+  .rule-light { border-color: var(--border-on-light); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 48px; }
+    .section-header h2 { font-size: 40px; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .prop-stack { grid-template-columns: 1fr; }
+    .prop-arrow { display: none; }
+    .chart-grid { grid-template-columns: 1fr; }
+    .case-grid { grid-template-columns: 1fr; }
+    .opps-grid { grid-template-columns: 1fr; }
+    .next-inner { grid-template-columns: 1fr; gap: 40px; }
+    .obs-loop { flex-direction: column; align-items: stretch; }
+    .obs-arrow { transform: rotate(90deg); text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero grid-overlay">
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="hero-meta">
+        <!-- GKIM Logo (black on yellow variant, recoloured white for dark bg) -->
+        <svg class="hero-logo" viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+          <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+          <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+          <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        </svg>
+
+        <div class="hero-divider"></div>
+
+        <div class="hero-praison-badge">
+          <div class="praison-dot"></div>
+          <span>× PRAISON AI</span>
+        </div>
+      </div>
+
+      <span class="eyebrow eyebrow-yellow">Collaboration Memorandum — May 2026</span>
+
+      <h1 class="league">
+        Intelligence<br>
+        meets<br>
+        <span class="accent">Execution.</span>
+      </h1>
+
+      <p class="hero-sub">
+        A proposed collaboration between GKIM Digital (GEARS™) and PraisonAI to build the full-stack operating system for AI-native businesses — GEARS as the intelligence and design layer, Praison as the execution and orchestration substrate.
+      </p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">1M+</span>
+          <span class="hero-stat-label">PraisonAI downloads — proven developer adoption</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">$65B</span>
+          <span class="hero-stat-label">AI orchestration market by 2034 (20% CAGR)</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">6%</span>
+          <span class="hero-stat-label">Enterprises that actually capture AI value — the gap we close</span>
+        </div>
+      </div>
+
+      <p class="hero-date">Prepared by Ian Morrison, GKIM Digital — Cambridge, UK</p>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1: THE PROBLEM
+═══════════════════════════════════════════ -->
+<section class="section section-light grid-overlay-light">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-dark">The Problem</span>
+      <h2 class="on-light league">Most enterprise AI is fragments without architecture.</h2>
+      <p class="on-light">
+        Businesses are deploying AI at scale — but as disconnected copilots, isolated agents and brittle workflow automations. There is no coherent operational layer beneath them. The result is fragmentation, poor observability, and value that never materialises at the business level.
+      </p>
+    </div>
+
+    <!-- fragmentation cards -->
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="problem-icon">⚡</span>
+        <h4>Operational Fragmentation</h4>
+        <p>AI tools deployed in silos with no shared operational logic, no common data model, and no way to observe value creation across the whole system.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">📉</span>
+        <h4>Weak Observability</h4>
+        <p>Runtime behaviour disconnected from business KPIs. Teams can see whether agents ran — not whether they created value or accelerated outcomes.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">🔄</span>
+        <h4>Brittle Orchestration</h4>
+        <p>Workflow automations hardwired to specific tools and models. Every change requires re-engineering the automation rather than updating intent.</p>
+      </div>
+      <div class="problem-card">
+        <span class="problem-icon">❓</span>
+        <h4>Unclear ROI</h4>
+        <p>No structured link between operational execution and business value. Boards ask "what did we get from AI?" and teams cannot answer at the system level.</p>
+      </div>
+    </div>
+
+    <!-- Adoption vs Value chart — FT-style -->
+    <div class="frag-chart">
+      <div class="frag-chart-title">
+        <span>The Deployment-to-Value Gap</span>
+        <span class="frag-chart-source">Sources: McKinsey State of AI 2025 · Gartner 2025 · PwC · IDC</span>
+      </div>
+      <div class="adoption-bars">
+        <div class="adoption-row">
+          <div class="adoption-label">Organisations using AI in at least one function</div>
+          <div class="adoption-bar-wrap">
+            <div class="adoption-bar bar-yellow" style="width:88%">
+              <span class="adoption-bar-val">88%</span>
+            </div>
+          </div>
+        </div>
+        <div class="adoption-row">
+          <div class="adoption-label">At least one AI workload in production</div>
+          <div class="adoption-bar-wrap">
+            <div class="adoption-bar bar-mid" style="width:72%">
+              <span class="adoption-bar-val">72%</span>
+            </div>
+          </div>
+        </div>
+        <div class="adoption-row">
+          <div class="adoption-label">Experimenting with AI agents</div>
+          <div class="adoption-bar-wrap">
+            <div class="adoption-bar bar-mid" style="width:62%">
+              <span class="adoption-bar-val">62%</span>
+            </div>
+          </div>
+        </div>
+        <div class="adoption-row">
+          <div class="adoption-label">Agents scaled to production</div>
+          <div class="adoption-bar-wrap">
+            <div class="adoption-bar bar-dark" style="width:25%">
+              <span class="adoption-bar-val">25%</span>
+            </div>
+          </div>
+        </div>
+        <div class="adoption-row">
+          <div class="adoption-label">Qualify as true AI high performers</div>
+          <div class="adoption-bar-wrap">
+            <div class="adoption-bar bar-red" style="width:6%">
+              <span class="adoption-bar-val" style="color:#fff; font-size:12px;">6%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--text-on-light-muted);margin-top:20px;line-height:1.5;">The drop from deployment (72%) to scaled production (25%) to genuine value capture (6%) represents the structural gap that a business-system intelligence layer closes. Gartner warns that by end of 2027, over 40% of agentic AI projects will be paused due to unclear business value and insufficient governance.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2: THE PROPOSITION
+═══════════════════════════════════════════ -->
+<section class="section section-dark grid-overlay">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-yellow">The Proposition</span>
+      <h2 class="on-dark league">GEARS is the front end.<br>Praison is the back end.</h2>
+      <p class="on-dark">
+        Two complementary platforms — neither complete alone. Together they create something that does not yet exist: a business-system intelligence layer wired directly to a production AI execution substrate.
+      </p>
+    </div>
+
+    <!-- Two-column prop cards -->
+    <div class="prop-stack">
+      <div class="prop-card gears">
+        <span class="eyebrow eyebrow-yellow">GEARS™ — Intelligence Layer</span>
+        <h3 class="league">Structured<br>Business<br>Intelligence</h3>
+        <p>GEARS models organisations as recursive value-producing systems (GEARs). Every unit holds its responsibilities, intent, inputs/outputs, KPIs, dependencies, and execution pathways. GEARS is execution-agnostic — it defines <em>what</em> must happen and <em>why</em>, not <em>how</em>.</p>
+        <div>
+          <span class="prop-badge highlight">Recursive Hierarchy</span>
+          <span class="prop-badge highlight">Selective Agentisation</span>
+          <span class="prop-badge highlight">Control Plane</span>
+          <span class="prop-badge">KPI Rollup</span>
+          <span class="prop-badge">Observability</span>
+          <span class="prop-badge">Compile to Execution</span>
+        </div>
+      </div>
+
+      <div class="prop-arrow">
+        <span class="prop-arrow-sym">⇄</span>
+        <span class="prop-arrow-label">Adapter Layer</span>
+      </div>
+
+      <div class="prop-card praison">
+        <span class="eyebrow" style="color:var(--text-on-dark-muted);font-family:'League Gothic',Impact,sans-serif;font-size:12px;letter-spacing:1.96px;text-transform:uppercase;display:block;margin-bottom:16px;">PraisonAI — Execution Layer</span>
+        <h3 class="league">Multi-Agent<br>Runtime<br>Substrate</h3>
+        <p>PraisonAI executes multi-agent teams with self-reflection, 100+ LLM integrations, RAG, memory, tool orchestration, and deployment infrastructure. 1M+ downloads. Used in production. Likes from Elon Musk. An existing community that can be commercialised.</p>
+        <div>
+          <span class="prop-badge">Agent / AgentTeam</span>
+          <span class="prop-badge">AgentFlow / AgentOS</span>
+          <span class="prop-badge">MCP Server</span>
+          <span class="prop-badge">100+ LLMs</span>
+          <span class="prop-badge">Memory + RAG</span>
+          <span class="prop-badge">1M+ Downloads</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="callout-quote">
+      <p class="league">"Karthick called GEARS 10 years ahead. In this AI-accelerated age, that means 10 days."</p>
+      <cite>Ian Morrison — GKIM Digital, Cambridge</cite>
+    </div>
+
+    <hr class="rule rule-dark">
+
+    <!-- 4-layer architecture stack -->
+    <span class="eyebrow eyebrow-yellow" style="margin-bottom:24px;display:block;">Technical Architecture</span>
+    <div class="layer-stack">
+      <div class="layer-row">
+        <div class="layer-num" style="color:#1A2F5E; background: rgba(255,255,255,0.03);">01</div>
+        <div class="layer-block layer-l1">
+          <div>
+            <div class="layer-name">Business-System Intelligence</div>
+            <div class="layer-desc">Recursive GEAR graphs · KPI frameworks · operational architecture · telemetry · optimisation logic</div>
+          </div>
+          <div class="layer-detail">
+            <div class="layer-owner">GEARS™</div>
+          </div>
+        </div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num" style="color:#162543; background: rgba(255,255,255,0.03);">02</div>
+        <div class="layer-block layer-l2">
+          <div>
+            <div class="layer-name">Execution Intent Layer</div>
+            <div class="layer-desc">Execution manifests · orchestration intent · capability specs · dependency graphs · role definitions</div>
+          </div>
+          <div class="layer-detail">
+            <div class="layer-owner">Shared</div>
+          </div>
+        </div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num" style="color:#C47F00; background: rgba(255,255,255,0.03);">03</div>
+        <div class="layer-block layer-l3">
+          <div>
+            <div class="layer-name" style="color:var(--text-on-light);">GEARS ↔ Praison Adapter</div>
+            <div class="layer-desc" style="color:#666;">Translation · agent compilation · workflow compilation · telemetry mapping · state sync</div>
+          </div>
+          <div class="layer-detail">
+            <div class="layer-owner" style="color:#888;">Integration</div>
+          </div>
+        </div>
+      </div>
+      <div class="layer-row">
+        <div class="layer-num" style="color:#1D9E75; background: rgba(255,255,255,0.03);">04</div>
+        <div class="layer-block layer-l4">
+          <div>
+            <div class="layer-name">Praison Runtime</div>
+            <div class="layer-desc">Agent execution · workflow coordination · tool orchestration · memory management · scaling</div>
+          </div>
+          <div class="layer-detail">
+            <div class="layer-owner">PraisonAI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3: MARKET VALIDATION
+═══════════════════════════════════════════ -->
+<section class="section section-light grid-overlay-light">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-dark">Market Validation</span>
+      <h2 class="on-light league">The window is now. The numbers are unambiguous.</h2>
+      <p class="on-light">
+        Every major analyst — Gartner, McKinsey, IDC — is pointing at the same inflection. The market for AI orchestration and agentic infrastructure is entering its steepest growth phase. The gap between deployment and value capture creates an urgent, commercial need for exactly what GEARS + Praison provides.
+      </p>
+    </div>
+
+    <div class="chart-grid">
+
+      <!-- Chart 1: Market trajectory -->
+      <div class="chart-box">
+        <div class="chart-title">AI Orchestration Market</div>
+        <div class="chart-headline">$65B</div>
+        <div class="chart-sub">Projected market size by 2034 — from $9.6B in 2024</div>
+        <div class="bar-chart-horiz">
+          <div class="bar-yr">
+            <span class="bar-yr-label">2024</span>
+            <div class="bar-yr-track">
+              <div class="bar-yr-fill bar-dark" style="width:15%">
+                <span class="bar-yr-val" style="color:#fff; font-size:12px;">$9.6B</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-yr">
+            <span class="bar-yr-label">2025</span>
+            <div class="bar-yr-track">
+              <div class="bar-yr-fill bar-mid" style="width:20%">
+                <span class="bar-yr-val" style="color:#fff; font-size:12px;">$12.9B</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-yr">
+            <span class="bar-yr-label">2026</span>
+            <div class="bar-yr-track">
+              <div class="bar-yr-fill bar-mid" style="width:25%">
+                <span class="bar-yr-val" style="color:#fff; font-size:12px;">$14B</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-yr">
+            <span class="bar-yr-label">2030</span>
+            <div class="bar-yr-track">
+              <div class="bar-yr-fill" style="width:50%; background:#444">
+                <span class="bar-yr-val" style="color:#fff; font-size:12px;">~$30B</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-yr">
+            <span class="bar-yr-label">2034</span>
+            <div class="bar-yr-track">
+              <div class="bar-yr-fill bar-yellow" style="width:100%">
+                <span class="bar-yr-val" style="color:var(--text-on-light);">$65.4B</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="chart-source">Source: Global Market Insights · Fortune Business Insights · MarketsandMarkets 2025</p>
+      </div>
+
+      <!-- Chart 2: Agentic AI growth -->
+      <div class="chart-box">
+        <div class="chart-title">Agentic AI — Enterprise Segment</div>
+        <div class="chart-headline">46%</div>
+        <div class="chart-sub">CAGR 2024–2030. Enterprise agentic AI: $2.6B → $24.5B</div>
+
+        <div style="margin-top:16px;">
+          <!-- Stepped timeline -->
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <div style="display:flex;align-items:center;gap:0;margin-bottom:2px;">
+              <div style="width:80px;font-size:12px;color:var(--text-on-light-muted);flex-shrink:0;">2024</div>
+              <div style="flex:1;height:24px;background:var(--bg-dark);display:flex;align-items:center;padding:0 10px;justify-content:flex-end;width:11%"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:13px;color:#fff;">$2.6B</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0;margin-bottom:2px;">
+              <div style="width:80px;font-size:12px;color:var(--text-on-light-muted);flex-shrink:0;">2025</div>
+              <div style="flex:1;background:var(--bg-dark);height:24px;display:flex;align-items:center;padding:0 10px;justify-content:flex-end;width:20%;opacity:0.85;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:13px;color:#fff;">$5.3B</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0;margin-bottom:2px;">
+              <div style="width:80px;font-size:12px;color:var(--text-on-light-muted);flex-shrink:0;">2026</div>
+              <div style="flex:1;background:var(--bg-dark);height:24px;display:flex;align-items:center;padding:0 10px;justify-content:flex-end;width:30%;opacity:0.75;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:13px;color:#fff;">$7.7B</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0;">
+              <div style="width:80px;font-size:12px;color:var(--text-on-light-muted);flex-shrink:0;">2030</div>
+              <div style="background:var(--bg-accent);height:28px;display:flex;align-items:center;padding:0 10px;justify-content:flex-end;width:100%;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:15px;color:var(--text-on-light);">$24.5B</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:12px;color:var(--text-on-light-muted);margin-top:16px;">88% of organisations plan AI budget increases in the next 12 months. Companies project average ROI of 171% from agentic implementations.</p>
+        <p class="chart-source">Source: Arcade.dev · PwC AI Survey 2025</p>
+      </div>
+
+      <!-- Chart 3: Gartner enterprise app adoption -->
+      <div class="chart-box">
+        <div class="chart-title">Enterprise Apps With AI Agents — Gartner</div>
+        <div class="chart-headline">40%</div>
+        <div class="chart-sub">Enterprise apps integrated with task-specific agents by end of 2026 — up from &lt;5% today</div>
+
+        <!-- Slope / area chart using SVG -->
+        <svg viewBox="0 0 460 140" style="width:100%;margin-top:12px;" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFDD00" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#FFDD00" stop-opacity="0.03"/>
+            </linearGradient>
+          </defs>
+          <!-- axis -->
+          <line x1="40" y1="10" x2="40" y2="120" stroke="#ccc" stroke-width="1"/>
+          <line x1="40" y1="120" x2="450" y2="120" stroke="#ccc" stroke-width="1"/>
+          <!-- y labels -->
+          <text x="35" y="14" text-anchor="end" font-size="10" fill="#999">50%</text>
+          <text x="35" y="50" text-anchor="end" font-size="10" fill="#999">30%</text>
+          <text x="35" y="80" text-anchor="end" font-size="10" fill="#999">10%</text>
+          <text x="35" y="118" text-anchor="end" font-size="10" fill="#999">0%</text>
+          <!-- gridlines -->
+          <line x1="40" y1="14" x2="450" y2="14" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="50" x2="450" y2="50" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="80" x2="450" y2="80" stroke="#eee" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- area fill: 2024=1%, 2025=5%, 2026=40%, 2030=50% (best case) -->
+          <!-- x positions: 2024=80, 2025=190, 2026=300, 2035=440 -->
+          <!-- y for %: 0%=120, 50%=14 → scale = (120-14)/50 = 2.12 per % -->
+          <!-- 1%→118, 5%→109, 40%→35, 50%→14 -->
+          <polygon points="80,118 190,109 300,35 440,14 440,120 80,120" fill="url(#areaGrad)"/>
+          <polyline points="80,118 190,109 300,35 440,14" fill="none" stroke="#FFDD00" stroke-width="2.5"/>
+          <!-- data points -->
+          <circle cx="80" cy="118" r="4" fill="#FFDD00"/>
+          <circle cx="190" cy="109" r="4" fill="#FFDD00"/>
+          <circle cx="300" cy="35" r="5" fill="#FFDD00"/>
+          <circle cx="440" cy="14" r="4" fill="#FFDD00"/>
+          <!-- labels -->
+          <text x="80" y="132" text-anchor="middle" font-size="10" fill="#666">2024</text>
+          <text x="190" y="132" text-anchor="middle" font-size="10" fill="#666">2025</text>
+          <text x="300" y="132" text-anchor="middle" font-size="10" fill="#666">2026</text>
+          <text x="440" y="132" text-anchor="middle" font-size="10" fill="#666">2035</text>
+          <!-- callout values -->
+          <text x="80" y="112" text-anchor="middle" font-size="9" fill="#999">&lt;1%</text>
+          <text x="190" y="103" text-anchor="middle" font-size="9" fill="#888">&lt;5%</text>
+          <text x="300" y="29" text-anchor="middle" font-size="11" fill="#202020" font-weight="bold">40%</text>
+          <text x="440" y="8" text-anchor="middle" font-size="9" fill="#666">~50%</text>
+        </svg>
+        <p class="chart-source">Source: Gartner Press Release, August 2025 — "Gartner Predicts 40% of Enterprise Apps Will Feature Task-Specific AI Agents by 2026"</p>
+      </div>
+
+      <!-- Chart 4: ROI + value capture -->
+      <div class="chart-box">
+        <div class="chart-title">Value Capture — With vs Without Architecture Layer</div>
+        <div class="chart-headline">171%</div>
+        <div class="chart-sub">Average projected ROI from enterprise agentic AI — but only with structured governance</div>
+
+        <!-- Grouped comparison bars -->
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <div style="font-size:12px;color:var(--text-on-light-muted);margin-bottom:6px;">Enterprises with structured operational design</div>
+            <div style="display:flex;gap:0;">
+              <div style="width:171%;max-width:100%;background:var(--bg-accent);height:32px;display:flex;align-items:center;padding:0 12px;justify-content:flex-end;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:16px;color:var(--text-on-light);">171% avg. ROI</span></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:12px;color:var(--text-on-light-muted);margin-bottom:6px;">Enterprises without — ad hoc AI deployment</div>
+            <div style="background:#ccc;height:32px;width:20%;display:flex;align-items:center;padding:0 12px;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:12px;color:#fff;white-space:nowrap;">unclear ROI</span></div>
+          </div>
+          <div style="padding-top:8px;border-top:1px solid var(--border-on-light);">
+            <div style="font-size:12px;color:var(--text-on-light-muted);margin-bottom:6px;">US enterprises (outperformers)</div>
+            <div style="background:var(--bg-dark);height:32px;width:100%;display:flex;align-items:center;padding:0 12px;justify-content:flex-end;"><span style="font-family:'League Gothic',Impact,sans-serif;font-size:16px;color:#fff;">192% avg. ROI</span></div>
+          </div>
+        </div>
+
+        <p style="font-size:12px;color:var(--text-on-light-muted);margin-top:16px;line-height:1.5;">McKinsey: midpoint scenario projects agentic AI + robotics generating ~$2.9T in annual US economic value by 2030. The mechanism is structured operational design — not tool deployment alone.</p>
+        <p class="chart-source">Source: Arcade.dev Agentic Framework Report 2025 · McKinsey Global Institute</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4: OBSERVABILITY LOOP
+═══════════════════════════════════════════ -->
+<section class="section section-dark grid-overlay">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-yellow">How It Works</span>
+      <h2 class="on-dark league">A continuous loop from business intent to runtime — and back.</h2>
+      <p class="on-dark">The adapter layer is the critical innovation. It compiles GEARS business architecture into Praison agents, workflows, and orchestration — then feeds runtime telemetry back into GEARS' observability and optimisation engine.</p>
+    </div>
+
+    <!-- Observability loop nodes -->
+    <div class="obs-loop">
+      <div class="obs-node">
+        <span class="obs-node-icon">🏗</span>
+        <span class="obs-node-name">GEARS Design</span>
+        <span class="obs-node-sub">Business architecture · GEARs · KPIs · intent</span>
+      </div>
+      <div class="obs-arrow">→</div>
+      <div class="obs-node" style="border-color:var(--bg-accent);">
+        <span class="obs-node-icon">⚙️</span>
+        <span class="obs-node-name">Compile</span>
+        <span class="obs-node-sub">Adapter translates into Praison agents + workflows</span>
+      </div>
+      <div class="obs-arrow">→</div>
+      <div class="obs-node" style="border-color:#1D9E75;">
+        <span class="obs-node-icon">🤖</span>
+        <span class="obs-node-name">Praison Runtime</span>
+        <span class="obs-node-sub">Agents execute · workflows coordinate · tools fire</span>
+      </div>
+      <div class="obs-arrow">→</div>
+      <div class="obs-node">
+        <span class="obs-node-icon">📡</span>
+        <span class="obs-node-name">Telemetry</span>
+        <span class="obs-node-sub">Runtime events → GEARS instrumentation layer</span>
+      </div>
+      <div class="obs-arrow">→</div>
+      <div class="obs-node" style="border-color:var(--bg-accent);">
+        <span class="obs-node-icon">📊</span>
+        <span class="obs-node-name">Optimise</span>
+        <span class="obs-node-sub">KPI analysis · bottleneck detection · redesign</span>
+      </div>
+      <div class="obs-arrow">↩</div>
+    </div>
+
+    <p style="font-size:14px;color:var(--text-on-dark-muted);max-width:640px;line-height:1.6;">
+      Humans remain first-class execution modalities throughout. GEARS supports approval gates, escalation chains, supervisory execution, and collaborative human-agent operations — ensuring governance without overhead.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5: CASE STUDIES
+═══════════════════════════════════════════ -->
+<section class="section section-light grid-overlay-light">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-dark">Applied Examples</span>
+      <h2 class="on-light league">What this looks like in the real world.</h2>
+      <p class="on-light">Two greenfield business archetypes — each illustrating how GEARS and Praison divide labour to create AI-native operational platforms that neither could build alone.</p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card">
+        <span class="case-num">01</span>
+        <h3>AI-Native Telehealth Operations Platform</h3>
+        <p>A continuously adaptive telehealth coordination system integrating patient intake, genetics testing, scheduling, AI-assisted triage, provider orchestration, and compliance oversight into a single living operational system.</p>
+        <div class="case-role-row">
+          <div class="case-role gears-role">
+            <span class="case-role-title">GEARS™ designs</span>
+            <p>Patient lifecycle · KPI structures · provider coordination · escalation pathways · compliance instrumentation</p>
+          </div>
+          <div class="case-role praison-role">
+            <span class="case-role-title">Praison executes</span>
+            <p>Triage agents · scheduling automation · coordination workflows · patient support systems · runtime logic</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <span class="case-num">02</span>
+        <h3>AI-Native Consulting Firm</h3>
+        <p>A strategic consulting organisation where analysts, researchers, architects, and reporting systems are partially AI-executed — scaling expertise without scaling headcount. The model GKIM itself is building on.</p>
+        <div class="case-role-row">
+          <div class="case-role gears-role">
+            <span class="case-role-title">GEARS™ designs</span>
+            <p>Consulting workflows · value chains · client engagement structures · telemetry and KPI systems · execution pathways</p>
+          </div>
+          <div class="case-role praison-role">
+            <span class="case-role-title">Praison executes</span>
+            <p>Agent collaboration · report generation · research orchestration · workflow execution · operational scaling</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 6: OPPORTUNITIES — accent
+═══════════════════════════════════════════ -->
+<section class="section section-accent">
+  <div class="container">
+
+    <div class="section-header">
+      <span class="eyebrow eyebrow-dark">What We Build Together</span>
+      <h2 class="on-light league">Three paths to commercial value from day one.</h2>
+      <p class="on-light" style="color:var(--text-on-light-muted);">
+        No presumption on structure — this is an opening position. The intent is to identify where our combined assets create disproportionate leverage, and build from there.
+      </p>
+    </div>
+
+    <div class="opps-grid">
+      <div class="opp-cell">
+        <span class="opp-num">01</span>
+        <span class="opp-title">Joint Client Engagements</span>
+        <p class="opp-desc">GKIM brings the business design mandate and client relationships. Praison provides the runtime that makes the design executable. Together we deliver AI-native operational systems that neither party could build alone — at a price point that reflects integrated value.</p>
+      </div>
+      <div class="opp-cell" style="background:#F5D000;">
+        <span class="opp-num">02</span>
+        <span class="opp-title">Community Commercialisation</span>
+        <p class="opp-desc">Praison has 1M+ downloads, a YouTube channel, and a growing developer community. GKIM has the commercial methodology and business design framing. Together we can build a premium tier, certification programme, or business-design curriculum that converts the open-source audience into revenue.</p>
+      </div>
+      <div class="opp-cell">
+        <span class="opp-num">03</span>
+        <span class="opp-title">Platform Productisation</span>
+        <p class="opp-desc">The GEARS-compiled-to-Praison pipeline is itself a product — a no-code/low-code interface for designing and deploying AI-native operations. Licensed to enterprises, sold to implementation partners, or packaged as a SaaS platform targeting the greenfield AI-native business market.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SECTION 7: NEXT STEP
+═══════════════════════════════════════════ -->
+<section class="section section-dark grid-overlay">
+  <div class="container">
+    <div class="next-inner">
+
+      <div class="next-left">
+        <span class="eyebrow eyebrow-yellow">Next Step</span>
+        <h2 class="league">One<br>conversation.<br><span class="accent">Many<br>directions.</span></h2>
+        <p>This is not a pitch deck. It is a working document — a structured starting point for a conversation between two technical founders who have built complementary pieces of something important.</p>
+        <p>The ask is simple: a focused working session to identify the first joint opportunity, define roles, and agree a path to market. Everything else follows from that.</p>
+        <p style="color:var(--text-on-dark); font-size:15px; margin-top:24px;">
+          <strong style="color:var(--bg-accent);">Proposed agenda:</strong><br>
+          1. Align on the architecture vision<br>
+          2. Identify the strongest first use case<br>
+          3. Define a 90-day collaboration structure<br>
+          4. Agree commercial terms framework
+        </p>
+      </div>
+
+      <div class="next-right">
+        <div class="contact-block">
+          <span class="contact-name">Ian Morrison</span>
+          <span class="contact-role">Founder — GKIM Digital &amp; GEARS Institute</span>
+          <div class="contact-details">
+            <span class="contact-detail"><strong>Location</strong> Cambridge, UK · Ho Chi Minh City, VN</span>
+            <span class="contact-detail"><strong>Platform</strong> GEARS™ — AI-Native Business System Design</span>
+            <span class="contact-detail"><strong>Web</strong> gkim.digital</span>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <span class="contact-name">Mervin Praison</span>
+          <span class="contact-role">Creator — PraisonAI</span>
+          <div class="contact-details">
+            <span class="contact-detail"><strong>Location</strong> United Kingdom</span>
+            <span class="contact-detail"><strong>Day role</strong> MLOps Engineer, WPP · Guest Lecturer, Westminster</span>
+            <span class="contact-detail"><strong>Platform</strong> PraisonAI — Multi-Agent AI Runtime</span>
+            <span class="contact-detail"><strong>Community</strong> 1M+ downloads · YouTube channel · Elon endorsement</span>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <span class="contact-name">Karthick</span>
+          <span class="contact-role">Technical Co-Founder — PraisonAI</span>
+          <div class="contact-details">
+            <span class="contact-detail"><strong>Focus</strong> Technical architecture · business development</span>
+            <span class="contact-detail"><strong>Perspective</strong> "GEARS is 10 years ahead" — Ian's answer: 10 days.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <svg height="22" viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+      </svg>
+
+      <span class="footer-note">GEARS × Praison — Collaboration Memorandum · May 2026 · Confidential</span>
+      <span class="footer-note">gkim.digital</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
