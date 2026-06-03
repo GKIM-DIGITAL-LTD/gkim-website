@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adora × GKIM — Board Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════
+   ADORA BRAND TOKENS
+══════════════════════════════ */
+:root {
+  --teal:        #3DBDA7;
+  --teal-dark:   #2a9d8a;
+  --teal-light:  #d6f0ec;
+  --teal-pale:   #eef8f6;
+  --navy:        #1e2d4a;
+  --navy-mid:    #2d3f5e;
+  --ink:         #1a1a2e;
+  --body:        #3d3d52;
+  --muted:       #7a7a96;
+  --dim:         #b8b8cc;
+  --rule:        #e4e4f0;
+  --bg:          #ffffff;
+  --bg-warm:     #f8faf9;
+  --bg-teal:     #eef8f6;
+  --pink:        #e85d7a;
+  --yellow:      #f5c842;
+
+  --font-head:   'Playfair Display', Georgia, serif;
+  --font-body:   'Nunito Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  --slide-h:     calc(100vh - 52px);
+  --nav-h:       52px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--ink);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ══════════════════════════════
+   DECK
+══════════════════════════════ */
+.deck {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  height: calc(100vh - var(--nav-h));
+  top: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  background: var(--bg);
+  padding-bottom: var(--nav-h);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+.nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 200;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.2s;
+}
+.nav-btn:hover { border-color: var(--teal); color: var(--teal); }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+.nav-btn:disabled:hover { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.6); }
+
+.nav-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-dot.active {
+  background: var(--teal);
+  width: 22px;
+  border-radius: 4px;
+}
+.nav-dot:hover:not(.active) { background: rgba(255,255,255,0.45); }
+
+.nav-label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  min-width: 140px;
+}
+.nav-label.right { text-align: right; }
+
+/* ══════════════════════════════
+   SHARED SLIDE COMPONENTS
+══════════════════════════════ */
+
+/* Header bar on each slide */
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 52px 16px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.slide-num {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.slide-title-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Brand lockup in corner */
+.brand-lock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-adora {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.adora-wordmark {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+.brand-sep {
+  color: var(--dim);
+  font-size: 0.8rem;
+  margin: 0 2px;
+}
+
+/* Slide body */
+.slide-body {
+  padding: 36px 52px 40px;
+}
+
+/* Section heading */
+.section-hed {
+  font-family: var(--font-head);
+  font-size: clamp(26px, 3.2vw, 42px);
+  font-weight: 400;
+  color: var(--navy);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.section-hed em { color: var(--teal); font-style: italic; }
+
+.section-sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+/* ══════════════════════════════
+   SLIDE 0 — TITLE
+══════════════════════════════ */
+.title-slide {
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.title-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 60px 48px;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Teal circle decoration */
+.title-top::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  border: 1px solid rgba(61,189,167,0.15);
+  pointer-events: none;
+}
+.title-top::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  border: 1px solid rgba(61,189,167,0.1);
+  pointer-events: none;
+}
+
+.title-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 24px;
+}
+
+.title-hed {
+  font-family: var(--font-head);
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.title-hed em { color: var(--teal); font-style: italic; }
+
+.title-sub {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.title-meta {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.title-meta-cell {
+  padding: 14px 28px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+.title-meta-cell:last-child { border-right: none; }
+
+.t-meta-label {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 4px;
+}
+
+.t-meta-val {
+  font-family: var(--font-head);
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.8);
+  font-style: italic;
+}
+
+/* Contents list */
+.title-contents {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 520px;
+  margin-top: 36px;
+}
+
+.tc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tc-item:first-child { border-top: 1px solid rgba(255,255,255,0.08); }
+.tc-item:hover .tc-name { color: #fff; }
+.tc-item:hover .tc-n { color: var(--teal); }
+
+.tc-n {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.25);
+  width: 20px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.tc-name {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.55);
+  font-style: italic;
+  transition: color 0.15s;
+}
+
+.tc-arr { margin-left: auto; color: rgba(255,255,255,0.2); font-size: 0.8rem; }
+
+/* Title foot */
+.title-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 52px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.15);
+}
+
+.foot-adora {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.foot-adora-word {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.foot-sep {
+  color: rgba(255,255,255,0.2);
+  margin: 0 10px;
+  font-size: 0.9rem;
+}
+
+.foot-gkim {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.foot-ian {
+  color: rgba(255,255,255,0.35);
+  font-size: 0.72rem;
+}
+
+/* ══════════════════════════════
+   CARD GRID
+══════════════════════════════ */
+.card-grid {
+  display: grid;
+  gap: 16px;
+}
+.card-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  background: var(--bg-warm);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--teal);
+  padding: 22px 20px;
+  transition: all 0.2s;
+}
+.card:hover { background: var(--bg-teal); border-color: var(--teal); }
+.card.card-navy { background: var(--navy); border-color: var(--teal); color: #fff; }
+.card.card-teal { background: var(--teal); border-top-color: var(--teal-dark); color: #fff; }
+
+.card-icon { font-size: 22px; display: block; margin-bottom: 10px; }
+.card-title {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  margin-bottom: 8px;
+}
+.card.card-navy .card-title { color: var(--teal); }
+.card.card-teal .card-title { color: rgba(255,255,255,0.7); }
+
+.card-text {
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.65;
+}
+.card.card-navy .card-text { color: rgba(255,255,255,0.75); }
+.card.card-teal .card-text { color: rgba(255,255,255,0.9); }
+
+.card-stat {
+  font-family: var(--font-head);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* ══════════════════════════════
+   HIGHLIGHT BAND
+══════════════════════════════ */
+.highlight-band {
+  background: var(--teal);
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-radius: 3px;
+}
+.hb-icon { font-size: 20px; flex-shrink: 0; }
+.hb-text {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: #ffffff;
+  line-height: 1.5;
+}
+.hb-text strong { font-style: normal; font-weight: 600; }
+
+.highlight-band.navy { background: var(--navy); }
+.highlight-band.pale { background: var(--bg-teal); }
+.highlight-band.pale .hb-text { color: var(--teal-dark); }
+
+/* ══════════════════════════════
+   TWO-COL LAYOUT
+══════════════════════════════ */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ══════════════════════════════
+   LIST
+══════════════════════════════ */
+.tick-list { list-style: none; padding: 0; }
+.tick-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+.tick-list li:last-child { border-bottom: none; }
+.tick-list li::before {
+  content: '✓';
+  color: var(--teal);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.dot-list { list-style: none; padding: 0; }
+.dot-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 5px 0;
+  font-size: 0.88rem;
+  color: var(--body);
+  line-height: 1.5;
+}
+.dot-list li::before {
+  content: '→';
+  color: var(--teal);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════
+   TIMELINE (slide 4)
+══════════════════════════════ */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: var(--teal-light);
+  z-index: 0;
+}
+
+.tl-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.tl-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--teal);
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.tl-dot.hollow {
+  background: #fff;
+  box-shadow: 0 0 0 2px var(--dim);
+}
+
+.tl-period {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.tl-card {
+  background: var(--bg-warm);
+  border: 1px solid var(--rule);
+  padding: 16px 14px;
+  width: 100%;
+}
+
+.tl-card-title {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--teal-light);
+}
+
+.tl-card-items { list-style: none; padding: 0; }
+.tl-card-items li {
+  font-size: 0.8rem;
+  color: var(--body);
+  line-height: 1.55;
+  padding: 4px 0;
+  padding-left: 12px;
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+.tl-card-items li:last-child { border-bottom: none; }
+.tl-card-items li::before {
+  content: '·';
+  position: absolute; left: 0;
+  color: var(--teal); font-weight: 700;
+}
+
+/* ══════════════════════════════
+   VISION SLIDE
+══════════════════════════════ */
+.vision-hero {
+  background: var(--navy);
+  padding: 44px 52px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.vision-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 1px solid rgba(61,189,167,0.15);
+  pointer-events: none;
+}
+.vision-hero-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 14px;
+}
+.vision-hero-text {
+  font-family: var(--font-head);
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  line-height: 1.5;
+  max-width: 780px;
+}
+.vision-hero-text strong { font-style: normal; color: var(--teal); }
+
+/* Stat row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 24px;
+}
+.stat-cell {
+  background: var(--bg);
+  padding: 20px 18px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ══════════════════════════════
+   ADORA ATOM SVG
+══════════════════════════════ */
+
+/* ══════════════════════════════
+   UTILITY
+══════════════════════════════ */
+.teal { color: var(--teal); }
+.navy { color: var(--navy); }
+.muted { color: var(--muted); }
+.pill {
+  display: inline-block;
+  background: var(--bg-teal);
+  border: 1px solid var(--teal-light);
+  color: var(--teal-dark);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin: 2px;
+}
+.section-divider {
+  height: 1px;
+  background: var(--rule);
+  margin: 24px 0;
+}
+.col-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--teal-light);
+}
+.small-muted {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ══════════════════════════════
+     SLIDE 0: TITLE
+══════════════════════════════ -->
+<div class="slide active" id="slide-0" data-name="Introduction">
+  <div class="title-slide">
+    <div class="title-top">
+      <div class="title-eyebrow">Board Presentation · June 2026</div>
+
+      <h1 class="title-hed">
+        Adora &amp; <em>GKIM</em><br>
+        Working Together
+      </h1>
+      <p class="title-sub">
+        What a fractional CIO partnership looks like — and what it could mean for Adora.
+      </p>
+
+      <div class="title-meta">
+        <div class="title-meta-cell">
+          <div class="t-meta-label">Prepared by</div>
+          <div class="t-meta-val">Ian Morrison, GKIM</div>
+        </div>
+        <div class="title-meta-cell">
+          <div class="t-meta-label">For</div>
+          <div class="t-meta-val">Ann O'Neill &amp; Adora Board</div>
+        </div>
+        <div class="title-meta-cell">
+          <div class="t-meta-label">Date</div>
+          <div class="t-meta-val">3 June 2026</div>
+        </div>
+      </div>
+
+      <div class="title-contents">
+        <div class="tc-item" onclick="goToSlide(1)">
+          <span class="tc-n">01</span>
+          <span class="tc-name">Where Adora is right now</span>
+          <span class="tc-arr">›</span>
+        </div>
+        <div class="tc-item" onclick="goToSlide(2)">
+          <span class="tc-n">02</span>
+          <span class="tc-name">How GKIM &amp; Ian can help</span>
+          <span class="tc-arr">›</span>
+        </div>
+        <div class="tc-item" onclick="goToSlide(3)">
+          <span class="tc-n">03</span>
+          <span class="tc-name">Real deliverables, not just talk</span>
+          <span class="tc-arr">›</span>
+        </div>
+        <div class="tc-item" onclick="goToSlide(4)">
+          <span class="tc-n">04</span>
+          <span class="tc-name">What success looks like</span>
+          <span class="tc-arr">›</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="title-foot">
+      <div class="foot-adora">
+        <svg width="22" height="22" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/>
+          <circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/>
+          <circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/>
+        </svg>
+        <span class="foot-adora-word">adora</span>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="foot-sep">×</span>
+        <div class="foot-gkim">
+          <svg width="56" height="20" viewBox="0 0 359 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="rgba(255,255,255,0.5)"/>
+            <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="rgba(255,255,255,0.5)"/>
+            <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="rgba(255,255,255,0.5)"/>
+            <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="rgba(255,255,255,0.5)"/>
+          </svg>
+        </div>
+        <span class="foot-ian" style="margin-left:10px;">Ian Morrison · Fractional CIO</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SLIDE 1: WHERE ADORA IS
+══════════════════════════════ -->
+<div class="slide" id="slide-1" data-name="Where Adora is right now">
+
+  <div class="slide-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="slide-num">01</span>
+      <span class="slide-title-label">Where Adora is right now</span>
+    </div>
+    <div class="brand-lock">
+      <svg width="18" height="18" viewBox="0 0 60 60" fill="none"><circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/></svg>
+      <span style="font-family:var(--font-body);font-size:0.95rem;font-weight:700;color:var(--navy);">adora</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <h2 class="section-hed">A strong product. <em>A critical moment.</em></h2>
+    <p class="section-sub">Everything has changed in five years — the market, the regulation, the competition. Adora has moved faster than anyone. Now the priority is building the commercial engine to match.</p>
+
+    <div class="two-col" style="margin-bottom:24px;">
+      <div>
+        <div class="col-label">What Adora has built</div>
+        <ul class="tick-list">
+          <li>Class 1 regulated medical device — the only one of its kind in UK menopause</li>
+          <li>Three products: Meno A (digital), Meno B (nurse-led), Meno C (employer bespoke)</li>
+          <li>Real clinical evidence — NHS CivTech pilot, 4,000+ users, B2B NPS in the low 80s</li>
+          <li>Live deal with Legal &amp; General across 2.1m insured lives (~£840K–£1.5M/yr)</li>
+          <li>Lime Health and Medicash integrations in progress</li>
+          <li>A product women genuinely love and trust</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-label">What the business needs now</div>
+        <ul class="dot-list">
+          <li>A sales and go-to-market system that isn't dependent on Ann alone</li>
+          <li>Cookie-cutter packaging across Meno A / B / C for each buyer type</li>
+          <li>Marketing messages that speak each buyer's language — insurers, EAPs, OH, employers</li>
+          <li>Outcome reporting and ROI evidence built into the product — not bolted on</li>
+          <li>Systems and tools so a small team can punch above its weight</li>
+          <li>A CTO-level partner who can help Ed and the tech team move faster</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-band pale">
+      <span class="hb-icon">⏱</span>
+      <div class="hb-text">
+        <strong>The window is 18 months.</strong> Adora has a real head start — regulated, proven, live with major partners. The risk is not the product. The risk is being outpaced commercially while the clinical foundation is strong.
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-4">
+      <div class="card">
+        <div class="card-stat">4,000+</div>
+        <div class="card-title">Users supported</div>
+        <div class="card-text">Across NHS, employer and healthcare deployments</div>
+      </div>
+      <div class="card">
+        <div class="card-stat">80s</div>
+        <div class="card-title">B2B NPS</div>
+        <div class="card-text">Very strong advocacy signal from existing clients</div>
+      </div>
+      <div class="card">
+        <div class="card-stat">£840K</div>
+        <div class="card-title">L&amp;G Digital (yr)</div>
+        <div class="card-text">~£1.5M with nurse-led, across 2.1m insured lives</div>
+      </div>
+      <div class="card">
+        <div class="card-stat">42%</div>
+        <div class="card-title">High symptom burden</div>
+        <div class="card-text">NHS pilot: women scoring ≥30 on Greene scale</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SLIDE 2: HOW GKIM HELPS
+══════════════════════════════ -->
+<div class="slide" id="slide-2" data-name="How GKIM &amp; Ian can help">
+
+  <div class="slide-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="slide-num">02</span>
+      <span class="slide-title-label">How GKIM &amp; Ian can help</span>
+    </div>
+    <div class="brand-lock">
+      <svg width="18" height="18" viewBox="0 0 60 60" fill="none"><circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/></svg>
+      <span style="font-family:var(--font-body);font-size:0.95rem;font-weight:700;color:var(--navy);">adora</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <h2 class="section-hed">Three things. <em>One partnership.</em></h2>
+    <p class="section-sub">Ian Morrison brings fractional CIO capability — strategic, technical and commercial — powered by AI. This is about building systems and tools that work without Ann in every conversation.</p>
+
+    <div class="three-col" style="margin-bottom:24px;">
+
+      <div>
+        <div class="col-label" style="color:#e85d7a;border-bottom-color:#f5c0cd;">a) Supporting Ann personally</div>
+        <ul class="dot-list">
+          <li>An AI-powered personal assistant — meeting notes, pipeline tracker, follow-up drafts, all surfaced automatically</li>
+          <li>A decision-support brain trained on Adora's own knowledge, strategy and documents</li>
+          <li>Less time in the weeds. More time on the things only Ann can do</li>
+          <li>A thinking partner who has read everything, knows the strategy, and can be challenged at any time</li>
+          <li>Help preparing board and investor materials — fast</li>
+        </ul>
+        <div style="margin-top:12px;padding:12px 14px;background:#fef0f3;border-left:3px solid #e85d7a;">
+          <div style="font-size:0.78rem;color:#c03060;font-weight:600;margin-bottom:3px;">The goal</div>
+          <div style="font-size:0.82rem;color:#7a3040;line-height:1.55;">Ann should never get ill from overwork again. Systems should carry the load.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-label" style="color:var(--teal-dark);border-bottom-color:var(--teal-light);">b) Accelerating the whole business</div>
+        <ul class="dot-list">
+          <li>Build the Adora knowledge graph — all the clinical evidence, buyer frameworks, value propositions — structured and queryable</li>
+          <li>Systemise sales: ICP maps, objection libraries, ROI calculators, sales scripts per buyer type</li>
+          <li>Enable the two new salespeople with tools, not just training</li>
+          <li>Build reporting and outcome dashboards so buyers see value automatically</li>
+          <li>Help Ed and the tech team prioritise and move faster on product</li>
+          <li>Position Adora for the insurer channel — the largest long-term prize</li>
+        </ul>
+        <div style="margin-top:12px;padding:12px 14px;background:var(--bg-teal);border-left:3px solid var(--teal);">
+          <div style="font-size:0.78rem;color:var(--teal-dark);font-weight:600;margin-bottom:3px;">The goal</div>
+          <div style="font-size:0.82rem;color:var(--teal-dark);line-height:1.55;">A small team that behaves like a team three times its size.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-label" style="color:var(--navy);border-bottom-color:#b8c4d8;">c) Building real deliverables</div>
+        <ul class="dot-list">
+          <li>Not strategy decks. Working tools — live sales assets, ROI calculators, buyer-specific pitch packs</li>
+          <li>Marketing content that speaks each buyer's exact language — from insurer CMOs to OH leads to HR directors</li>
+          <li>Product reporting built to prove value at renewal, not just at sale</li>
+          <li>A digital brain that Ann's team can query, update and trust</li>
+          <li>Infrastructure that compounds — every piece of work makes the next one faster</li>
+        </ul>
+        <div style="margin-top:12px;padding:12px 14px;background:#f0f2f8;border-left:3px solid var(--navy);">
+          <div style="font-size:0.78rem;color:var(--navy);font-weight:600;margin-bottom:3px;">The goal</div>
+          <div style="font-size:0.82rem;color:var(--navy-mid);line-height:1.55;">Every engagement produces something Adora owns and can use at scale.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="highlight-band">
+      <span class="hb-icon">🤝</span>
+      <div class="hb-text">
+        Ian is not a consultant who delivers a report and leaves. He embeds alongside Ann as a fractional CIO — building, thinking and doing — with <strong>AI as the force multiplier</strong> that makes a small team's effort go very far.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SLIDE 3: DELIVERABLES
+══════════════════════════════ -->
+<div class="slide" id="slide-3" data-name="Real deliverables, not just talk">
+
+  <div class="slide-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="slide-num">03</span>
+      <span class="slide-title-label">Real deliverables, not just talk</span>
+    </div>
+    <div class="brand-lock">
+      <svg width="18" height="18" viewBox="0 0 60 60" fill="none"><circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/></svg>
+      <span style="font-family:var(--font-body);font-size:0.95rem;font-weight:700;color:var(--navy);">adora</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <h2 class="section-hed">Short, medium <em>and long term.</em></h2>
+    <p class="section-sub">A phased approach — building the foundation first, then the commercial engine, then the scale infrastructure. Each phase produces real, usable outputs.</p>
+
+    <div class="timeline">
+
+      <div class="tl-col">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Now → 30 days</div>
+        <div class="tl-card">
+          <div class="tl-card-title">Foundation</div>
+          <ul class="tl-card-items">
+            <li>Adora knowledge graph — all documents, evidence and frameworks structured and searchable</li>
+            <li>Ann's personal AI assistant live and configured</li>
+            <li>Meno A / B / C one-page definitions, crisp and board-ready</li>
+            <li>Buyer value proposition map — confirmed and locked</li>
+            <li>Priority go-to-market channel decision (Tier 1 + one adjacent)</li>
+            <li>Sales pipeline tracker and follow-up system for Ann</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-col">
+        <div class="tl-dot"></div>
+        <div class="tl-period">30 → 90 days</div>
+        <div class="tl-card">
+          <div class="tl-card-title">Commercial engine</div>
+          <ul class="tl-card-items">
+            <li>Full sales system per buyer type — scripts, objection responses, proof packs</li>
+            <li>ROI calculator and outcome dashboard for employer and insurer buyers</li>
+            <li>Two new salespeople onboarded with tools, not just training</li>
+            <li>Marketing content suite — buyer-specific messages per channel</li>
+            <li>Reporting framework built into the product — engagement, outcomes, economic value</li>
+            <li>L&amp;G and Medicash integration reporting live</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-col">
+        <div class="tl-dot hollow"></div>
+        <div class="tl-period" style="color:var(--muted);">90 days → 18 months</div>
+        <div class="tl-card" style="border-top-color:var(--dim);">
+          <div class="tl-card-title" style="border-bottom-color:#e8e8f0;">Scale infrastructure</div>
+          <ul class="tl-card-items">
+            <li>Insurer channel evidence pack — actuarial model, claims narrative, workflow proof</li>
+            <li>Class 2a feasibility assessment and go/no-go decision</li>
+            <li>AI-powered sales outreach at scale for Meno A (volume channel)</li>
+            <li>Employer SaaS model for &lt;250 employees — productised and automated</li>
+            <li>International readiness — UK evidence base packaged for Australia / global</li>
+            <li>Exit narrative and buyer-facing strategic story</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="highlight-band pale" style="margin-top:0;">
+      <span class="hb-icon">📌</span>
+      <div class="hb-text">
+        <strong>The operating principle:</strong> everything we build, Adora owns. Every tool, every framework, every piece of content compounds. The business gets stronger even when Ian isn't in the room.
+      </div>
+    </div>
+
+    <div class="card-grid card-grid-3" style="margin-top:16px;">
+      <div class="card">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">Knowledge &amp; strategy</div>
+        <div class="card-text">Knowledge graph · Buyer maps · Value propositions · Product definitions · Strategic frameworks</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Sales &amp; marketing</div>
+        <div class="card-text">Sales scripts · ROI calculators · Pitch packs · Buyer content · Pipeline tools · Outcome dashboards</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔧</div>
+        <div class="card-title">Product &amp; tech</div>
+        <div class="card-text">Reporting layer · Outcome evidence · Integration support · AI personalisation · Data strategy</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SLIDE 4: VISION
+══════════════════════════════ -->
+<div class="slide" id="slide-4" data-name="What success looks like">
+
+  <div class="slide-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="slide-num">04</span>
+      <span class="slide-title-label">What success looks like</span>
+    </div>
+    <div class="brand-lock">
+      <svg width="18" height="18" viewBox="0 0 60 60" fill="none"><circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/></svg>
+      <span style="font-family:var(--font-body);font-size:0.95rem;font-weight:700;color:var(--navy);">adora</span>
+    </div>
+  </div>
+
+  <div class="slide-body">
+
+    <h2 class="section-hed">The leading embedded menopause platform. <em>In the UK. Then the world.</em></h2>
+
+    <div class="vision-hero">
+      <div class="vision-hero-label">18-month vision</div>
+      <div class="vision-hero-text">
+        Adora is <strong>the platform that every insurer, EAP, occupational health provider and large employer turns to</strong> when they need to prove they are supporting women through menopause — because Adora is the only one that can show the evidence, the outcomes and the economic return.
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-cell">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Major insurer / payor channels live</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Salespeople enabled with systems, not just product knowledge</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">£5M+</div>
+        <div class="stat-label">ARR in sight — insurer channel alone</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Regulated, proven platform nobody else can replicate overnight</div>
+      </div>
+    </div>
+
+    <div class="three-col">
+
+      <div>
+        <div class="col-label">For Ann</div>
+        <ul class="tick-list">
+          <li>Revenue coming in from multiple channels — not just Ann</li>
+          <li>A team with systems and tools that work independently</li>
+          <li>Time back to lead, not just deliver</li>
+          <li>A business that could attract serious strategic interest</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="col-label">For Adora</div>
+        <ul class="tick-list">
+          <li>Meno A embedded in insurer and EAP tenders at scale</li>
+          <li>Meno B proving workflow value in Lime, Medicash, L&amp;G</li>
+          <li>Meno C a flagship full-service employer proposition</li>
+          <li>Class 2a feasibility decision made — on evidence, not urgency</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="col-label">For women</div>
+        <ul class="tick-list">
+          <li>Millions of women with access to regulated, trustworthy menopause support</li>
+          <li>Their employers and insurers paying for it — not them</li>
+          <li>A platform that proves outcomes, not just promises them</li>
+          <li>The standard that everyone else is measured against</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="margin-top:24px;" class="highlight-band navy">
+      <span class="hb-icon">🌍</span>
+      <div class="hb-text" style="color:rgba(255,255,255,0.85);">
+        <strong style="color:#3DBDA7;">Adora was built for this moment.</strong> The product exists. The evidence exists. The regulatory foundation exists. What GKIM and Ian bring is the commercial and technical infrastructure to make the opportunity real — at pace, with a small team, using AI as the engine.
+      </div>
+    </div>
+
+    <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--bg-warm);border:1px solid var(--rule);">
+      <div style="font-size:0.82rem;color:var(--muted);">Next step: scoped engagement plan with priorities, resource, timeline and expected ARR impact</div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 60 60" fill="none"><circle cx="22" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="38" cy="20" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/><circle cx="30" cy="34" r="16" stroke="#3DBDA7" stroke-width="3.5" fill="none"/></svg>
+        <span style="font-family:var(--font-body);font-size:0.9rem;font-weight:700;color:var(--navy);">adora</span>
+        <span style="color:var(--dim);margin:0 4px;">×</span>
+        <span style="font-family:var(--font-body);font-size:0.78rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;">GKIM · Ian Morrison</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <button class="nav-btn" id="btn-prev" onclick="prevSlide()" disabled>← Back</button>
+    <span class="nav-label" id="nav-slide-name">Introduction</span>
+  </div>
+  <div class="nav-dots">
+    <button class="nav-dot active" onclick="goToSlide(0)" id="dot-0"></button>
+    <button class="nav-dot" onclick="goToSlide(1)" id="dot-1"></button>
+    <button class="nav-dot" onclick="goToSlide(2)" id="dot-2"></button>
+    <button class="nav-dot" onclick="goToSlide(3)" id="dot-3"></button>
+    <button class="nav-dot" onclick="goToSlide(4)" id="dot-4"></button>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="nav-label right" style="font-size:0.62rem;color:rgba(255,255,255,0.2);">← → keys</span>
+    <button class="nav-btn" id="btn-next" onclick="nextSlide()">Next →</button>
+  </div>
+</nav>
+
+<script>
+let current = 0;
+const total = 5;
+const slideNames = [
+  'Introduction',
+  'Where Adora is right now',
+  'How GKIM & Ian can help',
+  'Real deliverables, not just talk',
+  'What success looks like'
+];
+
+function goToSlide(idx) {
+  if (idx < 0 || idx >= total) return;
+  document.getElementById('slide-' + current).classList.remove('active');
+  document.getElementById('dot-' + current).classList.remove('active');
+  current = idx;
+  const sl = document.getElementById('slide-' + current);
+  sl.classList.add('active');
+  sl.scrollTop = 0;
+  document.getElementById('dot-' + current).classList.add('active');
+  document.getElementById('nav-slide-name').textContent = slideNames[current];
+  document.getElementById('btn-prev').disabled = current === 0;
+  document.getElementById('btn-next').disabled = current === total - 1;
+  document.getElementById('btn-next').textContent = current === total - 2 ? 'Vision →' : current === total - 1 ? 'Done' : 'Next →';
+}
+
+function nextSlide() { goToSlide(current + 1); }
+function prevSlide() { goToSlide(current - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+});
+</script>
+
+</body>
+</html>
