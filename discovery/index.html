@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GKIM Discovery Session — Design the Business Before You Build</title>
-<meta name="description" content="A 30-minute strategic session for founders and leadership teams designing AI-native business systems. Tell us about your business and book your slot.">
+<title>GKIM Discovery Call — Let's find out if we're the right fit</title>
+<meta name="description" content="A 30-minute conversation to understand what you're trying to do, and whether designing it together makes sense.">
 <link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg-dark:   #0A0A09;
@@ -29,7 +29,8 @@
   --space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;
   --space-12:48px;--space-16:64px;--space-20:80px;
   --container-max:1120px;
-  --header-h:72px;
+  --header-h-desktop:116px;
+  --header-h-mobile:84px;
   --type-display:'League Gothic',Impact,sans-serif;
   --type-body:'Figtree','Helvetica Neue',sans-serif;
   --type-serif:'Instrument Serif',Georgia,serif;
@@ -38,71 +39,108 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--type-body);background:var(--bg-light);color:var(--text-on-light);line-height:1.6;overflow-x:hidden}
+body{font-family:var(--type-body);background:var(--bg-dark);color:var(--text-on-dark);line-height:1.6;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 var(--space-10);height:var(--header-h);
-  background:var(--bg-dark);
-  transition:background 0.3s,backdrop-filter 0.3s;
+/* ── BUTTONS (matching marketing page) ── */
+.btn{
+  font-family:var(--type-body);font-size:20px;font-weight:600;line-height:1;
+  border-radius:0;border:2px solid;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  padding:var(--space-2) var(--space-5);
+  transition:background .18s ease,color .18s ease,transform .08s ease;
+  white-space:nowrap;
 }
-nav.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.nav-logo{display:flex;align-items:center}
-.nav-logo svg{height:32px;width:auto;display:block}
-.nav-back{
-  font-family:var(--type-body);font-size:0.85rem;color:var(--text-on-dark-muted);
-  display:flex;align-items:center;gap:6px;transition:color 0.2s;
-}
-.nav-back:hover{color:var(--text-on-dark)}
-.nav-back svg{width:14px;height:14px}
+.btn:active{transform:translateY(1px);}
+.btn .arrow{width:20px;height:20px;flex-shrink:0;transition:transform .18s ease;}
+.btn:hover .arrow{transform:translateX(4px);}
+.btn-sm{font-size:16px;padding:6px var(--space-6);}
+.btn-sm .arrow{width:16px;height:16px;}
+.btn-primary{background:var(--bg-accent);color:var(--text-on-light);border-color:var(--bg-accent);}
+.btn-primary:hover{background:#ffe640;border-color:#ffe640;}
+:focus-visible{outline:2px solid var(--bg-accent);outline-offset:2px;}
 
-/* ── COMPACT HEADER ── */
-.page-header{
+/* ── HEADER (matching marketing page) ── */
+header{
+  position:relative;
+  height:var(--header-h-mobile);
+  display:flex;align-items:center;
   background:var(--bg-dark);
-  padding-top:var(--header-h);
-  position:relative;overflow:hidden;
 }
-.page-header-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:
-    linear-gradient(to right,rgb(255 255 255/0.06)1px,transparent 1px),
-    linear-gradient(to bottom,rgb(255 255 255/0.06)1px,transparent 1px);
-  background-size:72px 72px;
+@media(min-width:1280px){header{height:var(--header-h-desktop);}}
+.header-inner{
+  width:100%;max-width:var(--container-max);margin:0 auto;
+  padding:0 var(--space-4);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);
 }
-.page-header-inner{
-  max-width:var(--container-max);margin:0 auto;
-  padding:3.5rem 2rem 3rem;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:3rem;flex-wrap:wrap;
+@media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
+.logo{display:flex;align-items:center;}
+.logo svg{height:28px;width:auto;display:block;}
+@media(min-width:1280px){.logo svg{height:40px;}}
+.nav-desktop{display:none;align-items:center;gap:var(--space-5);}
+@media(min-width:1280px){.nav-desktop{display:flex;}}
+.nav-link{
+  font-family:var(--type-body);font-size:16px;font-weight:400;
+  color:var(--text-on-dark);text-decoration:none;transition:color .18s ease;
 }
-.page-header-left{flex:1;min-width:280px}
-.page-header-eyebrow{
+.nav-link:hover{color:var(--text-on-dark-muted);}
+.header-cta{display:none;}
+@media(min-width:1280px){.header-cta{display:inline-flex;}}
+.hamburger{
+  display:flex;align-items:center;justify-content:center;
+  background:none;border:none;cursor:pointer;width:44px;height:44px;color:var(--text-on-dark);
+}
+@media(min-width:1280px){.hamburger{display:none;}}
+.hamburger svg{width:28px;height:28px;}
+.drawer{
+  position:fixed;inset:0;z-index:99;background:var(--surface-white);
+  transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+}
+.drawer.open{transform:translateX(0);}
+.drawer a{
+  font-family:var(--type-body);font-size:24px;color:var(--text-on-light);
+  text-decoration:none;padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-light);
+}
+.drawer a:hover{color:var(--border-strong);}
+
+/* ── MAIN TWO-COLUMN LAYOUT ── */
+.main-section{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* ── LEFT: CONTENT COLUMN ── */
+.content-col{
+  background:var(--bg-dark);
+  padding:3.5rem 3rem 5rem;
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.content-sticky{
+  position:sticky;
+  top:2rem;
+}
+
+.page-eyebrow{
   font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--bg-accent);margin-bottom:1rem;
-  opacity:0;animation:up 0.7s var(--ease-out) 0.1s forwards;
+  color:var(--bg-accent);margin-bottom:1.25rem;
+  opacity:0;animation:up 0.6s var(--ease-out) 0.1s forwards;
 }
-.page-header-h1{
+.page-h1{
   font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2.8rem,6vw,5.5rem);
-  line-height:0.92;color:var(--text-on-dark);
+  font-size:clamp(2.4rem,3.5vw,4rem);
+  line-height:0.95;color:var(--text-on-dark);
   margin-bottom:1.25rem;
-  opacity:0;animation:up 0.8s var(--ease-out) 0.2s forwards;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.15s forwards;
 }
-.page-header-h1 em{font-style:normal;color:var(--bg-accent)}
-.page-header-right{
-  flex-shrink:0;
-  opacity:0;animation:up 0.8s var(--ease-out) 0.3s forwards;
+.page-sub{
+  font-size:0.95rem;color:var(--text-on-dark-muted);line-height:1.65;
+  max-width:42ch;margin-bottom:2rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.2s forwards;
 }
-.page-header-sub{
-  font-size:0.95rem;color:var(--text-on-dark-muted);line-height:1.6;
-  max-width:38ch;margin-bottom:1.5rem;
-}
-.page-header-badges{
-  display:flex;flex-wrap:wrap;gap:1rem;
+.badges{
+  display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.25s forwards;
 }
 .badge{
   display:flex;align-items:center;gap:6px;
@@ -110,314 +148,391 @@ nav.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px
 }
 .badge svg{width:13px;height:13px;flex-shrink:0}
 
-/* Arrow pointing down into the form */
-.page-header-cue{
-  border-top:1px solid rgba(255,255,255,0.07);
-  padding:1rem 2rem;
-  max-width:var(--container-max);margin:0 auto;
-  display:flex;align-items:center;gap:0.75rem;
-  font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--text-on-dark-dim);
-  opacity:0;animation:up 0.8s var(--ease-out) 0.4s forwards;
+/* Ian quote */
+.ian-quote{
+  background:var(--surface-dark);
+  border-radius:10px;
+  padding:1.5rem;margin-bottom:2.5rem;
 }
-.page-header-cue .line{flex:1;height:1px;background:rgba(255,255,255,0.07)}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-.cue-arrow{
-  width:24px;height:24px;border:1px solid rgba(255,255,255,0.12);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  animation:bounce 2s ease-in-out 1s infinite;
+.ian-quote-text{
+  font-family:var(--type-serif);font-style:italic;
+  font-size:1rem;color:rgba(255,255,255,0.75);line-height:1.65;
+  margin-bottom:1rem;
+}
+.ian-quote-attr{display:flex;align-items:center;gap:0.75rem}
+.ian-quote-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--surface-dark);border:1px solid rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.7rem;font-weight:700;color:var(--text-on-dark-muted);
+  flex-shrink:0;overflow:hidden;
+}
+.ian-quote-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.ian-quote-name{font-size:0.82rem;font-weight:600;color:var(--text-on-dark)}
+.ian-quote-role{font-size:0.72rem;color:var(--text-on-dark-muted)}
+
+/* What we cover */
+.cover-label{
+  font-size:0.6rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.3);margin-bottom:1.25rem;
+}
+.cover-items{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,0.06);margin-bottom:1px}
+.cover-item{
+  background:var(--bg-dark);padding:1rem 1.25rem;
+  display:flex;align-items:flex-start;gap:0.85rem;
+}
+.cover-num{
+  font-family:var(--type-display);font-size:0.9rem;
+  color:var(--bg-accent);flex-shrink:0;margin-top:1px;
+}
+.cover-title{font-size:0.85rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.15rem}
+.cover-desc{font-size:0.76rem;color:var(--text-on-dark-muted);line-height:1.5}
+
+/* What to expect — 3 horizontal cards */
+.after-items{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(255,255,255,0.06);margin-bottom:2.5rem;
+}
+.after-item{background:var(--surface-dark);padding:1rem;}
+.after-title{font-size:0.82rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.35rem}
+.after-desc{font-size:0.74rem;color:var(--text-on-dark-muted);line-height:1.45}
+
+/* Testimonial — card only */
+.testimonial-card{
+  background:var(--surface-dark);border-radius:10px;
+  padding:1.25rem 1.5rem;
+}
+.testimonial-card-quote{
+  font-family:var(--type-serif);font-style:italic;
+  font-size:0.9rem;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:0.6rem;
+}
+.testimonial-card-source{font-size:0.72rem;color:rgba(255,255,255,0.35)}
+.testimonial-card-source strong{color:rgba(255,255,255,0.55);font-family:var(--type-body)}
+
+/* ── RIGHT: CAL → FORM PANEL ── */
+.right-col{
+  position:relative;
+  overflow:hidden;
+  background:var(--bg-dark);
 }
 
-/* ── BOOKING SECTION (comes first now) ── */
-.booking{background:var(--bg-light);padding:0 2rem 5rem}
-.booking-grid{
-  max-width:1280px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:2px;
-  background:var(--border-on-light);
-  min-height:740px;
+/* Cal layer — normal flow so it sets the column height */
+.cal-layer{
+  transition:transform 0.55s var(--ease-out), opacity 0.4s ease;
+  padding:2rem;
+  background:var(--bg-dark);
+  min-height:calc(100vh - var(--header-h-mobile));
 }
-@media(max-width:900px){.booking-grid{grid-template-columns:1fr}}
-
-/* Form column */
-.form-col{
+@media(min-width:1280px){.cal-layer{min-height:calc(100vh - var(--header-h-desktop));}}
+.cal-card{
   background:var(--surface-white);
+  border-radius:8px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  overflow:hidden;
+}
+/* Strip the blank header Cal.com renders above the event details */
+.cal-card cal-inline-container,
+.cal-card iframe {
+  margin-top:0 !important;
+}
+.cal-embed-wrap{}
+
+/* Form layer — absolutely positioned, slides in from right */
+.form-layer{
+  position:absolute;inset:0;
+  background:var(--surface-white);
+  transform:translateX(100%);
+  opacity:0;
+  transition:transform 0.55s var(--ease-out), opacity 0.4s ease;
+  overflow-y:auto;
   padding:2.5rem 2rem;
+  display:flex;flex-direction:column;
 }
-.form-col-header{
-  padding-bottom:1.25rem;margin-bottom:1.5rem;
-  border-bottom:1px solid var(--border-on-light);
+
+/* Trigger the swap */
+.right-col.booking-done .cal-layer{
+  transform:translateX(-40%);
+  opacity:0;
+  pointer-events:none;
 }
-.form-col-title{font-size:1rem;font-weight:600;color:var(--text-on-light)}
-.form-col-sub{font-size:0.8rem;color:var(--text-on-light-muted);margin-top:0.2rem}
+.right-col.booking-done .form-layer{
+  transform:translateX(0);
+  opacity:1;
+}
+
+/* Booking confirmed banner */
+.booking-confirmed-banner{
+  background:var(--bg-dark);
+  border-left:3px solid var(--bg-accent);
+  padding:0.9rem 1.1rem;
+  margin-bottom:1.75rem;
+  border-radius:0;
+}
+.booking-confirmed-label{
+  font-size:0.6rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--bg-accent);margin-bottom:0.25rem;
+}
+.booking-confirmed-name{font-size:0.88rem;font-weight:600;color:var(--text-on-dark)}
+.booking-confirmed-email{font-size:0.78rem;color:var(--text-on-dark-muted)}
+
+/* Form styles */
+.form-header{margin-bottom:1.75rem}
+.form-header-title{font-size:1rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.25rem}
+.form-header-sub{font-size:0.8rem;color:var(--text-on-light-muted)}
 .form-step{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border-on-light)}
 .form-step:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .form-step-label{
   font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--text-on-light-muted);margin-bottom:0.9rem;
 }
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem}
-@media(max-width:600px){.form-row{grid-template-columns:1fr}}
 .field{margin-bottom:0.65rem}
 .field:last-child{margin-bottom:0}
 label{display:block;font-size:0.76rem;font-weight:500;color:var(--text-on-light);margin-bottom:0.28rem}
 label .req{color:#c0392b;margin-left:2px}
-input,select,textarea{
+input,textarea{
   width:100%;font-family:var(--type-body);font-size:0.88rem;
   padding:0.55rem 0.7rem;
   background:var(--bg-light);color:var(--text-on-light);
   border:1px solid var(--border-on-light);border-radius:0;
   transition:border-color 0.2s,background 0.2s;
-  appearance:none;-webkit-appearance:none;
 }
-input:focus,select:focus,textarea:focus{
-  outline:none;border-color:var(--border-strong);background:var(--surface-white);
-}
+input:focus,textarea:focus{outline:none;border-color:var(--border-strong);background:var(--surface-white);}
 input::placeholder,textarea::placeholder{color:rgba(0,0,0,0.28)}
-textarea{resize:vertical;min-height:80px;line-height:1.5}
-select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235C5C5C' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 0.7rem center;
-  padding-right:2.1rem;cursor:pointer;
-}
-.conditional-field{display:none}
-.conditional-field.visible{display:block}
-.radio-group{display:flex;gap:0.5rem;flex-wrap:wrap}
+textarea{resize:vertical;min-height:90px;line-height:1.5}
+.radio-group{display:flex;flex-direction:column;gap:0.4rem}
 .radio-opt{
-  flex:1;min-width:110px;
-  display:flex;align-items:center;justify-content:center;
-  padding:0.5rem 0.65rem;
+  display:flex;align-items:flex-start;gap:0.7rem;
+  padding:0.65rem 0.8rem;
   border:1px solid var(--border-on-light);
-  font-size:0.8rem;cursor:pointer;transition:all 0.15s;
-  color:var(--text-on-light-muted);text-align:center;
+  font-size:0.82rem;cursor:pointer;transition:all 0.15s;
+  color:var(--text-on-light-muted);
 }
 .radio-opt input{display:none}
 .radio-opt.checked{background:var(--bg-dark);color:var(--text-on-dark);border-color:var(--bg-dark)}
 .radio-opt:hover:not(.checked){background:var(--bg-light);border-color:var(--border-strong)}
-.form-submit-wrap{margin-top:1.5rem}
+.radio-dot{
+  width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+}
+.radio-opt.checked .radio-dot::after{
+  content:'';width:6px;height:6px;border-radius:50%;background:var(--bg-accent);display:block;
+}
+.form-submit-wrap{margin-top:1.75rem}
 .btn-submit{
-  width:100%;
-  font-family:var(--type-body);font-size:1rem;font-weight:600;
+  width:100%;font-family:var(--type-body);font-size:1rem;font-weight:600;
   padding:0.85rem 1.5rem;
-  background:var(--bg-dark);color:var(--text-on-dark);
-  border:2px solid var(--bg-dark);border-radius:0;
+  background:var(--bg-accent);color:var(--text-on-light);
+  border:2px solid var(--bg-accent);border-radius:0;
   cursor:pointer;transition:opacity 0.2s;
   display:flex;align-items:center;justify-content:center;gap:0.6rem;
 }
-.btn-submit:hover{opacity:0.85}
+.btn-submit:hover{opacity:0.88}
 .btn-submit:disabled{opacity:0.4;cursor:not-allowed}
 .btn-submit .spinner{
   width:15px;height:15px;
-  border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;
+  border:2px solid rgba(0,0,0,0.2);border-top-color:#000;
   border-radius:50%;animation:spin 0.7s linear infinite;display:none;
 }
 .btn-submit.loading .spinner{display:block}
 @keyframes spin{to{transform:rotate(360deg)}}
 .form-note{margin-top:0.65rem;font-size:0.7rem;color:var(--text-on-light-muted);text-align:center}
 .form-error{
-  display:none;margin-top:0.9rem;
-  padding:0.7rem 0.9rem;
-  background:#fff0f0;border:1px solid #f5c6c6;
-  font-size:0.8rem;color:#c0392b;
+  display:none;margin-top:0.9rem;padding:0.7rem 0.9rem;
+  background:#fff0f0;border:1px solid #f5c6c6;font-size:0.8rem;color:#c0392b;
 }
-.form-success{display:none}
-.form-success-inner{padding:2.5rem 2rem;text-align:center}
+.form-success{display:none;flex:1;align-items:center;justify-content:center;text-align:center;padding:2rem}
 .form-success-icon{font-size:2rem;margin-bottom:1rem}
 .form-success-title{font-size:1.05rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.5rem}
-.form-success-body{font-size:0.88rem;color:var(--text-on-light-muted);line-height:1.6}
+.form-success-body{font-size:0.85rem;color:var(--text-on-light-muted);line-height:1.6}
 
-/* Cal column */
-.cal-col{
-  background:var(--surface-white);
-  position:relative;display:flex;flex-direction:column;
-}
-.cal-overlay{
-  position:absolute;inset:0;z-index:10;
-  background:rgba(242,242,242,0.94);
-  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity 0.4s,visibility 0.4s;
-}
-.cal-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.cal-overlay-inner{text-align:center;padding:2rem;max-width:260px}
-.cal-overlay-icon{
-  width:44px;height:44px;margin:0 auto 1rem;
-  border:1px solid var(--border-on-light);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--surface-white);
-}
-.cal-overlay-icon svg{width:20px;height:20px;color:var(--text-on-light-muted)}
-.cal-overlay-title{font-size:0.9rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.35rem}
-.cal-overlay-body{font-size:0.78rem;color:var(--text-on-light-muted);line-height:1.5}
-.cal-embed-wrap{flex:1;min-height:600px}
+/* ── FOOTER (matching marketing page) ── */
+footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
+.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-12);}
+@media(min-width:768px){.footer-inner{flex-direction:row;justify-content:space-between;align-items:flex-start;}}
+.footer-logo svg{height:40px;width:auto;}
+.footer-tag{color:var(--text-on-dark-muted);font-size:14px;margin-top:var(--space-5);max-width:34ch;}
+.footer-links{display:flex;flex-direction:column;gap:var(--space-3);}
+.footer-links a{color:var(--text-on-dark-muted);text-decoration:none;font-size:15px;transition:color .18s;}
+.footer-links a:hover{color:var(--text-on-dark);}
+.footer-bottom{max-width:var(--container-max);margin:var(--space-16) auto 0;padding-top:var(--space-8);border-top:1px solid var(--border-on-dark);display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;color:var(--text-on-dark-muted);font-size:12px;}
 
-/* ── DIVIDER between booking and context sections ── */
-.section-divider{
-  background:var(--bg-dark);
-  padding:2.5rem 2rem;
-  border-top:3px solid var(--bg-accent);
-}
-.section-divider-inner{
-  max-width:var(--container-max);margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
-}
-.section-divider-text{
-  font-family:var(--type-serif);font-style:italic;
-  font-size:1.2rem;color:rgba(255,255,255,0.5);
-  max-width:60ch;line-height:1.5;
-}
-.section-divider-text strong{
-  color:var(--text-on-dark);font-style:normal;
-  font-family:var(--type-body);font-weight:600;
-}
-.section-divider-label{
-  font-size:0.65rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;
-  color:rgba(255,255,255,0.28);flex-shrink:0;
-}
-
-/* ── WHY SECTION ── */
-.why{background:var(--bg-dark);padding:5rem 2rem}
-.why .container{max-width:var(--container-max);margin:0 auto}
-.section-label{
-  font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--bg-accent);margin-bottom:1.75rem;
-}
-.why-h2{
-  font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2rem,4.5vw,3.5rem);color:var(--text-on-dark);
-  line-height:0.95;margin-bottom:2.5rem;max-width:20ch;
-}
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,0.06)}
-.why-item{background:var(--bg-dark);padding:1.75rem}
-.why-num{font-family:var(--type-display);font-size:1.3rem;color:rgba(255,255,255,0.13);margin-bottom:0.6rem}
-.why-title{font-size:0.9rem;font-weight:600;color:var(--text-on-dark);margin-bottom:0.4rem}
-.why-body{font-size:0.82rem;color:var(--text-on-dark-muted);line-height:1.55}
-
-/* ── WHAT WE COVER ── */
-.cover{background:var(--bg-light);padding:5rem 2rem}
-.cover .container{max-width:var(--container-max);margin:0 auto}
-.cover-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem}
-.cover-h2{
-  font-family:var(--type-display);text-transform:uppercase;
-  font-size:clamp(2rem,4.5vw,3.5rem);color:var(--text-on-light);line-height:0.95;
-}
-.cover-sub{font-size:0.88rem;color:var(--text-on-light-muted);max-width:38ch}
-.cover-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border-on-light)}
-.cover-item{background:var(--bg-light);padding:1.75rem;transition:background 0.2s}
-.cover-item:hover{background:var(--surface-white)}
-.cover-icon{font-size:1.3rem;margin-bottom:0.85rem;line-height:1}
-.cover-name{font-size:0.95rem;font-weight:600;color:var(--text-on-light);margin-bottom:0.35rem}
-.cover-desc{font-size:0.8rem;color:var(--text-on-light-muted);line-height:1.5}
-
-/* ── DIAGRAM ── */
-.diagram{background:var(--bg-dark);padding:4rem 2rem;overflow:hidden}
-.diagram .container{max-width:var(--container-max);margin:0 auto}
-.diagram-label{font-size:0.65rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:2rem}
-.diagram-flow{
-  display:flex;align-items:center;
-  overflow-x:auto;padding-bottom:0.75rem;
-  -ms-overflow-style:none;scrollbar-width:none;
-}
-.diagram-flow::-webkit-scrollbar{display:none}
-.diagram-node{
-  flex-shrink:0;background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  padding:1rem 1.25rem;min-width:120px;text-align:center;
-}
-.diagram-node.accent{background:rgba(255,221,0,0.07);border-color:rgba(255,221,0,0.28)}
-.diagram-node-label{font-size:0.65rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-on-dark-muted);margin-bottom:0.25rem}
-.diagram-node-name{font-size:0.82rem;font-weight:600;color:var(--text-on-dark);line-height:1.2}
-.diagram-arrow{flex-shrink:0;padding:0 0.4rem;color:rgba(255,255,255,0.18);font-size:1.1rem}
-
-/* ── FOOTER ── */
-footer{background:var(--bg-dark);padding:2.5rem 2rem;border-top:1px solid rgba(255,255,255,0.06)}
-footer .container{
-  max-width:var(--container-max);margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
-}
-.footer-logo svg{height:26px;width:auto;display:block}
-.footer-links{display:flex;gap:2rem;list-style:none}
-.footer-links a{font-size:0.78rem;color:var(--text-on-dark-muted);transition:color 0.2s}
-.footer-links a:hover{color:var(--text-on-dark)}
-.footer-copy{font-size:0.72rem;color:var(--text-on-dark-dim)}
-
-@media(max-width:768px){
-  nav{padding:0 1.25rem}
-  .page-header-inner{padding:2.5rem 1.25rem 2rem;flex-direction:column;gap:1.5rem}
-  .page-header-right{width:100%}
-  .booking{padding:0 1.25rem 4rem}
-  .why,.cover,.diagram{padding-left:1.25rem;padding-right:1.25rem}
-  .section-divider{padding-left:1.25rem;padding-right:1.25rem}
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .main-section{grid-template-columns:1fr}
+  .content-col{padding:2.5rem 1.25rem 3rem}
+  .content-sticky{position:static}
+  .after-items{grid-template-columns:1fr}
+  .form-layer{padding:2rem 1.25rem}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
-<nav id="nav">
-  <a href="/" class="nav-logo" aria-label="GKIM Digital — home">
-    <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
-      <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
-      <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
-      <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
-      <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
-      <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
-    </svg>
-  </a>
-  <a href="/" class="nav-back">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-    Back to GKIM
-  </a>
-</nav>
+<!-- ═══ HEADER (matching marketing page) ═══ -->
+<header id="header">
+  <div class="header-inner">
+    <a href="/en/" class="logo" aria-label="GKIM home">
+      <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+        <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+      </svg>
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/en/#shift" class="nav-link">The Shift</a>
+      <a href="/en/#problem" class="nav-link">The Problem</a>
+      <a href="/en/#gears" class="nav-link">GEARS</a>
+      <a href="/en/#proof" class="nav-link">Proof</a>
+    </nav>
+    <a href="/discovery/" class="btn btn-primary btn-sm header-cta">Book a call
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
 
-<!-- ═══ COMPACT HEADER ═══ -->
-<header class="page-header">
-  <div class="page-header-grid"></div>
-  <div class="page-header-inner">
-    <div class="page-header-left">
-      <p class="page-header-eyebrow">GKIM Discovery Session</p>
-      <h1 class="page-header-h1">Design the <em>Business</em><br>Before You Build</h1>
-    </div>
-    <div class="page-header-right">
-      <p class="page-header-sub">A 30-minute strategic session for founders and leadership teams. Complete the intake form, then select your time — we'll come prepared.</p>
-      <div class="page-header-badges">
+<!-- Mobile drawer -->
+<div class="drawer" id="drawer">
+  <a href="/en/#shift">The Shift</a>
+  <a href="/en/#problem">The Problem</a>
+  <a href="/en/#gears">GEARS</a>
+  <a href="/en/#proof">Proof</a>
+  <a href="/discovery/">Book a call</a>
+</div>
+
+<!-- ═══ MAIN SECTION ═══ -->
+<div class="main-section">
+
+  <!-- LEFT: CONTENT -->
+  <div class="content-col">
+    <div class="content-sticky">
+
+      <p class="page-eyebrow">Discovery call</p>
+      <h1 class="page-h1">Let's find out if we're the right fit for each other.</h1>
+      <p class="page-sub">A 30-minute conversation to understand what you're trying to do, and whether designing it together makes sense.</p>
+
+      <div class="badges">
         <span class="badge">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3l2 2"/></svg>
           30 minutes
         </span>
         <span class="badge">
-          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="2.5" width="11" height="10" rx="1"/><path d="M1.5 5.5h11M4.5 1v3M9.5 1v3"/></svg>
-          Google Meet
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="3" width="11" height="8" rx="1"/><path d="M4 3V2M10 3V2"/></svg>
+          Video or phone
+        </span>
+        <span class="badge">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="10" height="7" rx="1"/><path d="M5 4V3a2 2 0 014 0v1"/></svg>
+          Confidential
         </span>
         <span class="badge">
           <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1l1.5 3.5L12 5l-2.5 2.5.5 3.5L7 9.5 4 11l.5-3.5L2 5l3.5-.5z"/></svg>
-          No pitch. Strategic only.
+          No commitment
         </span>
       </div>
-    </div>
-  </div>
-  <div class="page-header-cue">
-    <span class="line"></span>
-    <span>Complete the intake &amp; select your time below</span>
-    <div class="cue-arrow">
-      <svg width="9" height="9" viewBox="0 0 9 9" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"><path d="M4.5 1.5v5M2 4.5l2.5 2.5 2.5-2.5"/></svg>
-    </div>
-    <span class="line"></span>
-  </div>
-</header>
 
-<!-- ═══ BOOKING — FORM + CALENDAR (first content after header) ═══ -->
-<section class="booking" id="booking">
-  <div class="booking-grid">
+      <!-- Ian quote -->
+      <div class="ian-quote">
+        <p class="ian-quote-text">"Every engagement starts with understanding the real economic engine of the business. That's what this call is for."</p>
+        <div class="ian-quote-attr">
+          <div class="ian-quote-avatar">
+            <img src="/discovery/ian-morrison.jpeg" alt="Ian Morrison" onerror="this.style.display='none';this.parentNode.textContent='IM'">
+          </div>
+          <div>
+            <div class="ian-quote-name">Ian Morrison</div>
+            <div class="ian-quote-role">Founder, GKIM · Design &amp; Operating Partner</div>
+          </div>
+        </div>
+      </div>
 
-    <!-- LEFT: INTAKE FORM -->
-    <div class="form-col">
-      <div class="form-col-header">
-        <div class="form-col-title">Step 1 — Tell us about your business</div>
-        <div class="form-col-sub">Takes about 4 minutes. Used to prepare a focused session, not for sales.</div>
+      <!-- What we'll cover -->
+      <p class="cover-label">What we'll cover</p>
+      <div class="cover-items">
+        <div class="cover-item">
+          <span class="cover-num">01</span>
+          <div>
+            <div class="cover-title">Where your business is today</div>
+            <div class="cover-desc">Whether strategy, process, and data are working as one system or pulling in different directions.</div>
+          </div>
+        </div>
+        <div class="cover-item">
+          <span class="cover-num">02</span>
+          <div>
+            <div class="cover-title">What you're trying to build</div>
+            <div class="cover-desc">A new business, a transformed operation, or something you haven't named yet.</div>
+          </div>
+        </div>
+        <div class="cover-item">
+          <span class="cover-num">03</span>
+          <div>
+            <div class="cover-title">Whether GKIM is the right kind of partner</div>
+            <div class="cover-desc">Not a supplier who hands things over. Not a consultancy that leaves after the deck.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What to expect -->
+      <p class="cover-label" style="margin-top:1.75rem">What to expect</p>
+      <div class="after-items">
+        <div class="after-item">
+          <div class="after-title">Discovery call</div>
+          <div class="after-desc">Ian reviews your context before the call. 30 minutes on your business, not ours.</div>
+        </div>
+        <div class="after-item">
+          <div class="after-title">Define stage</div>
+          <div class="after-desc">We map the economic engine — how value is created, coordinated, and measured.</div>
+        </div>
+        <div class="after-item">
+          <div class="after-title">The Blueprint</div>
+          <div class="after-desc">A precise map of how your business works, its gaps, and what the system needs to do next.</div>
+        </div>
+      </div>
+
+      <!-- Testimonial — card only -->
+      <div class="testimonial-card">
+        <p class="testimonial-card-quote">"This isn't a firm you hire to build something and move on. They're still in it with us."</p>
+        <p class="testimonial-card-source"><strong>DNAInsights</strong> · Genetics Telehealth Platform, $1B+ enterprise value</p>
+      </div>
+
+    </div><!-- /content-sticky -->
+  </div><!-- /content-col -->
+
+  <!-- RIGHT: CAL → FORM -->
+  <div class="right-col" id="rightPanel">
+
+    <!-- CAL.COM LAYER (normal flow — sets column height) -->
+    <div class="cal-layer" id="calLayer">
+      <div class="cal-card">
+        <div class="cal-embed-wrap">
+          <cal-inline
+            style="width:100%;overflow:scroll"
+            calLink="ian-morrison-ri6tnc/gkim-discovery-session">
+          </cal-inline>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM LAYER — slides in after Cal.com booking -->
+    <div class="form-layer" id="formLayer">
+
+      <div class="booking-confirmed-banner" id="bookingBanner">
+        <div class="booking-confirmed-label">✓ Booking confirmed</div>
+        <div class="booking-confirmed-name" id="bannerName"></div>
+        <div class="booking-confirmed-email" id="bannerEmail"></div>
+      </div>
+
+      <div class="form-header">
+        <div class="form-header-title">One last thing — help Ian prepare</div>
+        <div class="form-header-sub">Takes 60 seconds. Kept confidential.</div>
       </div>
 
       <form id="intakeForm" novalidate>
+        <input type="hidden" id="hiddenName" name="name">
+        <input type="hidden" id="hiddenEmail" name="email">
         <input type="hidden" name="utm_source" id="utmSource">
         <input type="hidden" name="utm_medium" id="utmMedium">
         <input type="hidden" name="utm_campaign" id="utmCampaign">
@@ -425,131 +540,44 @@ footer .container{
         <input type="hidden" name="utm_term" id="utmTerm">
 
         <div class="form-step">
-          <div class="form-step-label">01 — Contact</div>
-          <div class="form-row">
-            <div class="field">
-              <label for="name">Full name<span class="req">*</span></label>
-              <input type="text" id="name" name="name" placeholder="Ian Morrison" required autocomplete="name">
-            </div>
-            <div class="field">
-              <label for="email">Business email<span class="req">*</span></label>
-              <input type="email" id="email" name="email" placeholder="ian@company.com" required autocomplete="email">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="field">
-              <label for="company">Company<span class="req">*</span></label>
-              <input type="text" id="company" name="company" placeholder="Acme Corp" required>
-            </div>
-            <div class="field">
-              <label for="website">Website</label>
-              <input type="url" id="website" name="website" placeholder="https://acme.com">
-            </div>
+          <div class="form-step-label">Company</div>
+          <div class="field">
+            <label for="company">Company name<span class="req">*</span></label>
+            <input type="text" id="company" name="company" placeholder="Acme Corp" required>
           </div>
         </div>
 
         <div class="form-step">
-          <div class="form-step-label">02 — About you</div>
+          <div class="form-step-label">What are you trying to build</div>
           <div class="field">
-            <label for="role">Your role<span class="req">*</span></label>
-            <select id="role" name="role" required>
-              <option value="">Select your role</option>
-              <option value="Founder">Founder / Co-founder</option>
-              <option value="CEO">CEO</option>
-              <option value="CTO">CTO / CPO</option>
-              <option value="COO">COO / Head of Operations</option>
-              <option value="Investor">Investor / PE / VC</option>
-              <option value="Operator">Operator / GM</option>
-              <option value="Executive">Executive / VP</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="field conditional-field" id="cond-founder">
-            <label for="founderStage">Which stage are you at?</label>
-            <select id="founderStage" name="founderStage">
-              <option value="">Select stage</option>
-              <option value="Pre-build">Pre-build — defining before development starts</option>
-              <option value="Post-MVP">Post-MVP — refining what we launched</option>
-              <option value="Scaling">Scaling — systems breaking under growth</option>
-              <option value="Restructuring">Restructuring — redesigning existing business</option>
-            </select>
-          </div>
-          <div class="field conditional-field" id="cond-investor">
-            <label for="investorContext">What is the context?</label>
-            <select id="investorContext" name="investorContext">
-              <option value="">Select context</option>
-              <option value="Portfolio evaluation">Evaluating a portfolio company</option>
-              <option value="New venture">New venture or thesis</option>
-              <option value="Operating platform">Operating platform design</option>
-            </select>
-          </div>
-          <div class="field conditional-field" id="cond-operator">
-            <label for="operatorArea">Which area is most constrained?</label>
-            <input type="text" id="operatorArea" name="operatorArea" placeholder="e.g. fulfilment, onboarding, finance ops">
+            <label for="designing">Describe what you're working on<span class="req">*</span></label>
+            <textarea id="designing" name="designing" placeholder="A new AI-native business, a platform that needs redesign, an operating system — anything is fine. One to two sentences is enough. This helps Ian prepare." required></textarea>
           </div>
         </div>
 
         <div class="form-step">
-          <div class="form-step-label">03 — Company context</div>
-          <div class="form-row">
-            <div class="field">
-              <label for="stage">Company stage<span class="req">*</span></label>
-              <select id="stage" name="stage" required>
-                <option value="">Select</option>
-                <option value="Pre-revenue">Pre-revenue</option>
-                <option value="Early revenue">Early revenue (&lt;$500K ARR)</option>
-                <option value="Growing">Growing ($500K–$5M ARR)</option>
-                <option value="Scaling">Scaling ($5M–$50M ARR)</option>
-                <option value="Established">Established ($50M+ ARR)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="teamSize">Team size<span class="req">*</span></label>
-              <select id="teamSize" name="teamSize" required>
-                <option value="">Select</option>
-                <option value="1–5">1–5</option>
-                <option value="6–15">6–15</option>
-                <option value="16–50">16–50</option>
-                <option value="51–200">51–200</option>
-                <option value="200+">200+</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-step">
-          <div class="form-step-label">04 — What you're working on</div>
-          <div class="field">
-            <label for="designing">What are you designing or improving?<span class="req">*</span></label>
-            <textarea id="designing" name="designing" placeholder="Describe the system, product, or process you're working on." required></textarea>
-          </div>
-          <div class="field">
-            <label for="bottleneck">Biggest operational or system bottleneck?</label>
-            <textarea id="bottleneck" name="bottleneck" placeholder="What is slowing you down or breaking under load?"></textarea>
-          </div>
-          <div class="field">
-            <label>New build or redesign?<span class="req">*</span></label>
-            <div class="radio-group" id="buildTypeGroup">
-              <label class="radio-opt"><input type="radio" name="buildType" value="New build">New build</label>
-              <label class="radio-opt"><input type="radio" name="buildType" value="Redesign">Redesign</label>
-              <label class="radio-opt"><input type="radio" name="buildType" value="Both">Both</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-step">
-          <div class="form-step-label">05 — Session prep</div>
-          <div class="field">
-            <label for="aiRole">What role do you expect AI to play?</label>
-            <textarea id="aiRole" name="aiRole" placeholder="e.g. automate back-office, augment decision-making, replace a workflow entirely"></textarea>
-          </div>
-          <div class="field">
-            <label for="valuable">What would make this session most valuable?</label>
-            <textarea id="valuable" name="valuable" placeholder="What outcome would mean this session was worthwhile?"></textarea>
-          </div>
-          <div class="field">
-            <label for="attendees">Who else should attend?</label>
-            <input type="text" id="attendees" name="attendees" placeholder="e.g. CTO, Head of Ops — names or roles">
+          <div class="form-step-label">Where are you in the process?</div>
+          <div class="radio-group" id="processGroup">
+            <label class="radio-opt">
+              <input type="radio" name="processStage" value="Still defining the idea">
+              <span class="radio-dot"></span>
+              Still defining the idea
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="processStage" value="Existing business, need redesign">
+              <span class="radio-dot"></span>
+              Existing business, need redesign
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="processStage" value="New venture, design from scratch">
+              <span class="radio-dot"></span>
+              New venture, design from scratch
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="processStage" value="Not sure yet">
+              <span class="radio-dot"></span>
+              Not sure yet
+            </label>
           </div>
         </div>
 
@@ -558,60 +586,50 @@ footer .container{
         <div class="form-submit-wrap">
           <button type="submit" class="btn-submit" id="submitBtn">
             <div class="spinner"></div>
-            <span class="btn-label">Submit &amp; Unlock Booking →</span>
+            <span class="btn-label">Send to Ian →</span>
           </button>
-          <p class="form-note">Kept confidential. Used only to prepare your session.</p>
+          <p class="form-note">Your booking is confirmed. This helps Ian show up prepared.</p>
         </div>
       </form>
 
       <div class="form-success" id="formSuccess">
-        <div class="form-success-inner">
+        <div>
           <div class="form-success-icon">✓</div>
-          <div class="form-success-title">Intake received</div>
-          <div class="form-success-body">Thank you. Your booking slot is now unlocked — select a time on the right.<br><br>A confirmation will follow from ian@gkim.digital once booked.</div>
+          <div class="form-success-title">All done</div>
+          <div class="form-success-body">Ian will review your details before the call.<br><br>A confirmation is on its way to your inbox from ian@gkim.digital</div>
         </div>
       </div>
-    </div>
 
-    <!-- RIGHT: CAL.COM EMBED -->
-    <div class="cal-col">
-      <div class="cal-overlay" id="calOverlay">
-        <div class="cal-overlay-inner">
-          <div class="cal-overlay-icon">
-            <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="18" height="16" rx="1.5"/><path d="M2 8h18M7 2v4M15 2v4"/></svg>
-          </div>
-          <div class="cal-overlay-title">Step 2 — Select your time</div>
-          <div class="cal-overlay-body">Complete the intake form on the left first. Takes about 4 minutes.</div>
-        </div>
-      </div>
-      <div class="cal-embed-wrap">
-        <cal-inline
-          style="width:100%;height:100%;min-height:600px;overflow:scroll"
-          calLink="ian-morrison-ri6tnc/gkim-discovery-session">
-        </cal-inline>
-      </div>
-    </div>
+    </div><!-- /form-layer -->
+  </div><!-- /right-col -->
 
-  </div>
-</section>
+</div><!-- /main-section -->
 
-<!-- ═══ FOOTER ═══ -->
+<!-- ═══ FOOTER (matching marketing page) ═══ -->
 <footer>
-  <div class="container">
-    <div class="footer-logo">
-      <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM Digital">
-        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
-        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
-        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
-        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
-      </svg>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM" role="img">
+          <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+          <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+          <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+          <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        </svg>
+      </div>
+      <p class="footer-tag">Designing AI-native business systems through GEARS. Define → Design → Simulate → Build → Operate → Evolve.</p>
     </div>
-    <ul class="footer-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/#gears">GEARS™</a></li>
-      <li><a href="/#about">About</a></li>
-    </ul>
-    <span class="footer-copy">&copy; 2025 GKIM Digital</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="/en/#shift">The Shift</a>
+      <a href="/en/#problem">The Problem</a>
+      <a href="/en/#gears">GEARS</a>
+      <a href="/en/#proof">Commercial Proof</a>
+      <a href="/discovery/">Book a call</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> GKIM. All rights reserved.</span>
+    <span>Design the business before you build the software.</span>
   </div>
 </footer>
 
@@ -631,18 +649,7 @@ Cal("inline",{
   calLink:"ian-morrison-ri6tnc/gkim-discovery-session",
   layout:"month_view"
 });
-Cal("ui",{styles:{branding:{brandColor:"#FFDD00"}},hideEventTypeDetails:false,layout:"month_view"});
-</script>
-<script>
-// Suppress Cal.com's "Something went wrong." error div that appears when its
-// stylesheet fails to load (shadow DOM style tag renders as "undefined").
-(function suppressCalError() {
-  var host = document.querySelector('cal-inline-container');
-  if (!host || !host.shadowRoot) { setTimeout(suppressCalError, 200); return; }
-  var err = host.shadowRoot.querySelector('#error');
-  if (err) { err.style.display = 'none'; return; }
-  setTimeout(suppressCalError, 200);
-})();
+Cal("ui",{styles:{branding:{brandColor:"#FFDD00"}},hideEventTypeDetails:true,layout:"month_view"});
 </script>
 
 <!-- GA4 -->
@@ -656,6 +663,9 @@ gtag('event','page_view',{page_title:'Discovery',page_location:window.location.h
 </script>
 
 <script>
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+
 // UTM capture
 (function(){
   const p=new URLSearchParams(window.location.search);
@@ -663,11 +673,48 @@ gtag('event','page_view',{page_title:'Discovery',page_location:window.location.h
   Object.keys(map).forEach(function(k){const v=p.get(k);if(v){const el=document.getElementById(map[k]);if(el)el.value=v}});
 })();
 
-// Nav scroll state
-(function(){
-  const nav=document.getElementById('nav');
-  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>40)},{passive:true});
-})();
+// Hamburger / drawer
+const burger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+function setDrawer(open){
+  drawer.classList.toggle('open',open);
+  burger.setAttribute('aria-expanded',String(open));
+}
+burger.addEventListener('click',()=>setDrawer(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setDrawer(false)));
+
+// Cal.com booking success → slide in form
+function onCalBookingSuccess(e) {
+  var data    = e.detail || e.data || {};
+  var booking = data.booking || data.data?.booking || {};
+  var attendees = booking.attendees || [];
+  var name  = (attendees[0] && attendees[0].name)  || booking.name  || data.name  || '';
+  var email = (attendees[0] && attendees[0].email) || booking.email || data.email || '';
+
+  document.getElementById('hiddenName').value        = name;
+  document.getElementById('hiddenEmail').value       = email;
+  document.getElementById('bannerName').textContent  = name;
+  document.getElementById('bannerEmail').textContent = email;
+  document.getElementById('rightPanel').classList.add('booking-done');
+
+  if (window.innerWidth <= 900) {
+    setTimeout(function(){
+      document.getElementById('formLayer').scrollIntoView({behavior:'smooth',block:'start'});
+    }, 600);
+  }
+  if (typeof gtag !== 'undefined') gtag('event','cal_booking_completed',{name:name,email:email});
+}
+
+// Primary: Cal.com SDK callback (reliable)
+Cal("on", { action: "bookingSuccessful", callback: onCalBookingSuccess });
+
+// Fallback: raw postMessage (catches edge cases)
+window.addEventListener('message', function(e) {
+  var type = (e.data && e.data.type) || '';
+  if (type === 'cal:bookingSuccessful' || type === 'cal:booking-successful') {
+    onCalBookingSuccess({ detail: e.data.data || {} });
+  }
+});
 
 // Radio group
 document.querySelectorAll('.radio-group').forEach(function(g){
@@ -679,88 +726,42 @@ document.querySelectorAll('.radio-group').forEach(function(g){
   });
 });
 
-// Conditional role fields
-(function(){
-  const roleEl=document.getElementById('role');
-  const condFounder=document.getElementById('cond-founder');
-  const condInvestor=document.getElementById('cond-investor');
-  const condOperator=document.getElementById('cond-operator');
-  function update(){
-    const v=roleEl.value;
-    condFounder.classList.toggle('visible',v==='Founder'||v==='CEO');
-    condInvestor.classList.toggle('visible',v==='Investor');
-    condOperator.classList.toggle('visible',v==='Operator');
-  }
-  roleEl.addEventListener('change',update);
-  update();
-})();
-
 // Form submission
 (function(){
   const form=document.getElementById('intakeForm');
   const btn=document.getElementById('submitBtn');
   const errEl=document.getElementById('formError');
-  errEl.style.display='none'; errEl.textContent='';
   const successEl=document.getElementById('formSuccess');
-  const overlay=document.getElementById('calOverlay');
-
-  function showError(msg){
-    errEl.textContent=msg;errEl.style.display='block';
-    btn.disabled=false;btn.classList.remove('loading');
-    btn.querySelector('.btn-label').textContent='Submit & Unlock Booking →';
-  }
-  function getRadio(name){
-    const c=document.querySelector('input[name="'+name+'"]:checked');return c?c.value:'';
-  }
-
+  errEl.style.display='none';
+  function showError(msg){errEl.textContent=msg;errEl.style.display='block';btn.disabled=false;btn.classList.remove('loading');btn.querySelector('.btn-label').textContent='Send to Ian →';}
+  function getRadio(name){var c=document.querySelector('input[name="'+name+'"]:checked');return c?c.value:'';}
   form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    errEl.style.display='none';
-    const required=['name','email','company','role','stage','teamSize','designing'];
-    for(const id of required){
-      const el=document.getElementById(id);
-      if(!el||!el.value.trim()){showError('Please complete all required fields.');el&&el.focus();return;}
-    }
-    if(!getRadio('buildType')){showError('Please select new build or redesign.');return;}
-    btn.disabled=true;btn.classList.add('loading');
-    btn.querySelector('.btn-label').textContent='Submitting…';
-
-    const data={
-      name:document.getElementById('name').value.trim(),
-      email:document.getElementById('email').value.trim(),
-      company:document.getElementById('company').value.trim(),
-      website:document.getElementById('website').value.trim(),
-      role:document.getElementById('role').value,
-      founderStage:document.getElementById('founderStage').value,
-      investorContext:document.getElementById('investorContext').value,
-      operatorArea:document.getElementById('operatorArea').value.trim(),
-      stage:document.getElementById('stage').value,
-      teamSize:document.getElementById('teamSize').value,
-      designing:document.getElementById('designing').value.trim(),
-      bottleneck:document.getElementById('bottleneck').value.trim(),
-      buildType:getRadio('buildType'),
-      aiRole:document.getElementById('aiRole').value.trim(),
-      valuable:document.getElementById('valuable').value.trim(),
-      attendees:document.getElementById('attendees').value.trim(),
+    e.preventDefault();errEl.style.display='none';
+    var company=document.getElementById('company').value.trim();
+    var designing=document.getElementById('designing').value.trim();
+    var processStage=getRadio('processStage');
+    if(!company){showError('Please enter your company name.');return;}
+    if(!designing){showError('Please tell us what you\'re trying to build.');return;}
+    if(!processStage){showError('Please select where you are in the process.');return;}
+    btn.disabled=true;btn.classList.add('loading');btn.querySelector('.btn-label').textContent='Sending…';
+    var data={
+      name:document.getElementById('hiddenName').value||'Discovery booking',
+      email:document.getElementById('hiddenEmail').value,
+      company:company,designing:designing,buildType:processStage,
       utm_source:document.getElementById('utmSource').value,
       utm_medium:document.getElementById('utmMedium').value,
       utm_campaign:document.getElementById('utmCampaign').value,
       utm_content:document.getElementById('utmContent').value,
       utm_term:document.getElementById('utmTerm').value,
     };
-
     try{
-      const res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-      const json=await res.json();
+      var res=await fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      var json=await res.json();
       if(!res.ok){showError(json.error||'Something went wrong. Please try again.');return;}
-      gtag('event','intake_submitted',{company:data.company,role:data.role});
+      gtag('event','intake_submitted',{company:data.company});
       form.style.display='none';
-      successEl.style.display='block';
-      overlay.classList.add('hidden');
-      if(window.innerWidth<900){document.querySelector('.cal-col').scrollIntoView({behavior:'smooth',block:'start'});}
-    }catch(err){
-      showError('Network error. Please check your connection and try again.');
-    }
+      successEl.style.display='flex';
+    }catch(err){showError('Network error. Please check your connection and try again.');}
   });
 })();
 </script>

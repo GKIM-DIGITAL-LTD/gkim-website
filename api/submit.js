@@ -1,15 +1,10 @@
 // POST /api/submit
-// Receives intake form data, runs Claude AI analysis, writes to Google Sheets,
-// sends prospect acknowledgement and internal briefing via Resend.
+// Receives intake form data, sends prospect acknowledgement and internal briefing via Resend.
 
-import Anthropic from '@anthropic-ai/sdk';
 import { Resend } from 'resend';
-import { google } from 'googleapis';
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const SHEET_ID = process.env.GOOGLE_SHEET_ID;
 const FROM_EMAIL = 'Ian Morrison <ian@gkim.digital>';
 const INTERNAL_EMAILS = ['ian@gkim.digital', 'sales@gkim.digital'];
 
@@ -28,7 +23,7 @@ function isRateLimited(ip) {
 
 // ── Input validation ──
 function validate(body) {
-  const required = ['name', 'email', 'company', 'role', 'stage', 'teamSize', 'designing', 'buildType'];
+  const required = ['name', 'email', 'company', 'designing', 'buildType'];
   for (const f of required) {
     if (!body[f] || !String(body[f]).trim()) return `Missing required field: ${f}`;
   }
@@ -38,104 +33,9 @@ function validate(body) {
   return null;
 }
 
-// ── Claude AI intake analysis ──
-async function analyseIntake(data) {
-  const prompt = `You are an expert business systems analyst for GKIM Digital.
-GKIM helps leadership teams design AI-native business systems before they build software.
-Analyse this discovery session intake and produce a structured internal briefing.
-
-INTAKE DATA:
-Name: ${data.name}
-Role: ${data.role}${data.founderStage ? ` (${data.founderStage})` : ''}${data.investorContext ? ` (${data.investorContext})` : ''}${data.operatorArea ? ` (area: ${data.operatorArea})` : ''}
-Company: ${data.company}${data.website ? ` — ${data.website}` : ''}
-Stage: ${data.stage} | Team: ${data.teamSize}
-What they're designing: ${data.designing}
-Biggest bottleneck: ${data.bottleneck || 'Not specified'}
-Build type: ${data.buildType}
-AI role expected: ${data.aiRole || 'Not specified'}
-What would make session valuable: ${data.valuable || 'Not specified'}
-Additional attendees: ${data.attendees || 'None specified'}
-
-Respond in this exact JSON format (no markdown, just the object):
-{
-  "summary": "2-3 sentence plain English summary of what this business is and what they need",
-  "workflowComplexity": "low|medium|high",
-  "aiNativeRelevance": "low|medium|high",
-  "urgency": "low|medium|high",
-  "strategicSeriousness": "low|medium|high",
-  "readinessScore": <0-100 integer>,
-  "readinessBand": "high_priority|qualified|nurture|low_fit",
-  "suggestedFocus": "The specific dimension or problem area to open with in the session",
-  "suggestedOpeningQuestion": "The single most valuable question to start the session",
-  "prospectMessage": "2-3 sentences written directly to ${data.name} explaining what GKIM understands about their situation and how this session will be focused on their specific needs. Warm, direct, professional. Do not be generic.",
-  "redFlags": ["array of any concerns about fit, readiness, or complexity"],
-  "highValueAngles": ["array of the most promising areas to explore in the session"]
-}`;
-
-  const message = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const text = message.content[0].text.trim();
-  return JSON.parse(text);
-}
-
-// ── Google Sheets write ──
-async function writeToSheet(data, analysis, submissionId) {
-  const auth = new google.auth.JWT({
-    email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
-  const sheets = google.sheets({ version: 'v4', auth });
-
-  const row = [
-    submissionId,
-    new Date().toISOString(),
-    data.name,
-    data.email,
-    data.company,
-    data.website || '',
-    data.role,
-    data.founderStage || data.investorContext || data.operatorArea || '',
-    data.stage,
-    data.teamSize,
-    data.buildType,
-    data.designing,
-    data.bottleneck || '',
-    data.aiRole || '',
-    data.valuable || '',
-    data.attendees || '',
-    data.utm_source || '',
-    data.utm_medium || '',
-    data.utm_campaign || '',
-    analysis.readinessScore,
-    analysis.readinessBand,
-    analysis.workflowComplexity,
-    analysis.aiNativeRelevance,
-    analysis.urgency,
-    analysis.summary,
-    analysis.suggestedFocus,
-    analysis.suggestedOpeningQuestion,
-    JSON.stringify(analysis.redFlags),
-    JSON.stringify(analysis.highValueAngles),
-    '', // booking_id — filled by webhook
-    '', // booked_at — filled by webhook
-    '', // meet_link — filled by webhook
-  ];
-
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: SHEET_ID,
-    range: 'Leads!A:AF',
-    valueInputOption: 'USER_ENTERED',
-    requestBody: { values: [row] },
-  });
-}
 
 // ── Email: prospect acknowledgement ──
-function prospectEmailHtml(data, analysis) {
+function prospectEmailHtml(data) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -168,13 +68,8 @@ function prospectEmailHtml(data, analysis) {
           <h1 style="margin:0 0 24px;font-size:24px;font-weight:700;color:#0A0A09;line-height:1.25">Your intake is confirmed,<br>${data.name.split(' ')[0]}</h1>
 
           <p style="margin:0 0 20px;font-size:15px;color:#404040;line-height:1.65">
-            ${analysis.prospectMessage}
+            We've received your request and Ian will review it before the call. Please select your preferred time in the booking calendar below — you'll receive a Google Meet link with your confirmation.
           </p>
-
-          <div style="background:#F7F7F7;border-left:3px solid #FFDD00;padding:20px 24px;margin:28px 0">
-            <p style="margin:0 0 6px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#999999">Your session focus</p>
-            <p style="margin:0;font-size:15px;color:#0A0A09;font-weight:500;line-height:1.5">${analysis.suggestedFocus}</p>
-          </div>
 
           <p style="margin:0 0 20px;font-size:15px;color:#404040;line-height:1.65">
             If you haven't already, please select your preferred time in the booking calendar. You'll receive a Google Meet link with your confirmation.
@@ -238,24 +133,10 @@ function prospectEmailHtml(data, analysis) {
 }
 
 // ── Email: internal briefing ──
-function briefingEmailHtml(data, analysis, submissionId) {
-  const bandColour = {
-    high_priority: '#1a7a3a',
-    qualified: '#2563eb',
-    nurture: '#d97706',
-    low_fit: '#dc2626',
-  }[analysis.readinessBand] || '#666666';
-
-  const bandLabel = {
-    high_priority: 'HIGH PRIORITY',
-    qualified: 'QUALIFIED',
-    nurture: 'NURTURE',
-    low_fit: 'LOW FIT',
-  }[analysis.readinessBand] || analysis.readinessBand;
-
+function briefingEmailHtml(data, submissionId) {
   return `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>GKIM Briefing: ${data.name}</title></head>
+<head><meta charset="UTF-8"><title>GKIM Discovery Intake: ${data.name}</title></head>
 <body style="margin:0;padding:0;background:#F2F2F2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#F2F2F2;padding:32px 0">
   <tr><td align="center">
@@ -263,15 +144,8 @@ function briefingEmailHtml(data, analysis, submissionId) {
 
       <!-- Header -->
       <tr>
-        <td style="background:#0A0A09;padding:20px 32px;display:flex;align-items:center;justify-content:space-between">
-          <table width="100%" cellpadding="0" cellspacing="0"><tr>
-            <td style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#AAAAAA">
-              GKIM Internal — Discovery Briefing
-            </td>
-            <td align="right">
-              <span style="background:${bandColour};color:#ffffff;font-size:10px;font-weight:700;letter-spacing:0.1em;padding:4px 10px;text-transform:uppercase">${bandLabel}</span>
-            </td>
-          </tr></table>
+        <td style="background:#0A0A09;padding:20px 32px">
+          <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#AAAAAA">GKIM Internal — Discovery Intake</p>
         </td>
       </tr>
       <tr><td style="background:#FFDD00;height:3px;font-size:0;line-height:0">&nbsp;</td></tr>
@@ -280,101 +154,19 @@ function briefingEmailHtml(data, analysis, submissionId) {
       <tr>
         <td style="padding:28px 32px 20px">
           <h2 style="margin:0 0 4px;font-size:20px;font-weight:700;color:#0A0A09">${data.name}</h2>
-          <p style="margin:0 0 16px;font-size:14px;color:#666666">${data.role} &nbsp;·&nbsp; ${data.company}${data.website ? ` &nbsp;·&nbsp; <a href="${data.website}" style="color:#0A0A09">${data.website}</a>` : ''}</p>
+          <p style="margin:0 0 20px;font-size:14px;color:#666666">${data.company} &nbsp;·&nbsp; <a href="mailto:${data.email}" style="color:#0A0A09">${data.email}</a></p>
 
-          <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px">
+          <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:24px">
             <tr>
-              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:12px;color:#666666;width:25%">Stage</td>
-              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:13px;color:#0A0A09;font-weight:500">${data.stage}</td>
-              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:12px;color:#666666;width:25%">Team</td>
-              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:13px;color:#0A0A09;font-weight:500">${data.teamSize}</td>
-            </tr>
-            <tr>
-              <td style="padding:10px 14px;border:1px solid #E8E8E8;font-size:12px;color:#666666">Build type</td>
-              <td style="padding:10px 14px;border:1px solid #E8E8E8;font-size:13px;color:#0A0A09;font-weight:500">${data.buildType}</td>
-              <td style="padding:10px 14px;border:1px solid #E8E8E8;font-size:12px;color:#666666">Email</td>
-              <td style="padding:10px 14px;border:1px solid #E8E8E8;font-size:13px;color:#0A0A09;font-weight:500"><a href="mailto:${data.email}" style="color:#0A0A09">${data.email}</a></td>
+              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:12px;color:#666666;width:30%">Where in process</td>
+              <td style="padding:10px 14px;background:#F7F7F7;border:1px solid #E8E8E8;font-size:13px;color:#0A0A09;font-weight:500">${data.buildType}</td>
             </tr>
           </table>
 
-          <!-- AI Summary -->
-          <div style="background:#F0F4FF;border-left:3px solid #2563eb;padding:16px 20px;margin-bottom:20px">
-            <p style="margin:0 0 6px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#2563eb">AI Summary</p>
-            <p style="margin:0;font-size:14px;color:#1a1a2e;line-height:1.6">${analysis.summary}</p>
-          </div>
-
-          <!-- Readiness scores -->
-          <table cellpadding="0" cellspacing="0" style="width:100%;margin-bottom:20px;border:1px solid #E8E8E8">
-            <tr style="background:#F7F7F7">
-              <th style="padding:10px 14px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#666666;text-align:left">Dimension</th>
-              <th style="padding:10px 14px;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#666666;text-align:left">Rating</th>
-            </tr>
-            <tr>
-              <td style="padding:8px 14px;font-size:13px;color:#404040;border-top:1px solid #F0F0F0">Readiness score</td>
-              <td style="padding:8px 14px;font-size:13px;font-weight:700;color:#0A0A09;border-top:1px solid #F0F0F0">${analysis.readinessScore}/100</td>
-            </tr>
-            <tr>
-              <td style="padding:8px 14px;font-size:13px;color:#404040;border-top:1px solid #F0F0F0">Workflow complexity</td>
-              <td style="padding:8px 14px;font-size:13px;font-weight:600;color:#0A0A09;border-top:1px solid #F0F0F0;text-transform:capitalize">${analysis.workflowComplexity}</td>
-            </tr>
-            <tr>
-              <td style="padding:8px 14px;font-size:13px;color:#404040;border-top:1px solid #F0F0F0">AI-native relevance</td>
-              <td style="padding:8px 14px;font-size:13px;font-weight:600;color:#0A0A09;border-top:1px solid #F0F0F0;text-transform:capitalize">${analysis.aiNativeRelevance}</td>
-            </tr>
-            <tr>
-              <td style="padding:8px 14px;font-size:13px;color:#404040;border-top:1px solid #F0F0F0">Urgency</td>
-              <td style="padding:8px 14px;font-size:13px;font-weight:600;color:#0A0A09;border-top:1px solid #F0F0F0;text-transform:capitalize">${analysis.urgency}</td>
-            </tr>
-            <tr>
-              <td style="padding:8px 14px;font-size:13px;color:#404040;border-top:1px solid #F0F0F0">Strategic seriousness</td>
-              <td style="padding:8px 14px;font-size:13px;font-weight:600;color:#0A0A09;border-top:1px solid #F0F0F0;text-transform:capitalize">${analysis.strategicSeriousness}</td>
-            </tr>
-          </table>
-
-          <!-- Session prep -->
           <div style="margin-bottom:20px">
-            <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#999999">Suggested session focus</p>
-            <p style="margin:0;font-size:14px;color:#0A0A09;font-weight:500">${analysis.suggestedFocus}</p>
+            <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#999999">What they're trying to build</p>
+            <p style="margin:0;font-size:14px;color:#0A0A09;line-height:1.65">${data.designing}</p>
           </div>
-
-          <div style="margin-bottom:20px">
-            <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#999999">Opening question</p>
-            <p style="margin:0;font-size:14px;color:#0A0A09;font-style:italic">"${analysis.suggestedOpeningQuestion}"</p>
-          </div>
-
-          ${analysis.highValueAngles.length ? `
-          <div style="margin-bottom:20px">
-            <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#999999">High-value angles</p>
-            <ul style="margin:0;padding-left:18px">
-              ${analysis.highValueAngles.map(a => `<li style="font-size:13px;color:#404040;margin-bottom:4px;line-height:1.5">${a}</li>`).join('')}
-            </ul>
-          </div>` : ''}
-
-          ${analysis.redFlags.length ? `
-          <div style="background:#FFF5F5;border-left:3px solid #dc2626;padding:14px 18px;margin-bottom:20px">
-            <p style="margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#dc2626">Red flags</p>
-            <ul style="margin:0;padding-left:18px">
-              ${analysis.redFlags.map(f => `<li style="font-size:13px;color:#7f1d1d;margin-bottom:4px;line-height:1.5">${f}</li>`).join('')}
-            </ul>
-          </div>` : ''}
-
-          <!-- Raw responses -->
-          <details style="margin-top:20px">
-            <summary style="cursor:pointer;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#999999;padding:10px 0;border-top:1px solid #E8E8E8">Raw intake responses</summary>
-            <table cellpadding="0" cellspacing="0" style="width:100%;margin-top:12px">
-              ${[
-                ['Designing / improving', data.designing],
-                ['Bottleneck', data.bottleneck],
-                ['AI role expected', data.aiRole],
-                ['Session value', data.valuable],
-                ['Additional attendees', data.attendees],
-              ].filter(([, v]) => v).map(([k, v]) => `
-              <tr>
-                <td style="padding:8px 12px 8px 0;font-size:12px;color:#999999;vertical-align:top;width:35%">${k}</td>
-                <td style="padding:8px 0;font-size:13px;color:#404040;line-height:1.5">${v}</td>
-              </tr>`).join('')}
-            </table>
-          </details>
 
           <p style="margin:20px 0 0;font-size:11px;color:#BBBBBB">Submission ID: ${submissionId}&nbsp;·&nbsp;${new Date().toUTCString()}</p>
         </td>
@@ -382,7 +174,7 @@ function briefingEmailHtml(data, analysis, submissionId) {
 
       <tr>
         <td style="background:#0A0A09;padding:16px 32px">
-          <p style="margin:0;font-size:11px;color:#555555">GKIM Digital &nbsp;·&nbsp; Internal briefing &nbsp;·&nbsp; Not for distribution</p>
+          <p style="margin:0;font-size:11px;color:#555555">GKIM Digital &nbsp;·&nbsp; Internal &nbsp;·&nbsp; Not for distribution</p>
         </td>
       </tr>
     </table>
@@ -418,49 +210,34 @@ export default async function handler(req, res) {
 
   const submissionId = `gkim_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-  // Check required env vars up front so the log is clear
-  const missingEnv = ['ANTHROPIC_API_KEY','RESEND_API_KEY','GOOGLE_SHEET_ID','GOOGLE_SERVICE_ACCOUNT_EMAIL','GOOGLE_PRIVATE_KEY']
-    .filter(k => !process.env[k]);
+  // Check required env vars up front
+  const missingEnv = ['RESEND_API_KEY'].filter(k => !process.env[k]);
   if (missingEnv.length) {
     console.error('submit.js: missing env vars:', missingEnv.join(', '));
     return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
   }
 
   try {
-    // 1. Claude analysis (run first — most valuable, fail loudly if broken)
-    let analysis;
-    try {
-      analysis = await analyseIntake(body);
-    } catch (err) {
-      console.error('submit.js: Claude analyseIntake failed:', err?.message || err);
-      throw err;
-    }
-
-    // 2. Write to Sheets (non-blocking on failure — don't fail the user request)
-    writeToSheet(body, analysis, submissionId).catch(err =>
-      console.error('submit.js: Sheets write failed:', err?.message || err)
-    );
-
-    // 3. Send prospect acknowledgement email
+    // 1. Send prospect acknowledgement email
     try {
       await resend.emails.send({
         from: FROM_EMAIL,
         to: body.email,
         subject: `Your GKIM Discovery Session — ${body.name.split(' ')[0]}, we're ready`,
-        html: prospectEmailHtml(body, analysis),
+        html: prospectEmailHtml(body),
       });
     } catch (err) {
       console.error('submit.js: prospect email failed:', err?.message || err);
       throw err;
     }
 
-    // 4. Send internal briefing email
+    // 2. Send internal briefing email
     try {
       await resend.emails.send({
         from: FROM_EMAIL,
         to: INTERNAL_EMAILS,
-        subject: `[${analysis.readinessBand.toUpperCase()}] Discovery intake: ${body.name} — ${body.company}`,
-        html: briefingEmailHtml(body, analysis, submissionId),
+        subject: `Discovery intake: ${body.name} — ${body.company}`,
+        html: briefingEmailHtml(body, submissionId),
       });
     } catch (err) {
       console.error('submit.js: internal briefing email failed:', err?.message || err);
