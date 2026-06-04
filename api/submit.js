@@ -212,7 +212,7 @@ export default async function handler(req, res) {
   const missingEnv = ['RESEND_API_KEY'].filter(k => !process.env[k]);
   if (missingEnv.length) {
     console.error('submit.js: missing env vars:', missingEnv.join(', '));
-    return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
+    return res.status(500).json({ error: `Configuration error: missing ${missingEnv.join(', ')}` });
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
