@@ -1,7 +1,7 @@
 // POST /api/submit
 // Receives intake form data, sends prospect acknowledgement and internal briefing via Resend.
 
-import { Resend } from 'resend';
+import sgMail from '@sendgrid/mail';
 
 const FROM_EMAIL = 'Ian Morrison <ian@gkim.digital>';
 const INTERNAL_EMAILS = ['ian@gkim.digital', 'sales@gkim.digital'];
@@ -209,18 +209,18 @@ export default async function handler(req, res) {
   const submissionId = `gkim_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
   // Check required env vars up front
-  const missingEnv = ['RESEND_API_KEY'].filter(k => !process.env[k]);
+  const missingEnv = ['SENDGRID_API_KEY'].filter(k => !process.env[k]);
   if (missingEnv.length) {
     console.error('submit.js: missing env vars:', missingEnv.join(', '));
     return res.status(500).json({ error: `Configuration error: missing ${missingEnv.join(', ')}` });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   try {
     // 1. Send prospect acknowledgement email
     try {
-      await resend.emails.send({
+      await sgMail.send({
         from: FROM_EMAIL,
         to: body.email,
         subject: `Your GKIM Discovery Session — ${body.name.split(' ')[0]}, we're ready`,
@@ -233,7 +233,7 @@ export default async function handler(req, res) {
 
     // 2. Send internal briefing email
     try {
-      await resend.emails.send({
+      await sgMail.send({
         from: FROM_EMAIL,
         to: INTERNAL_EMAILS,
         subject: `Discovery intake: ${body.name} — ${body.company}`,
