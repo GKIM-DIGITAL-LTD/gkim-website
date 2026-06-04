@@ -3,8 +3,6 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM_EMAIL = 'Ian Morrison <ian@gkim.digital>';
 const INTERNAL_EMAILS = ['ian@gkim.digital', 'sales@gkim.digital'];
 
@@ -216,6 +214,8 @@ export default async function handler(req, res) {
     console.error('submit.js: missing env vars:', missingEnv.join(', '));
     return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
   }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
     // 1. Send prospect acknowledgement email
