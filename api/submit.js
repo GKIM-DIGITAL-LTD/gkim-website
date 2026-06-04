@@ -3,7 +3,7 @@
 
 import sgMail from '@sendgrid/mail';
 
-const FROM_EMAIL = 'Ian Morrison <ian@gkim.digital>';
+const FROM_EMAIL = 'GKIM Digital <no-reply@gkim.digital>';
 const INTERNAL_EMAILS = ['ian@gkim.digital', 'sales@gkim.digital'];
 
 // ── Rate limiting (in-memory, resets per cold-start) ──
