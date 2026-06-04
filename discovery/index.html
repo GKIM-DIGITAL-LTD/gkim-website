@@ -112,7 +112,11 @@ header{
 
 /* ── LEFT: CONTENT COLUMN ── */
 .content-col{
-  background:var(--bg-dark);
+  background-color:var(--bg-dark);
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size:72px 72px;
   padding:3.5rem 3rem 5rem;
   border-right:1px solid rgba(255,255,255,0.06);
 }
@@ -220,7 +224,11 @@ header{
 .cal-layer{
   transition:transform 0.55s var(--ease-out), opacity 0.4s ease;
   padding:2rem;
-  background:var(--bg-dark);
+  background-color:var(--bg-dark);
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size:72px 72px;
   min-height:calc(100vh - var(--header-h-mobile));
 }
 @media(min-width:1280px){.cal-layer{min-height:calc(100vh - var(--header-h-desktop));}}
@@ -688,8 +696,13 @@ function onCalBookingSuccess(e) {
   var data    = e.detail || e.data || {};
   var booking = data.booking || data.data?.booking || {};
   var attendees = booking.attendees || [];
-  var name  = (attendees[0] && attendees[0].name)  || booking.name  || data.name  || '';
-  var email = (attendees[0] && attendees[0].email) || booking.email || data.email || '';
+  var name      = (attendees[0] && attendees[0].name)      || booking.name      || data.name      || '';
+  var email     = (attendees[0] && attendees[0].email)     || booking.email     || data.email     || '';
+  var startTime = booking.startTime || data.startTime || '';
+  var timezone  = (attendees[0] && attendees[0].timeZone)  || booking.timeZone  || data.timeZone  || '';
+
+  // Store for confirm page
+  sessionStorage.setItem('gkim_booking', JSON.stringify({ name, email, startTime, timezone }));
 
   document.getElementById('hiddenName').value        = name;
   document.getElementById('hiddenEmail').value       = email;
@@ -744,10 +757,13 @@ document.querySelectorAll('.radio-group').forEach(function(g){
     if(!designing){showError('Please tell us what you\'re trying to build.');return;}
     if(!processStage){showError('Please select where you are in the process.');return;}
     btn.disabled=true;btn.classList.add('loading');btn.querySelector('.btn-label').textContent='Sending…';
+    var stored={};try{stored=JSON.parse(sessionStorage.getItem('gkim_booking')||'{}');}catch(e){}
     var data={
-      name:document.getElementById('hiddenName').value||'Discovery booking',
-      email:document.getElementById('hiddenEmail').value,
+      name:document.getElementById('hiddenName').value||stored.name||'Discovery booking',
+      email:document.getElementById('hiddenEmail').value||stored.email||'',
       company:company,designing:designing,buildType:processStage,
+      startTime:stored.startTime||'',
+      timezone:stored.timezone||'',
       utm_source:document.getElementById('utmSource').value,
       utm_medium:document.getElementById('utmMedium').value,
       utm_campaign:document.getElementById('utmCampaign').value,
@@ -759,8 +775,7 @@ document.querySelectorAll('.radio-group').forEach(function(g){
       var json=await res.json();
       if(!res.ok){showError(json.error||'Something went wrong. Please try again.');return;}
       gtag('event','intake_submitted',{company:data.company});
-      form.style.display='none';
-      successEl.style.display='flex';
+      window.location.href = '/confirm/';
     }catch(err){showError('Network error. Please check your connection and try again.');}
   });
 })();
