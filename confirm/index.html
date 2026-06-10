@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're booked — GKIM Discovery Call</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark:   #0A0A09;
+  --bg-light:  #F2F2F2;
+  --bg-accent: #FFDD00;
+  --surface-white:  #FFFFFF;
+  --surface-dark:   #202020;
+  --surface-header-scrolled: #202020eb;
+  --text-on-dark:       #FFFFFF;
+  --text-on-dark-muted: #D6D6D6;
+  --text-on-dark-dim:   rgba(255,255,255,0.38);
+  --text-on-light:      #202020;
+  --text-on-light-muted:#5C5C5C;
+  --border-on-dark:  rgba(255,255,255,0.08);
+  --border-on-light: #D6D6D6;
+  --container-max: 1120px;
+  --header-h-desktop: 116px;
+  --header-h-mobile: 84px;
+  --type-display:'League Gothic',Impact,sans-serif;
+  --type-body:'Figtree','Helvetica Neue',sans-serif;
+  --type-serif:'Instrument Serif',Georgia,serif;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;
+  --space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--type-body);background:var(--bg-light);color:var(--text-on-light);line-height:1.6;overflow-x:hidden;min-height:100vh}
+a{color:inherit;text-decoration:none}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ── BUTTONS ── */
+.btn{
+  font-family:var(--type-body);font-size:20px;font-weight:600;line-height:1;
+  border-radius:0;border:2px solid;cursor:pointer;text-decoration:none;
+  display:inline-flex;align-items:center;gap:var(--space-4);
+  padding:8px var(--space-5);
+  transition:background .18s ease,color .18s ease;white-space:nowrap;
+}
+.btn .arrow{width:20px;height:20px;flex-shrink:0;transition:transform .18s ease;}
+.btn:hover .arrow{transform:translateX(4px);}
+.btn-sm{font-size:16px;padding:6px var(--space-6);}
+.btn-sm .arrow{width:16px;height:16px;}
+.btn-primary{background:var(--bg-accent);color:var(--text-on-light);border-color:var(--bg-accent);}
+.btn-primary:hover{background:#ffe640;border-color:#ffe640;}
+
+/* ── HEADER ── */
+header{
+  height:var(--header-h-mobile);
+  display:flex;align-items:center;
+  background:var(--bg-dark);
+  border-bottom:1px solid var(--border-on-dark);
+}
+@media(min-width:1280px){header{height:var(--header-h-desktop);}}
+.header-inner{
+  width:100%;max-width:var(--container-max);margin:0 auto;
+  padding:0 var(--space-4);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);
+}
+@media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
+.logo svg{height:28px;width:auto;display:block;}
+@media(min-width:1280px){.logo svg{height:40px;}}
+.nav-desktop{display:none;align-items:center;gap:var(--space-5);}
+@media(min-width:1280px){.nav-desktop{display:flex;}}
+.nav-link{font-size:16px;font-weight:400;color:var(--text-on-dark);transition:color .18s ease;}
+.nav-link:hover{color:var(--text-on-dark-muted);}
+.header-cta{display:none;}
+@media(min-width:1280px){.header-cta{display:inline-flex;}}
+
+/* ── MAIN ── */
+.main-wrap{
+  position:relative;
+  background:var(--bg-light);
+}
+.main-wrap::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+  background-size:72px 72px;
+}
+.main{
+  position:relative;z-index:1;
+  max-width:680px;margin:0 auto;
+  padding:5rem var(--space-6) 6rem;
+}
+
+/* Chip */
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-on-light-muted);margin-bottom:1.5rem;
+  opacity:0;animation:up 0.6s var(--ease-out) 0.05s forwards;
+}
+.chip-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--bg-accent);flex-shrink:0;
+}
+
+/* Title */
+.confirm-title{
+  font-family:var(--type-display);text-transform:uppercase;
+  line-height:0.95;color:var(--text-on-light);margin-bottom:2.5rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.1s forwards;
+}
+.title-line1,.title-line2{
+  display:block;
+  font-size:clamp(2.4rem,7vw,5rem);
+  color:var(--text-on-light);
+  line-height:0.6;
+}
+
+/* Body */
+.confirm-body{
+  font-size:1rem;color:var(--text-on-light-muted);line-height:1.65;
+  margin-bottom:2.5rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.15s forwards;
+}
+.confirm-body .email{color:var(--text-on-light);font-weight:500;}
+.body-break{display:none;}
+@media(min-width:600px){.body-break{display:block;}}
+
+/* Booking card */
+.booking-card{
+  background:var(--surface-white);border-radius:10px;
+  border:1px solid var(--border-on-light);
+  padding:1.75rem 2rem;margin-bottom:3rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.2s forwards;
+}
+.booking-card-label{
+  font-size:0.6rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text-on-light-muted);margin-bottom:1.25rem;
+}
+.booking-row{
+  display:flex;align-items:flex-start;gap:0.85rem;
+  padding:0.85rem 0;border-top:1px solid var(--border-on-light);
+}
+.booking-row:first-of-type{border-top:none;padding-top:0;}
+.booking-icon{
+  width:18px;height:18px;flex-shrink:0;margin-top:2px;
+  color:var(--text-on-light-muted);
+}
+.booking-row-label{font-size:0.78rem;font-weight:600;color:var(--text-on-light);line-height:1.4}
+.booking-row-sub{font-size:0.75rem;color:var(--text-on-light-muted);margin-top:0.15rem}
+
+/* Sections */
+.section{
+  margin-bottom:2.5rem;
+  opacity:0;animation:up 0.7s var(--ease-out) 0.25s forwards;
+}
+.section + .section{animation-delay:0.3s;}
+.section-title{
+  font-size:0.6rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--text-on-light-muted);margin-bottom:1.25rem;
+}
+.section-items{display:flex;flex-direction:column;gap:1px;background:var(--border-on-light);}
+.section-item{
+  background:var(--surface-white);padding:1rem 1.25rem;
+  display:flex;align-items:flex-start;gap:0.85rem;
+  font-size:0.88rem;color:var(--text-on-light-muted);line-height:1.6;
+}
+.section-item:first-child{color:var(--text-on-light);}
+.section-item-icon{
+  width:18px;height:18px;flex-shrink:0;margin-top:3px;
+  color:var(--text-on-light-muted);
+}
+
+/* LinkedIn card */
+.linkedin-card{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  background:var(--surface-white);border-radius:10px;
+  border:1px solid var(--border-on-light);
+  padding:1.25rem 1.5rem;
+  text-decoration:none;
+  transition:border-color 0.2s, box-shadow 0.2s;
+}
+.linkedin-card:hover{border-color:#0A66C2;box-shadow:0 2px 12px rgba(10,102,194,0.1);}
+.linkedin-card-left{display:flex;align-items:center;gap:0.85rem;}
+.linkedin-icon{
+  width:36px;height:36px;border-radius:6px;
+  background:#0A66C2;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.linkedin-icon svg{width:20px;height:20px;}
+.linkedin-label{font-size:0.88rem;font-weight:600;color:var(--text-on-light);}
+.linkedin-sub{font-size:0.75rem;color:var(--text-on-light-muted);}
+.linkedin-arrow{color:var(--text-on-light-muted);font-size:1.1rem;}
+
+/* ── FOOTER ── */
+footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
+.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;gap:var(--space-10);}
+.footer-brand{flex:0 0 160px;}
+.footer-logo svg{height:36px;width:auto;}
+.footer-socials{display:flex;gap:8px;margin-top:var(--space-5);}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.1);color:var(--text-on-dark-muted);text-decoration:none;transition:background .18s,color .18s;}
+.footer-social-btn:hover{background:var(--bg-accent);color:var(--bg-dark);}
+.footer-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px;}
+.footer-col strong{color:var(--text-on-dark);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:var(--space-2);display:block;}
+.footer-col a,.footer-col span{color:var(--text-on-dark-muted);font-size:13px;line-height:1.6;text-decoration:none;}
+.footer-col a:hover{color:var(--text-on-dark);}
+.footer-bottom{max-width:var(--container-max);margin:var(--space-12) auto 0;padding-top:var(--space-6);border-top:1px solid var(--border-on-dark);text-align:center;color:var(--text-on-dark-muted);font-size:12px;}
+
+@media(max-width:768px){
+  .main{padding:3rem var(--space-6) 4rem;}
+  .booking-card{padding:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-inner">
+    <a href="/en/" class="logo" aria-label="GKIM home">
+      <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+        <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+      </svg>
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/en/#gears" class="nav-link">GEARS™</a>
+      <a href="/en/#proof" class="nav-link">Proof</a>
+      <a href="/about" class="nav-link">About</a>
+    </nav>
+    <a href="/discovery/" class="btn btn-primary btn-sm header-cta">Book a call
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main-wrap">
+<main class="main">
+
+  <div class="chip">
+    <span class="chip-dot"></span>
+    You're booked
+  </div>
+
+  <h1 class="confirm-title">
+    <span class="title-line1" id="titleLine1">See you</span><br>
+    <span class="title-line2" id="titleLine2">soon.</span>
+  </h1>
+
+  <p class="confirm-body">
+    A confirmation is on its way to <span class="email" id="confirmEmail">your inbox</span>.<br class="body-break">
+    Ian will review your context before the call.
+  </p>
+
+  <!-- Booking card -->
+  <div class="booking-card">
+    <div class="booking-card-label">Your booking</div>
+
+    <div class="booking-row">
+      <svg class="booking-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="3" width="15" height="13" rx="1.5"/><path d="M1.5 7h15M5.5 1v4M12.5 1v4"/></svg>
+      <div>
+        <div class="booking-row-label" id="bookingDateTime">Your scheduled time</div>
+        <div class="booking-row-sub" id="bookingTimezone"></div>
+      </div>
+    </div>
+
+    <div class="booking-row">
+      <svg class="booking-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="3" width="15" height="12" rx="1.5"/><path d="M1.5 7.5l6 4.5a3 3 0 003 0l6-4.5"/></svg>
+      <div>
+        <div class="booking-row-label">Video call (link in your confirmation email)</div>
+      </div>
+    </div>
+
+    <div class="booking-row">
+      <svg class="booking-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="6" r="3.5"/><path d="M2 16c0-3.314 3.134-6 7-6s7 2.686 7 6"/></svg>
+      <div>
+        <div class="booking-row-label">With Ian Morrison</div>
+        <div class="booking-row-sub">CEO &amp; Founder of GKIM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What to expect -->
+  <div class="section">
+    <div class="section-title">What to expect</div>
+    <div class="section-items">
+      <div class="section-item">
+        <svg class="section-item-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h8a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M6 8h6M6 11h4"/></svg>
+        Ian reads your submission before the call.
+      </div>
+      <div class="section-item">
+        <svg class="section-item-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="3" width="15" height="10" rx="1.5"/><path d="M6 16h6M9 13v3"/></svg>
+        30 minutes on your business. We'll cover where you are, what you're designing, and whether we're the right fit.
+      </div>
+      <div class="section-item">
+        <svg class="section-item-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="3" r="1.5"/><circle cx="3" cy="15" r="1.5"/><circle cx="15" cy="15" r="1.5"/><path d="M9 4.5v3m0 3l-4.5 4.5m4.5-4.5l4.5 4.5"/><rect x="6.5" y="7.5" width="5" height="3" rx="0.5"/></svg>
+        If there's a fit, the next step is Define: where we map the Blueprint of how your business actually works.
+      </div>
+    </div>
+  </div>
+
+  <!-- In the meantime -->
+  <div class="section">
+    <div class="section-title">In the meantime</div>
+    <a class="linkedin-card" href="https://www.linkedin.com/in/descendantofsmith/" target="_blank" rel="noopener noreferrer">
+      <div class="linkedin-card-left">
+        <div class="linkedin-icon">
+          <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="linkedin-label">Get to know Ian on LinkedIn</div>
+          <div class="linkedin-sub">linkedin.com/in/descendantofsmith</div>
+        </div>
+      </div>
+      <span class="linkedin-arrow">→</span>
+    </a>
+  </div>
+
+</main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM" role="img">
+          <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+          <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+          <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+          <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/gkimdigital/posts/?feedView=all" class="footer-social-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.facebook.com/gkimdigital" class="footer-social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <!-- Explore -->
+    <div class="footer-col">
+      <strong>Explore</strong>
+      <a href="/en/#gears">GEARS™</a>
+      <a href="/en/#proof">Proof</a>
+      <a href="/about">About</a>
+      <a href="/discovery/">Book a call</a>
+    </div>
+    <!-- Ian Morrison -->
+    <div class="footer-col">
+      <strong>Ian Morrison</strong>
+      <span>Mobile &amp; WhatsApp:<br><a href="tel:+447385542874">(+44) 738 5542874</a><br><a href="tel:+84907280831">(+84) 90 728 0831</a></span>
+      <a href="mailto:hello@gkim.digital">hello@gkim.digital</a>
+    </div>
+    <!-- UK Office -->
+    <div class="footer-col">
+      <strong>UK Office</strong>
+      <span>17 South Rd, Impington,<br>Cambridge CB24 9PB</span>
+      <a href="tel:+447385542874">(+44) 738 5542874</a>
+    </div>
+    <!-- Vietnam Office -->
+    <div class="footer-col">
+      <strong>Vietnam Office</strong>
+      <span>C00.07 Sarina Tower C1, Sala Residence<br>62 Hoang The Thien Street,<br>Thu Duc, Ho Chi Minh city</span>
+      <a href="tel:+84283511886">(+84) 28 3511 8866</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© Copyright <span id="year"></span> GKIM Digital Ltd.</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Read booking data from sessionStorage
+(function() {
+  var raw = sessionStorage.getItem('gkim_booking');
+  if (!raw) return;
+  try {
+    var b = JSON.parse(raw);
+
+    // Email
+    if (b.email) {
+      document.getElementById('confirmEmail').textContent = b.email;
+    }
+
+    // Title: line1 = "See you on", line2 = "Wednesday, 17 June."
+    if (b.startTime) {
+      var d = new Date(b.startTime);
+      var day  = d.toLocaleDateString('en-GB', { weekday: 'long' });
+      var date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+      document.getElementById('titleLine1').textContent = 'See you on';
+      document.getElementById('titleLine2').textContent = day + ', ' + date + '.';
+
+      // Booking card date/time
+      var time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('bookingDateTime').textContent = day + ', ' + date + ' · ' + time;
+    }
+
+    // Timezone
+    if (b.timezone) {
+      document.getElementById('bookingTimezone').textContent = b.timezone;
+    }
+
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>
