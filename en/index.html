@@ -328,6 +328,23 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 @media(min-width:1024px){.human-h-break{display:inline;}}
 #human .section-head{max-width:none;}
 #human .lead{font-size:16px;}
+/* ---------- The Path ---------- */
+#path .section-head{max-width:none;}
+#path .path-lead{max-width:60ch;margin-bottom:var(--space-16);}
+.path-timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+.path-timeline::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--border-on-light);}
+@media(min-width:768px){.path-timeline::before{left:22px;}}
+.path-step{display:grid;grid-template-columns:44px 1fr;gap:var(--space-8);padding-bottom:var(--space-16);position:relative;}
+@media(min-width:768px){.path-step{grid-template-columns:48px 1fr;gap:var(--space-10);}}
+.path-step:last-child{padding-bottom:0;}
+.path-step-num{width:36px;height:36px;border:2px solid var(--border-on-light);display:flex;align-items:center;justify-content:center;font-family:'League Gothic',Impact,sans-serif;font-size:16px;color:var(--text-on-light-muted);background:var(--bg-light);flex-shrink:0;position:relative;z-index:1;}
+@media(min-width:768px){.path-step-num{width:44px;height:44px;font-size:18px;}}
+.path-step-body{padding-top:6px;}
+.path-step-body h3{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(22px,3vw,30px);line-height:1.1;color:var(--text-on-light);margin-bottom:var(--space-4);}
+.path-step-body p{color:var(--text-on-light-muted);font-size:16px;line-height:1.65;max-width:56ch;}
+.path-closing{margin-top:var(--space-16);max-width:56ch;color:var(--text-on-light-muted);font-size:16px;line-height:1.65;}
+.path-closing strong{color:var(--text-on-light);}
+
 /* ---------- Human role ---------- */
 .human-grid{display:grid;grid-template-columns:1fr;gap:var(--space-12);margin-top:var(--space-12);}
 @media(min-width:1024px){.human-grid{grid-template-columns:1fr 1fr;gap:var(--space-20);}}
@@ -546,11 +563,56 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   </div>
 </section>
 
+<!-- ============ THE PATH (light) ============ -->
+<section class="section bg-light grid-overlay" id="path">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">04 / The Path</span>
+      <h2 class="h2">Three steps to AI-native.</h2>
+    </div>
+    <p class="lead path-lead reveal" style="transition-delay:.05s">The companies that win the next decade are being designed right now.</p>
+
+    <div class="path-timeline">
+
+      <div class="path-step reveal" style="transition-delay:.08s">
+        <div class="path-step-num">01</div>
+        <div class="path-step-body">
+          <h3>Know more than your rivals</h3>
+          <p>Build a knowledge-graph of your market at a depth no conventional research can match — the white space, the dynamics, the things your competitors can't see.<br><br>This is your intelligence advantage. Built before you commit a single decision.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.12s">
+        <div class="path-step-num">02</div>
+        <div class="path-step-body">
+          <h3>Design the blueprint</h3>
+          <p>GEARS™ is GKIM's proprietary business design framework. It takes the intelligence you've gathered and turns it into a precise, engineered blueprint — every workflow, every handoff, every stakeholder relationship, designed before anything is built.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.16s">
+        <div class="path-step-num">03</div>
+        <div class="path-step-body">
+          <h3>Put agents to work for every stakeholder</h3>
+          <p>When the blueprint is clear, execution is fast. In the age of AI, build is as fast as buy. GKIM deploys bespoke AI agents across every stakeholder relationship — customers, employees, partners, investors — combining best-in-class AI applications with agents built specifically for your business. In days, not months.<br><br><strong>One team. Every relationship. Always on.</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="path-closing reveal" style="transition-delay:.2s">Whether you're reinventing a business that's outgrown its model, or designing one built to win from day one, the three steps are the same.<br><br><strong>The question is whether you take them before your competitors do.</strong></p>
+
+    <div class="reveal" style="transition-delay:.24s;margin-top:var(--space-10);">
+      <a href="#discovery" class="btn btn-primary">Talk to GKIM</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============ GEARS (gray, interactive) ============ -->
 <section class="section bg-light grid-overlay" id="gears">
   <div class="container">
     <div class="gears-head reveal">
-      <span class="eyebrow">04 / The GEARS Approach</span>
+      <span class="eyebrow">05 / The GEARS Approach</span>
       <h2 class="h2">Six connected stages that turn<br class="gears-h-break"> an idea into a living business system.</h2>
     </div>
 
@@ -587,7 +649,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <section class="section bg-light grid-overlay" id="proof">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">05 / Commercial Proof</span>
+      <span class="eyebrow">06 / Commercial Proof</span>
       <h2 class="h2">Grounded in real operational experience.</h2>
     </div>
 
@@ -654,7 +716,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <section class="section bg-dark grid-overlay" id="human">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">06 / The Human Role</span>
+      <span class="eyebrow">07 / The Human Role</span>
       <h2 class="h2">This is not about replacing humans.<br class="human-h-break"> It's about elevating them.</h2>
     </div>
     <div class="human-grid">
