@@ -138,19 +138,24 @@ def load_config(wb, lang_codes):
     return config
 
 
+def lang_canonical(lang):
+    """Canonical (no trailing slash) URL for a language row."""
+    return sitemap_url(lang.get("canonical_url") or lang["url_path"])
+
+
 def build_hreflang_tags(languages):
-    """Build <link rel="alternate"> hreflang tags for SEO."""
+    """Build <link rel="alternate"> hreflang tags for SEO.
+    URLs use the canonical (non-redirecting) form so they agree with each
+    page's <link rel="canonical">."""
     tags = []
     for lang in languages:
         if lang["status"] == "live":
             code = lang["hreflang"]
-            url  = lang["canonical_url"] if lang.get("canonical_url") else f"https://gkim.digital{lang['url_path']}"
-            tags.append(f'  <link rel="alternate" hreflang="{code}" href="{url}">')
+            tags.append(f'  <link rel="alternate" hreflang="{code}" href="{lang_canonical(lang)}">')
     # Add x-default pointing to English
     en = next((l for l in languages if l["language_name"] == "English"), None)
     if en:
-        url = en.get("canonical_url", f"https://gkim.digital{en['url_path']}")
-        tags.append(f'  <link rel="alternate" hreflang="x-default" href="{url}">')
+        tags.append(f'  <link rel="alternate" hreflang="x-default" href="{lang_canonical(en)}">')
     return "\n".join(tags)
 
 
@@ -584,10 +589,13 @@ def build(target_langs=None, include_drafts=False):
         extra_fonts = build_extra_fonts(lang_config)
         lang_switcher = build_lang_switcher(languages, lang)
 
+        canonical_tag = f'<link rel="canonical" href="{lang_canonical(lang_row)}">'
+
         rendered = template.render(
             s=s,
             meta=lang_meta,
             page={"lang": lang_row.get("hreflang", lang)},
+            canonical_tag=canonical_tag,
             hreflang_tags=hreflang_tags,
             extra_fonts=extra_fonts,
             lang_switcher=lang_switcher,
