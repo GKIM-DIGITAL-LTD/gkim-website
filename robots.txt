@@ -1,0 +1,7 @@
+# robots.txt for gkim.digital
+# Allow all crawlers full access, and tell them where the sitemap is.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://gkim.digital/sitemap.xml

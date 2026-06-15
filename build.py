@@ -50,6 +50,19 @@ STATIC_DIRS    = ["assets", "images", "fonts"]   # copied as-is to each lang dir
 
 LANG_CODES = ["en", "de", "fr", "nl", "zh", "vi"]
 
+# ── Sitemap settings ──────────────────────────────────────────────────────────
+BASE_URL = "https://gkim.digital"
+
+# Standalone, hand-written pages (NOT part of the language build) to include in
+# sitemap.xml. Edit this list if you add or remove a standalone page.
+# Pages that should stay out of Google (e.g. /confirm, marked noindex) are
+# deliberately omitted.
+EXTRA_SITEMAP_PAGES = [
+    {"path": "/about",                             "changefreq": "monthly", "priority": "0.7"},
+    {"path": "/discovery",                         "changefreq": "monthly", "priority": "0.8"},
+    {"path": "/en/insights/ai-adoption-landscape", "changefreq": "yearly",  "priority": "0.6"},
+]
+
 # Translation settings
 CLAUDE_MODEL       = os.environ.get("GKIM_TRANSLATE_MODEL", "claude-haiku-4-5-20251001")
 EN_SNAPSHOT_COL    = "_en_last_translated"   # hidden column managed by this script
@@ -125,19 +138,24 @@ def load_config(wb, lang_codes):
     return config
 
 
+def lang_canonical(lang):
+    """Canonical (no trailing slash) URL for a language row."""
+    return sitemap_url(lang.get("canonical_url") or lang["url_path"])
+
+
 def build_hreflang_tags(languages):
-    """Build <link rel="alternate"> hreflang tags for SEO."""
+    """Build <link rel="alternate"> hreflang tags for SEO.
+    URLs use the canonical (non-redirecting) form so they agree with each
+    page's <link rel="canonical">."""
     tags = []
     for lang in languages:
         if lang["status"] == "live":
             code = lang["hreflang"]
-            url  = lang["canonical_url"] if lang.get("canonical_url") else f"https://gkim.digital{lang['url_path']}"
-            tags.append(f'  <link rel="alternate" hreflang="{code}" href="{url}">')
+            tags.append(f'  <link rel="alternate" hreflang="{code}" href="{lang_canonical(lang)}">')
     # Add x-default pointing to English
     en = next((l for l in languages if l["language_name"] == "English"), None)
     if en:
-        url = en.get("canonical_url", f"https://gkim.digital{en['url_path']}")
-        tags.append(f'  <link rel="alternate" hreflang="x-default" href="{url}">')
+        tags.append(f'  <link rel="alternate" hreflang="x-default" href="{lang_canonical(en)}">')
     return "\n".join(tags)
 
 
@@ -183,6 +201,69 @@ def build_extra_fonts(config_row):
     if not extra or extra.strip().startswith("("):
         return ""
     return f"&{extra}" if extra else ""
+
+
+def sitemap_url(path_or_url):
+    """Absolute, canonical URL for sitemap.xml.
+    vercel.json sets trailingSlash:false, so we list the non-redirecting
+    (no trailing slash) form to avoid pointing crawlers at a redirect."""
+    url = path_or_url if path_or_url.startswith("http") else BASE_URL + path_or_url
+    if url.endswith("/") and url != BASE_URL + "/":
+        url = url.rstrip("/")
+    return url
+
+
+def build_sitemap(languages):
+    """Generate sitemap.xml from the live languages plus the standalone pages.
+
+    Driven by the 'languages' sheet: only languages with status 'live' are
+    listed, so a language appears in the sitemap the moment it goes live (and
+    drops out if set back to draft). Regenerated on every build so it always
+    matches what is published.
+    """
+    live = [l for l in languages if l["status"] == "live"]
+
+    # Shared hreflang alternates for the language homepages (only meaningful
+    # when more than one language is live).
+    alternates = [(l["hreflang"], sitemap_url(l["url_path"])) for l in live]
+    en = next((l for l in live if l["code"] == "en"), None)
+    if en:
+        alternates.append(("x-default", sitemap_url(en["url_path"])))
+
+    alt_block = "\n".join(
+        f'    <xhtml:link rel="alternate" hreflang="{code}" href="{url}"/>'
+        for code, url in alternates
+    )
+
+    out = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+        '        xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+        '',
+        '  <!-- Marketing homepages (generated from gkim-content.xlsx) -->',
+    ]
+    for l in live:
+        priority = "1.0" if l["code"] == "en" else "0.9"
+        out.append('  <url>')
+        out.append(f'    <loc>{sitemap_url(l["url_path"])}</loc>')
+        if len(live) > 1:
+            out.append(alt_block)
+        out.append('    <changefreq>monthly</changefreq>')
+        out.append(f'    <priority>{priority}</priority>')
+        out.append('  </url>')
+
+    out.append('')
+    out.append('  <!-- Standalone pages -->')
+    for p in EXTRA_SITEMAP_PAGES:
+        out.append('  <url>')
+        out.append(f'    <loc>{sitemap_url(p["path"])}</loc>')
+        out.append(f'    <changefreq>{p["changefreq"]}</changefreq>')
+        out.append(f'    <priority>{p["priority"]}</priority>')
+        out.append('  </url>')
+
+    out += ['', '</urlset>', '']
+
+    (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(out), encoding="utf-8")
 
 
 def validate_strings(strings, languages, warn_only=True):
@@ -508,10 +589,13 @@ def build(target_langs=None, include_drafts=False):
         extra_fonts = build_extra_fonts(lang_config)
         lang_switcher = build_lang_switcher(languages, lang)
 
+        canonical_tag = f'<link rel="canonical" href="{lang_canonical(lang_row)}">'
+
         rendered = template.render(
             s=s,
             meta=lang_meta,
             page={"lang": lang_row.get("hreflang", lang)},
+            canonical_tag=canonical_tag,
             hreflang_tags=hreflang_tags,
             extra_fonts=extra_fonts,
             lang_switcher=lang_switcher,
@@ -533,6 +617,11 @@ def build(target_langs=None, include_drafts=False):
 
         size_kb = out_path.stat().st_size // 1024
         print(f"✓  ({size_kb}KB)")
+
+    # Regenerate sitemap.xml from the full live-language set (independent of
+    # which subset was built this run) so it always reflects what is published.
+    build_sitemap(languages)
+    print("  → sitemap.xml ✓")
 
     print(f"\n✅  Done. {len(build_langs)} language(s) generated.")
     print("   Next step: git add . && git commit -m 'rebuild' && git push\n")

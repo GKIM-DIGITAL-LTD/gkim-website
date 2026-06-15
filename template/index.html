@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:wght@300;400;500;600;700{{ extra_fonts }}&display=swap" rel="stylesheet">
+{{ canonical_tag }}
 {{ hreflang_tags }}
 <style>
 :root{
@@ -239,12 +240,14 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 /* ---------- Position ---------- */
 .position-nots{display:grid;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-12);}
 @media(min-width:768px){.position-nots{grid-template-columns:repeat(3,1fr);}}
-.not-card{border:1px solid var(--border-on-dark);padding:var(--space-8);}
-.not-card .x{font-family:'League Gothic',Impact,sans-serif;font-size:40px;color:var(--border-on-dark);line-height:1;}
-.not-card.is{border-color:var(--bg-accent);}
-.not-card.is .x{color:var(--bg-accent);}
+.not-card{border:1px solid var(--border-on-light);padding:var(--space-8);}
+.not-card .x{font-family:'League Gothic',Impact,sans-serif;font-size:40px;color:var(--border-on-light);line-height:1;}
+.not-card.is{border-color:var(--bg-accent);background:var(--bg-accent);}
+.not-card.is .x{color:var(--text-on-light);}
+.not-card.is h4{color:var(--text-on-light);}
+.not-card.is p{color:var(--text-on-light);}
 .not-card h4{margin:var(--space-4) 0 var(--space-3);}
-.not-card p{color:var(--text-on-dark-muted);font-size:15px;}
+.not-card p{color:var(--text-on-light-muted);font-size:15px;}
 
 /* ---------- GEARS ---------- */
 .gears-h-break{display:none;}
@@ -280,12 +283,12 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .quote-section{padding-top:140px;padding-bottom:140px;}
 .quote{
   font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.1;
-  font-size:clamp(36px,6vw,80px);color:var(--text-on-light);
+  font-size:clamp(36px,6vw,80px);color:var(--text-on-dark);
 }
 .quote .b{display:block;}
 @media(min-width:768px){.quote{font-size:clamp(48px,6vw,80px);}}
 @media(min-width:1280px){.quote{font-size:clamp(64px,6vw,80px);}}
-.quote-attr{margin-top:var(--space-8);font-size:14px;text-transform:uppercase;letter-spacing:1.96px;color:var(--text-on-light);}
+.quote-attr{margin-top:var(--space-8);font-size:14px;text-transform:uppercase;letter-spacing:1.96px;color:var(--text-on-dark-muted);}
 
 /* ---------- Proof / cases ---------- */
 .cases{display:grid;grid-template-columns:1fr;gap:var(--space-1);margin-top:var(--space-16);}
@@ -326,6 +329,23 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 @media(min-width:1024px){.human-h-break{display:inline;}}
 #human .section-head{max-width:none;}
 #human .lead{font-size:16px;}
+/* ---------- The Path ---------- */
+#path .section-head{max-width:none;}
+#path .path-lead{max-width:60ch;margin-bottom:var(--space-16);}
+.path-timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+.path-timeline::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--border-on-dark);}
+@media(min-width:768px){.path-timeline::before{left:22px;}}
+.path-step{display:grid;grid-template-columns:44px 1fr;gap:var(--space-8);padding-bottom:var(--space-16);position:relative;}
+@media(min-width:768px){.path-step{grid-template-columns:48px 1fr;gap:var(--space-10);}}
+.path-step:last-child{padding-bottom:0;}
+.path-step-num{width:36px;height:36px;border:2px solid var(--border-on-dark);display:flex;align-items:center;justify-content:center;font-family:'League Gothic',Impact,sans-serif;font-size:16px;color:var(--text-on-dark-muted);background:var(--bg-dark);flex-shrink:0;position:relative;z-index:1;}
+@media(min-width:768px){.path-step-num{width:44px;height:44px;font-size:18px;}}
+.path-step-body{padding-top:6px;}
+.path-step-body h3{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(22px,3vw,30px);line-height:1.1;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.path-step-body p{color:var(--text-on-dark-muted);font-size:16px;line-height:1.65;max-width:56ch;}
+.path-closing{margin-top:var(--space-16);max-width:56ch;color:var(--text-on-dark-muted);font-size:16px;line-height:1.65;}
+.path-closing strong{color:var(--text-on-dark);}
+
 /* ---------- Human role ---------- */
 .human-grid{display:grid;grid-template-columns:1fr;gap:var(--space-12);margin-top:var(--space-12);}
 @media(min-width:1024px){.human-grid{grid-template-columns:1fr 1fr;gap:var(--space-20);}}
@@ -482,8 +502,53 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   </div>
 </section>
 
-<!-- ============ THE GKIM POSITION (dark) ============ -->
-<section class="section bg-dark grid-overlay" id="position">
+<!-- ============ THE PATH (dark) ============ -->
+<section class="section bg-dark grid-overlay" id="path">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">03 / The Path</span>
+      <h2 class="h2">Three steps to AI-native.</h2>
+    </div>
+    <p class="lead path-lead reveal" style="transition-delay:.05s">The companies that win the next decade are being designed right now.</p>
+
+    <div class="path-timeline">
+
+      <div class="path-step reveal" style="transition-delay:.08s">
+        <div class="path-step-num">01</div>
+        <div class="path-step-body">
+          <h3>Build the Knowledge-graph</h3>
+          <p>To know more than your rival, we build a knowledge-graph of your market at a depth no conventional research can match — the white space, the dynamics, the things your competitors can't see.<br><br>This is your intelligence advantage. Built before you commit a single decision.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.12s">
+        <div class="path-step-num">02</div>
+        <div class="path-step-body">
+          <h3>Design the Business Blueprint</h3>
+          <p>GEARS™ is GKIM's proprietary business design framework. It takes the intelligence you've gathered and turns it into a precise, engineered blueprint. Every workflow, every handoff, every stakeholder relationship, designed before anything is built.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.16s">
+        <div class="path-step-num">03</div>
+        <div class="path-step-body">
+          <h3>Put Agents to Work</h3>
+          <p>When the blueprint is clear, execution is fast. In the age of AI, build is as fast as buy. GKIM deploys bespoke AI agents across every stakeholder relationship: customers, employees, partners, investors, combining best-in-class AI applications with agents built specifically for your business. In days, not months.<br><br><strong>One team. Every relationship. Always on.</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="path-closing reveal" style="transition-delay:.2s">Whether you're reinventing a business that's outgrown its model, or designing one built to win from day one, the three steps are the same.<br><br><strong>The question is whether you take them before your competitors do.</strong></p>
+
+    <div class="reveal" style="transition-delay:.24s;margin-top:var(--space-10);">
+      <a href="#discovery" class="btn btn-primary">Talk to GKIM</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE GKIM POSITION (light) ============ -->
+<section class="section bg-light grid-overlay" id="position">
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">{{ s["position.eyebrow"] }}</span>
@@ -511,37 +576,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   </div>
 </section>
 
-<!-- ============ GEARS (gray, interactive) ============ -->
-<section class="section bg-light grid-overlay" id="gears">
-  <div class="container">
-    <div class="gears-head reveal">
-      <span class="eyebrow">{{ s["gears.eyebrow"] }}</span>
-      <h2 class="h2">{{ s["gears.h2.part1"] }}<br class="gears-h-break"> {{ s["gears.h2.part2"] }}</h2>
-    </div>
-
-    <div class="gears-tabs reveal" role="tablist" aria-label="GEARS stages">
-      <button class="gear-tab" role="tab" aria-selected="true"  data-i="0"><span class="num">01</span><span class="name">{{ s["gears.1.name"] }}</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="1"><span class="num">02</span><span class="name">{{ s["gears.2.name"] }}</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="2"><span class="num">03</span><span class="name">{{ s["gears.3.name"] }}</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="3"><span class="num">04</span><span class="name">{{ s["gears.4.name"] }}</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="4"><span class="num">05</span><span class="name">{{ s["gears.5.name"] }}</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="5"><span class="num">06</span><span class="name">{{ s["gears.6.name"] }}</span></button>
-    </div>
-
-    <div class="gear-panel reveal" role="tabpanel">
-      <div class="gp-num" id="gpNum">01</div>
-      <div>
-        <div class="gp-name" id="gpName">{{ s["gears.1.name"] }}</div>
-        <p class="gp-desc" id="gpDesc">{{ s["gears.1.desc"] }}</p>
-      </div>
-    </div>
-
-    <div class="gears-cycle-note reveal"><span class="dot"></span> {{ s["gears.cycle"] }}</div>
-  </div>
-</section>
-
 <!-- ============ QUOTE (yellow) ============ -->
-<section class="section bg-accent grid-overlay quote-section">
+<section class="section bg-dark grid-overlay quote-section">
   <div class="container">
     <blockquote class="quote reveal"><span class="b">{{ s["quote.line1"] }}</span><span class="b">{{ s["quote.line2"] }}</span></blockquote>
     <div class="quote-attr reveal" style="transition-delay:.1s">{{ s["quote.attr"] }}</div>

@@ -117,8 +117,11 @@ You'll see output like:
 ✓ Generated en/index.html
 ✓ Generated de/index.html (draft — skipped, not live)
 ✓ Generated fr/index.html (draft — skipped, not live)
+  → sitemap.xml ✓
 ✓ Done. 1 live language(s) generated.
 ```
+
+The build also refreshes **`sitemap.xml`** automatically (the list of pages we hand to Google). You never edit it by hand — it rebuilds from the live languages every time. When you launch a new language (Scenario C), it joins the sitemap on the next build with no extra step.
 
 **Step 5** — Push to GitHub:
 ```bash
