@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "start": "echo 'TODO: implement' && exit 0",
+    "test": "echo 'TODO: implement' && exit 0",
+    "lint": "echo 'TODO: implement' && exit 0",
+    "build": "echo 'TODO: implement' && exit 0"
+  },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "googleapis": "^144.0.0",

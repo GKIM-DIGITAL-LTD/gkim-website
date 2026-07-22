@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEARS™ Knowledge Factory IDE — Mockup v0.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A09; --panel:#131312; --panel-2:#181816; --raise:#1E1E1C;
+  --line:#2A2A28; --line-soft:#222220;
+  --ink:#F2F2F2; --muted:#8F8F89; --dim:#5C5C57;
+  --yellow:#FFDD00; --yellow-dim:rgba(255,221,0,.14); --yellow-soft:rgba(255,221,0,.07);
+  --green:#5DD98A; --amber:#FFB347; --red:#FF6B6B; --blue:#6BB2FF;
+  --mono:'JetBrains Mono',monospace; --sans:'Inter',sans-serif; --serif:'DM Serif Display',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:13px;overflow:hidden}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:#2E2E2C;border-radius:4px}
+::-webkit-scrollbar-track{background:transparent}
+button{font-family:inherit;cursor:pointer}
+.mono{font-family:var(--mono)}
+
+/* ---------- App frame ---------- */
+#app{display:grid;grid-template-rows:52px 1fr 34px;height:100vh}
+#main{display:grid;grid-template-columns:216px 1fr 312px;min-height:0}
+
+/* ---------- Top bar ---------- */
+#topbar{display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+.logo{display:flex;align-items:baseline;gap:8px;margin-right:6px}
+.logo .g{font-family:var(--serif);font-size:19px;color:var(--yellow);letter-spacing:.5px}
+.logo .sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.4px}
+.selector{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--ink);font-size:12px}
+.selector:hover{border-color:#3A3A3A}
+.selector .lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
+.selector .caret{color:var(--dim);font-size:9px}
+.selector .val{font-weight:600}
+#topbar .spacer{flex:1}
+.readiness-chip{display:flex;align-items:center;gap:10px;background:var(--yellow-soft);border:1px solid rgba(255,221,0,.25);border-radius:6px;padding:5px 12px 5px 8px}
+.readiness-chip .lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.readiness-chip .val{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--yellow)}
+.ring{width:26px;height:26px}
+.topbtn{background:none;border:1px solid var(--line);border-radius:6px;color:var(--muted);padding:6px 10px;font-size:11px}
+.topbtn:hover{color:var(--ink);border-color:#3A3A3A}
+
+/* ---------- Left nav ---------- */
+#nav{border-right:1px solid var(--line);background:var(--panel);padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+#nav .section{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.4px;padding:10px 10px 5px}
+.navitem{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:6px;border:none;background:none;color:var(--muted);font-size:12.5px;text-align:left;width:100%;position:relative}
+.navitem:hover{background:var(--panel-2);color:var(--ink)}
+.navitem.active{background:var(--yellow-dim);color:var(--yellow);font-weight:600}
+.navitem .badge{margin-left:auto;font-family:var(--mono);font-size:10px;background:var(--raise);color:var(--muted);border-radius:9px;padding:1px 7px}
+.navitem.active .badge{background:rgba(255,221,0,.2);color:var(--yellow)}
+.navitem svg{width:14px;height:14px;flex:none}
+#nav .foot{margin-top:auto;padding:10px;border-top:1px solid var(--line-soft);font-size:10px;color:var(--dim);line-height:1.6}
+
+/* ---------- Workspace ---------- */
+#workspace{overflow-y:auto;padding:22px 26px;min-width:0}
+.screen{display:none;max-width:1060px}
+.screen.visible{display:block;animation:fade .18s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.screen-head{margin-bottom:18px}
+.screen-head h1{font-family:var(--serif);font-size:26px;font-weight:400;letter-spacing:.3px}
+.screen-head .desc{color:var(--muted);margin-top:4px;font-size:12.5px;max-width:640px;line-height:1.55}
+.eyebrow{font-size:9.5px;color:var(--yellow);text-transform:uppercase;letter-spacing:1.6px;font-family:var(--mono);margin-bottom:6px}
+
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card h3{font-size:11px;text-transform:uppercase;letter-spacing:1.1px;color:var(--muted);font-weight:600;margin-bottom:12px}
+.stat .big{font-family:var(--mono);font-size:26px;font-weight:600}
+.stat .cap{font-size:11px;color:var(--muted);margin-top:3px}
+.delta{font-family:var(--mono);font-size:10.5px;margin-left:8px}
+.up{color:var(--green)}.down{color:var(--red)}.warn{color:var(--amber)}
+
+.bar{height:5px;background:var(--raise);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--yellow);border-radius:3px}
+.domrow{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;padding:6px 0}
+.domrow .nm{font-size:12px}
+.domrow .pc{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right}
+
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tr:hover td{background:var(--panel-2)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;padding:2px 9px;border-radius:10px;font-family:var(--mono)}
+.pill .dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.p-green{background:rgba(93,217,138,.12);color:var(--green)}
+.p-amber{background:rgba(255,179,71,.12);color:var(--amber)}
+.p-red{background:rgba(255,107,107,.12);color:var(--red)}
+.p-blue{background:rgba(107,178,255,.12);color:var(--blue)}
+.p-yellow{background:var(--yellow-dim);color:var(--yellow)}
+.p-grey{background:var(--raise);color:var(--muted)}
+
+.btn{border-radius:6px;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);padding:6px 13px;font-size:11.5px;font-weight:500}
+.btn:hover{border-color:#3A3A3A}
+.btn.primary{background:var(--yellow);border-color:var(--yellow);color:#0A0A09;font-weight:600}
+.btn.primary:hover{background:#FFE633}
+.btn.ghost{background:none}
+.btn.sm{padding:4px 10px;font-size:10.5px}
+.btn.approve{background:rgba(93,217,138,.12);border-color:rgba(93,217,138,.3);color:var(--green)}
+.btn.reject{background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.25);color:var(--red)}
+
+/* Factory cards */
+.factory{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:10px}
+.factory .top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.factory .nm{font-weight:600;font-size:13px}
+.factory .role{font-size:11px;color:var(--muted);line-height:1.5;margin-top:2px}
+.factory .stats{display:flex;gap:14px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.factory .stats b{color:var(--ink);font-weight:600}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);position:relative;flex:none;margin-top:3px}
+.pulse.running::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--green);animation:pw 1.8s ease-out infinite;opacity:0}
+@keyframes pw{0%{transform:scale(.5);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+.pulse.idle{background:var(--dim)}.pulse.attn{background:var(--amber)}
+.pulse.attn.running::after{border-color:var(--amber)}
+.factory .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-soft);padding-top:10px}
+.factory .last{font-size:10px;color:var(--dim)}
+
+/* Candidate cards */
+.cand{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:grid;grid-template-columns:1fr auto;gap:14px;transition:opacity .25s,transform .25s}
+.cand.gone{opacity:0;transform:translateX(16px)}
+.cand .type{font-family:var(--mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.cand .title{font-weight:600;font-size:13.5px}
+.cand .detail{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.55}
+.cand .evidence{margin-top:9px;background:var(--panel-2);border-left:2px solid var(--yellow);border-radius:0 6px 6px 0;padding:8px 11px;font-size:11px;color:var(--muted);line-height:1.55}
+.cand .evidence .src{font-family:var(--mono);font-size:9.5px;color:var(--dim);display:block;margin-top:5px}
+.cand .actions{display:flex;flex-direction:column;gap:7px;justify-content:center}
+.conf{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center}
+
+/* Copilot */
+#copilot{border-left:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+#copilot .head{padding:13px 15px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
+#copilot .head .orb{width:9px;height:9px;border-radius:50%;background:var(--yellow);animation:orb 2.4s ease-in-out infinite}
+@keyframes orb{0%,100%{opacity:1}50%{opacity:.35}}
+#copilot .head .t{font-weight:600;font-size:12.5px}
+#copilot .head .st{font-size:10px;color:var(--muted);font-family:var(--mono)}
+#feed{flex:1;overflow-y:auto;padding:13px 15px;display:flex;flex-direction:column;gap:11px}
+.msg{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:var(--panel-2);font-size:11.5px;line-height:1.55;color:#D4D4CF;animation:fade .25s ease}
+.msg .tag{font-family:var(--mono);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;display:block;margin-bottom:5px}
+.msg.reason .tag{color:var(--blue)}
+.msg.discovery .tag{color:var(--green)}
+.msg.uncertain .tag{color:var(--amber)}
+.msg.decision{border-color:rgba(255,221,0,.35);background:var(--yellow-soft)}
+.msg.decision .tag{color:var(--yellow)}
+.msg .acts{display:flex;gap:6px;margin-top:9px}
+#copilot .ask{border-top:1px solid var(--line);padding:11px 15px;display:flex;gap:8px}
+#copilot .ask input{flex:1;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;color:var(--ink);padding:8px 11px;font-size:11.5px;font-family:inherit;outline:none}
+#copilot .ask input:focus{border-color:rgba(255,221,0,.4)}
+
+/* Timeline */
+#timeline{border-top:1px solid var(--line);background:var(--panel);display:flex;align-items:center;gap:0;padding:0 14px;overflow:hidden}
+#timeline .lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-right:14px;flex:none}
+.tl-item{display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--muted);padding:0 14px;border-left:1px solid var(--line-soft);white-space:nowrap;font-family:var(--mono)}
+.tl-item .d{width:5px;height:5px;border-radius:50%;flex:none}
+.tl-item .t{color:var(--dim)}
+
+/* Automation */
+.autorow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.autorow:last-child{border-bottom:none}
+.autorow .nm{font-weight:500;font-size:12.5px}
+.autorow .hint{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5}
+.toggle{width:34px;height:19px;border-radius:10px;background:var(--raise);border:1px solid var(--line);position:relative;flex:none}
+.toggle::after{content:'';position:absolute;width:13px;height:13px;border-radius:50%;background:var(--muted);top:2px;left:2px;transition:.15s}
+.toggle.on{background:var(--yellow);border-color:var(--yellow)}
+.toggle.on::after{left:17px;background:#0A0A09}
+.slider-row{display:flex;align-items:center;gap:12px}
+input[type=range]{-webkit-appearance:none;width:150px;height:4px;border-radius:2px;background:var(--raise);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--yellow);cursor:pointer}
+.thresh-val{font-family:var(--mono);font-size:12px;color:var(--yellow);width:38px;text-align:right}
+
+/* Graph canvas */
+#graphwrap{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;height:440px}
+#graphcanvas{width:100%;height:100%;display:block}
+.graph-legend{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:6px;background:rgba(10,10,9,.82);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:10.5px;color:var(--muted)}
+.graph-legend .li{display:flex;align-items:center;gap:7px}
+.graph-legend .sw{width:8px;height:8px;border-radius:50%}
+.viewtabs{position:absolute;top:12px;right:12px;display:flex;background:rgba(10,10,9,.82);border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.viewtabs button{background:none;border:none;color:var(--muted);padding:6px 12px;font-size:10.5px}
+.viewtabs button.on{background:var(--yellow-dim);color:var(--yellow);font-weight:600}
+
+/* History */
+.hist{position:relative;padding-left:22px}
+.hist::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.histitem{position:relative;padding:0 0 18px}
+.histitem .d{position:absolute;left:-21px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--panel);border:2px solid var(--dim)}
+.histitem.pub .d{border-color:var(--yellow);background:var(--yellow)}
+.histitem .when{font-family:var(--mono);font-size:10px;color:var(--dim)}
+.histitem .what{font-size:12.5px;margin-top:2px}
+.histitem .who{font-size:11px;color:var(--muted);margin-top:2px}
+
+.reco{display:flex;gap:11px;padding:10px 0;border-bottom:1px solid var(--line-soft);align-items:flex-start}
+.reco:last-child{border:none}
+.reco .n{font-family:var(--mono);color:var(--yellow);font-size:11px;padding-top:1px}
+.reco .b{font-size:12px;line-height:1.5;color:#D4D4CF}
+.reco .b b{color:var(--ink)}
+
+.kbtag{font-family:var(--mono);font-size:10px;color:var(--dim)}
+.mock-note{position:fixed;bottom:44px;right:322px;background:var(--yellow);color:#0A0A09;font-family:var(--mono);font-size:9px;letter-spacing:1px;padding:3px 10px;border-radius:4px 4px 0 0;transform-origin:bottom right;z-index:5;text-transform:uppercase}
+@media (max-width:1180px){#main{grid-template-columns:200px 1fr}#copilot{display:none}.mock-note{right:8px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ======= TOP BAR ======= -->
+  <header id="topbar">
+    <div class="logo"><span class="g">GEARS™</span><span class="sub">Knowledge Factory IDE</span></div>
+    <button class="selector"><span class="lbl">Business</span><span class="val">Adora Health</span><span class="caret">▾</span></button>
+    <button class="selector"><span class="lbl">GEAR</span><span class="val">Research All Stakeholders</span><span class="caret">▾</span></button>
+    <button class="selector"><span class="lbl">Workspace</span><span class="val">Stakeholder Intelligence KB</span><span class="caret">▾</span></button>
+    <div class="spacer"></div>
+    <div class="readiness-chip" title="Knowledge Readiness — does this GEAR know enough to execute its purpose?">
+      <svg class="ring" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="#2A2A28" stroke-width="4"/>
+        <circle id="ringArc" cx="16" cy="16" r="13" fill="none" stroke="#FFDD00" stroke-width="4"
+                stroke-linecap="round" stroke-dasharray="81.68" stroke-dashoffset="21.2"
+                transform="rotate(-90 16 16)"/>
+      </svg>
+      <div><div class="lbl">Knowledge Readiness</div><div class="val" id="readinessVal">74%</div></div>
+    </div>
+    <button class="topbtn">⌘K</button>
+  </header>
+
+  <!-- ======= MAIN ======= -->
+  <div id="main">
+
+    <!-- Left nav -->
+    <nav id="nav">
+      <div class="section">Workspace</div>
+      <button class="navitem active" data-screen="overview">◈ <span>Overview</span></button>
+      <button class="navitem" data-screen="requirements">☰ <span>Knowledge Requirements</span><span class="badge">12</span></button>
+      <button class="navitem" data-screen="sources">⛁ <span>Sources</span><span class="badge">31</span></button>
+      <div class="section">Engineering</div>
+      <button class="navitem" data-screen="factories">⚙ <span>Factories</span><span class="badge">5</span></button>
+      <button class="navitem" data-screen="review">✓ <span>Candidate Review</span><span class="badge" id="queueBadge">14</span></button>
+      <div class="section">Knowledge</div>
+      <button class="navitem" data-screen="published">◆ <span>Published Knowledge</span></button>
+      <button class="navitem" data-screen="graphs">☍ <span>Knowledge Graphs</span></button>
+      <button class="navitem" data-screen="quality">♥ <span>Quality</span></button>
+      <div class="section">Operations</div>
+      <button class="navitem" data-screen="automation">⚡ <span>Automation</span></button>
+      <button class="navitem" data-screen="history">↺ <span>History</span></button>
+      <div class="foot">GEARset · Adora Health v3<br>15 knowledge workspaces<br><span class="mono" style="color:#3F3F3C">build 0.1.0-mock</span></div>
+    </nav>
+
+    <!-- Central workspace -->
+    <main id="workspace">
+
+      <!-- ======= OVERVIEW ======= -->
+      <section class="screen visible" id="s-overview">
+        <div class="screen-head">
+          <div class="eyebrow">Stakeholder Intelligence KB · Research All Stakeholders</div>
+          <h1>Knowledge Overview</h1>
+          <div class="desc">Understand every organisation and individual influencing commercial success. Published stakeholder knowledge is consumed by the Opportunity Development, Sales and Deployment gears.</div>
+        </div>
+        <div class="grid g4" style="margin-bottom:12px">
+          <div class="card stat"><h3>Readiness</h3><div class="big" style="color:var(--yellow)">74%</div><div class="cap">Target 85% for operational sign-off<span class="delta up">▲ 6 this week</span></div></div>
+          <div class="card stat"><h3>Confidence</h3><div class="big">0.81</div><div class="cap">Mean across published objects<span class="delta up">▲ 0.03</span></div></div>
+          <div class="card stat"><h3>Freshness</h3><div class="big">92%</div><div class="cap">Sources refreshed &lt; 30 days<span class="delta warn">2 stale</span></div></div>
+          <div class="card stat"><h3>Review Debt</h3><div class="big" id="debtVal">14</div><div class="cap">Candidates awaiting decision<span class="delta down">▲ 5 today</span></div></div>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Coverage by Domain</h3>
+            <div id="domains"></div>
+          </div>
+          <div class="card">
+            <h3>Recommendations</h3>
+            <div class="reco"><div class="n">01</div><div class="b"><b>Clear the Entity Merge queue.</b> 6 probable duplicates in Clinicians are suppressing coverage and inflating review debt.</div></div>
+            <div class="reco"><div class="n">02</div><div class="b"><b>Payers coverage is the readiness bottleneck (58%).</b> Approve the proposed "NHS ICB Commissioning Contacts" source to unlock Payer Discovery.</div></div>
+            <div class="reco"><div class="n">03</div><div class="b"><b>2 sources are stale.</b> CQC provider register and the conference attendee list have not refreshed in 47 and 61 days.</div></div>
+            <div class="reco"><div class="n">04</div><div class="b"><b>Ontology proposal pending.</b> The factory suggests promoting "Patient Advocacy Group" from tag to first-class entity type — 23 candidates would reclassify.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= REQUIREMENTS ======= -->
+      <section class="screen" id="s-requirements">
+        <div class="screen-head">
+          <div class="eyebrow">What this GEAR must know</div>
+          <h1>Knowledge Requirements</h1>
+          <div class="desc">Business-centric statements of required knowledge. Factories are provisioned against requirements — you never specify graph structure here.</div>
+        </div>
+        <div class="card" style="padding:0">
+          <table id="reqTable"></table>
+        </div>
+        <div class="card" style="margin-top:12px;border-color:rgba(255,221,0,.3)">
+          <h3 style="color:var(--yellow)">AI-Proposed Requirements</h3>
+          <div class="autorow">
+            <div><div class="nm">Track patient advocacy group influence on payer decisions</div><div class="hint">Inferred from 9 evidence fragments linking advocacy campaigns to ICB commissioning outcomes. Would extend the Payers and Patients domains.</div></div>
+            <div style="display:flex;gap:7px"><button class="btn approve sm">Accept</button><button class="btn ghost sm">Dismiss</button></div>
+          </div>
+          <div class="autorow">
+            <div><div class="nm">Map investor board seats to portfolio competitors</div><div class="hint">4 investors in the graph hold board positions at organisations classified as competitors. Conflict-of-interest signal for the Sales gear.</div></div>
+            <div style="display:flex;gap:7px"><button class="btn approve sm">Accept</button><button class="btn ghost sm">Dismiss</button></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= SOURCES ======= -->
+      <section class="screen" id="s-sources">
+        <div class="screen-head">
+          <div class="eyebrow">Knowledge source catalogue</div>
+          <h1>Sources</h1>
+          <div class="desc">Documents, APIs, databases, interviews, websites and existing graphs feeding this workspace, with provenance, freshness, confidence and extraction status.</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <button class="btn primary">+ Add Source</button>
+          <button class="btn">Import from Source Catalogue KB</button>
+          <div style="flex:1"></div>
+          <span class="pill p-grey" style="align-self:center">31 sources · 6 types</span>
+        </div>
+        <div class="card" style="padding:0"><table id="srcTable"></table></div>
+      </section>
+
+      <!-- ======= FACTORIES ======= -->
+      <section class="screen" id="s-factories">
+        <div class="screen-head">
+          <div class="eyebrow">AI-assisted knowledge engineering</div>
+          <h1>Factory Dashboard</h1>
+          <div class="desc">Specialist factories continuously convert sources into candidate knowledge. You supervise; they engineer.</div>
+        </div>
+        <div class="grid g3" id="factoryGrid"></div>
+      </section>
+
+      <!-- ======= CANDIDATE REVIEW ======= -->
+      <section class="screen" id="s-review">
+        <div class="screen-head">
+          <div class="eyebrow">One-click approval workflow</div>
+          <h1>Candidate Review</h1>
+          <div class="desc">Proposed entities, relationships and ontology changes with supporting evidence. Approvals publish to the knowledge graph under the current publishing policy.</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center">
+          <button class="btn primary sm" id="approveHigh">Approve all ≥ 0.90 confidence (5)</button>
+          <button class="btn sm">Filter: All types ▾</button>
+          <div style="flex:1"></div>
+          <span class="kbtag" id="queueCount">14 in queue</span>
+        </div>
+        <div id="candList"></div>
+      </section>
+
+      <!-- ======= PUBLISHED ======= -->
+      <section class="screen" id="s-published">
+        <div class="screen-head">
+          <div class="eyebrow">Consumed by Opportunity Development · Sales · Deployment</div>
+          <h1>Published Knowledge</h1>
+          <div class="desc">Business objects organised by domain — not graph nodes. Everything here has passed review and is live for downstream gears.</div>
+        </div>
+        <div class="grid g4" style="margin-bottom:12px">
+          <div class="card stat"><h3>Organisations</h3><div class="big">412</div><div class="cap">Across 7 domains</div></div>
+          <div class="card stat"><h3>People</h3><div class="big">1,067</div><div class="cap">638 with verified roles</div></div>
+          <div class="card stat"><h3>Relationships</h3><div class="big">3,204</div><div class="cap">18 relationship types</div></div>
+          <div class="card stat"><h3>Consumers</h3><div class="big">3</div><div class="cap">Downstream gears subscribed</div></div>
+        </div>
+        <div class="card" style="padding:0"><table id="pubTable"></table></div>
+      </section>
+
+      <!-- ======= GRAPHS ======= -->
+      <section class="screen" id="s-graphs">
+        <div class="screen-head">
+          <div class="eyebrow">Stakeholder Intelligence KB · influence topology</div>
+          <h1>Knowledge Graphs</h1>
+          <div class="desc">Read-only visualisation of the published graph. Editing happens upstream through requirements, factories and review — never here.</div>
+        </div>
+        <div id="graphwrap">
+          <canvas id="graphcanvas"></canvas>
+          <div class="graph-legend">
+            <div class="li"><span class="sw" style="background:#FFDD00"></span>Hub entity</div>
+            <div class="li"><span class="sw" style="background:#6BB2FF"></span>Organisation</div>
+            <div class="li"><span class="sw" style="background:#5DD98A"></span>Person</div>
+            <div class="li"><span class="sw" style="background:#8F8F89"></span>Influence edge</div>
+          </div>
+          <div class="viewtabs">
+            <button class="on">Graph</button><button>Hierarchy</button><button>Evidence</button>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--dim)">Showing influence neighbourhood of <span class="mono" style="color:var(--muted)">NHS England (hub)</span> · 22 nodes · 26 edges · live extraction pulses indicate factory activity</div>
+      </section>
+
+      <!-- ======= QUALITY ======= -->
+      <section class="screen" id="s-quality">
+        <div class="screen-head">
+          <div class="eyebrow">Operational readiness</div>
+          <h1>Knowledge Health</h1>
+          <div class="desc">The dimensions that decide whether the GEAR can be trusted to execute: coverage, confidence, freshness, contradictions and debt.</div>
+        </div>
+        <div class="grid g3" style="margin-bottom:12px">
+          <div class="card stat"><h3>Coverage</h3><div class="big">76%</div><div class="cap">Weighted across 12 requirements</div><div class="bar" style="margin-top:10px"><i style="width:76%"></i></div></div>
+          <div class="card stat"><h3>Confidence</h3><div class="big">0.81</div><div class="cap">142 objects below 0.6 threshold</div><div class="bar" style="margin-top:10px"><i style="width:81%"></i></div></div>
+          <div class="card stat"><h3>Freshness</h3><div class="big">92%</div><div class="cap">2 stale sources · oldest 61 days</div><div class="bar" style="margin-top:10px"><i style="width:92%"></i></div></div>
+        </div>
+        <div class="grid g2">
+          <div class="card" style="padding:0"><table>
+            <tr><th>Issue</th><th>Count</th><th>Trend</th><th></th></tr>
+            <tr><td>Probable duplicates (Entity Merge queue)</td><td class="mono">6</td><td><span class="delta down">▲ 2</span></td><td><button class="btn sm">Open queue</button></td></tr>
+            <tr><td>Contradictions (conflicting role claims)</td><td class="mono">3</td><td><span class="delta up">▼ 1</span></td><td><button class="btn sm">Resolve</button></td></tr>
+            <tr><td>Missing sources (Payers domain)</td><td class="mono">2</td><td><span class="mono" style="color:var(--dim)">—</span></td><td><button class="btn sm">Propose</button></td></tr>
+            <tr><td>Review debt</td><td class="mono" id="debtVal2">14</td><td><span class="delta down">▲ 5</span></td><td><button class="btn sm">Review</button></td></tr>
+            <tr><td>Orphaned entities (no relationships)</td><td class="mono">11</td><td><span class="delta up">▼ 4</span></td><td><button class="btn sm">Inspect</button></td></tr>
+          </table></div>
+          <div class="card">
+            <h3>Readiness Composition</h3>
+            <div class="domrow"><span class="nm">Coverage</span><div class="bar"><i style="width:76%"></i></div><span class="pc">×0.35</span></div>
+            <div class="domrow"><span class="nm">Confidence</span><div class="bar"><i style="width:81%"></i></div><span class="pc">×0.25</span></div>
+            <div class="domrow"><span class="nm">Freshness</span><div class="bar"><i style="width:92%"></i></div><span class="pc">×0.15</span></div>
+            <div class="domrow"><span class="nm">Contradiction-free</span><div class="bar"><i style="width:88%"></i></div><span class="pc">×0.15</span></div>
+            <div class="domrow"><span class="nm">Debt discipline</span><div class="bar"><i style="width:52%"></i></div><span class="pc">×0.10</span></div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:11px;color:var(--muted)">Composite readiness</span>
+              <span class="mono" style="font-size:20px;color:var(--yellow);font-weight:600">74%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= AUTOMATION ======= -->
+      <section class="screen" id="s-automation">
+        <div class="screen-head">
+          <div class="eyebrow">Factory behaviour · agent instructions · policy</div>
+          <h1>Automation</h1>
+          <div class="desc">Configure how much the factories do without you. Thresholds and policies apply per workspace and are versioned in History.</div>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Approval Thresholds</h3>
+            <div class="autorow"><div><div class="nm">Auto-publish entities</div><div class="hint">Candidates at or above this confidence publish without review.</div></div>
+              <div class="slider-row"><input type="range" min="50" max="100" value="92" oninput="this.nextElementSibling.textContent=(this.value/100).toFixed(2)"><span class="thresh-val">0.92</span></div></div>
+            <div class="autorow"><div><div class="nm">Auto-publish relationships</div><div class="hint">Relationship claims are higher-risk; default is stricter.</div></div>
+              <div class="slider-row"><input type="range" min="50" max="100" value="95" oninput="this.nextElementSibling.textContent=(this.value/100).toFixed(2)"><span class="thresh-val">0.95</span></div></div>
+            <div class="autorow"><div><div class="nm">Ontology changes always require review</div><div class="hint">Schema-level proposals can never auto-publish.</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+            <div class="autorow"><div><div class="nm">Auto-merge exact duplicates</div><div class="hint">Identical identifiers (Companies House no., NHS ODS code) merge silently.</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+          </div>
+          <div class="card">
+            <h3>Schedules & Policies</h3>
+            <div class="autorow"><div><div class="nm">Source monitoring</div><div class="hint">Re-crawl web and API sources for changes.</div></div><span class="pill p-blue">Every 6h</span></div>
+            <div class="autorow"><div><div class="nm">Gap detection sweep</div><div class="hint">Compare coverage against requirements; raise proposals.</div></div><span class="pill p-blue">Daily 02:00</span></div>
+            <div class="autorow"><div><div class="nm">Retry policy</div><div class="hint">Failed extractions retry with exponential backoff.</div></div><span class="pill p-grey">3× · backoff 2ⁿ</span></div>
+            <div class="autorow"><div><div class="nm">Publishing window</div><div class="hint">Batch publications so downstream gears see coherent snapshots.</div></div><span class="pill p-blue">Hourly, atomic</span></div>
+            <div class="autorow"><div><div class="nm">Notify on readiness drop &gt; 3pts</div><div class="hint">Alerts the workspace owner and pauses auto-publish.</div></div><button class="toggle on" onclick="this.classList.toggle('on')"></button></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <h3>Agent Instructions</h3>
+          <div style="background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:13px 15px;font-family:var(--mono);font-size:11.5px;line-height:1.7;color:#C9C9C4">Prioritise NHS and UK-regulated sources over general web content. Treat LinkedIn role claims as confidence ≤ 0.7 unless corroborated. Never infer clinical opinions from patient forum posts — extract organisational affiliation only. When two sources conflict on a person's current role, prefer the fresher source and raise a contradiction.</div>
+          <div style="display:flex;gap:8px;margin-top:10px"><button class="btn sm">Edit instructions</button><button class="btn ghost sm">View version history</button></div>
+        </div>
+      </section>
+
+      <!-- ======= HISTORY ======= -->
+      <section class="screen" id="s-history">
+        <div class="screen-head">
+          <div class="eyebrow">Append-only · every decision attributable</div>
+          <h1>History</h1>
+          <div class="desc">The full audit trail: publications, approvals, policy changes and factory runs. Nothing in this workspace is ever silently overwritten.</div>
+        </div>
+        <div class="card">
+          <div class="hist">
+            <div class="histitem pub"><div class="d"></div><div class="when">Today · 14:32</div><div class="what">Published batch #241 — 12 entities, 31 relationships (hourly window)</div><div class="who">Publishing policy · atomic snapshot</div></div>
+            <div class="histitem"><div class="d"></div><div class="when">Today · 14:07</div><div class="what">Approved: "Dr Priya Sharma — Clinical Director, Manchester ICB" (confidence 0.94)</div><div class="who">Ian · one-click review</div></div>
+            <div class="histitem"><div class="d"></div><div class="when">Today · 13:51</div><div class="what">Relationship Discovery run #1,882 completed — 34 candidates raised from 3 sources</div><div class="who">Factory · scheduled</div></div>
+            <div class="histitem"><div class="d"></div><div class="when">Today · 11:20</div><div class="what">Auto-publish threshold for relationships raised 0.92 → 0.95</div><div class="who">Ian · automation settings v18</div></div>
+            <div class="histitem"><div class="d"></div><div class="when">Yesterday · 17:44</div><div class="what">Contradiction resolved: J. Okafor role claim — kept "Head of Procurement, Leeds THT", retired stale claim</div><div class="who">Ian · evidence view</div></div>
+            <div class="histitem pub"><div class="d"></div><div class="when">Yesterday · 16:00</div><div class="what">Published batch #240 — first Payers-domain objects live; readiness 68% → 71%</div><div class="who">Publishing policy · atomic snapshot</div></div>
+            <div class="histitem"><div class="d"></div><div class="when">Tue · 09:15</div><div class="what">Ontology proposal raised: promote "Patient Advocacy Group" to first-class entity type</div><div class="who">Ontology Evolution factory</div></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ======= COPILOT ======= -->
+    <aside id="copilot">
+      <div class="head"><span class="orb"></span><div><div class="t">Knowledge Engineer</div><div class="st" id="agentState">reasoning · relationship discovery</div></div></div>
+      <div id="feed"></div>
+      <div class="ask"><input placeholder="Ask about this workspace…" id="askInput"><button class="btn primary sm">→</button></div>
+    </aside>
+  </div>
+
+  <!-- ======= TIMELINE ======= -->
+  <footer id="timeline">
+    <span class="lbl">Activity</span>
+    <div id="tlItems" style="display:flex;overflow:hidden"></div>
+  </footer>
+</div>
+<div class="mock-note">Mockup · PRD v0.1</div>
+
+<script>
+/* ================= DATA ================= */
+const domains=[
+ ["Patients",82],["Clinicians",79],["Regulators",88],["Payers",58],
+ ["Competitors",71],["Investors",76],["Partners",64]
+];
+const requirements=[
+ ["KR-01","Identify every NHS payer organisation with women's health commissioning authority","Payers","p-amber","In progress · 58%"],
+ ["KR-02","Map decision-makers and clinical champions per target ICB","Clinicians","p-green","Met · 91%"],
+ ["KR-03","Track regulator guidance affecting digital women's health","Regulators","p-green","Met · 88%"],
+ ["KR-04","Maintain competitor product and funding intelligence","Competitors","p-amber","In progress · 71%"],
+ ["KR-05","Understand patient community structures and advocacy channels","Patients","p-green","Met · 82%"],
+ ["KR-06","Map investor relationships and portfolio conflicts","Investors","p-amber","In progress · 76%"],
+ ["KR-07","Identify integration and channel partner candidates","Partners","p-red","Gap · 64%"],
+ ["KR-08","Link stakeholders to open opportunities in the Opportunity KB","Cross-domain","p-green","Met · 86%"]
+];
+const sources=[
+ ["NHS ODS organisation register","API","Regulators","2h ago",0.97,"p-green","Extracting"],
+ ["ICB board papers (12 trusts)","Documents","Payers","1d ago",0.88,"p-green","Extracted"],
+ ["Companies House filings","API","Competitors, Investors","6h ago",0.95,"p-green","Extracting"],
+ ["Clinical advisory interviews (Ann O'Neill)","Interviews","Clinicians","3d ago",0.92,"p-green","Extracted"],
+ ["CQC provider register","Database","Regulators","47d ago",0.90,"p-amber","Stale"],
+ ["LinkedIn role monitoring","Website","Clinicians, Payers","12h ago",0.68,"p-green","Extracting"],
+ ["FemTech conference attendee list","Documents","Competitors, Partners","61d ago",0.74,"p-red","Stale"],
+ ["Patient community forums (moderated)","Website","Patients","9h ago",0.71,"p-green","Extracted"],
+ ["Existing CRM Intelligence KB","Graph","Cross-domain","Live",0.93,"p-blue","Linked"],
+ ["NIHR funding awards database","API","Clinicians, Regulators","1d ago",0.91,"p-green","Extracted"]
+];
+const factories=[
+ ["Organisation Discovery","Finds and classifies organisations across all seven stakeholder domains.","running",["412 published","23 in queue"],"Run #2,204 · 4 min ago"],
+ ["Person Discovery","Identifies individuals, roles and tenure with corroboration rules.","running",["1,067 published","31 in queue"],"Run #1,977 · 11 min ago"],
+ ["Relationship Discovery","Extracts employment, commissioning, funding and referral relationships.","running",["3,204 published","34 raised this run"],"Run #1,882 · live"],
+ ["Influence Mapping","Scores influence paths between stakeholders and target outcomes.","attn",["208 paths","2 contradictions"],"Blocked on contradiction #77"],
+ ["Entity Merge","Detects and resolves duplicate entities across sources.","idle",["189 merged","6 awaiting review"],"Queue paused · needs decisions"]
+];
+const candidates=[
+ {type:"ENTITY · ORGANISATION",c:"p-blue",title:"Greater Manchester ICB — Women's Health Programme Board",conf:0.94,
+  detail:"New organisational unit within an existing payer. Classified: Payers domain, commissioning authority = true.",
+  ev:"\u201CThe Women's Health Programme Board will hold delegated commissioning responsibility from April…\u201D",src:"ICB board papers · GM-ICB-2026-03.pdf · p.14"},
+ {type:"RELATIONSHIP · EMPLOYMENT",c:"p-green",title:"Dr Priya Sharma → Clinical Director, Manchester ICB",conf:0.94,
+  detail:"Role claim corroborated by two independent sources within 30 days.",
+  ev:"Board paper attendee list (Mar 2026) + NHS ODS role record, both current.",src:"2 sources · corroboration rule R-04"},
+ {type:"ENTITY · PERSON",c:"p-green",title:"James Okafor — Head of Procurement, Leeds Teaching Hospitals",conf:0.91,
+  detail:"Existing person, updated role. Prior role claim will be retired on approval.",ev:"\u201CJames Okafor, who joined the procurement team as Head in January…\u201D",src:"Trust newsletter · Jan 2026"},
+ {type:"RELATIONSHIP · FUNDING",c:"p-green",title:"Octopus Ventures → Series A investor, Juno Women's Health",conf:0.92,
+  detail:"Competitor funding event. Links Investors and Competitors domains.",ev:"Companies House SH01 filing, allotment dated 12 Jun 2026.",src:"Companies House · filing 08812/SH01"},
+ {type:"ONTOLOGY · NEW ENTITY TYPE",c:"p-yellow",title:"Promote \u201CPatient Advocacy Group\u201D to first-class entity type",conf:0.87,
+  detail:"23 existing entities currently tagged would reclassify. Adds influence-path support from advocacy to payer decisions. Requires review by policy.",
+  ev:"9 evidence fragments link advocacy campaigns to ICB commissioning outcomes.",src:"Ontology Evolution factory · proposal ONT-12"},
+ {type:"MERGE · DUPLICATE",c:"p-amber",title:"Merge: \u201CManchester Univ. NHS FT\u201D + \u201CMFT\u201D",conf:0.89,
+  detail:"Same NHS ODS code (R0A) found on both records; names differ across sources.",ev:"Identifier match: ODS R0A. Name similarity 0.64 — below auto-merge bar.",src:"Entity Merge factory · pair #6/6"},
+ {type:"RELATIONSHIP · INFLUENCE",c:"p-grey",title:"Endometriosis UK → influences → GM Women's Health Programme Board",conf:0.78,
+  detail:"Inferred from cited campaign material in board minutes. Medium confidence — single source.",ev:"\u201C…responding to the priorities raised in the Endometriosis UK access report…\u201D",src:"ICB board papers · GM-ICB-2026-03.pdf · p.9"}
+];
+const published=[
+ ["Patients","74 objects","0.79","2h ago","Opportunity Development"],
+ ["Clinicians","318 objects","0.86","31m ago","Sales · Deployment"],
+ ["Regulators","96 objects","0.88","2h ago","Opportunity Development"],
+ ["Payers","141 objects","0.77","1h ago","Sales"],
+ ["Competitors","203 objects","0.80","6h ago","Opportunity Development"],
+ ["Investors","167 objects","0.83","1d ago","Opportunity Development"],
+ ["Partners","68 objects","0.72","1d ago","Deployment"]
+];
+const agentScript=[
+ ["reason","Live Reasoning","Cross-referencing 34 new relationship candidates from run #1,882 against corroboration rule R-04. 11 meet the two-source bar; the rest are held pending the 6h source-monitoring sweep."],
+ ["discovery","Discovery","Greater Manchester ICB has created a Women's Health Programme Board with delegated commissioning authority. This is the strongest Payers-domain signal this month — it directly serves KR-01."],
+ ["uncertain","Uncertainty","Two sources disagree on whether Dr A. Whitfield remains at NICE or has moved to NHS England. Freshness rule prefers the NHS England claim (0.71) but I have not corroborated it. Holding, not publishing."],
+ ["decision","Decision Requested","The Entity Merge queue (6 pairs) is blocking Influence Mapping — duplicate clinicians split influence scores. Reviewing them now would lift Clinicians coverage an estimated 3 points."],
+ ["reason","Live Reasoning","Gap detection sweep queued for 02:00. Based on current Payers coverage (58%), I expect to propose 2 new sources: NHS ICB commissioning contacts, and the NHSE delegation register."],
+ ["discovery","Discovery","Octopus Ventures now appears in both the Investors domain and (via Juno's Series A) the Competitors funding graph. Flagged as a potential conflict-of-interest path for the Sales gear."]
+];
+const timelineItems=[
+ ["#5DD98A","14:32","batch #241 published · 43 objects"],
+ ["#FFDD00","14:07","candidate approved · P. Sharma"],
+ ["#6BB2FF","13:51","relationship discovery · 34 raised"],
+ ["#FFB347","13:12","contradiction #77 raised"],
+ ["#6BB2FF","12:58","source refreshed · Companies House"],
+ ["#5DD98A","12:00","batch #240 consumed by Sales gear"]
+];
+
+/* ================= RENDER ================= */
+const $=s=>document.querySelector(s);
+
+$("#domains").innerHTML=domains.map(([n,p])=>
+ `<div class="domrow"><span class="nm">${n}</span><div class="bar"><i style="width:${p}%;${p<65?'background:var(--amber)':''}"></i></div><span class="pc">${p}%</span></div>`).join("");
+
+$("#reqTable").innerHTML=`<tr><th style="width:64px">ID</th><th>Requirement</th><th>Domain</th><th style="width:150px">Status</th></tr>`+
+ requirements.map(r=>`<tr><td class="mono" style="color:var(--dim)">${r[0]}</td><td>${r[1]}</td><td><span class="kbtag">${r[2]}</span></td><td><span class="pill ${r[3]}"><span class="dot"></span>${r[4]}</span></td></tr>`).join("");
+
+$("#srcTable").innerHTML=`<tr><th>Source</th><th>Type</th><th>Feeds</th><th>Refreshed</th><th>Conf.</th><th>Status</th></tr>`+
+ sources.map(s=>`<tr><td style="font-weight:500">${s[0]}</td><td><span class="kbtag">${s[1]}</span></td><td style="color:var(--muted)">${s[2]}</td><td class="mono" style="color:var(--muted)">${s[3]}</td><td class="mono">${s[4].toFixed(2)}</td><td><span class="pill ${s[5]}"><span class="dot"></span>${s[6]}</span></td></tr>`).join("");
+
+$("#factoryGrid").innerHTML=factories.map(f=>`
+ <div class="factory"><div class="top"><div><div class="nm">${f[0]}</div><div class="role">${f[1]}</div></div><span class="pulse ${f[2]==='idle'?'idle':f[2]==='attn'?'attn running':'running'}"></span></div>
+ <div class="stats">${f[3].map(x=>{const[a,...b]=x.split(" ");return`<span><b>${a}</b> ${b.join(" ")}</span>`}).join("")}</div>
+ <div class="foot"><span class="last">${f[4]}</span><button class="btn ghost sm">Configure</button></div></div>`).join("");
+
+function renderCands(){
+ $("#candList").innerHTML=candidates.map((c,i)=>`
+  <div class="cand" data-i="${i}">
+   <div><div class="type" style="color:${c.c==='p-yellow'?'var(--yellow)':c.c==='p-blue'?'var(--blue)':c.c==='p-green'?'var(--green)':c.c==='p-amber'?'var(--amber)':'var(--muted)'}">${c.type}</div>
+    <div class="title">${c.title}</div><div class="detail">${c.detail}</div>
+    <div class="evidence">${c.ev}<span class="src">${c.src}</span></div></div>
+   <div class="actions"><span class="conf">conf ${c.conf.toFixed(2)}</span>
+    <button class="btn approve sm" onclick="decide(this,1)">✓ Approve</button>
+    <button class="btn reject sm" onclick="decide(this,0)">✗ Reject</button>
+    <button class="btn ghost sm">Evidence →</button></div></div>`).join("");
+}
+renderCands();
+
+$("#pubTable").innerHTML=`<tr><th>Domain</th><th>Objects</th><th>Mean conf.</th><th>Last publish</th><th>Consumed by</th><th></th></tr>`+
+ published.map(p=>`<tr><td style="font-weight:600">${p[0]}</td><td class="mono">${p[1]}</td><td class="mono">${p[2]}</td><td class="mono" style="color:var(--muted)">${p[3]}</td><td style="color:var(--muted)">${p[4]}</td><td><button class="btn ghost sm">Explore</button></td></tr>`).join("");
+
+$("#tlItems").innerHTML=timelineItems.map(t=>`<span class="tl-item"><span class="d" style="background:${t[0]}"></span><span class="t">${t[1]}</span>${t[2]}</span>`).join("");
+
+/* ================= NAV ================= */
+document.querySelectorAll(".navitem").forEach(b=>b.addEventListener("click",()=>{
+ document.querySelectorAll(".navitem").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("visible"));
+ $("#s-"+b.dataset.screen).classList.add("visible");
+ $("#workspace").scrollTop=0;
+}));
+
+/* ================= REVIEW INTERACTIONS ================= */
+let queue=14,readiness=74;
+window.decide=(btn,approved)=>{
+ const card=btn.closest(".cand");card.classList.add("gone");
+ setTimeout(()=>card.remove(),260);
+ queue--;$("#queueBadge").textContent=queue;$("#queueCount").textContent=queue+" in queue";
+ $("#debtVal").textContent=queue;const d2=$("#debtVal2");if(d2)d2.textContent=queue;
+ if(approved&&readiness<85&&Math.random()<0.5){readiness++;setReadiness(readiness);}
+ pushMsg(approved?"reason":"reason", approved?"Live Reasoning":"Live Reasoning",
+  approved?"Approval received — publishing to the graph in the next hourly window and re-scoring affected influence paths.":"Rejection logged with evidence reference — corroboration rule weights for this source will be reduced.");
+};
+$("#approveHigh").addEventListener("click",()=>{
+ document.querySelectorAll(".cand").forEach(c=>{
+  const i=+c.dataset.i;if(candidates[i].conf>=0.90){c.classList.add("gone");setTimeout(()=>c.remove(),260);queue--;}
+ });
+ if(queue<0)queue=0;
+ $("#queueBadge").textContent=queue;$("#queueCount").textContent=queue+" in queue";$("#debtVal").textContent=queue;
+ readiness=Math.min(readiness+2,85);setReadiness(readiness);
+ pushMsg("discovery","Discovery","Batch approval cleared 5 high-confidence candidates. Payers coverage recalculating — projected 58% → 63% at next publish window.");
+});
+function setReadiness(v){
+ $("#readinessVal").textContent=v+"%";
+ $("#ringArc").setAttribute("stroke-dashoffset",(81.68*(1-v/100)).toFixed(1));
+}
+
+/* ================= COPILOT FEED ================= */
+const feed=$("#feed");let agentIdx=0;
+function pushMsg(cls,tag,body,acts){
+ const el=document.createElement("div");el.className="msg "+cls;
+ el.innerHTML=`<span class="tag">${tag}</span>${body}`+(acts?`<div class="acts">${acts}</div>`:"");
+ feed.appendChild(el);feed.scrollTop=feed.scrollHeight;
+ while(feed.children.length>9)feed.removeChild(feed.firstChild);
+}
+function nextAgentMsg(){
+ const m=agentScript[agentIdx%agentScript.length];agentIdx++;
+ pushMsg(m[0],m[1],m[2],m[0]==="decision"?`<button class="btn primary sm" onclick="goReview()">Open review queue</button><button class="btn ghost sm">Later</button>`:null);
+ const states=["reasoning · relationship discovery","corroborating role claims","scoring influence paths","monitoring 31 sources","running gap detection"];
+ $("#agentState").textContent=states[agentIdx%states.length];
+}
+window.goReview=()=>document.querySelector('[data-screen="review"]').click();
+nextAgentMsg();nextAgentMsg();
+setInterval(()=>{if(!document.hidden)nextAgentMsg()},9000);
+
+$("#askInput").addEventListener("keydown",e=>{
+ if(e.key==="Enter"&&e.target.value.trim()){
+  pushMsg("reason","You asked",e.target.value.trim());
+  setTimeout(()=>pushMsg("reason","Live Reasoning","(Mock) In the live IDE this queries the workspace: readiness composition, evidence trails and factory state are all addressable in natural language."),700);
+  e.target.value="";
+ }
+});
+
+/* ================= GRAPH CANVAS (LED beads, capped) ================= */
+(function(){
+ const canvas=$("#graphcanvas");if(!canvas)return;
+ const ctx=canvas.getContext("2d",{alpha:false});
+ const DPR=Math.min(window.devicePixelRatio||1,2);
+ let W=0,H=0,raf=null,visible=false,onGraphScreen=false;
+ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+ // topology: hub + orgs + people
+ const N=22, nodes=[], edges=[];
+ function build(){
+  nodes.length=0;edges.length=0;
+  nodes.push({x:.5,y:.48,r:16,c:"#FFDD00",lbl:"NHS England",hub:true});
+  const orgs=["GM ICB","Leeds THT","NICE","MFT","Endometriosis UK","Octopus V.","Juno WH","CQC"];
+  orgs.forEach((l,i)=>{const a=(i/orgs.length)*Math.PI*2+.4;
+   nodes.push({x:.5+Math.cos(a)*.27,y:.48+Math.sin(a)*.30,r:9,c:"#6BB2FF",lbl:l});});
+  for(let i=0;i<13;i++){const p=nodes[1+(i%orgs.length)];const a=Math.random()*Math.PI*2;
+   nodes.push({x:p.x+Math.cos(a)*.085,y:p.y+Math.sin(a)*.10,r:4.5,c:"#5DD98A"});}
+  for(let i=1;i<=8;i++)edges.push([0,i,true]);           // hub spokes (animated)
+  for(let i=9;i<nodes.length;i++)edges.push([1+((i-9)%8),i,false]);
+  edges.push([1,5,true]);edges.push([6,7,true]);          // cross-influence
+ }
+ build();
+
+ // LED beads: cap ~14 per animated edge, brightness interpolation
+ const BEADS=14;let t=0;
+
+ // offscreen label pre-render
+ let labelCanvas=null;
+ function prerenderLabels(){
+  labelCanvas=document.createElement("canvas");
+  labelCanvas.width=W*DPR;labelCanvas.height=H*DPR;
+  const lc=labelCanvas.getContext("2d");lc.scale(DPR,DPR);
+  lc.font="10px 'JetBrains Mono',monospace";lc.textAlign="center";
+  nodes.forEach(n=>{if(!n.lbl)return;
+   lc.fillStyle=n.hub?"#FFDD00":"#8F8F89";
+   lc.fillText(n.lbl,n.x*W,n.y*H+n.r+13);});
+ }
+ function resize(){
+  const b=canvas.getBoundingClientRect();
+  if(!b.width)return;
+  W=b.width;H=b.height;
+  canvas.width=W*DPR;canvas.height=H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  prerenderLabels();
+  if(reduced)drawFrame();
+ }
+ let rz;window.addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(resize,150)});
+
+ function drawFrame(){
+  ctx.fillStyle="#131312";ctx.fillRect(0,0,W,H);
+  // edges
+  ctx.lineWidth=1;
+  edges.forEach(([a,b])=>{
+   const A=nodes[a],B=nodes[b];
+   ctx.strokeStyle="rgba(143,143,137,.22)";
+   ctx.beginPath();ctx.moveTo(A.x*W,A.y*H);ctx.lineTo(B.x*W,B.y*H);ctx.stroke();
+  });
+  // beads on animated edges — brightness interpolation, no shadowBlur
+  if(!reduced)edges.forEach(([a,b,anim],ei)=>{
+   if(!anim)return;
+   const A=nodes[a],B=nodes[b];
+   for(let k=0;k<BEADS;k++){
+    const ph=((t*.00042)+(k/BEADS)+(ei*.13))%1;
+    const x=A.x*W+(B.x*W-A.x*W)*ph, y=A.y*H+(B.y*H-A.y*H)*ph;
+    const br=Math.max(0,Math.sin(ph*Math.PI));            // fade at ends
+    const head=Math.pow(Math.max(0,Math.sin((ph*4)%1*Math.PI)),3); // pulse head
+    ctx.fillStyle=`rgba(255,221,0,${(0.10+0.55*head)*br})`;
+    ctx.beginPath();ctx.arc(x,y,1.4+head*1.3,0,6.283);ctx.fill();
+   }
+  });
+  // nodes
+  nodes.forEach(n=>{
+   ctx.fillStyle="#131312";
+   ctx.beginPath();ctx.arc(n.x*W,n.y*H,n.r+2.5,0,6.283);ctx.fill();
+   ctx.fillStyle=n.c;
+   ctx.beginPath();ctx.arc(n.x*W,n.y*H,n.r,0,6.283);ctx.fill();
+   if(n.hub){ctx.strokeStyle="rgba(255,221,0,.35)";ctx.lineWidth=1;
+    const pr=n.r+5+3*Math.sin(t*.002);
+    ctx.beginPath();ctx.arc(n.x*W,n.y*H,pr,0,6.283);ctx.stroke();}
+  });
+  if(labelCanvas)ctx.drawImage(labelCanvas,0,0,W,H);
+ }
+ function loop(ts){t=ts;drawFrame();raf=requestAnimationFrame(loop);}
+ function maybeRun(){
+  const should=visible&&onGraphScreen&&!document.hidden&&!reduced;
+  if(should&&!raf){resize();raf=requestAnimationFrame(loop);}
+  if(!should&&raf){cancelAnimationFrame(raf);raf=null;}
+  if(reduced&&visible&&onGraphScreen){resize();}
+ }
+ new IntersectionObserver(e=>{visible=e[0].isIntersecting;maybeRun();}).observe(canvas);
+ document.addEventListener("visibilitychange",maybeRun);
+ document.querySelectorAll(".navitem").forEach(b=>b.addEventListener("click",()=>{
+  onGraphScreen=b.dataset.screen==="graphs";setTimeout(maybeRun,60);
+ }));
+})();
+</script>
+</body>
+</html>

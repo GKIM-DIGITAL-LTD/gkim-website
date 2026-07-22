@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Self-Evolving Enterprise — GEARS White Paper No. 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0A0A09;
+    --bg2: #111110;
+    --bg3: #1A1A18;
+    --bg4: #222220;
+    --yellow: #FFDD00;
+    --yellow-dim: rgba(255,221,0,0.09);
+    --yellow-mid: rgba(255,221,0,0.4);
+    --light: #F2F2F2;
+    --mid: #999990;
+    --dim: #666660;
+    --secondary: #3A3A3A;
+    --border: rgba(255,221,0,0.14);
+    --text: #D0D0C8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    position: fixed; left:0; top:0; bottom:0; width:234px;
+    background: var(--bg2); border-right:1px solid var(--border);
+    z-index:100; display:flex; flex-direction:column; padding:28px 0; overflow-y:auto;
+  }
+  .sidebar-logo { padding:0 20px 22px; border-bottom:1px solid var(--border); margin-bottom:18px; }
+  .wp-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:var(--yellow); text-transform:uppercase; margin-bottom:5px; }
+  .sidebar-logo .wp-title { font-family:'DM Serif Display',serif; font-size:13px; color:var(--light); line-height:1.3; }
+  #sidebar nav a { display:block; padding:6px 20px; font-size:11.5px; color:var(--mid); text-decoration:none; border-left:2px solid transparent; transition:all .2s; line-height:1.4; }
+  #sidebar nav a:hover, #sidebar nav a.active { color:var(--yellow); border-left-color:var(--yellow); background:var(--yellow-dim); }
+  #sidebar nav .nav-section { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:var(--secondary); text-transform:uppercase; padding:13px 20px 4px; }
+
+  /* MAIN */
+  #main { margin-left:234px; }
+  #progress-bar { position:fixed; top:0; left:234px; right:0; height:2px; background:var(--yellow); transform-origin:left; transform:scaleX(0); z-index:200; }
+
+  /* HERO */
+  #hero { position:relative; min-height:100vh; display:flex; align-items:center; padding:80px 72px; overflow:hidden; }
+  #hero-canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.4; }
+  .hero-content { position:relative; z-index:2; max-width:700px; }
+  .wp-number { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; color:var(--yellow); text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:12px; }
+  .wp-number::after { content:''; height:1px; width:48px; background:var(--yellow); }
+  .hero-title { font-family:'DM Serif Display',serif; font-size:clamp(40px,5.5vw,74px); color:var(--light); line-height:1.02; margin-bottom:14px; }
+  .hero-title em { color:var(--yellow); font-style:italic; }
+  .hero-subtitle { font-size:17px; font-weight:300; color:var(--mid); margin-bottom:44px; }
+  .hero-thesis { border-left:3px solid var(--yellow); padding-left:24px; max-width:520px; }
+  .hero-thesis p { font-family:'DM Serif Display',serif; font-size:19px; font-style:italic; color:var(--light); line-height:1.5; }
+
+  /* SECTIONS */
+  .section { padding:84px 72px; border-top:1px solid var(--border); }
+  .section-eyebrow { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--yellow); text-transform:uppercase; margin-bottom:13px; }
+  .section-title { font-family:'DM Serif Display',serif; font-size:clamp(26px,3vw,44px); color:var(--light); line-height:1.12; margin-bottom:30px; max-width:680px; }
+  .section-title em { color:var(--yellow); font-style:italic; }
+  .prose { font-size:15.5px; color:var(--text); max-width:640px; margin-bottom:20px; line-height:1.72; }
+  .prose strong { color:var(--light); font-weight:600; }
+
+  /* CALLOUT */
+  .callout { border:1px solid rgba(255,221,0,.45); background:var(--yellow-dim); padding:24px 28px; margin:32px 0; max-width:640px; }
+  .callout .callout-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.18em; color:var(--yellow); text-transform:uppercase; margin-bottom:7px; }
+  .callout p { font-family:'DM Serif Display',serif; font-size:17px; font-style:italic; color:var(--light); line-height:1.5; }
+
+  /* TWO-COL */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin:32px 0; max-width:840px; }
+  .two-col h3 { font-family:'DM Serif Display',serif; font-size:18px; color:var(--light); margin-bottom:9px; }
+  .two-col p { font-size:13.5px; color:var(--mid); line-height:1.65; }
+
+  /* THREE-COL */
+  .three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); margin:36px 0; max-width:860px; }
+  .col-item { background:var(--bg2); padding:24px; }
+  .col-item .col-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--yellow); text-transform:uppercase; margin-bottom:8px; }
+  .col-item h3 { font-family:'DM Serif Display',serif; font-size:18px; color:var(--light); margin-bottom:8px; }
+  .col-item p { font-size:13px; color:var(--mid); line-height:1.6; }
+
+  /* DIAGRAM CONTAINERS */
+  .diagram { margin:44px 0; position:relative; }
+  .diagram canvas { display:block; width:100%; }
+  .diagram-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--dim); text-transform:uppercase; margin-top:10px; }
+
+  /* PIPELINE STEPS */
+  .pipeline { display:flex; flex-direction:column; gap:2px; margin:40px 0; max-width:720px; }
+  .pipeline-step { display:grid; grid-template-columns:36px 1fr; align-items:stretch; background:var(--bg2); border:1px solid var(--border); transition:all .2s; cursor:pointer; overflow:hidden; }
+  .pipeline-step:hover, .pipeline-step.open { border-color:rgba(255,221,0,.65); background:var(--bg3); }
+  .step-num { background:var(--bg3); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--mid); border-right:1px solid var(--border); padding:18px 0; }
+  .pipeline-step.open .step-num { color:var(--yellow); }
+  .step-body { padding:16px 20px; }
+  .step-name { font-family:'DM Serif Display',serif; font-size:16px; color:var(--light); margin-bottom:2px; }
+  .step-desc { font-size:12px; color:var(--mid); }
+  .step-detail { grid-column:1/-1; background:var(--bg3); border-top:1px solid var(--border); max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .step-detail.open { max-height:200px; }
+  .step-detail-inner { padding:16px 16px 16px 56px; display:grid; grid-template-columns:1fr 1fr; gap:20px; font-size:12.5px; color:var(--mid); }
+  .step-detail h4 { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.14em; color:var(--yellow); text-transform:uppercase; margin-bottom:6px; }
+  .step-detail ul { list-style:none; }
+  .step-detail ul li { margin-bottom:3px; }
+  .step-detail ul li::before { content:'→ '; color:var(--yellow); font-size:10px; }
+
+  /* CONCEPT CARDS */
+  .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:36px 0; max-width:760px; }
+  .concept-card { background:var(--bg2); border:1px solid var(--border); padding:22px; transition:background .2s; }
+  .concept-card:hover { background:var(--bg3); }
+  .concept-card .c-title { font-family:'DM Serif Display',serif; font-size:17px; color:var(--yellow); margin-bottom:7px; }
+  .concept-card .c-body { font-size:13px; color:var(--mid); line-height:1.6; }
+
+  /* QUOTE */
+  .pullquote { border-left:3px solid var(--yellow); padding-left:28px; max-width:580px; margin:36px 0; }
+  .pullquote p { font-family:'DM Serif Display',serif; font-size:20px; font-style:italic; color:var(--light); line-height:1.5; }
+
+  /* CONCLUSION */
+  #conclusion { padding:84px 72px; border-top:1px solid var(--border); background:linear-gradient(180deg,var(--bg) 0%,#0d0d0b 100%); }
+  .conclusion-quote { border-left:3px solid var(--yellow); padding-left:26px; max-width:600px; margin:40px 0; }
+  .conclusion-quote p { font-family:'DM Serif Display',serif; font-size:20px; font-style:italic; color:var(--light); line-height:1.5; margin-bottom:9px; }
+  .conclusion-quote cite { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; color:var(--yellow); font-style:normal; }
+
+  /* FOOTER */
+  footer { border-top:1px solid var(--border); padding:36px 72px; display:flex; justify-content:space-between; align-items:center; margin-top:48px; }
+  footer .f-brand { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--mid); }
+  footer .f-brand span { color:var(--yellow); }
+
+  /* BACK LINK */
+  .series-link { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.12em; color:var(--mid); text-decoration:none; padding:8px 14px; border:1px solid var(--border); transition:all .2s; margin-bottom:40px; }
+  .series-link:hover { color:var(--yellow); border-color:var(--yellow); background:var(--yellow-dim); }
+
+  @media (max-width:900px) {
+    #sidebar { display:none; } #main { margin-left:0; } #progress-bar { left:0; }
+    .section, #conclusion { padding:52px 26px; } #hero { padding:52px 26px; }
+    .two-col, .three-col, .concept-grid { grid-template-columns:1fr; }
+    footer { padding:28px 26px; flex-direction:column; gap:10px; }
+    .pipeline-step { grid-template-columns:32px 1fr; }
+    .step-detail-inner { grid-template-columns:1fr; padding:14px 14px 14px 46px; }
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="wp-label">GEARS · White Paper No. 2</div>
+    <div class="wp-title">The Self-Evolving Enterprise</div>
+  </div>
+  <nav>
+    <div class="nav-section">Foundations</div>
+    <a href="#hero">Overview</a>
+    <a href="#context">From KOS to ACMS</a>
+    <a href="#thesis">The Central Thesis</a>
+    <div class="nav-section">Architecture</div>
+    <a href="#pipeline">The ACMS Pipeline</a>
+    <a href="#investigation">The Investigation Object</a>
+    <a href="#diagnosis">Recursive GEAR Diagnosis</a>
+    <a href="#kas">Knowledge Acquisition Strategy</a>
+    <div class="nav-section">Dynamics</div>
+    <a href="#uncertainty">Uncertainty as First-Class</a>
+    <a href="#negotiation">Agentic Negotiation</a>
+    <a href="#governance">Governance &amp; Simulation</a>
+    <a href="#backlog">The Evolution Backlog</a>
+    <div class="nav-section">Synthesis</div>
+    <a href="#properties">Emergent Properties</a>
+    <a href="#conclusion">Conclusion</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="wp-number">GEARS White Paper No. 2</div>
+    <h1 class="hero-title">The <em>Self-Evolving</em> Enterprise</h1>
+    <p class="hero-subtitle">Designing the Agentic Change Management System</p>
+    <div class="hero-thesis">
+      <p>Every improvement begins with an Architectural Inquiry — not a task. The business continuously redesigns itself through evidence-based, negotiated evolution.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section" id="context">
+  <div class="section-eyebrow">Section 1 · Context</div>
+  <h2 class="section-title">From Knowledge Operating System to <em>Change Engine</em></h2>
+  <p class="prose">White Paper No. 1 established that an AI-native enterprise is one that continuously transforms knowledge into improved business design. It introduced the Business Knowledge Stack (BKS) as the layered architecture from which a Living Digital Twin emerges, and described the Observe → Understand → Negotiate → Redesign → Deploy → Learn cycle as the operational rhythm of the self-evolving enterprise.</p>
+  <p class="prose">This paper addresses the question that WP1 left open: <strong>what, precisely, does the machinery look like that runs that cycle?</strong> How does an observation become a hypothesis? How does a hypothesis become a change proposal? How does a change proposal navigate approval, simulation, and deployment without becoming either a bureaucratic bottleneck or a dangerous source of uncontrolled mutation?</p>
+  <div class="callout">
+    <div class="callout-label">This Paper Introduces</div>
+    <p>The Agentic Change Management System (ACMS) — the control plane that continuously detects improvement opportunities, conducts architectural inquiry, gathers evidence, negotiates change, and evolves the GEARS Blueprint.</p>
+  </div>
+  <p class="prose">The ACMS is not a workflow engine wrapped around a change management process. It is an <strong>architectural inquiry engine</strong>: a system whose primary outputs are structured investigations, evidence profiles, and governed architectural decisions — not completed tasks.</p>
+  <div class="three-col" style="margin-top:40px;">
+    <div class="col-item">
+      <div class="col-label">WP1 Established</div>
+      <h3>The Knowledge System</h3>
+      <p>The Business Knowledge Stack: six layers of structured knowledge from Industry Intelligence to Simulation Models, continuously maintained as the Living Digital Twin.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">WP2 Introduces</div>
+      <h3>The Change Engine</h3>
+      <p>The ACMS: the control plane that reads the knowledge system, detects architectural opportunity, and drives the continuous evolution of the GEARS Blueprint.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Future Papers</div>
+      <h3>Execution &amp; Instrumentation</h3>
+      <p>How deployed GEARs operate, are instrumented, and feed evidence back into the ACMS — closing the loop from architecture to operation and back again.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="section-eyebrow">Section 2 · Core Thesis</div>
+  <h2 class="section-title">Why <em>Inquiry</em>, Not Tasks</h2>
+  <p class="prose">Conventional change management systems are task-oriented. A problem is identified, a solution is proposed, a ticket is opened, a team is assigned, work is done, and the ticket is closed. This model has a structural flaw: it assumes the problem is understood before the work begins.</p>
+  <p class="prose">In a complex adaptive system — which is what any sufficiently large business is — the problem is rarely understood at the moment it is identified. The signal that something is wrong is observed long before its cause is known, its scope is mapped, or its optimal remedy is determined. Acting on early signals without investigation produces expensive, misaimed change.</p>
+  <div class="pullquote">
+    <p>The ACMS treats every improvement signal as the opening of an investigation, not the assignment of a task. The investigation is the primary object. The task — if any — is its eventual conclusion.</p>
+  </div>
+  <p class="prose">This distinction has architectural consequences that propagate through the entire system. It means the ACMS maintains a structured <strong>Evolution Backlog</strong> of open investigations at different stages of maturity, not a task queue. It means agents are investigative entities — gathering evidence, forming hypotheses, challenging assumptions — not execution workers. And it means governance acts on evidence-backed proposals, not on gut-feel requests.</p>
+  <div class="two-col">
+    <div>
+      <h3>Task-Oriented Change</h3>
+      <p>Signal → Problem Statement → Solution → Task → Execution → Done. Fast but shallow. Works for well-understood problems. Systematically fails when the signal is ambiguous, the cause is disputed, or the solution space is large.</p>
+    </div>
+    <div>
+      <h3>Inquiry-Oriented Change</h3>
+      <p>Signal → Investigation → Evidence → Hypotheses → Proposal → Negotiation → Simulation → Governed Decision → Deployment → Learning. Slower but deep. Appropriate for architectural decisions whose cost of reversal is high.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="section" id="pipeline">
+  <div class="section-eyebrow">Section 3 · System Architecture</div>
+  <h2 class="section-title">The ACMS <em>Pipeline</em></h2>
+  <p class="prose">The ACMS operates as a fourteen-stage pipeline from trigger to learning. This is not a linear sequence that each change traverses lock-step — it is a state machine. Investigations move forward when evidence justifies it, pause when uncertainty is high, branch when multiple hypotheses require parallel exploration, and are abandoned when the evidence fails to support the original premise.</p>
+
+  <div class="diagram">
+    <canvas id="pipeline-canvas" height="520"></canvas>
+    <div class="diagram-label">ACMS Pipeline · Fourteen Stages · Click to explore each stage below</div>
+  </div>
+
+  <div class="pipeline" id="pipeline-list">
+
+    <div class="pipeline-step" data-step="0">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-name">Trigger</div>
+        <div class="step-desc">A signal enters the system and is assessed for investigation worthiness</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Trigger Sources</h4>
+            <ul>
+              <li>Operational metric anomaly</li>
+              <li>BKS knowledge update (new external intelligence)</li>
+              <li>Scheduled architectural review</li>
+              <li>Human observation or escalation</li>
+              <li>Simulation result divergence</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Assessment Criteria</h4>
+            <ul>
+              <li>Signal strength vs. noise floor</li>
+              <li>Novelty relative to open investigations</li>
+              <li>Strategic relevance weighting</li>
+              <li>Cost of ignoring vs. cost of investigating</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="1">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-name">Investigation Opened</div>
+        <div class="step-desc">A structured investigation object is instantiated in the Evolution Backlog</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Investigation Object Contains</h4>
+            <ul>
+              <li>Trigger signal with provenance</li>
+              <li>Initial scope hypothesis</li>
+              <li>Assigned investigative agents</li>
+              <li>Open questions register</li>
+            </ul>
+          </div>
+          <div>
+            <h4>State at Opening</h4>
+            <ul>
+              <li>Status: Active Investigation</li>
+              <li>Evidence: pending</li>
+              <li>Hypotheses: none formed</li>
+              <li>Priority: assessed from trigger</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="2">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-name">Issue Framing</div>
+        <div class="step-desc">The investigation defines its Architectural Questions — the precise questions that evidence must answer</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Architectural Questions</h4>
+            <ul>
+              <li>Scoped to specific GEAR(s) or cross-cutting concern</li>
+              <li>Expressed as falsifiable propositions</li>
+              <li>Ordered by epistemic dependency</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Framing Quality Checks</h4>
+            <ul>
+              <li>Is this answerable with available evidence types?</li>
+              <li>Is scope correctly bounded?</li>
+              <li>Does this duplicate an open investigation?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="3">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <div class="step-name">Target GEAR Identification</div>
+        <div class="step-desc">The GEAR or GEARs implicated by the investigation are identified and tagged</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>GEAR Targeting</h4>
+            <ul>
+              <li>Primary GEAR(s) directly implicated</li>
+              <li>Upstream dependency GEARs</li>
+              <li>Downstream affected GEARs</li>
+              <li>Cross-cutting concern scope if applicable</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Why This Matters</h4>
+            <ul>
+              <li>GEAR ownership assigns investigative authority</li>
+              <li>Determines whose evidence is authoritative</li>
+              <li>Shapes the recursive diagnosis path</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="4">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <div class="step-name">Recursive GEAR Diagnosis</div>
+        <div class="step-desc">The investigation descends bidirectionally through the GEAR graph to map causal and consequential scope</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Upward Traversal</h4>
+            <ul>
+              <li>What upstream GEARs are causing this?</li>
+              <li>Where does the causal chain originate?</li>
+              <li>Are root causes architectural or operational?</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Downward Traversal</h4>
+            <ul>
+              <li>What downstream GEARs are affected?</li>
+              <li>What dependent outputs are at risk?</li>
+              <li>What is the blast radius of proposed change?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="5">
+      <div class="step-num">06</div>
+      <div class="step-body">
+        <div class="step-name">Knowledge Acquisition Strategy</div>
+        <div class="step-desc">A plan is formed for what evidence is needed, from which BKS layers, in what sequence, and with what freshness requirements</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Strategy Dimensions</h4>
+            <ul>
+              <li>Evidence types required per Architectural Question</li>
+              <li>BKS layer sources to query</li>
+              <li>Evidence freshness thresholds</li>
+              <li>Parallel vs. sequential acquisition</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Adaptive Properties</h4>
+            <ul>
+              <li>Strategy updates as evidence changes the question</li>
+              <li>New questions trigger KAS revision</li>
+              <li>Cost/confidence trade-offs tracked explicitly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="6">
+      <div class="step-num">07</div>
+      <div class="step-body">
+        <div class="step-name">Evidence Gathering</div>
+        <div class="step-desc">Investigative agents execute the KAS, pulling from the BKS, external sources, and operational telemetry</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Evidence Sources</h4>
+            <ul>
+              <li>BKS Layers 1–6 per relevance</li>
+              <li>Operational telemetry (L4 evidence)</li>
+              <li>External real-time data</li>
+              <li>Domain expert elicitation</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Evidence Metadata</h4>
+            <ul>
+              <li>Provenance and collection timestamp</li>
+              <li>Freshness score vs. threshold</li>
+              <li>Weighting per Knowledge Weighting model</li>
+              <li>Conflicts flagged for resolution</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="7">
+      <div class="step-num">08</div>
+      <div class="step-body">
+        <div class="step-name">Hypothesis Formation</div>
+        <div class="step-desc">Evidence is synthesised into one or more competing hypotheses about cause, scope, and remedy</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Hypothesis Structure</h4>
+            <ul>
+              <li>Causal claim with evidence references</li>
+              <li>Scope boundary assertion</li>
+              <li>Proposed remedy class</li>
+              <li>Confidence level (calibrated)</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Multiple Hypotheses</h4>
+            <ul>
+              <li>Competing hypotheses maintained in parallel</li>
+              <li>Evidence discrimination tracked per hypothesis</li>
+              <li>Eliminated hypotheses recorded with reasoning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="8">
+      <div class="step-num">09</div>
+      <div class="step-body">
+        <div class="step-name">Change Proposal Drafted</div>
+        <div class="step-desc">The leading hypothesis is formalised into a structured Change Proposal for the GEARS Blueprint</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Proposal Contents</h4>
+            <ul>
+              <li>Architectural change specification</li>
+              <li>Evidence profile (Knowledge Weighting model)</li>
+              <li>Grill-Me framework responses</li>
+              <li>Blast radius assessment</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Proposal Metadata</h4>
+            <ul>
+              <li>Originating investigation ID</li>
+              <li>Rejected alternatives with reasons</li>
+              <li>Reversibility classification</li>
+              <li>Simulation requirements</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="9">
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <div class="step-name">Agentic Negotiation</div>
+        <div class="step-desc">The Change Proposal enters the multi-participant negotiation surface — humans, AI agents, simulation, domain experts</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Negotiation Participants</h4>
+            <ul>
+              <li>Human stakeholders with governance authority</li>
+              <li>AI agents with domain and evidence access</li>
+              <li>Simulation engines for quantitative challenge</li>
+              <li>Affected GEAR owners with operational insight</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Negotiation Outputs</h4>
+            <ul>
+              <li>Approved as proposed</li>
+              <li>Approved with modifications</li>
+              <li>Returned to investigation with new questions</li>
+              <li>Rejected with documented reasoning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="10">
+      <div class="step-num">11</div>
+      <div class="step-body">
+        <div class="step-name">Simulation</div>
+        <div class="step-desc">Approved proposals are stress-tested against simulation models before blueprint update</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Simulation Types</h4>
+            <ul>
+              <li>Financial impact modelling</li>
+              <li>Operational load and capacity simulation</li>
+              <li>Monte Carlo uncertainty analysis</li>
+              <li>Dependency cascade stress testing</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Simulation Gate</h4>
+            <ul>
+              <li>Pass: proceed to governance</li>
+              <li>Conditional: proceed with monitoring plan</li>
+              <li>Fail: return to negotiation with findings</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="11">
+      <div class="step-num">12</div>
+      <div class="step-body">
+        <div class="step-name">Governance Decision</div>
+        <div class="step-desc">Final authority reviews simulation results and issues a deployment decision with conditions</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Decision Inputs</h4>
+            <ul>
+              <li>Full investigation record</li>
+              <li>Evidence profile and Grill-Me responses</li>
+              <li>Simulation results and conditional flags</li>
+              <li>Negotiation history and dissenting views</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Decision Types</h4>
+            <ul>
+              <li>Full deployment</li>
+              <li>Staged rollout with monitoring gates</li>
+              <li>Experiment (reversible, time-bounded)</li>
+              <li>Deferred (backlogged with conditions)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="12">
+      <div class="step-num">13</div>
+      <div class="step-body">
+        <div class="step-name">Blueprint Deployment</div>
+        <div class="step-desc">The GEARS Blueprint is updated and changes propagate through the operational architecture</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>Deployment Steps</h4>
+            <ul>
+              <li>Blueprint version incremented</li>
+              <li>Affected GEAR configurations updated</li>
+              <li>Monitoring and alerting thresholds set</li>
+              <li>Rollback plan activated</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Propagation Scope</h4>
+            <ul>
+              <li>Primary GEAR update</li>
+              <li>Upstream/downstream GEAR notifications</li>
+              <li>Documentation and BKS update (L5 Decision Memory)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pipeline-step" data-step="13">
+      <div class="step-num">14</div>
+      <div class="step-body">
+        <div class="step-name">Learning &amp; Memory</div>
+        <div class="step-desc">The investigation is closed, its full record written to Decision Memory, and new triggers may be spawned</div>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-inner">
+          <div>
+            <h4>What Is Recorded</h4>
+            <ul>
+              <li>Complete investigation record</li>
+              <li>All hypotheses with their fates</li>
+              <li>Evidence quality retrospective</li>
+              <li>Negotiation and dissent record</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Feedback Loops</h4>
+            <ul>
+              <li>Deployment outcome triggers monitoring</li>
+              <li>Monitoring anomalies may open new investigations</li>
+              <li>Decision Memory informs future KAS planning</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pipeline-list -->
+</section>
+
+<!-- INVESTIGATION OBJECT -->
+<section class="section" id="investigation">
+  <div class="section-eyebrow">Section 4 · Core Data Structure</div>
+  <h2 class="section-title">The Investigation as <em>Primary Object</em></h2>
+  <p class="prose">The architectural decision to treat the investigation — not the task, not the change request, not the ticket — as the primary object of the system has consequences that ripple through the entire ACMS design. Understanding why the investigation is primary, and what it contains, is essential to understanding how the system behaves.</p>
+
+  <div class="diagram">
+    <canvas id="investigation-canvas" height="340"></canvas>
+    <div class="diagram-label">Investigation Object · Anatomy of a Structured Architectural Inquiry</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="c-title">Trigger Signal</div>
+      <div class="c-body">The originating observation — with full provenance metadata: source, timestamp, signal type, confidence, and the BKS layer from which it emerged. Preserved permanently; never overwritten.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Architectural Questions</div>
+      <div class="c-body">The precise, falsifiable questions the investigation must answer before it can conclude. Ordered by epistemic dependency — some questions cannot be asked until others are answered. The investigation cannot advance until its questions are defined.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Temporary Working Graph</div>
+      <div class="c-body">Each investigation builds its own temporary knowledge sub-graph from the relevant fragments of the BKS, populated as evidence is gathered. This graph is the investigative workspace — it is discarded when the investigation closes, but its conclusions are written to Decision Memory.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Hypothesis Register</div>
+      <div class="c-body">All hypotheses formed during investigation — both surviving and eliminated — with their supporting evidence, confidence scores, and (for eliminated hypotheses) the evidence that ruled them out. Competing hypotheses are maintained simultaneously, not sequentially.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Evidence Ledger</div>
+      <div class="c-body">Every piece of evidence gathered, with provenance, freshness score, weighting applied, and the Architectural Question it was gathered to answer. Immutable append-only log; contradicting evidence is added, not used to overwrite prior entries.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Uncertainty State</div>
+      <div class="c-body">A first-class field, not a footnote. The investigation tracks its current uncertainty level as a structured object: known unknowns listed, confidence levels per hypothesis, evidence gaps identified, and the minimum evidence threshold required to proceed.</div>
+    </div>
+  </div>
+
+  <p class="prose">The investigation object is designed to be <strong>self-planning</strong>. As evidence changes what is known, the Architectural Questions are revised, the Knowledge Acquisition Strategy is updated, and the investigation routes itself to the next appropriate stage without requiring external instruction. Agents assigned to an investigation are given authority to revise the plan as well as execute it.</p>
+</section>
+
+<!-- RECURSIVE DIAGNOSIS -->
+<section class="section" id="diagnosis">
+  <div class="section-eyebrow">Section 5 · Diagnostic Architecture</div>
+  <h2 class="section-title">Recursive GEAR <em>Diagnosis</em></h2>
+  <p class="prose">One of the structural innovations of the ACMS is its treatment of GEAR diagnosis as a recursive, bidirectional graph traversal — not a flat root-cause analysis performed on a single process.</p>
+  <p class="prose">When an investigation identifies a target GEAR, it does not simply analyse that GEAR in isolation. It traverses the GEAR graph in two directions simultaneously: upstream to find causal predecessors, and downstream to map consequential impact. This bidirectional traversal continues recursively until it either reaches the boundary of the GEAR graph, or encounters a GEAR that does not meet the relevance threshold for inclusion in the investigation scope.</p>
+
+  <div class="diagram">
+    <canvas id="diagnosis-canvas" height="400"></canvas>
+    <div class="diagram-label">Recursive GEAR Diagnosis · Bidirectional Graph Traversal from Target GEAR</div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3>Upward Traversal (Causal)</h3>
+      <p>Moving toward the inputs of the target GEAR — asking: what feeds this GEAR? What earlier design decisions produce the conditions that make this problem possible? Where is the true architectural root?</p>
+      <p style="margin-top:10px; font-size:13px; color:var(--mid);">Traversal stops when: the causal chain reaches a GEAR with no further upstream dependency, or when causal evidence strength drops below threshold.</p>
+    </div>
+    <div>
+      <h3>Downward Traversal (Consequential)</h3>
+      <p>Moving toward the outputs of the target GEAR — asking: what does this GEAR produce that other GEARs consume? What downstream processes, decisions, and customer experiences are at risk if this GEAR is changed?</p>
+      <p style="margin-top:10px; font-size:13px; color:var(--mid);">Traversal stops when: impact probability drops below threshold, or when a downstream GEAR acts as a buffer that absorbs upstream variation.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Key Property</div>
+    <p>The diagnosis never assumes the problem is where the symptom appears. The target GEAR is the starting point of an investigation, not the conclusion of one.</p>
+  </div>
+
+  <p class="prose">The recursive diagnosis produces a <strong>Blast Radius Map</strong> — a subgraph of the GEAR topology that defines the minimum scope of architectural consideration. Any change proposal that does not account for every GEAR in the blast radius map is considered architecturally incomplete and is returned to investigation.</p>
+</section>
+
+<!-- KAS -->
+<section class="section" id="kas">
+  <div class="section-eyebrow">Section 6 · Evidence Architecture</div>
+  <h2 class="section-title">The Knowledge Acquisition <em>Strategy</em></h2>
+  <p class="prose">Every investigation generates a Knowledge Acquisition Strategy — a structured plan that specifies what evidence is needed, from which BKS layers it should be drawn, in what order acquisition should proceed, and what freshness standards each piece of evidence must meet.</p>
+  <p class="prose">The KAS is not a static document. It is an adaptive plan that updates as evidence changes the shape of the investigation. Discoveries made early in evidence gathering may eliminate some Architectural Questions entirely, generate new ones, or shift the relative priority of evidence acquisition tracks.</p>
+
+  <div class="diagram">
+    <canvas id="kas-canvas" height="320"></canvas>
+    <div class="diagram-label">Knowledge Acquisition Strategy · Evidence Planning Across BKS Layers</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="c-title">Evidence Freshness</div>
+      <div class="c-body">Evidence has a freshness requirement derived from the rate of change of its subject domain. Regulatory knowledge may be valid for months; operational telemetry may be stale within hours. The KAS specifies freshness thresholds per evidence type and will re-acquire stale evidence before closing a hypothesis.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Parallel Acquisition Tracks</div>
+      <div class="c-body">Where Architectural Questions are epistemically independent — where the answer to one does not change what should be asked of another — the KAS authorises parallel acquisition tracks. This prevents the investigation from becoming a serial bottleneck when multiple independent evidence streams are needed.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Cost-Confidence Trade-off</div>
+      <div class="c-body">Not all evidence is equally expensive to acquire. Primary research, domain expert elicitation, and real-time data collection all carry cost. The KAS explicitly models the marginal confidence gain per unit of acquisition cost, and can recommend stopping evidence gathering when the curve flattens.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Evidence Conflict Resolution</div>
+      <div class="c-body">When evidence from different sources contradicts, the KAS does not pick a winner by default. It escalates the conflict to the investigation record as a flagged uncertainty, initiates resolution acquisition (seeking a tie-breaking source), and propagates the conflict to the relevant hypothesis confidence scores.</div>
+    </div>
+  </div>
+</section>
+
+<!-- UNCERTAINTY -->
+<section class="section" id="uncertainty">
+  <div class="section-eyebrow">Section 7 · Epistemic Architecture</div>
+  <h2 class="section-title">Uncertainty as <em>First-Class</em></h2>
+  <p class="prose">Most change management systems treat uncertainty as a risk to be managed — something to be reduced before a decision can be made. The ACMS takes a different position: uncertainty is a <strong>first-class data type</strong> that must be explicitly represented, tracked, and communicated at every stage of an investigation.</p>
+  <p class="prose">This matters because in complex systems, the pretence of certainty is more dangerous than acknowledged uncertainty. A change proposal that claims 85% confidence when it should claim 40% — because the analyst rounded up, because the evidence was stale, or because the scope was underestimated — produces false confidence in the governance layer that approves it. The ACMS is designed to make this pretence structurally difficult.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>Known Unknowns</h3>
+      <p>Questions the investigation knows it has not yet answered. Explicitly listed in the investigation object, each with a note on whether a KAS track is open to address it, and what the estimated cost of resolution is.</p>
+    </div>
+    <div>
+      <h3>Unknown Unknowns</h3>
+      <p>Gaps in the GEAR diagnosis scope that the investigation has not yet explored. Flagged by traversal bounds — every time the recursive diagnosis stops short of a complete traversal, the stopping point is logged as a known scope limitation.</p>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:0;">
+    <div>
+      <h3>Confidence Floors</h3>
+      <p>Each stage of the pipeline has a minimum confidence threshold that must be met before the investigation can advance. A Change Proposal cannot be drafted while competing hypotheses remain within a defined confidence margin of each other — the investigation must first discriminate.</p>
+    </div>
+    <div>
+      <h3>Uncertainty Propagation</h3>
+      <p>Uncertainty compounds through the pipeline. A proposal built on 70% confident evidence that was itself built on 80% confident diagnosis carries a compound confidence lower than either. The ACMS tracks this compounding explicitly and surfaces it in governance documentation.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Design Principle</div>
+    <p>An investigation that cannot characterise its own uncertainty is not ready to produce a Change Proposal. Uncertainty is not a sign of weakness in an investigation — it is a sign of honesty. The governance layer should distrust proposals that claim no uncertainty more than proposals that quantify it clearly.</p>
+  </div>
+</section>
+
+<!-- NEGOTIATION -->
+<section class="section" id="negotiation">
+  <div class="section-eyebrow">Section 8 · Governance Dynamics</div>
+  <h2 class="section-title">Agentic <em>Negotiation</em></h2>
+  <p class="prose">When a Change Proposal exits investigation and enters negotiation, it crosses from the domain of inquiry into the domain of decision. The negotiation surface is where competing interests, interpretations, and authority levels meet — and where the ACMS must prevent the degeneration of structured evidence-based discussion into either rubber-stamping or impasse.</p>
+
+  <div class="diagram">
+    <canvas id="negotiation-canvas" height="360"></canvas>
+    <div class="diagram-label">Agentic Negotiation Surface · Multi-participant governed decision process</div>
+  </div>
+
+  <p class="prose" style="margin-top:32px;">Each participant in negotiation has a defined role, a defined scope of authority, and a defined contribution type. Participants cannot veto based on preference alone — every objection must be grounded in evidence, scope, or authority, and must be accompanied by a specific, answerable counter-question or a concrete alternative proposal.</p>
+
+  <div class="three-col">
+    <div class="col-item">
+      <div class="col-label">Human Stakeholders</div>
+      <h3>Authority &amp; Context</h3>
+      <p>Provide strategic context, governance authority, and organisational memory that may not be captured in the formal evidence record. Final approval authority rests here.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">AI Investigative Agents</div>
+      <h3>Evidence &amp; Challenge</h3>
+      <p>Present the investigation record, surface evidence conflicts, challenge weak causal claims, and propose alternative hypotheses that were considered and rejected.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Simulation Engines</div>
+      <h3>Quantitative Stress</h3>
+      <p>Run real-time scenario challenges against the proposal during negotiation, surfacing quantitative risks that the qualitative discussion may have underweighted.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE -->
+<section class="section" id="governance">
+  <div class="section-eyebrow">Section 9 · Decision Architecture</div>
+  <h2 class="section-title">Governance &amp; <em>Simulation</em></h2>
+  <p class="prose">Governance in the ACMS is not a final approval step bolted onto the end of a change process. It is an architectural function that runs throughout the pipeline — setting confidence thresholds, defining traversal bounds, approving investigation scope extensions, and ultimately ratifying or rejecting Change Proposals with full accountability.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>Staged Governance</h3>
+      <p>Governance touches the pipeline at four points: investigation scope approval (before significant evidence acquisition begins), hypothesis approval (before a Change Proposal is drafted), simulation gate (after simulation results are available), and final deployment decision. Each gate has defined authority levels and documented criteria.</p>
+    </div>
+    <div>
+      <h3>Reversibility as a Governance Variable</h3>
+      <p>The ACMS classifies every Change Proposal by its reversibility: fully reversible, partially reversible (with defined rollback cost), or effectively irreversible. Reversibility classification directly determines the governance authority level required — irreversible changes require higher authority and more complete evidence profiles than reversible experiments.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">Governance Principle</div>
+    <p>The governance layer does not make the investigation's decision for it. It sets the standards by which the investigation's conclusion will be evaluated — and it is accountable for those standards, not just the decisions made against them.</p>
+  </div>
+
+  <p class="prose">After governance approval, every non-trivial change passes through a simulation gate before blueprint deployment. The simulation gate is not a validation of the change against the current model — it is a stress test. Simulation engines are instructed to find the conditions under which the proposed change <em>fails</em>, not the conditions under which it succeeds. A simulation that only confirms the expected outcome adds little value; one that identifies a failure mode under a specific load pattern or dependency configuration adds substantial value to the governance decision record.</p>
+</section>
+
+<!-- BACKLOG -->
+<section class="section" id="backlog">
+  <div class="section-eyebrow">Section 10 · System Dynamics</div>
+  <h2 class="section-title">The Evolution <em>Backlog</em></h2>
+  <p class="prose">The Evolution Backlog is the ACMS's view of all investigations currently in flight — across all fourteen pipeline stages, at all levels of maturity, covering all parts of the GEAR graph. It is the primary interface between the ACMS and the humans who govern it.</p>
+  <p class="prose">Unlike a conventional task backlog, the Evolution Backlog is not simply a priority-ordered list of work to be done. It is a <strong>portfolio of open hypotheses</strong> — a live map of every question the organisation is currently investigating about its own architecture, together with each question's evidence state, uncertainty level, and distance from a governance decision.</p>
+
+  <div class="diagram">
+    <canvas id="backlog-canvas" height="300"></canvas>
+    <div class="diagram-label">Evolution Backlog · Live Portfolio of Open Investigations by Stage and Priority</div>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="c-title">Investigation Priority</div>
+      <div class="c-body">Priority is not simply urgency. It is a composite of strategic relevance, evidence maturity (how close is the investigation to a conclusion?), cost of delay, and blast radius of the underlying issue. The backlog re-prioritises continuously as these factors change.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Investigation Merging</div>
+      <div class="c-body">When two open investigations converge on the same GEAR, the same causal hypothesis, or a shared evidence requirement, the backlog management function detects the overlap and proposes an investigation merge. This prevents the system from running parallel investigations into the same architectural question at different evidence maturity levels.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Investigation Spawning</div>
+      <div class="c-body">An investigation can spawn child investigations when its recursive diagnosis identifies a GEAR that merits separate investigation at greater depth, or when a hypothesis generates a secondary question that cannot be resolved within the parent investigation's scope. Child investigations are linked in the record.</div>
+    </div>
+    <div class="concept-card">
+      <div class="c-title">Stale Investigation Management</div>
+      <div class="c-body">An investigation that has not progressed in a defined window is flagged as stale. Stale investigations either receive a scheduled reactivation (when their triggering signal is expected to recur), are merged into a related active investigation, or are formally closed as inconclusive — with reasons documented in Decision Memory.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section class="section" id="properties">
+  <div class="section-eyebrow">Section 11 · Synthesis</div>
+  <h2 class="section-title">Emergent <em>Properties</em></h2>
+  <p class="prose">When all fourteen pipeline stages, the investigation object, the recursive diagnosis, the adaptive KAS, the first-class uncertainty model, and the multi-participant negotiation surface operate together as a coherent system, several important properties emerge at the system level — properties that none of the individual components possesses alone.</p>
+
+  <div class="three-col">
+    <div class="col-item">
+      <div class="col-label">Property 1</div>
+      <h3>Architectural Self-Awareness</h3>
+      <p>The ACMS builds and continuously updates a structured understanding of the GEAR graph's own weaknesses, its evidence gaps, and the questions its investigations have not yet been able to answer. The organisation learns where it doesn't know what it doesn't know.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Property 2</div>
+      <h3>Governed Autonomy</h3>
+      <p>Investigative agents operate autonomously within the bounds of their KAS — gathering evidence, forming hypotheses, updating plans — without requiring human instruction at each step. But every consequential decision is governed. Autonomy is scoped to investigation; authority over deployment remains human.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Property 3</div>
+      <h3>Institutional Memory Compounding</h3>
+      <p>Every investigation that closes writes to Decision Memory — not just the outcome, but the full record of what was asked, what was found, what was rejected, and why. Over time, this record becomes a compounding asset: future investigations run faster, with fewer blind alleys, because the organisation remembers having been there before.</p>
+    </div>
+  </div>
+  <div class="three-col" style="margin-top:2px;">
+    <div class="col-item">
+      <div class="col-label">Property 4</div>
+      <h3>Evidence-Based Culture</h3>
+      <p>The structural requirement that every Change Proposal arrive with a full evidence profile, Grill-Me responses, and a blast radius assessment creates cultural pressure toward evidence-based reasoning. Proposals without evidence are not refused — they are returned to investigation until they have it.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Property 5</div>
+      <h3>Continuous Improvement Velocity</h3>
+      <p>As the Decision Memory fills and the investigation process matures, the ACMS becomes more efficient. Hypotheses that match prior investigations are identified earlier. Evidence that was expensive to acquire once is available immediately for future investigations. The cost per improvement declines as the system matures.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Property 6</div>
+      <h3>Blast Radius Discipline</h3>
+      <p>The mandatory recursive diagnosis and blast radius assessment mean that narrow proposals — those that fix a symptom without understanding its cause or its downstream effects — cannot survive the investigation process. The system structurally prevents tunnel-vision change.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="section-eyebrow" style="padding:0 72px 28px;">Conclusion</div>
+  <div style="padding:0 72px; max-width:1040px;">
+    <h2 class="section-title">An Inquiry Engine, Not a <em>Workflow Engine</em></h2>
+    <p class="prose">The Agentic Change Management System described in this paper is a fundamentally different kind of enterprise software from the change management, ITSM, and workflow platforms it superficially resembles. Those systems ask: <em>what work needs to be done, and by whom?</em> The ACMS asks: <em>what do we not yet understand about our own architecture, and what would it take to know?</em></p>
+    <p class="prose">This shift in the primary question — from task completion to architectural inquiry — is not cosmetic. It produces a system with different failure modes, different incentives, and different long-term properties. A task management system fails by losing track of work. An inquiry engine fails by losing track of questions.</p>
+    <div class="conclusion-quote">
+      <p>The ACMS is not merely a workflow engine that automates change management. It is an architectural inquiry engine that serves the GEARS Blueprint — one whose primary output is not completed tasks, but structured understanding.</p>
+    </div>
+    <p class="prose">The organisation that deploys the ACMS is not simply automating its change process. It is building institutional capacity to continuously ask better questions about its own architecture — and to govern the answers rigorously enough that the improvements they produce are trusted, durable, and compounding.</p>
+    <div class="conclusion-quote">
+      <p>The business that never stops questioning its own design never becomes obsolete. The ACMS is the mechanism through which that questioning is made rigorous, governed, and continuous.</p>
+      <cite>— GEARS White Paper No. 2</cite>
+    </div>
+    <div class="callout" style="margin-top:40px;">
+      <div class="callout-label">Series Continuity</div>
+      <p>White Paper No. 3 will address GEAR execution and instrumentation — how deployed GEARs operate, how they are observed at runtime, and how operational telemetry feeds back into the ACMS as evidence to drive future investigations.</p>
+    </div>
+  </div>
+  <footer>
+    <div class="f-brand">GEARS · <span>GKIM Digital</span> · White Paper Series</div>
+    <div class="f-brand" style="font-size:10px; letter-spacing:.08em;">Knowledge Engineering &amp; AI Transformation</div>
+  </footer>
+</section>
+
+</main>
+
+<script>
+// SCROLL + PROGRESS
+const progressBar = document.getElementById('progress-bar');
+const navLinks = document.querySelectorAll('#sidebar nav a');
+const sections = document.querySelectorAll('[id]');
+window.addEventListener('scroll', () => {
+  const st = window.scrollY, dh = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.transform = `scaleX(${st/dh})`;
+  let cur = '';
+  sections.forEach(s => { if(st >= s.offsetTop - 130) cur = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+}, {passive:true});
+
+// PIPELINE ACCORDION
+document.querySelectorAll('.pipeline-step[data-step]').forEach(step => {
+  step.addEventListener('click', () => {
+    const detail = step.querySelector('.step-detail');
+    const isOpen = detail.classList.contains('open');
+    document.querySelectorAll('.step-detail.open').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.pipeline-step.open').forEach(s => s.classList.remove('open'));
+    if(!isOpen){ detail.classList.add('open'); step.classList.add('open'); }
+  });
+});
+
+// HERO CANVAS — complex network topology
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes, t=0;
+  function resize(){
+    W=canvas.width=canvas.offsetWidth; H=canvas.height=canvas.offsetHeight;
+    // Create a layered DAG-like structure for ACMS pipeline feel
+    nodes=[];
+    const cols=8, rows=5;
+    for(let c=0;c<cols;c++) for(let r=0;r<rows;r++){
+      if(Math.random()<.6) nodes.push({
+        x: (c/(cols-1))*W*.9+W*.05 + (Math.random()-.5)*W*.06,
+        y: (r/(rows-1))*H*.85+H*.08 + (Math.random()-.5)*H*.06,
+        vx:(Math.random()-.5)*.18, vy:(Math.random()-.5)*.18,
+        col:c, row:r, r:Math.random()*3+1.5
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t+=.007;
+    nodes.forEach(n=>{ n.x+=n.vx; n.y+=n.vy; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1; });
+    // Draw edges — prefer left-to-right (pipeline direction)
+    for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++){
+      const a=nodes[i], b=nodes[j];
+      const dx=b.x-a.x, dy=b.y-a.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<W*.18 && dx>0){
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle='rgba(255,221,0,0.07)'; ctx.lineWidth=1; ctx.stroke();
+        // bead
+        const bt=((t*1.5+i*.3)%1);
+        ctx.beginPath(); ctx.arc(a.x+dx*bt, a.y+dy*bt, 2,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,221,0,.7)'; ctx.fill();
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,221,0,.18)'; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize); resize(); draw();
+})();
+
+// PIPELINE CANVAS — the 14-stage flow
+(function(){
+  const canvas = document.getElementById('pipeline-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+  const stages=[
+    'Trigger','Investigation\nOpened','Issue\nFraming','Target GEAR\nID','Recursive\nDiagnosis',
+    'Knowledge\nAcquisition\nStrategy','Evidence\nGathering','Hypothesis\nFormation',
+    'Change\nProposal','Agentic\nNegotiation','Simulation','Governance\nDecision',
+    'Blueprint\nDeployment','Learning &\nMemory'
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.008;
+    const bead_pos = (t*stages.length*1.2) % (stages.length);
+    const active_idx = Math.floor(bead_pos);
+
+    const cols=7, rows=2;
+    const padX=48, padY=40;
+    const cellW=(W-padX*2)/cols, cellH=(H-padY*2)/rows;
+    const nodeW=cellW*.78, nodeH=cellH*.62;
+
+    // Calculate node positions
+    const positions=stages.map((_,i)=>{
+      const col=i%cols, row=Math.floor(i/cols);
+      const cx=padX+col*cellW+cellW/2;
+      const cy=padY+row*cellH+cellH/2;
+      return {cx,cy};
+    });
+
+    // Draw connecting lines
+    for(let i=0;i<stages.length-1;i++){
+      const {cx:ax,cy:ay}=positions[i], {cx:bx,cy:by}=positions[i+1];
+      ctx.strokeStyle='rgba(255,221,0,.18)'; ctx.lineWidth=1;
+      ctx.beginPath();
+      // Turn at end of row
+      if(Math.floor(i/cols) !== Math.floor((i+1)/cols)){
+        // Down turn
+        ctx.moveTo(ax,ay); ctx.lineTo(ax,ay+cellH*.35);
+        ctx.lineTo(bx,ay+cellH*.35); ctx.lineTo(bx,by);
+      } else {
+        ctx.moveTo(ax+nodeW/2,ay); ctx.lineTo(bx-nodeW/2,by);
+      }
+      ctx.stroke();
+
+      // Animated bead on this edge
+      if(i===active_idx){
+        const frac=bead_pos-active_idx;
+        let bx2,by2;
+        if(Math.floor(i/cols)!==Math.floor((i+1)/cols)){
+          const path=[{x:ax,y:ay},{x:ax,y:ay+cellH*.35},{x:bx,y:ay+cellH*.35},{x:bx,y:by}];
+          const total=3; const seg=Math.floor(frac*total); const sf=frac*total-seg;
+          const s=path[seg],e=path[seg+1];
+          bx2=s.x+(e.x-s.x)*sf; by2=s.y+(e.y-s.y)*sf;
+        } else {
+          bx2=ax+nodeW/2+(bx-nodeW/2-(ax+nodeW/2))*frac; by2=ay+(by-ay)*frac;
+        }
+        ctx.beginPath(); ctx.arc(bx2,by2,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,221,0,.95)'; ctx.fill();
+      }
+    }
+
+    // Draw nodes
+    stages.forEach((stage,i)=>{
+      const {cx,cy}=positions[i];
+      const isActive=i===active_idx;
+      const x=cx-nodeW/2, y=cy-nodeH/2;
+
+      ctx.fillStyle=isActive?'rgba(255,221,0,.2)':'rgba(26,26,24,.9)';
+      ctx.strokeStyle=isActive?'#FFDD00':'rgba(255,221,0,.25)';
+      ctx.lineWidth=isActive?1.5:1;
+      ctx.beginPath(); ctx.rect(x,y,nodeW,nodeH); ctx.fill(); ctx.stroke();
+
+      // Stage number
+      ctx.font='8px "JetBrains Mono",monospace';
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(153,153,144,.6)';
+      ctx.textAlign='center';
+      ctx.fillText(String(i+1).padStart(2,'0'), cx, y+11);
+
+      // Label (multi-line)
+      const lines=stage.split('\n');
+      const lh=11;
+      const totalH=lines.length*lh;
+      const startY=cy-totalH/2+lh/2+(i<7?2:0);
+      ctx.font=`${isActive?'500':'400'} 10.5px Inter,sans-serif`;
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(200,200,192,.8)';
+      lines.forEach((line,li)=>ctx.fillText(line, cx, startY+li*lh+4));
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// INVESTIGATION OBJECT CANVAS
+(function(){
+  const canvas = document.getElementById('investigation-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+
+  const components=[
+    {label:'Trigger Signal', sub:'provenance, timestamp, source', angle:0},
+    {label:'Architectural Questions', sub:'falsifiable, ordered', angle:Math.PI*2/6},
+    {label:'Temporary\nWorking Graph', sub:'BKS subgraph per investigation', angle:Math.PI*4/6},
+    {label:'Evidence Ledger', sub:'immutable, append-only', angle:Math.PI*6/6},
+    {label:'Hypothesis Register', sub:'competing, calibrated', angle:Math.PI*8/6},
+    {label:'Uncertainty State', sub:'known unknowns, confidence floors', angle:Math.PI*10/6},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*.36;
+
+    // Central object
+    ctx.fillStyle='rgba(255,221,0,.12)'; ctx.strokeStyle='rgba(255,221,0,.7)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.arc(cx,cy,52,0,Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.font='bold 11px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='#FFDD00';
+    ctx.fillText('INVESTIGATION', cx, cy-8);
+    ctx.fillText('OBJECT', cx, cy+8);
+
+    components.forEach((c,i)=>{
+      const a=c.angle + Math.sin(t*0.4+i)*0.03;
+      const nx=cx+Math.cos(a)*R, ny=cy+Math.sin(a)*R;
+
+      // Line from centre
+      ctx.strokeStyle='rgba(255,221,0,.2)'; ctx.lineWidth=1;
+      ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(cx+Math.cos(a)*52, cy+Math.sin(a)*52); ctx.lineTo(nx, ny); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Node
+      const bw=W*.18, bh=46;
+      const bx=nx-bw/2, by=ny-bh/2;
+      ctx.fillStyle='rgba(26,26,24,.92)'; ctx.strokeStyle='rgba(255,221,0,.45)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.rect(bx,by,bw,bh); ctx.fill(); ctx.stroke();
+
+      ctx.font='500 11px Inter,sans-serif'; ctx.textAlign='center'; ctx.fillStyle='rgba(242,242,242,.9)';
+      const lines=c.label.split('\n');
+      lines.forEach((l,li)=>ctx.fillText(l, nx, by+14+li*13));
+      ctx.font='9.5px Inter,sans-serif'; ctx.fillStyle='rgba(153,153,144,.7)';
+      ctx.fillText(c.sub, nx, by+bh-8);
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// RECURSIVE DIAGNOSIS CANVAS
+(function(){
+  const canvas = document.getElementById('diagnosis-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.007;
+
+    const cx=W/2, cy=H/2;
+    const gearW=96, gearH=36;
+
+    // GEAR nodes: upstream (left), target (centre), downstream (right)
+    // Format: {label, x, y, type}
+    const gears=[
+      // Upstream causes
+      {label:'GEAR A\nIndustry Intel', x:cx-W*.34, y:cy-80, type:'upstream'},
+      {label:'GEAR B\nEnterprise KG', x:cx-W*.34, y:cy+80, type:'upstream'},
+      {label:'GEAR C\nData Pipeline', x:cx-W*.18, y:cy, type:'upstream'},
+      // Target
+      {label:'TARGET GEAR\nCustomer Onboarding', x:cx, y:cy, type:'target'},
+      // Downstream
+      {label:'GEAR D\nRevenue Calc', x:cx+W*.18, y:cy-60, type:'downstream'},
+      {label:'GEAR E\nReporting', x:cx+W*.18, y:cy+60, type:'downstream'},
+      {label:'GEAR F\nCustomer Success', x:cx+W*.34, y:cy, type:'downstream'},
+    ];
+
+    const edges=[
+      [0,2],[1,2],[2,3],[3,4],[3,5],[4,6],[5,6]
+    ];
+
+    // Draw edges with traversal animation
+    edges.forEach(([a,b],i)=>{
+      const ga=gears[a], gb=gears[b];
+      const isUpstream=ga.type==='upstream'||gb.type==='upstream'||ga.type==='upstream';
+      ctx.strokeStyle=isUpstream?'rgba(255,221,0,.2)':'rgba(255,100,100,.15)';
+      ctx.lineWidth=1; ctx.setLineDash([]); 
+      ctx.beginPath(); ctx.moveTo(ga.x,ga.y); ctx.lineTo(gb.x,gb.y); ctx.stroke();
+
+      // Bead
+      const bfrac=((t*1.5+i*.4)%1);
+      const bx=ga.x+(gb.x-ga.x)*bfrac, by=ga.y+(gb.y-ga.y)*bfrac;
+      ctx.beginPath(); ctx.arc(bx,by,3,0,Math.PI*2);
+      ctx.fillStyle=isUpstream?'rgba(255,221,0,.8)':'rgba(255,140,80,.8)'; ctx.fill();
+    });
+
+    // Blast radius arc
+    const br=W*.28;
+    ctx.beginPath(); ctx.arc(cx,cy,br,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,221,0,.08)'; ctx.lineWidth=1; ctx.setLineDash([6,6]); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.font='9px "JetBrains Mono",monospace'; ctx.textAlign='left'; ctx.fillStyle='rgba(255,221,0,.35)';
+    ctx.fillText('BLAST RADIUS', cx+br*.68, cy-br*.72);
+
+    // Labels
+    ctx.font='9px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='rgba(255,221,0,.5)';
+    ctx.fillText('← CAUSAL (upstream)', cx-W*.2, H-16);
+    ctx.fillStyle='rgba(255,140,80,.5)';
+    ctx.fillText('CONSEQUENTIAL (downstream) →', cx+W*.18, H-16);
+
+    // Draw GEAR boxes
+    gears.forEach(g=>{
+      const x=g.x-gearW/2, y=g.y-gearH/2;
+      const isTarget=g.type==='target';
+      ctx.fillStyle=isTarget?'rgba(255,221,0,.22)':'rgba(26,26,24,.92)';
+      ctx.strokeStyle=isTarget?'#FFDD00':g.type==='upstream'?'rgba(255,221,0,.4)':'rgba(255,140,80,.4)';
+      ctx.lineWidth=isTarget?1.5:1;
+      ctx.beginPath(); ctx.rect(x,y,gearW,gearH); ctx.fill(); ctx.stroke();
+      ctx.font=`${isTarget?'500':'400'} 9px Inter,sans-serif`;
+      ctx.textAlign='center'; ctx.fillStyle=isTarget?'#FFDD00':'rgba(200,200,192,.85)';
+      const lines=g.label.split('\n');
+      lines.forEach((l,li)=>ctx.fillText(l, g.x, y+12+li*13));
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// KAS CANVAS — evidence planning across BKS layers
+(function(){
+  const canvas = document.getElementById('kas-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+
+  const layers=[
+    {label:'L1 Industry Intelligence', freshness:'months', load:.4},
+    {label:'L2 Enterprise Knowledge', freshness:'weeks', load:.7},
+    {label:'L3 Business Architecture', freshness:'days', load:.9},
+    {label:'L4 Operational Evidence', freshness:'hours', load:.95},
+    {label:'L5 Decision Memory', freshness:'permanent', load:.3},
+    {label:'L6 Simulation Models', freshness:'on-demand', load:.6},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.009;
+    const padX=220, padY=30, barH=(H-padY*2-5*(layers.length-1))/layers.length;
+
+    layers.forEach((layer,i)=>{
+      const y=padY+i*(barH+5);
+
+      // Label
+      ctx.font='11.5px Inter,sans-serif'; ctx.textAlign='right'; ctx.fillStyle='rgba(153,153,144,.85)';
+      ctx.fillText(layer.label, padX-12, y+barH/2+4);
+
+      // Freshness tag
+      ctx.font='9px "JetBrains Mono",monospace'; ctx.fillStyle='rgba(255,221,0,.5)';
+      ctx.fillText(layer.freshness, padX-12, y+barH/2+16);
+
+      // Bar background
+      const bw=W-padX-40;
+      ctx.fillStyle='rgba(26,26,24,.9)'; ctx.strokeStyle='rgba(255,221,0,.15)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.rect(padX,y,bw,barH); ctx.fill(); ctx.stroke();
+
+      // Animated fill
+      const animLoad=layer.load*(.85+Math.sin(t+i*.7)*.1);
+      ctx.fillStyle=`rgba(255,221,0,${.12+animLoad*.18})`;
+      ctx.beginPath(); ctx.rect(padX,y,bw*animLoad,barH); ctx.fill();
+
+      // Beads travelling across bar
+      const nBeads=3;
+      for(let b=0;b<nBeads;b++){
+        const bt=((t*1.2+i*.5+b/nBeads)%1)*animLoad;
+        const bx=padX+bw*bt;
+        ctx.beginPath(); ctx.arc(bx, y+barH/2, 3,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,221,0,.8)'; ctx.fill();
+      }
+
+      // Load label
+      ctx.font='9px "JetBrains Mono",monospace'; ctx.textAlign='left'; ctx.fillStyle='rgba(255,221,0,.7)';
+      ctx.fillText(Math.round(layer.load*100)+'% relevance', padX+bw*animLoad+6, y+barH/2+4);
+    });
+
+    // Title
+    ctx.font='9px "JetBrains Mono",monospace'; ctx.textAlign='left'; ctx.fillStyle='rgba(255,221,0,.45)';
+    ctx.fillText('EVIDENCE ACQUISITION PRIORITY BY BKS LAYER', padX, padY-12);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// NEGOTIATION CANVAS — multi-participant surface
+(function(){
+  const canvas = document.getElementById('negotiation-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+
+  const participants=[
+    {label:'Human\nStakeholders', sub:'Authority', angle:-Math.PI/2, col:'rgba(255,221,0,1)'},
+    {label:'GEAR\nOwners', sub:'Operational insight', angle:-Math.PI/2+Math.PI*.4, col:'rgba(255,221,0,.8)'},
+    {label:'Domain\nExperts', sub:'Evidence authority', angle:-Math.PI/2+Math.PI*.8, col:'rgba(255,221,0,.7)'},
+    {label:'AI Investigative\nAgents', sub:'Evidence & challenge', angle:-Math.PI/2+Math.PI*1.2, col:'rgba(255,221,0,.75)'},
+    {label:'Simulation\nEngines', sub:'Quantitative stress', angle:-Math.PI/2+Math.PI*1.6, col:'rgba(255,221,0,.65)'},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*.35;
+
+    participants.forEach((p,i)=>{
+      const a=p.angle+Math.sin(t*.3+i)*.02;
+      const nx=cx+Math.cos(a)*R, ny=cy+Math.sin(a)*R;
+
+      // Connecting line — animated
+      const pulse=((t*2+i*.7)%1);
+      const lx=cx+(nx-cx)*pulse, ly=cy+(ny-cy)*pulse;
+      ctx.strokeStyle='rgba(255,221,0,.15)'; ctx.lineWidth=1; ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny); ctx.stroke();
+      ctx.beginPath(); ctx.arc(lx,ly,3,0,Math.PI*2); ctx.fillStyle='rgba(255,221,0,.8)'; ctx.fill();
+
+      // Node box
+      const bw=110, bh=48;
+      const bx=nx-bw/2, by=ny-bh/2;
+      ctx.fillStyle='rgba(17,17,16,.95)'; ctx.strokeStyle=p.col.replace('1)',',.55)');
+      ctx.lineWidth=1;
+      ctx.beginPath(); ctx.rect(bx,by,bw,bh); ctx.fill(); ctx.stroke();
+      ctx.font='500 10.5px Inter,sans-serif'; ctx.textAlign='center'; ctx.fillStyle='rgba(242,242,242,.9)';
+      const lines=p.label.split('\n');
+      lines.forEach((l,li)=>ctx.fillText(l, nx, by+14+li*13));
+      ctx.font='9px Inter,sans-serif'; ctx.fillStyle='rgba(153,153,144,.65)';
+      ctx.fillText(p.sub, nx, by+bh-7);
+    });
+
+    // Centre: Change Proposal
+    const cr=36;
+    ctx.beginPath(); ctx.arc(cx,cy,cr,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.15)'; ctx.strokeStyle='#FFDD00'; ctx.lineWidth=1.5;
+    ctx.fill(); ctx.stroke();
+
+    // Pulsing outer ring
+    const pr=cr+8+Math.sin(t*2)*4;
+    ctx.beginPath(); ctx.arc(cx,cy,pr,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(255,221,0,${.15+Math.sin(t*2)*.1})`; ctx.lineWidth=1; ctx.stroke();
+
+    ctx.font='bold 8px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='#FFDD00';
+    ctx.fillText('CHANGE', cx, cy-6); ctx.fillText('PROPOSAL', cx, cy+8);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// EVOLUTION BACKLOG CANVAS
+(function(){
+  const canvas = document.getElementById('backlog-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+
+  const stages=[
+    'Trigger','Investigation','Issue Frame','Diagnosis','KAS',
+    'Evidence','Hypothesis','Proposal','Negotiation','Simulation','Governance','Deploy','Learning'
+  ];
+
+  // Fake investigations distributed across stages
+  const investigations=[
+    {stage:1, label:'Onboarding dropout rate', priority:'high', age:3},
+    {stage:3, label:'Pricing GEAR latency', priority:'medium', age:7},
+    {stage:5, label:'Regulatory compliance gap', priority:'high', age:12},
+    {stage:6, label:'Partner data freshness', priority:'low', age:2},
+    {stage:8, label:'Revenue recognition delay', priority:'high', age:18},
+    {stage:9, label:'ML model drift', priority:'medium', age:5},
+    {stage:11, label:'Dashboard aggregation bug', priority:'low', age:21},
+    {stage:12, label:'Auth refactor rollout', priority:'high', age:30},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+    const padX=20, padY=36, colW=(W-padX*2)/stages.length;
+
+    // Column headers
+    stages.forEach((s,i)=>{
+      const cx=padX+i*colW+colW/2;
+      ctx.font='8.5px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='rgba(153,153,144,.6)';
+      ctx.fillText(s, cx, padY-10);
+      ctx.strokeStyle='rgba(255,221,0,.08)'; ctx.lineWidth=1; ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.moveTo(cx,padY); ctx.lineTo(cx,H-16); ctx.stroke(); ctx.setLineDash([]);
+    });
+
+    // Investigation cards
+    investigations.forEach((inv,i)=>{
+      const cx=padX+inv.stage*colW+colW/2;
+      const cy=padY+40+i*(H-padY-60)/investigations.length;
+      const cardW=colW*.84, cardH=24;
+      const prioCol=inv.priority==='high'?'rgba(255,100,80,.7)':inv.priority==='medium'?'rgba(255,200,60,.7)':'rgba(153,153,144,.5)';
+
+      ctx.fillStyle='rgba(26,26,24,.95)'; ctx.strokeStyle='rgba(255,221,0,.3)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.rect(cx-cardW/2, cy-cardH/2, cardW, cardH); ctx.fill(); ctx.stroke();
+
+      // Priority dot
+      ctx.beginPath(); ctx.arc(cx-cardW/2+8, cy, 4, 0, Math.PI*2);
+      ctx.fillStyle=prioCol; ctx.fill();
+
+      ctx.font='9px Inter,sans-serif'; ctx.textAlign='left'; ctx.fillStyle='rgba(200,200,192,.85)';
+      const label=inv.label.length>14?inv.label.slice(0,13)+'…':inv.label;
+      ctx.fillText(label, cx-cardW/2+16, cy+3);
+    });
+
+    // Active bead moving through system
+    const activeStage=(t*2)%stages.length;
+    const activeCx=padX+activeStage*colW+colW/2;
+    ctx.beginPath(); ctx.arc(activeCx, H-20, 5, 0, Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.9)'; ctx.fill();
+    ctx.font='8px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='rgba(255,221,0,.6)';
+    ctx.fillText('active', activeCx, H-8);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKIM Commercial Stewardship — Steve</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:      #0D0F14;
+    --deep:     #111827;
+    --mid:      #1F2D3D;
+    --steel:    #2E4057;
+    --accent:   #3B82F6;
+    --accent-lt:#60A5FA;
+    --green:    #10B981;
+    --amber:    #F59E0B;
+    --cream:    #F8F7F4;
+    --warm:     #F0EDE6;
+    --muted:    #6B7280;
+    --white:    #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--deep);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 90% 10%, rgba(59,130,246,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 50% at 5%  90%, rgba(16,185,129,0.08) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 3.8rem;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.5) 20%, rgba(59,130,246,0.5) 80%, transparent);
+    pointer-events: none;
+  }
+
+  .cover-header {
+    padding: 2.8rem 4rem 0 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .cover-wordmark span { color: var(--accent-lt); }
+
+  .cover-meta { text-align: right; }
+
+  .cover-meta-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .cover-meta-value {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+  }
+
+  .cover-body {
+    padding: 4rem 4rem 3rem 6rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cover-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-lt);
+    margin-bottom: 2rem;
+  }
+
+  .cover-tag::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--accent-lt);
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.08;
+    max-width: 680px;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-title em {
+    font-style: italic;
+    color: var(--accent-lt);
+  }
+
+  .cover-version {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .cover-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+  }
+
+  .cover-steward-block {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 580px;
+  }
+
+  .steward-accent-bar {
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--green));
+    flex-shrink: 0;
+  }
+
+  .steward-content {
+    padding: 1.4rem 1.8rem;
+    flex: 1;
+  }
+
+  .steward-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.3rem;
+  }
+
+  .steward-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.15rem;
+  }
+
+  .steward-designation {
+    font-size: 0.78rem;
+    color: var(--accent-lt);
+    font-style: italic;
+  }
+
+  .steward-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.4rem 1.8rem;
+    border-left: 1px solid rgba(255,255,255,0.08);
+    gap: 0.8rem;
+  }
+
+  .steward-meta-item { }
+
+  .steward-meta-label {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 0.1rem;
+  }
+
+  .steward-meta-value {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .cover-footer {
+    padding: 1.8rem 4rem 1.8rem 6rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-footer-note {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.22);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── SHARED ── */
+  .section { padding: 5.5rem 4rem; }
+
+  .section-inner { max-width: 920px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.85;
+    margin-bottom: 3rem;
+  }
+
+  /* ── PRINCIPLES ── */
+  .principles-section { background: var(--white); }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .principle-card {
+    background: var(--white);
+    padding: 1.8rem;
+    transition: background 0.2s;
+  }
+
+  .principle-card:hover { background: var(--cream); }
+
+  .principle-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: rgba(59,130,246,0.15);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+
+  .principle-text {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  /* ── STEWARD ROLE ── */
+  .steward-section { background: var(--deep); color: var(--white); }
+  .steward-section .section-title { color: var(--white); }
+  .steward-section .section-lead  { color: rgba(255,255,255,0.45); }
+  .steward-section .section-eyebrow { color: var(--accent-lt); }
+  .steward-section .section-eyebrow::before { background: var(--accent-lt); }
+
+  .steward-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .s-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 2rem;
+  }
+
+  .s-card-wide { grid-column: 1 / -1; }
+
+  .s-card-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .s-card-icon.blue   { background: rgba(59,130,246,0.15); }
+  .s-card-icon.green  { background: rgba(16,185,129,0.15); }
+  .s-card-icon.amber  { background: rgba(245,158,11,0.12); }
+
+  .s-card-who {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.3rem;
+  }
+
+  .s-card-who.blue  { color: var(--accent-lt); }
+  .s-card-who.green { color: #34D399; }
+  .s-card-who.amber { color: #FCD34D; }
+
+  .s-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .s-card-body {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .s-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .s-list li {
+    font-size: 0.84rem;
+    color: rgba(255,255,255,0.5);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .s-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0.2rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── STEWARDSHIP RIGHTS ── */
+  .rights-section { background: var(--cream); }
+
+  .rights-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .right-row {
+    background: var(--white);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.5rem;
+    transition: background 0.2s;
+  }
+
+  .right-row:hover { background: #fafaf8; }
+
+  .right-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: rgba(59,130,246,0.2);
+    line-height: 1;
+    padding-top: 0.1rem;
+    font-weight: 700;
+  }
+
+  .right-content { }
+
+  .right-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .right-body {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .right-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .right-bullets li {
+    font-size: 0.84rem;
+    color: #374151;
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .right-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    color: var(--muted);
+    top: 0.18rem;
+  }
+
+  .right-note {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    background: rgba(59,130,246,0.07);
+    color: var(--accent);
+    border: 1px solid rgba(59,130,246,0.15);
+  }
+
+  /* ── PHASES ── */
+  .phases-section { background: var(--white); }
+
+  .phases-track {
+    margin-top: 2.5rem;
+    position: relative;
+  }
+
+  .phases-track::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    top: 2rem;
+    bottom: 2rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--green));
+  }
+
+  .phase-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .phase-dot {
+    width: 3rem; height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+    color: var(--white);
+  }
+
+  .phase-dot.p1 { background: var(--accent); }
+  .phase-dot.p2 { background: #6366F1; }
+  .phase-dot.p3 { background: #8B5CF6; }
+  .phase-dot.p4 { background: var(--green); }
+
+  .phase-body {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .phase-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-leads {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-lead-item {
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lead-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lead-dot.blue  { background: var(--accent); }
+  .lead-dot.green { background: var(--green); }
+  .lead-dot.amber { background: var(--amber); }
+
+  .phase-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── GOVERNANCE ── */
+  .governance-section { background: var(--deep); color: var(--white); }
+  .governance-section .section-title  { color: var(--white); }
+  .governance-section .section-lead   { color: rgba(255,255,255,0.45); }
+  .governance-section .section-eyebrow { color: var(--accent-lt); }
+  .governance-section .section-eyebrow::before { background: var(--accent-lt); }
+
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .gov-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 1.8rem;
+  }
+
+  .gov-card-title {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent-lt);
+    margin-bottom: 1rem;
+  }
+
+  .gov-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .gov-list li {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.55);
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .gov-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.22);
+    font-size: 0.6rem;
+    top: 0.25rem;
+  }
+
+  /* Termination events — styled differently as a caution block */
+  .termination-grid {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .term-block {
+    border-radius: 10px;
+    padding: 2rem;
+    border: 1px solid;
+  }
+
+  .term-block.caution {
+    background: rgba(245,158,11,0.06);
+    border-color: rgba(245,158,11,0.2);
+  }
+
+  .term-block.safe {
+    background: rgba(16,185,129,0.05);
+    border-color: rgba(16,185,129,0.15);
+  }
+
+  .term-block-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.75rem;
+  }
+
+  .term-block-label.caution { color: #FCD34D; }
+  .term-block-label.safe    { color: #34D399; }
+
+  .term-block-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .term-block-body {
+    font-size: 0.84rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+  }
+
+  .term-block-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+
+  .term-block-list li {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.5);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .term-block-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0.2rem;
+    color: rgba(255,255,255,0.22);
+  }
+
+  /* Guiding principle callout */
+  .guiding-principle {
+    margin-top: 2.5rem;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--accent-lt);
+    border-radius: 0 8px 8px 0;
+    padding: 1.8rem 2rem;
+  }
+
+  .guiding-principle-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent-lt);
+    margin-bottom: 0.75rem;
+  }
+
+  .guiding-principle-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── CLOSING ── */
+  .closing-section {
+    background: var(--ink);
+    color: var(--white);
+    text-align: center;
+    padding: 7rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(59,130,246,0.08) 0%, transparent 60%);
+  }
+
+  .closing-eyebrow {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-lt);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.25;
+    max-width: 700px;
+    margin: 0 auto 1.25rem;
+    color: var(--white);
+    position: relative;
+  }
+
+  .closing-title em {
+    font-style: italic;
+    color: var(--accent-lt);
+  }
+
+  .closing-rule {
+    width: 48px; height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  .closing-body {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.42);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.85;
+    position: relative;
+  }
+
+  .closing-footer {
+    margin-top: 4rem;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.18);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    position: relative;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .section { padding: 3.5rem 1.5rem; }
+    .cover-body, .cover-header, .cover-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .cover::before { display: none; }
+    .principles-grid,
+    .steward-grid,
+    .gov-grid,
+    .termination-grid { grid-template-columns: 1fr; }
+    .s-card-wide { grid-column: 1; }
+    .right-row { grid-template-columns: 2.5rem 1fr; }
+    .cover-steward-block { flex-direction: column; }
+    .steward-meta { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); flex-direction: row; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-header">
+    <div class="cover-wordmark">GKIM <span>×</span> Steve</div>
+    <div class="cover-meta">
+      <div class="cover-meta-label">Framework</div>
+      <div class="cover-meta-value">Commercial Stewardship Model</div>
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-tag">Performance-Based Commercial Partnership</div>
+    <h1 class="cover-title">The rights that reward the<br><em>relationships you build.</em></h1>
+    <div class="cover-version">Confidential · 2026</div>
+    <p class="cover-desc">
+      A framework that protects Steve's commercial contribution over the long term — without requiring ownership of GKIM or GMG. Rights earned through ongoing value creation. Responsibilities clearly divided. Platform built to last.
+    </p>
+
+    <div class="cover-steward-block">
+      <div class="steward-accent-bar"></div>
+      <div class="steward-content">
+        <div class="steward-label">Appointed As</div>
+        <div class="steward-name">Steve</div>
+        <div class="steward-designation">Commercial Steward — GKIM Ecosystem</div>
+      </div>
+      <div class="steward-meta">
+        <div class="steward-meta-item">
+          <div class="steward-meta-label">Technology & Operations</div>
+          <div class="steward-meta-value">GKIM Digital</div>
+        </div>
+        <div class="steward-meta-item">
+          <div class="steward-meta-label">Clinical Infrastructure</div>
+          <div class="steward-meta-value">GMG Health</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-note">Private &amp; Confidential</div>
+    <div class="cover-footer-note">Scroll to explore ↓</div>
+  </div>
+</div>
+
+<!-- ══════════ DESIGN PRINCIPLES ══════════ -->
+<div class="principles-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Design Principles</div>
+    <h2 class="section-title">Six principles that govern everything that follows.</h2>
+    <p class="section-lead">The framework is not a set of rules. It is a set of beliefs about how a lasting commercial partnership should work — and why the details fall into place once those beliefs are shared.</p>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">01</div>
+        <div class="principle-text">Opportunity creation has long-term value and must be protected — not gradually eroded as relationships mature.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">02</div>
+        <div class="principle-text">Operational excellence requires GKIM and GMG to retain full control of technology, delivery, compliance, and clinical operations.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">03</div>
+        <div class="principle-text">Customer relationships should become institutional rather than dependent on any individual — protecting the customer, the partner, and the platform.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">04</div>
+        <div class="principle-text">Commercial partners remain strategically involved throughout the customer lifecycle — not just during the sale.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">05</div>
+        <div class="principle-text">Rights are earned through continued contribution rather than granted indefinitely. Stewardship is active, not passive.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">06</div>
+        <div class="principle-text">The model is designed to be repeatable — Steve is the first Commercial Steward in a framework built for a national platform.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ STEWARD ROLE & PARTY RESPONSIBILITIES ══════════ -->
+<div class="steward-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Roles & Responsibilities</div>
+    <h2 class="section-title">Each party owns what they are best at. Nothing more.</h2>
+    <p class="section-lead">The model separates commercial opportunity creation from operational delivery. This allows Steve to focus entirely on building relationships, while GKIM and GMG focus on converting those relationships into lasting customer success.</p>
+
+    <div class="steward-grid">
+
+      <div class="s-card" style="grid-column: 1 / -1;">
+        <div class="s-card-icon blue">🤝</div>
+        <div class="s-card-who blue">Steve — Commercial Steward</div>
+        <div class="s-card-title">Identifying and creating commercial opportunity.</div>
+        <div class="s-card-body">Steve's primary responsibility is origination and commercial leadership. He is not responsible for operational delivery unless separately agreed — that accountability sits entirely with GKIM.</div>
+        <ul class="s-list" style="columns: 2; gap: 2rem;">
+          <li>Identifying laboratory and medical solution provider opportunities</li>
+          <li>Developing and managing executive relationships</li>
+          <li>Qualifying customers and negotiating commercial frameworks</li>
+          <li>Sponsoring the customer relationship at the executive level</li>
+          <li>Identifying future growth opportunities within existing accounts</li>
+          <li>Acting as commercial strategist for the ecosystem</li>
+        </ul>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-icon green">⚙️</div>
+        <div class="s-card-who green">GKIM</div>
+        <div class="s-card-title">Technology & Operations</div>
+        <div class="s-card-body">GKIM is accountable for converting commercial opportunities into successful, long-term customers and for delivering the services customers purchase.</div>
+        <ul class="s-list">
+          <li>AI platform, workflow automation & patient operations</li>
+          <li>Implementation, onboarding & integrations</li>
+          <li>Compliance systems & reporting</li>
+          <li>Customer success & product development</li>
+        </ul>
+      </div>
+
+      <div class="s-card">
+        <div class="s-card-icon amber">🏥</div>
+        <div class="s-card-who amber">GMG</div>
+        <div class="s-card-title">Clinical Infrastructure</div>
+        <div class="s-card-body">GMG provides the clinical layer wherever healthcare services are required, and remains accountable for all clinical governance and compliance.</div>
+        <ul class="s-list">
+          <li>Virtual primary care & precision medicine expertise</li>
+          <li>Physician network & medical necessity assessment</li>
+          <li>Clinical governance & longitudinal care</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ STEWARDSHIP RIGHTS ══════════ -->
+<div class="rights-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Stewardship Rights</div>
+    <h2 class="section-title">Eight protected rights for every account you originate.</h2>
+    <p class="section-lead">For each customer Steve brings to the ecosystem, the following rights apply. They are designed to ensure Steve's contribution is recognised and protected throughout the life of the customer relationship — not just at the point of introduction.</p>
+
+    <div class="rights-list">
+
+      <div class="right-row">
+        <div class="right-num">1</div>
+        <div class="right-content">
+          <div class="right-title">Exclusive Commercialisation Rights</div>
+          <div class="right-body">Steve holds the exclusive right to originate and commercialise services into every account he introduces. GKIM and GMG will not knowingly pursue those opportunities independently while the stewardship remains in force.</div>
+          <span class="right-note">Protection remains active for the life of the stewardship</span>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">2</div>
+        <div class="right-content">
+          <div class="right-title">Executive Sponsor Status</div>
+          <div class="right-body">Steve remains the executive sponsor for every stewarded account throughout the relationship — including strategic reviews, commercial planning, and senior customer engagement. Operational relationships within GKIM and GMG may expand, but executive sponsorship stays with Steve.</div>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">3</div>
+        <div class="right-content">
+          <div class="right-title">Right of First Refusal on Expansion</div>
+          <div class="right-body">When additional commercial opportunities arise within a stewarded account, Steve has the first opportunity to lead the commercial discussion. Only if Steve elects not to pursue the opportunity within an agreed period may GKIM act independently.</div>
+          <ul class="right-bullets">
+            <li>Additional medical programmes and new disease areas</li>
+            <li>New laboratories or provider groups</li>
+            <li>AI services, billing, and patient operations</li>
+            <li>Technology enhancements and platform extensions</li>
+            <li>New geographies and additional states</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">4</div>
+        <div class="right-content">
+          <div class="right-title">Participation in Strategic Reviews</div>
+          <div class="right-body">Steve is entitled to participate in all scheduled strategic reviews for stewarded customers — covering customer satisfaction, growth opportunities, operational performance, new programmes, and future roadmap.</div>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">5</div>
+        <div class="right-content">
+          <div class="right-title">Performance-Based Exclusivity</div>
+          <div class="right-body">Stewardship rights continue while Steve remains actively engaged and continues to add value. The objective is to reward ongoing contribution — not passive ownership. Stewardship criteria include:</div>
+          <ul class="right-bullets">
+            <li>Maintaining executive relationships within stewarded accounts</li>
+            <li>Participating in strategic reviews</li>
+            <li>Supporting commercial development and expansion</li>
+            <li>Maintaining agreed service standards and partnership obligations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">6</div>
+        <div class="right-content">
+          <div class="right-title">Team Building Rights</div>
+          <div class="right-body">Steve may establish and manage a commercial team to support stewarded accounts — including account managers, business development representatives, customer success personnel, and commercial operations staff. Steve remains responsible for their activities.</div>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">7</div>
+        <div class="right-content">
+          <div class="right-title">Assignment & Transfer Consent</div>
+          <div class="right-body">Stewardship rights are personal to Steve. They may not be transferred, assigned, or sold without the prior written consent of GKIM — ensuring continuity for customers and protecting the integrity of the ecosystem.</div>
+        </div>
+      </div>
+
+      <div class="right-row">
+        <div class="right-num">8</div>
+        <div class="right-content">
+          <div class="right-title">Defined Termination Events Only</div>
+          <div class="right-body">Stewardship rights terminate only upon clearly defined events. The relationship between GKIM and the customer becoming operationally close is not a termination event — this is an expected outcome of a maturing relationship. Termination events are limited to:</div>
+          <ul class="right-bullets">
+            <li>Material breach of the partnership agreement</li>
+            <li>Sustained inactivity over an agreed period</li>
+            <li>Insolvency, fraud, or misconduct</li>
+            <li>Repeated failure to fulfil stewardship responsibilities</li>
+            <li>Mutual agreement</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CUSTOMER PHASES ══════════ -->
+<div class="phases-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Customer Relationship</div>
+    <h2 class="section-title">One integrated team. Four phases. Steve present throughout.</h2>
+    <p class="section-lead">Leadership shifts as the relationship matures — but Steve's involvement never disappears. Executive sponsorship, strategic oversight, and expansion leadership remain with the Commercial Steward at every stage.</p>
+
+    <div class="phases-track">
+
+      <div class="phase-row">
+        <div class="phase-dot p1">01</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase One</div>
+          <div class="phase-title">Opportunity Development</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve leads</span>
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM — technical support on request</span>
+          </div>
+          <div class="phase-desc">Relationship building, commercial qualification, strategic discussions, and executive sponsorship. Steve drives the engagement. GKIM provides technical support wherever it strengthens the commercial conversation.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p2">02</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Two</div>
+          <div class="phase-title">Solution Design</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — commercial lead</span>
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM — technical solution design</span>
+          </div>
+          <div class="phase-desc">Joint leadership. Steve continues to own commercial discussions and customer relationships. GKIM leads technical and operational solution design. The customer experiences one team.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p3">03</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Three</div>
+          <div class="phase-title">Implementation</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM leads delivery</span>
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — executive sponsor</span>
+          </div>
+          <div class="phase-desc">GKIM owns operational delivery — onboarding, workflow configuration, integrations, and compliance. Steve remains the executive sponsor, maintaining the senior customer relationship and ensuring commercial momentum continues.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p4">04</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Four</div>
+          <div class="phase-title">Long-Term Growth</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — strategy &amp; expansion</span>
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM — operational excellence</span>
+          </div>
+          <div class="phase-desc">Customer success becomes fully shared. Steve identifies strategic expansion opportunities and maintains executive relationships. GKIM leads operational performance and platform evolution. Both parties jointly support long-term customer success.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ GOVERNANCE & TERMS ══════════ -->
+<div class="governance-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Governance &amp; Terms</div>
+    <h2 class="section-title">Responsibilities divided. Contribution protected.</h2>
+    <p class="section-lead">The framework is structured so that neither party needs to fear the other. Steve does not fear being replaced as the customer relationship matures. GKIM does not fear losing control of its technology or platform. That clarity makes the partnership durable.</p>
+
+    <div class="gov-grid">
+
+      <div class="gov-card">
+        <div class="gov-card-title">Quarterly Strategic Reviews</div>
+        <ul class="gov-list">
+          <li>New opportunities and pipeline health</li>
+          <li>Customer satisfaction and relationship health</li>
+          <li>Operational performance</li>
+          <li>Expansion opportunities across stewarded accounts</li>
+          <li>Strategic priorities for the ecosystem</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">Exclusivity Commitments</div>
+        <ul class="gov-list">
+          <li>Steve makes GKIM and GMG the preferred platform for opportunities within agreed scope</li>
+          <li>GKIM does not pursue Steve-originated opportunities independently</li>
+          <li>Both parties agree to avoid circumvention in all forms</li>
+          <li>Material commercial expansions are agreed jointly before presentation to the customer</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">Continuity Obligations</div>
+        <ul class="gov-list">
+          <li>Existing customer contracts remain in force on any exit event</li>
+          <li>Operational services continue uninterrupted regardless of partnership status</li>
+          <li>Customers retain full access to the platform</li>
+          <li>Neither party disrupts ongoing healthcare programmes</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">What Steve is Never Responsible For</div>
+        <ul class="gov-list">
+          <li>Operational delivery or customer success management</li>
+          <li>Technology, AI platform, or workflow automation</li>
+          <li>Compliance systems or regulatory obligations</li>
+          <li>Clinical governance or physician oversight</li>
+          <li>Implementation or onboarding execution</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="termination-grid">
+      <div class="term-block safe">
+        <div class="term-block-label safe">On Accrued Obligations</div>
+        <div class="term-block-title">Existing contractual rights are always honoured.</div>
+        <div class="term-block-body">Any obligations that arose before termination — fixed introduction fees, defined earn-outs, accrued commission — are honoured in full, regardless of how or why the stewardship ends.</div>
+      </div>
+
+      <div class="term-block caution">
+        <div class="term-block-label caution">On Future Revenue After Termination</div>
+        <div class="term-block-title">No entitlement to commissions on new business.</div>
+        <div class="term-block-body">After termination, Steve has no entitlement to future commissions on new business or future expansions, unless separately agreed in writing. The value of this model lies in continuing collaboration — not indefinite passive income.</div>
+      </div>
+    </div>
+
+    <div class="guiding-principle">
+      <div class="guiding-principle-label">Guiding Principle</div>
+      <div class="guiding-principle-text">"The objective is not to divide ownership. The objective is to divide responsibilities — while protecting the long-term contribution of each party."</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ CLOSING ══════════ -->
+<div class="closing-section">
+  <div class="closing-eyebrow">Long-Term Vision</div>
+  <h2 class="closing-title">Steve as the first Commercial Steward in a framework <em>built for a national platform.</em></h2>
+  <div class="closing-rule"></div>
+  <p class="closing-body">
+    Future commercial partners may each become Stewards for their own territories, sectors, or customer portfolios — while GKIM provides the common AI-native operating platform and GMG provides clinical infrastructure where required. The ecosystem scales nationally without requiring GKIM to own every commercial relationship, and without requiring Steve to own any part of the platform. Each party holds what they built.
+  </p>
+  <div class="closing-footer">GKIM Commercial Stewardship Model · 2026 · Private &amp; Confidential</div>
+</div>
+
+</body>
+</html>

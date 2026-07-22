@@ -1,0 +1,4 @@
+{
+  "extends": ["/Users/mac/LocalRepos/.workspace/configs/.eslintrc.json"],
+  "rules": {}
+}

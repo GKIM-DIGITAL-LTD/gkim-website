@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecosystem Discovery — Steve Marinucci Review</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --ink: #1a1818;
+  --ink-mid: #4a4440;
+  --ink-muted: #8a8480;
+  --rule: #dedad6;
+  --page: #fdfcf9;
+  --cream: #f5f2eb;
+  --amber: #92600a;
+  --amber-bg: #fdf4e4;
+  --amber-border: #e8c170;
+  --green: #1a6644;
+  --green-bg: #e8f5ee;
+  --blue: #1e4d8c;
+  --blue-bg: #eaf0fb;
+  --serif: 'Lora', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 780px;
+  margin: 32px auto 80px;
+  background: var(--page);
+  border: 1px solid var(--rule);
+  box-shadow: 0 1px 20px rgba(0,0,0,0.06);
+}
+
+/* COVER */
+.cover {
+  padding: 56px 64px 44px;
+  border-bottom: 2px solid var(--ink);
+  position: relative;
+}
+.cover-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 36px;
+}
+.cover-status {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  color: var(--amber);
+  padding: 3px 10px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+.cover h1 {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.cover .byline {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 32px;
+}
+.cover .purpose-box {
+  background: var(--cream);
+  border-left: 3px solid var(--ink);
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.cover .purpose-box p { margin-bottom: 6px; }
+.cover .purpose-box p:last-child { margin-bottom: 0; }
+.cover .purpose-box ul { padding-left: 18px; margin-top: 8px; }
+.cover .purpose-box li { margin-bottom: 3px; }
+
+/* PROGRESS BAR */
+.progress-bar-wrap {
+  padding: 16px 64px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.progress-label { font-size: 11px; color: var(--ink-muted); white-space: nowrap; }
+.progress-track { flex: 1; height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--amber); border-radius: 2px; transition: width 0.4s; }
+.progress-count { font-size: 11px; color: var(--amber); font-weight: 500; white-space: nowrap; }
+
+/* BODY */
+.doc-body { padding: 0 64px; }
+
+/* SECTIONS */
+.doc-section { padding: 44px 0; border-bottom: 1px solid var(--rule); }
+.doc-section:last-child { border-bottom: none; padding-bottom: 64px; }
+
+.section-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+.section-num {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--ink-muted);
+  flex-shrink: 0;
+  font-style: italic;
+}
+h2 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.section-intro {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  max-width: 580px;
+}
+
+/* UNDERSTANDING BLOCKS */
+.understanding {
+  margin-bottom: 20px;
+}
+.understanding-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.understanding-content {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.understanding-content ul { padding-left: 18px; }
+.understanding-content li { margin-bottom: 3px; }
+
+/* RESPONSE PANELS */
+.response-panel {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-border);
+  border-radius: 2px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.response-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.response-panel-header.open { border-bottom-color: var(--amber-border); }
+.response-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.panel-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--amber-border);
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+.panel-dot.filled { background: var(--amber); }
+.response-panel-header .chevron {
+  font-size: 11px;
+  color: var(--amber);
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.response-panel-header.open .chevron { transform: rotate(180deg); }
+.response-panel-body { padding: 16px; display: none; }
+.response-panel-body.open { display: block; }
+
+/* FORM ELEMENTS */
+.field-group { margin-bottom: 16px; }
+.field-group:last-child { margin-bottom: 0; }
+.field-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+textarea {
+  width: 100%;
+  background: #fffdf7;
+  border: 1px solid var(--amber-border);
+  border-radius: 2px;
+  padding: 10px 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+textarea:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 2px rgba(146,96,10,0.12);
+}
+textarea::placeholder { color: var(--ink-muted); font-style: italic; }
+
+/* CHIP OPTIONS */
+.chip-group { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.chip-opt { display: none; }
+.chip-label {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--amber-border);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--amber);
+  cursor: pointer;
+  background: #fffdf7;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+}
+.chip-opt:checked + .chip-label {
+  background: var(--amber);
+  color: #fff;
+  border-color: var(--amber);
+}
+
+/* CONFIDENCE CHIPS */
+.confidence-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.conf-opt { display: none; }
+.conf-label {
+  padding: 3px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--ink-muted);
+  background: var(--page);
+  transition: all 0.15s;
+}
+.conf-opt[value="agree"]:checked + .conf-label { background: var(--green-bg); border-color: #9fd9b8; color: var(--green); }
+.conf-opt[value="partial"]:checked + .conf-label { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+.conf-opt[value="disagree"]:checked + .conf-label { background: #fdf0eb; border-color: #f0bba0; color: #993c1d; }
+
+/* STAKEHOLDER TABLE */
+.stakeholder-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 16px 0; }
+.stakeholder-table th {
+  text-align: left;
+  padding: 7px 10px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-bottom: 1px solid var(--rule);
+  font-weight: 500;
+}
+.stakeholder-table td { padding: 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.stakeholder-table tr:last-child td { border-bottom: none; }
+.conf-badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 500;
+}
+.conf-high   { background: var(--green-bg); color: var(--green); }
+.conf-medium { background: var(--amber-bg); color: var(--amber); }
+.conf-low    { background: #fdf0eb; color: #993c1d; }
+
+/* ECONOMICS TABLE */
+.econ-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 16px 0; }
+.econ-table th { text-align:left; padding:7px 10px; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-muted); border-bottom:1px solid var(--rule); font-weight:500; }
+.econ-table td { padding:10px; border-bottom:1px solid var(--rule); vertical-align:middle; }
+.econ-table tr:last-child td { border-bottom:none; }
+.econ-table input[type="text"] {
+  border: 1px solid var(--amber-border);
+  background: #fffdf7;
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink);
+  width: 100%;
+  outline: none;
+}
+.econ-table input[type="text"]:focus { border-color: var(--amber); box-shadow: 0 0 0 2px rgba(146,96,10,0.1); }
+
+/* EXCLUSIVITY CHECKS */
+.exclusivity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.exclusivity-item:last-child { border-bottom: none; }
+.excl-check { display: none; }
+.excl-check-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  background: var(--page);
+  font-size: 11px;
+  color: transparent;
+  transition: all 0.15s;
+}
+.excl-check:checked + .excl-check-label {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #fff;
+}
+.excl-content { flex: 1; }
+.excl-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.excl-desc  { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
+/* SUBMIT */
+.submit-row {
+  padding: 32px 64px;
+  border-top: 1px solid var(--rule);
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.submit-note { font-size: 12px; color: var(--ink-muted); max-width: 380px; line-height: 1.6; }
+.submit-btn {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  padding: 11px 28px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.submit-btn:hover { background: #333; }
+
+/* DIVIDER */
+hr.doc { border: none; border-top: 1px solid var(--rule); margin: 20px 0; }
+
+/* QUESTION HINTS */
+.q-hint {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--amber);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+@media(max-width:640px){
+  .cover,.doc-body,.submit-row,.progress-bar-wrap{padding-left:24px;padding-right:24px;}
+  .cover h1{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-meta">
+      <div>GKIM / GMG · Ian Morrison</div>
+      <div class="cover-status">Working draft — for Steve's review</div>
+    </div>
+    <h1>Ecosystem Discovery<br>& Review</h1>
+    <div class="byline">Prepared by Ian Morrison &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Joint review document</div>
+    <div class="purpose-box">
+      <p>This document captures Ian's current understanding of the ecosystem we are building together. It is not a negotiating document.</p>
+      <p><strong>The sole objective is clarity:</strong></p>
+      <ul>
+        <li>Who the stakeholders are</li>
+        <li>What each role involves</li>
+        <li>How money flows between parties</li>
+        <li>What the future state looks like</li>
+      </ul>
+      <p style="margin-top:10px;">Ian expects parts of this to be wrong. Steve's corrections, additions and challenges are the purpose of this document. Please use the amber response panels throughout to add your input.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar-wrap">
+    <span class="progress-label">Steve's responses</span>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <span class="progress-count" id="progressCount">0 of 14 answered</span>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- 1. STRATEGIC OBJECTIVE -->
+    <div class="doc-section" id="s1">
+      <div class="section-header">
+        <span class="section-num">§ 1</span>
+        <h2>Strategic Objective</h2>
+      </div>
+      <p class="section-intro">Ian's working understanding of what we are building together — at the highest level.</p>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <p>We are building a scalable healthcare ecosystem capable of supporting:</p>
+          <ul>
+            <li>Multiple laboratories and marketing groups</li>
+            <li>Multiple medical solution providers</li>
+            <li>Telemedicine and AI-powered patient operations</li>
+            <li>Compliant patient acquisition</li>
+            <li>Payer-funded healthcare programmes</li>
+          </ul>
+          <p style="margin-top:10px;">The long-term goal is a repeatable operating model — commercially attractive to all participants — that can scale across many laboratories and programmes.</p>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s1"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s1">
+          <div class="field-group">
+            <label class="field-label">Does this capture the strategic objective accurately?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s1-conf" id="s1-agree" value="agree" data-panel="s1" onchange="updateProgress()">
+              <label class="conf-label" for="s1-agree">Yes, broadly correct</label>
+              <input type="radio" class="conf-opt" name="s1-conf" id="s1-partial" value="partial" data-panel="s1" onchange="updateProgress()">
+              <label class="conf-label" for="s1-partial">Partially — needs adjustment</label>
+              <input type="radio" class="conf-opt" name="s1-conf" id="s1-disagree" value="disagree" data-panel="s1" onchange="updateProgress()">
+              <label class="conf-label" for="s1-disagree">No — significantly wrong</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s1-corrections">Corrections, additions or missing elements</label>
+            <textarea id="s1-corrections" rows="4" placeholder="What's wrong, missing or needs nuance here?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s1-priority">What is the single most important near-term priority?</label>
+            <textarea id="s1-priority" rows="3" placeholder="e.g. securing first lab contracts, getting marketing groups live, signing GMG into programmes…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. STEVE'S ROLES -->
+    <div class="doc-section" id="s2">
+      <div class="section-header">
+        <span class="section-num">§ 2</span>
+        <h2>Steve's Roles</h2>
+      </div>
+      <p class="section-intro">Ian's understanding of what Steve actually does in this ecosystem. This section deliberately errs on the side of over-including to prompt Steve's corrections.</p>
+      <div class="understanding">
+        <div class="understanding-label">Roles Ian believes Steve performs</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Ecosystem architect and strategic vision</li>
+            <li>Business development and commercial negotiation</li>
+            <li>Laboratory relationships and introductions</li>
+            <li>Marketing group introductions and management</li>
+            <li>Relationship manager across all parties</li>
+            <li>Strategic advisor to GKIM and GMG</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s2"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s2">
+          <div class="field-group">
+            <label class="field-label">Is this list of roles accurate?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s2-conf" id="s2-agree" value="agree" data-panel="s2" onchange="updateProgress()">
+              <label class="conf-label" for="s2-agree">Yes, broadly correct</label>
+              <input type="radio" class="conf-opt" name="s2-conf" id="s2-partial" value="partial" data-panel="s2" onchange="updateProgress()">
+              <label class="conf-label" for="s2-partial">Partially — needs adjustment</label>
+              <input type="radio" class="conf-opt" name="s2-conf" id="s2-disagree" value="disagree" data-panel="s2" onchange="updateProgress()">
+              <label class="conf-label" for="s2-disagree">No — significantly wrong</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s2-missing">Roles missing from Ian's list</label>
+            <textarea id="s2-missing" rows="3" placeholder="What roles or functions has Ian missed?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Which roles consume most of Steve's time?</label>
+            <div class="chip-group" id="s2-time-chips">
+              <input type="checkbox" class="chip-opt" id="s2-c1" name="s2-time" value="bd"><label class="chip-label" for="s2-c1">Business development</label>
+              <input type="checkbox" class="chip-opt" id="s2-c2" name="s2-time" value="labs"><label class="chip-label" for="s2-c2">Lab relationships</label>
+              <input type="checkbox" class="chip-opt" id="s2-c3" name="s2-time" value="mktg"><label class="chip-label" for="s2-c3">Marketing groups</label>
+              <input type="checkbox" class="chip-opt" id="s2-c4" name="s2-time" value="neg"><label class="chip-label" for="s2-c4">Negotiations</label>
+              <input type="checkbox" class="chip-opt" id="s2-c5" name="s2-time" value="ops"><label class="chip-label" for="s2-c5">Operations oversight</label>
+              <input type="checkbox" class="chip-opt" id="s2-c6" name="s2-time" value="other"><label class="chip-label" for="s2-c6">Other</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s2-value">Which roles create the most value for the ecosystem?</label>
+            <textarea id="s2-value" rows="3" placeholder="Where does Steve's effort produce the greatest return for all parties?"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. LABORATORIES -->
+    <div class="doc-section" id="s3">
+      <div class="section-header">
+        <span class="section-num">§ 3</span>
+        <h2>Laboratories</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Laboratories receive specimens, perform testing, bill payers directly and receive reimbursement</li>
+            <li>Most participating laboratories bill directly</li>
+            <li>Reference laboratory relationships may exist in some or many programmes</li>
+            <li>Some laboratories may outsource portions of testing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s3"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s3">
+          <div class="field-group">
+            <label class="field-label">Is Ian's understanding of laboratories accurate?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s3-conf" id="s3-agree" value="agree" data-panel="s3" onchange="updateProgress()">
+              <label class="conf-label" for="s3-agree">Yes, broadly correct</label>
+              <input type="radio" class="conf-opt" name="s3-conf" id="s3-partial" value="partial" data-panel="s3" onchange="updateProgress()">
+              <label class="conf-label" for="s3-partial">Partially</label>
+              <input type="radio" class="conf-opt" name="s3-conf" id="s3-disagree" value="disagree" data-panel="s3" onchange="updateProgress()">
+              <label class="conf-label" for="s3-disagree">No</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">How many labs are currently in scope and what is their billing model?</label>
+            <textarea id="s3-labs" rows="3" placeholder="e.g. 10 labs, all direct bill. 2 use reference labs for specialist panels. Exceptions include…"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">How frequently are reference laboratories involved — and who controls those relationships?</label>
+            <textarea id="s3-reflabs" rows="3" placeholder="Always? Occasionally? Only for genetics panels? Steve owns the relationship / lab owns it…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. MARKETING GROUPS -->
+    <div class="doc-section" id="s4">
+      <div class="section-header">
+        <span class="section-num">§ 4</span>
+        <h2>Marketing Groups</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Marketing groups perform advertising, patient acquisition, lead generation and campaign management</li>
+            <li>Their responsibility largely ends after initial patient acquisition and handoff</li>
+            <li>Thereafter patient operations, scheduling, follow-up and engagement move to GKIM operational support</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s4"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s4">
+          <div class="field-group">
+            <label class="field-label">Is the marketing group handoff described correctly?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s4-conf" id="s4-agree" value="agree" data-panel="s4" onchange="updateProgress()">
+              <label class="conf-label" for="s4-agree">Yes</label>
+              <input type="radio" class="conf-opt" name="s4-conf" id="s4-partial" value="partial" data-panel="s4" onchange="updateProgress()">
+              <label class="conf-label" for="s4-partial">Partially</label>
+              <input type="radio" class="conf-opt" name="s4-conf" id="s4-disagree" value="disagree" data-panel="s4" onchange="updateProgress()">
+              <label class="conf-label" for="s4-disagree">No</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s4-handoff">Where exactly does the marketing group's responsibility end?</label>
+            <textarea id="s4-handoff" rows="3" placeholder="At what point does the patient move from marketing group ownership to GKIM/GMG operations?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s4-groups">How many marketing groups are currently active or in discussion?</label>
+            <textarea id="s4-groups" rows="2" placeholder="Number, names if appropriate, current status…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. SCREENMYGENE -->
+    <div class="doc-section" id="s5">
+      <div class="section-header">
+        <span class="section-num">§ 5</span>
+        <h2>ScreenMyGene</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Not primarily a marketing platform</li>
+            <li>Provides patient screening and medical necessity support</li>
+            <li>Performs billing quality assurance and qualification support</li>
+          </ul>
+          <p style="margin-top:8px;"><em>Ian has low confidence in this section and specifically requests Steve's correction.</em></p>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s5"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s5">
+          <div class="field-group">
+            <label class="field-label">Is ScreenMyGene described correctly?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s5-conf" id="s5-agree" value="agree" data-panel="s5" onchange="updateProgress()">
+              <label class="conf-label" for="s5-agree">Yes</label>
+              <input type="radio" class="conf-opt" name="s5-conf" id="s5-partial" value="partial" data-panel="s5" onchange="updateProgress()">
+              <label class="conf-label" for="s5-partial">Partially</label>
+              <input type="radio" class="conf-opt" name="s5-conf" id="s5-disagree" value="disagree" data-panel="s5" onchange="updateProgress()">
+              <label class="conf-label" for="s5-disagree">No</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s5-correct">How should ScreenMyGene's role be properly described?</label>
+            <textarea id="s5-correct" rows="4" placeholder="What does ScreenMyGene actually do? How does it fit in the flow? What is its commercial relationship?"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. GMG -->
+    <div class="doc-section" id="s6">
+      <div class="section-header">
+        <span class="section-num">§ 6</span>
+        <h2>GMG</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Virtual primary care provider with precision medicine expertise</li>
+            <li>Operates a physician network via telemedicine</li>
+            <li>Makes independent medical necessity determinations</li>
+            <li>Manages precision medicine programmes and longitudinal care</li>
+          </ul>
+          <p style="margin-top:8px;">Note: other provider groups may operate alongside GMG — as competitors, GKIM customers or capacity partners. The ecosystem may extend beyond GMG itself.</p>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s6"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s6">
+          <div class="field-group">
+            <label class="field-label">Is GMG's role described correctly?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s6-conf" id="s6-agree" value="agree" data-panel="s6" onchange="updateProgress()">
+              <label class="conf-label" for="s6-agree">Yes</label>
+              <input type="radio" class="conf-opt" name="s6-conf" id="s6-partial" value="partial" data-panel="s6" onchange="updateProgress()">
+              <label class="conf-label" for="s6-partial">Partially</label>
+              <input type="radio" class="conf-opt" name="s6-conf" id="s6-disagree" value="disagree" data-panel="s6" onchange="updateProgress()">
+              <label class="conf-label" for="s6-disagree">No</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s6-correct">How should GMG's role be described differently?</label>
+            <textarea id="s6-correct" rows="3" placeholder="What is missing or wrong in Ian's description of GMG?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s6-gmg-labs">How should GMG interact with laboratories — and who manages that relationship?</label>
+            <textarea id="s6-gmg-labs" rows="3" placeholder="e.g. GMG orders tests from any participating lab / lab selected by provider / Steve manages lab relationships separately…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. ECONOMICS — STAKEHOLDER TABLE -->
+    <div class="doc-section" id="s7">
+      <div class="section-header">
+        <span class="section-num">§ 7</span>
+        <h2>Economic Flow — Stakeholder View</h2>
+      </div>
+      <p class="section-intro">This table captures Ian's current hypothesis on who receives economic benefit — and how confident Ian is. Steve's correction of confidence levels and descriptions is the priority here.</p>
+
+      <table class="stakeholder-table">
+        <thead>
+          <tr>
+            <th>Party</th>
+            <th>Receives benefit?</th>
+            <th>Ian's understanding</th>
+            <th>Ian's confidence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Laboratory</td><td>Yes</td><td>Primary recipient of reimbursement</td><td><span class="conf-badge conf-high">High</span></td></tr>
+          <tr><td>Marketing Group</td><td>Yes</td><td>Patient acquisition compensation</td><td><span class="conf-badge conf-high">High</span></td></tr>
+          <tr><td>Billing Company</td><td>Yes</td><td>Percentage or fee-based collections support</td><td><span class="conf-badge conf-medium">Medium</span></td></tr>
+          <tr><td>Reference Laboratory</td><td>Possibly</td><td>May participate in some or many programmes</td><td><span class="conf-badge conf-low">Low</span></td></tr>
+          <tr><td>ScreenMyGene</td><td>Yes</td><td>Platform and qualification support</td><td><span class="conf-badge conf-low">Low</span></td></tr>
+          <tr><td>GMG</td><td>Yes</td><td>Clinical services</td><td><span class="conf-badge conf-medium">Medium</span></td></tr>
+          <tr><td>GKIM</td><td>Yes</td><td>Technology and patient operations</td><td><span class="conf-badge conf-medium">Medium</span></td></tr>
+          <tr><td>Steve</td><td>Yes</td><td>Role not yet fully understood</td><td><span class="conf-badge conf-low">Low</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s7"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s7">
+          <div class="field-group">
+            <label class="field-label" for="s7-missing">Who is missing from this table?</label>
+            <textarea id="s7-missing" rows="3" placeholder="Any party that receives money that Ian hasn't listed?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s7-wrong">What is wrong or misleading in this table?</label>
+            <textarea id="s7-wrong" rows="3" placeholder="Any incorrect descriptions, wrong benefit flows, or missing nuance?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s7-steve-econ">Steve's economics — how does Steve receive compensation in this ecosystem?</label>
+            <textarea id="s7-steve-econ" rows="4" placeholder="e.g. consulting fees, advisory retainer, revenue participation, reference lab economics, ownership, introductory commission, other…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. ECONOMIC CATEGORIES -->
+    <div class="doc-section" id="s8">
+      <div class="section-header">
+        <span class="section-num">§ 8</span>
+        <h2>Economic Categories — Cost Model</h2>
+      </div>
+      <p class="section-intro">Using a representative $1,200 reimbursement, Steve can fill in estimated ranges below. The purpose is to understand who receives money from whom — not to negotiate amounts.</p>
+
+      <table class="econ-table">
+        <thead>
+          <tr>
+            <th style="width:220px">Economic category</th>
+            <th>Approx. $ amount or %</th>
+            <th>Who pays whom</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marketing / patient acquisition</td>
+            <td><input type="text" placeholder="e.g. $150–200" /></td>
+            <td><input type="text" placeholder="Lab → Marketing Group" /></td>
+          </tr>
+          <tr>
+            <td>Patient screening (ScreenMyGene)</td>
+            <td><input type="text" placeholder="$ or %" /></td>
+            <td><input type="text" placeholder="Who pays?" /></td>
+          </tr>
+          <tr>
+            <td>Billing administration</td>
+            <td><input type="text" placeholder="e.g. 5–8%" /></td>
+            <td><input type="text" placeholder="Lab → Billing Co." /></td>
+          </tr>
+          <tr>
+            <td>Lab processing (supplies, COGS)</td>
+            <td><input type="text" placeholder="e.g. $100–150" /></td>
+            <td><input type="text" placeholder="Internal to lab" /></td>
+          </tr>
+          <tr>
+            <td>Reference laboratory</td>
+            <td><input type="text" placeholder="$ or %" /></td>
+            <td><input type="text" placeholder="Who pays / when?" /></td>
+          </tr>
+          <tr>
+            <td>Telemedicine (GMG)</td>
+            <td><input type="text" placeholder="e.g. $50–80" /></td>
+            <td><input type="text" placeholder="Lab → GMG" /></td>
+          </tr>
+          <tr>
+            <td>Patient operations (GKIM)</td>
+            <td><input type="text" placeholder="e.g. $50–75" /></td>
+            <td><input type="text" placeholder="Lab → GKIM" /></td>
+          </tr>
+          <tr>
+            <td>Strategic / BD (Steve)</td>
+            <td><input type="text" placeholder="$ or %" /></td>
+            <td><input type="text" placeholder="Who pays Steve?" /></td>
+          </tr>
+          <tr>
+            <td>Lab net margin (remainder)</td>
+            <td><input type="text" placeholder="What's left?" /></td>
+            <td><input type="text" placeholder="Retained by lab" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="response-panel" style="margin-top:20px;">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s8"></div>Steve's notes on economics</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s8">
+          <div class="field-group">
+            <label class="field-label" for="s8-notes">Additional context, corrections or important nuances</label>
+            <textarea id="s8-notes" rows="5" placeholder="e.g. billing % varies by lab. Reference lab is only involved in genetics panels. Steve's economics come from X not Y. Clawback risk affects margins because…"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Most important observation about the economics</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s8-econ" id="s8-e1" value="agree" data-panel="s8" onchange="updateProgress()">
+              <label class="conf-label" for="s8-e1">Margins are workable at $1,200 avg</label>
+              <input type="radio" class="conf-opt" name="s8-econ" id="s8-e2" value="partial" data-panel="s8" onchange="updateProgress()">
+              <label class="conf-label" for="s8-e2">Margins are tight — volume is critical</label>
+              <input type="radio" class="conf-opt" name="s8-econ" id="s8-e3" value="disagree" data-panel="s8" onchange="updateProgress()">
+              <label class="conf-label" for="s8-e3">The model needs restructuring</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. BILLING -->
+    <div class="doc-section" id="s9">
+      <div class="section-header">
+        <span class="section-num">§ 9</span>
+        <h2>Billing</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's current understanding</div>
+        <div class="understanding-content">
+          <ul>
+            <li>Many laboratories use third-party billing administrators</li>
+            <li>Billing companies typically charge a percentage of collections</li>
+            <li>GKIM may eventually enter this market</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s9"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s9">
+          <div class="field-group">
+            <label class="field-label" for="s9-billing">Who currently performs billing for Steve's labs — and how are they compensated?</label>
+            <textarea id="s9-billing" rows="4" placeholder="e.g. Labs use [X company]. Typical rate is 6–8%. Some labs do in-house billing. Billing is lab-specific rather than centralised…"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Is centralised billing an opportunity?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s9-cent" id="s9-c1" value="agree" data-panel="s9" onchange="updateProgress()">
+              <label class="conf-label" for="s9-c1">Yes — significant opportunity</label>
+              <input type="radio" class="conf-opt" name="s9-cent" id="s9-c2" value="partial" data-panel="s9" onchange="updateProgress()">
+              <label class="conf-label" for="s9-c2">Possibly — worth exploring</label>
+              <input type="radio" class="conf-opt" name="s9-cent" id="s9-c3" value="disagree" data-panel="s9" onchange="updateProgress()">
+              <label class="conf-label" for="s9-c3">No — labs prefer their current arrangements</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. EXCLUSIVITY -->
+    <div class="doc-section" id="s10">
+      <div class="section-header">
+        <span class="section-num">§ 10</span>
+        <h2>Exclusivity</h2>
+      </div>
+      <p class="section-intro">Ian believes the parties are philosophically aligned on becoming long-term strategic partners. The purpose of this section is to understand what exclusivity actually means in practice — and what each party expects.</p>
+
+      <p style="font-size:13px; color:var(--ink-muted); margin-bottom:16px;">Please tick any exclusivity principle Steve considers important, and use the notes field to add nuance or corrections.</p>
+
+      <div class="exclusivity-item">
+        <input type="checkbox" class="excl-check" id="ex1">
+        <label class="excl-check-label" for="ex1">✓</label>
+        <div class="excl-content">
+          <div class="excl-title">Steve protection</div>
+          <div class="excl-desc">GMG and GKIM do not pursue Steve-introduced laboratories or marketing groups without Steve's involvement.</div>
+        </div>
+      </div>
+      <div class="exclusivity-item">
+        <input type="checkbox" class="excl-check" id="ex2">
+        <label class="excl-check-label" for="ex2">✓</label>
+        <div class="excl-content">
+          <div class="excl-title">Relationship protection</div>
+          <div class="excl-desc">Steve remains commercially involved in any opportunities he originates, for the life of those relationships.</div>
+        </div>
+      </div>
+      <div class="exclusivity-item">
+        <input type="checkbox" class="excl-check" id="ex3">
+        <label class="excl-check-label" for="ex3">✓</label>
+        <div class="excl-content">
+          <div class="excl-title">Reciprocal protection</div>
+          <div class="excl-desc">Steve introduces labs and marketing groups to GMG/GKIM; GMG/GKIM introduces opportunities to Steve. Neither side circumvents the other.</div>
+        </div>
+      </div>
+      <div class="exclusivity-item">
+        <input type="checkbox" class="excl-check" id="ex4">
+        <label class="excl-check-label" for="ex4">✓</label>
+        <div class="excl-content">
+          <div class="excl-title">Telemedicine exclusivity</div>
+          <div class="excl-desc">Steve does not actively build competing telemedicine relationships where GMG can reasonably perform the role.</div>
+        </div>
+      </div>
+      <div class="exclusivity-item">
+        <input type="checkbox" class="excl-check" id="ex5">
+        <label class="excl-check-label" for="ex5">✓</label>
+        <div class="excl-content">
+          <div class="excl-title">Ecosystem preferred partnership</div>
+          <div class="excl-desc">Steve and GMG/GKIM become the preferred partners across the whole ecosystem — labs and marketing groups deal with this partnership rather than fragmented providers.</div>
+        </div>
+      </div>
+
+      <div class="response-panel" style="margin-top:20px;">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s10"></div>Steve's response on exclusivity</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s10">
+          <div class="field-group">
+            <label class="field-label" for="s10-expectations">What does Steve expect from GMG and GKIM in return for exclusivity?</label>
+            <textarea id="s10-expectations" rows="4" placeholder="What commitments, protections or performance standards would Steve need to see?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s10-missing">Any exclusivity principle Ian has missed?</label>
+            <textarea id="s10-missing" rows="3" placeholder="What protection matters to Steve that isn't listed above?"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s10-redline">Any exclusivity principle on the list that Steve would not agree to?</label>
+            <textarea id="s10-redline" rows="3" placeholder="Any that Ian has listed which don't work from Steve's perspective?"></textarea>
+          </div>
+          <input type="radio" class="conf-opt" name="s10-conf" id="s10-conf" value="agree" data-panel="s10" onchange="updateProgress()" style="display:none">
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. FUTURE STATE -->
+    <div class="doc-section" id="s11">
+      <div class="section-header">
+        <span class="section-num">§ 11</span>
+        <h2>Future-State Vision</h2>
+      </div>
+      <div class="understanding">
+        <div class="understanding-label">Ian's preferred future state</div>
+        <div class="understanding-content" style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+          <div style="background:var(--cream);padding:12px;border-radius:2px;border:1px solid var(--rule);">
+            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">Steve</div>
+            <div style="font-size:13px;font-weight:500;">Strategic Business Development Partner</div>
+          </div>
+          <div style="background:var(--cream);padding:12px;border-radius:2px;border:1px solid var(--rule);">
+            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">ScreenMyGene</div>
+            <div style="font-size:13px;font-weight:500;">Preferred Screening & Qualification Layer</div>
+          </div>
+          <div style="background:var(--cream);padding:12px;border-radius:2px;border:1px solid var(--rule);">
+            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">GMG</div>
+            <div style="font-size:13px;font-weight:500;">Preferred Virtual PCP & Precision Medicine Provider</div>
+          </div>
+          <div style="background:var(--cream);padding:12px;border-radius:2px;border:1px solid var(--rule);">
+            <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:4px;">GKIM</div>
+            <div style="font-size:13px;font-weight:500;">Preferred Technology & Patient Operations Platform</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="response-panel" style="margin-top:20px;">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s11"></div>Steve's response</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s11">
+          <div class="field-group">
+            <label class="field-label">Does this future-state vision resonate?</label>
+            <div class="confidence-group">
+              <input type="radio" class="conf-opt" name="s11-conf" id="s11-agree" value="agree" data-panel="s11" onchange="updateProgress()">
+              <label class="conf-label" for="s11-agree">Yes — this is the vision</label>
+              <input type="radio" class="conf-opt" name="s11-conf" id="s11-partial" value="partial" data-panel="s11" onchange="updateProgress()">
+              <label class="conf-label" for="s11-partial">Broadly yes, with changes</label>
+              <input type="radio" class="conf-opt" name="s11-conf" id="s11-disagree" value="disagree" data-panel="s11" onchange="updateProgress()">
+              <label class="conf-label" for="s11-disagree">Different vision</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s11-vision">What does Steve's ideal future-state look like in 2–3 years?</label>
+            <textarea id="s11-vision" rows="5" placeholder="Revenue scale, number of labs, programme types, Steve's role, how much of this is Steve's day-to-day vs. delegated…"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. MOST IMPORTANT QUESTION -->
+    <div class="doc-section" id="s12">
+      <div class="section-header">
+        <span class="section-num">§ 12</span>
+        <h2>The Most Important Question</h2>
+      </div>
+      <div style="background:var(--cream); border:1px solid var(--rule); border-left:3px solid var(--ink); padding:20px 24px; margin-bottom:20px; border-radius:0 2px 2px 0;">
+        <p style="font-family:var(--serif); font-size:17px; color:var(--ink); line-height:1.5; font-style:italic;">If we were drawing the complete ecosystem map on a whiteboard — exactly who receives money from whom?</p>
+        <p style="font-size:12px; color:var(--ink-muted); margin-top:10px;">Until this question is answered completely, it will be difficult to finalise contracts, exclusivity, pricing, responsibilities or long-term strategy.</p>
+      </div>
+
+      <div class="response-panel">
+        <div class="response-panel-header" onclick="togglePanel(this)">
+          <div class="response-panel-title"><div class="panel-dot" id="dot-s12"></div>Steve's answer</div>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="response-panel-body" id="body-s12">
+          <div class="field-group">
+            <label class="field-label" for="s12-moneyflow">Walk through the full money flow — who pays whom, in what order, from the moment the payer reimburses the lab</label>
+            <textarea id="s12-moneyflow" rows="8" placeholder="e.g. Payer → Lab ($1,200). Lab pays Billing Co 7% ($84). Lab pays Marketing Group $175. Lab pays ScreenMyGene $X. Lab pays GMG $50. Lab pays GKIM $75. Steve receives $Y from [who?]. Lab retains remainder…"></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="s12-unknown">What parts of the money flow does Steve himself not yet have clarity on?</label>
+            <textarea id="s12-unknown" rows="4" placeholder="Any flows that are still being figured out, or that depend on decisions not yet made?"></textarea>
+          </div>
+          <input type="radio" class="conf-opt" name="s12-conf" id="s12-conf" value="agree" data-panel="s12" onchange="updateProgress()" style="display:none">
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /doc-body -->
+
+  <!-- SUBMIT -->
+  <div class="submit-row">
+    <div class="submit-note">When Steve has completed all sections, this document can be downloaded or shared with Ian as a structured response. Nothing here is a commitment — it is a discovery document.</div>
+    <button class="submit-btn" onclick="handleSubmit()">Mark as complete &rarr;</button>
+  </div>
+
+</div>
+
+<script>
+const TOTAL_PANELS = 14;
+
+function togglePanel(header) {
+  const body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function updateProgress() {
+  const panels = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12'];
+  let answered = 0;
+
+  panels.forEach(p => {
+    const radio = document.querySelector(`input[data-panel="${p}"]:checked`);
+    const textareas = document.querySelectorAll(`#body-${p} textarea`);
+    let hasText = false;
+    textareas.forEach(t => { if(t.value.trim().length > 0) hasText = true; });
+    if(radio || hasText) {
+      answered++;
+      const dot = document.getElementById(`dot-${p}`);
+      if(dot) dot.classList.add('filled');
+    } else {
+      const dot = document.getElementById(`dot-${p}`);
+      if(dot) dot.classList.remove('filled');
+    }
+  });
+
+  const extraPanels = [document.getElementById('s10-conf') && document.getElementById('s10-conf').checked,
+    document.getElementById('s12-conf') && document.getElementById('s12-conf').checked];
+
+  const pct = Math.round((answered / panels.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCount').textContent = answered + ' of ' + panels.length + ' sections responded';
+}
+
+document.querySelectorAll('textarea').forEach(t => {
+  t.addEventListener('input', updateProgress);
+});
+
+function handleSubmit() {
+  const panels = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12'];
+  let filled = 0;
+  panels.forEach(p => {
+    const radio = document.querySelector(`input[data-panel="${p}"]:checked`);
+    const textareas = document.querySelectorAll(`#body-${p} textarea`);
+    let hasText = false;
+    textareas.forEach(t => { if(t.value.trim().length > 0) hasText = true; });
+    if(radio || hasText) filled++;
+  });
+
+  if(filled < panels.length * 0.5) {
+    alert('Fewer than half the sections have been responded to. Please review the amber panels and add Steve\'s input before marking complete.');
+    return;
+  }
+  alert('Thank you, Steve. Ian will review your responses and prepare a revised version of this document with agreed positions highlighted.');
+}
+</script>
+</body>
+</html>

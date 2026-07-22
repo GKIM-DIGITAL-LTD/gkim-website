@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMG + GKIM — Marketing Objectives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark:#0A0A09; --bg-light:#F2F2F2; --bg-accent:#FFDD00;
+  --surface-dark:#202020; --surface-mid:#161616; --surface-white:#FFFFFF;
+  --text-on-dark:#FFFFFF; --text-on-dark-muted:#D6D6D6; --text-on-dark-dim:rgba(255,255,255,0.38);
+  --text-on-light:#202020; --text-on-light-muted:#5C5C5C;
+  --border-on-dark:#5C5C5C; --border-strong:#333533; --border-accent:#FFDD00;
+  --chalk-warm:#EDE9E0; --chalk-mid:#D4CFC2;
+  --type-display:'League Gothic',Impact,'Arial Narrow',sans-serif;
+  --type-body:'Figtree','Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--type-body);background:var(--bg-dark);color:var(--text-on-dark);overflow-x:hidden;line-height:1.65}
+
+/* ── HEADER ── */
+.gear-header{height:64px;background:var(--bg-dark);border-bottom:1px solid var(--border-on-dark);display:flex;align-items:center;padding:0 40px;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header-brand{display:flex;align-items:center;gap:12px}
+.logo-text{font-family:var(--type-display);font-size:1.5rem;color:var(--text-on-dark);letter-spacing:0.06em}
+.logo-text span{color:var(--bg-accent)}
+.hdivider{width:1px;height:20px;background:var(--border-on-dark)}
+.app-name{font-family:var(--type-display);font-size:1rem;letter-spacing:0.06em;color:var(--text-on-dark-muted);text-transform:uppercase}
+.header-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;background:var(--bg-accent);color:var(--text-on-light);padding:4px 12px}
+
+/* ── HERO ── */
+.hero{background:var(--bg-dark);padding:64px 40px 56px;max-width:1120px;margin:0 auto}
+.eyebrow{font-size:0.68rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:14px}
+.hero-title{font-family:var(--type-display);font-size:clamp(3rem,6vw,6rem);line-height:1.0;color:var(--text-on-dark);margin-bottom:20px}
+.hero-title span{color:var(--bg-accent)}
+.hero-body{font-size:1.05rem;color:var(--text-on-dark-muted);max-width:720px;line-height:1.7}
+
+/* ── SECTION WRAPPER ── */
+.section{padding:56px 40px;max-width:1120px;margin:0 auto}
+.section-rule{border:none;border-top:1px solid var(--border-on-dark);margin:0}
+
+/* ── POSITIONING STATEMENT ── */
+.positioning{background:var(--surface-dark);border-left:4px solid var(--bg-accent);padding:32px 40px;margin:0}
+.positioning__label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:12px}
+.positioning__text{font-family:var(--type-display);font-size:clamp(1.5rem,3vw,2.4rem);line-height:1.2;color:var(--text-on-dark)}
+.positioning__text span{color:var(--bg-accent)}
+
+/* ── TWO LAYER BLOCK ── */
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:0}
+@media(max-width:680px){.layers{grid-template-columns:1fr}}
+.layer{padding:28px 32px}
+.layer--gmg{background:var(--bg-accent)}
+.layer--gkim{background:var(--surface-dark);border:1px solid var(--border-on-dark)}
+.layer__eyebrow{font-size:0.62rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:8px}
+.layer--gmg .layer__eyebrow{color:var(--text-on-light-muted)}
+.layer--gkim .layer__eyebrow{color:var(--bg-accent)}
+.layer__title{font-family:var(--type-display);font-size:2rem;line-height:1;margin-bottom:10px}
+.layer--gmg .layer__title{color:var(--text-on-light)}
+.layer--gkim .layer__title{color:var(--text-on-dark)}
+.layer__desc{font-size:0.85rem;line-height:1.6}
+.layer--gmg .layer__desc{color:var(--text-on-light-muted)}
+.layer--gkim .layer__desc{color:var(--text-on-dark-muted)}
+
+/* ── SECTION HEADING ── */
+.section-heading{margin-bottom:32px}
+.section-heading .eyebrow{margin-bottom:8px}
+.section-heading h2{font-family:var(--type-display);font-size:clamp(2rem,4vw,3.5rem);line-height:1;color:var(--text-on-dark)}
+.section-heading h2 span{color:var(--bg-accent)}
+
+/* ── STAKEHOLDER CARDS ── */
+.stakeholder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px}
+.scard{background:var(--surface-dark);border:1px solid var(--border-on-dark);display:flex;flex-direction:column}
+.scard__head{padding:18px 22px 14px;border-bottom:1px solid var(--border-on-dark);display:flex;gap:16px;align-items:flex-start}
+.scard__num{font-family:var(--type-display);font-size:3rem;line-height:1;color:var(--bg-accent);flex-shrink:0;margin-top:-4px}
+.scard__meta{}
+.scard__priority{font-size:0.58rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px}
+.scard__title{font-family:var(--type-display);font-size:1.3rem;line-height:1.1;color:var(--text-on-dark)}
+.scard__body{padding:14px 22px 18px;flex:1;display:flex;flex-direction:column;gap:12px}
+.scard__row-label{font-size:0.6rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:3px}
+.scard__row-text{font-size:0.8rem;color:var(--text-on-dark-muted);line-height:1.5}
+.scard__tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.tag{font-size:0.58rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border-on-dark);color:var(--text-on-dark-muted);padding:3px 8px}
+.tag--accent{border-color:var(--bg-accent);color:var(--bg-accent)}
+.scard__footer{padding:8px 22px;border-top:1px solid var(--border-on-dark);font-size:0.6rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase}
+.priority-highest{color:var(--bg-accent)}
+.priority-core{color:#8BCFFF}
+.priority-high-future{color:#B8F0A0}
+.priority-future{color:var(--text-on-dark-muted)}
+.priority-low{color:var(--border-on-dark)}
+
+/* ── NOT THIS ── */
+.not-this{background:var(--surface-mid);border:1px solid var(--border-on-dark);padding:40px}
+.not-this__grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:24px}
+@media(max-width:680px){.not-this__grid{grid-template-columns:1fr}}
+.not-col{padding:24px 28px}
+.not-col--no{background:#1a0a0a;border:1px solid #4a1a1a}
+.not-col--yes{background:#0a1a0a;border:1px solid #1a4a1a}
+.not-col__label{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px}
+.not-col--no .not-col__label{color:#ff6b6b}
+.not-col--yes .not-col__label{color:#6bff8e}
+.not-col__item{font-size:0.85rem;color:var(--text-on-dark-muted);line-height:1.6;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.not-col__item:last-child{border-bottom:none}
+
+/* ── CLOSING STATEMENT ── */
+.closing{background:var(--bg-accent);padding:56px 40px;text-align:center}
+.closing__label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-on-light-muted);margin-bottom:16px}
+.closing__text{font-family:var(--type-display);font-size:clamp(1.6rem,3.5vw,2.8rem);line-height:1.15;color:var(--text-on-light);max-width:860px;margin:0 auto}
+
+/* full-bleed wrappers */
+.full-dark{background:var(--bg-dark)}
+.full-surface{background:var(--surface-dark)}
+.full-accent{background:var(--bg-accent)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="gear-header">
+  <div class="header-brand">
+    <div class="logo-text">GEARS<span>&#x2122;</span></div>
+    <div class="hdivider"></div>
+    <div class="app-name">Marketing Objectives</div>
+  </div>
+  <div class="header-tag">GMG + GKIM &#x2014; 2025</div>
+</header>
+
+<!-- HERO -->
+<div class="full-dark">
+  <div class="hero">
+    <p class="eyebrow">Strategic Positioning &#x2014; GMG + GKIM</p>
+    <h1 class="hero-title">WHAT WE ARE<br><span>MARKETING.</span><br>AND TO WHOM.</h1>
+    <p class="hero-body">GMG is the clinical provider network. GKIM is the operating and technology layer. Together, they allow medical solution providers and marketing partners to route patients into a compliant, longitudinal, precision-primary-care model &#x2014; where medical solutions are prescribed only when clinically appropriate.</p>
+  </div>
+</div>
+
+<!-- POSITIONING STATEMENT -->
+<div style="background:var(--surface-dark)">
+  <div class="positioning">
+    <div class="positioning__label">Core Positioning Statement</div>
+    <div class="positioning__text">GMG + GKIM is a <span>clinical decision and longitudinal care ecosystem</span> &#x2014; not a lead-generation company, and not a testing approval engine.</div>
+  </div>
+</div>
+
+<!-- TWO LAYERS -->
+<div style="background:var(--bg-dark);padding:40px 40px 0;max-width:1120px;margin:0 auto">
+  <p class="eyebrow">The Two-Layer Model</p>
+</div>
+<div style="max-width:1120px;margin:0 auto;padding:0 40px 56px">
+  <div class="layers">
+    <div class="layer layer--gmg">
+      <div class="layer__eyebrow">Clinical Layer</div>
+      <div class="layer__title">GMG</div>
+      <div class="layer__desc">The clinical provider network. Independent physician evaluation, medical necessity assessment, prescription and referral where appropriate, and ongoing longitudinal patient management. The trusted clinical home into which patients are directed.</div>
+    </div>
+    <div class="layer layer--gkim">
+      <div class="layer__eyebrow">Operating + Technology Layer</div>
+      <div class="layer__title">GKIM</div>
+      <div class="layer__desc">The operating system behind the clinical layer. Workflow design, CRM integration, documentation infrastructure, AI-supported onboarding, consent capture, policy logic, program routing, reporting, and operational coordination. The infrastructure that makes the clinical model scalable.</div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- STAKEHOLDER CARDS -->
+<div class="full-dark">
+  <div class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Customer Stakeholder Hierarchy</p>
+      <h2>WHO WE ARE<br><span>MARKETING TO.</span></h2>
+    </div>
+    <div class="stakeholder-grid">
+
+      <!-- 1 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">01</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-highest">&#x25CF; Highest Priority</div>
+            <div class="scard__title">Medical Solution Providers</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">GKIM commercial + technical layer. GMG clinical layer.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Reimbursable products but no compliant patient flow, weak clinical justification, audit risk, poor documentation quality, low longitudinal retention.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">Independent clinical evaluation, medical necessity assessment, prescription/referral infrastructure, and a scalable operating layer to support it.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag tag--accent">Genetic / PGx Labs</span>
+            <span class="tag tag--accent">RPM Vendors</span>
+            <span class="tag tag--accent">DME Suppliers</span>
+            <span class="tag">Diagnostics</span>
+            <span class="tag">Home Testing</span>
+            <span class="tag">Sleep Testing</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-highest">&#x25CF; Highest Priority &#x2014; Direct Revenue</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">02</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-highest">&#x25CF; Highest Priority</div>
+            <div class="scard__title">Marketing Organisations</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">GKIM primarily. GMG as the clinical destination.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Can generate patient interest but lack a trusted clinical endpoint, compliant patient journey, durable monetisation, and multiple downstream programs per patient.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">CRM integration, attribution, patient journey workflows, AI-supported onboarding, consent capture, recording governance, and program-routing infrastructure.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag tag--accent">Medicare Marketers</span>
+            <span class="tag tag--accent">Call Centres</span>
+            <span class="tag tag--accent">Lead Generators</span>
+            <span class="tag">Affiliate Networks</span>
+            <span class="tag">Senior Health Publishers</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-highest">&#x25CF; Highest Priority &#x2014; Patient Flow Control</div>
+      </div>
+
+      <!-- 3 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">03</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-core">&#x25CF; Core Long-Term Value</div>
+            <div class="scard__title">Patients</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">GMG directly.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Fragmented care, medication burden, chronic-condition uncertainty, limited PCP access, poor care coordination, confusion after testing.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">Virtual PCP care, Precision Primary Care Assessment, HRA, medication review, care-gap identification, PGx or other testing where clinically appropriate, care plans, and longitudinal management.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag tag--accent">Medicare Patients</span>
+            <span class="tag">Chronic Condition</span>
+            <span class="tag">Polypharmacy</span>
+            <span class="tag">Precision Medicine</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-core">&#x25CF; Core &#x2014; Long-Term Value Base</div>
+      </div>
+
+      <!-- 4 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">04</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-high-future">&#x25CF; High Future Value</div>
+            <div class="scard__title">Medical Solution Aggregators</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">GKIM + GMG together.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Many products but no coherent clinical routing layer, no unified patient journey, no common documentation model, no longitudinal care strategy.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">A unified clinical decision and operating layer for multi-solution healthcare programs: program design, workflow orchestration, rules logic, data capture, integrations, reporting.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag tag--accent">Multi-Solution Operators</span>
+            <span class="tag">MSO-like Distributors</span>
+            <span class="tag">Multi-Program Healthcare</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-high-future">&#x25CF; High Future Value &#x2014; Scale Opportunity</div>
+      </div>
+
+      <!-- 5 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">05</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-future">&#x25CF; Future Strategic</div>
+            <div class="scard__title">Risk-Bearing Organisations</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">GMG + GKIM (later stage).</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Poor adherence, unmanaged chronic conditions, avoidable utilisation, fragmented care, weak patient engagement, limited precision-medicine infrastructure.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">Longitudinal virtual PCP coverage, care-gap intelligence, workflow automation, reporting, and outcome-oriented operating infrastructure. Requires stronger outcomes evidence first.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag">Medicare Advantage Plans</span>
+            <span class="tag">ACOs</span>
+            <span class="tag">Value-Based Care Groups</span>
+            <span class="tag">Risk-Bearing MSOs</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-future">&#x25CF; Future Strategic &#x2014; Not Immediate</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="scard">
+        <div class="scard__head">
+          <div class="scard__num">06</div>
+          <div class="scard__meta">
+            <div class="scard__priority priority-low">&#x25CF; Low Priority</div>
+            <div class="scard__title">Provider Groups</div>
+          </div>
+        </div>
+        <div class="scard__body">
+          <div>
+            <div class="scard__row-label">Who sells</div>
+            <div class="scard__row-text">Mostly partnership, not customer relationship.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">Their pain</div>
+            <div class="scard__row-text">Need patient volume, better infrastructure, documentation support, and higher-value care models. Not the main buyer today.</div>
+          </div>
+          <div>
+            <div class="scard__row-label">What we offer</div>
+            <div class="scard__row-text">Possible collaboration around clinical capacity, staffing, specialty coverage, or delegated care delivery. Useful only where they help expand GMG provider-network capacity.</div>
+          </div>
+          <div class="scard__tags">
+            <span class="tag">Physician Groups</span>
+            <span class="tag">NP Networks</span>
+            <span class="tag">Telehealth Groups</span>
+            <span class="tag">Specialist Groups</span>
+          </div>
+        </div>
+        <div class="scard__footer priority-low">&#x25CF; Low Priority &#x2014; Capacity Partnership Only</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="section-rule">
+
+<!-- NOT THIS -->
+<div class="full-dark">
+  <div class="section">
+    <div class="section-heading">
+      <p class="eyebrow">Positioning Boundaries</p>
+      <h2>WHAT THIS IS<br><span>NOT.</span></h2>
+    </div>
+    <div class="not-this">
+      <div class="not-this__grid">
+        <div class="not-col not-col--no">
+          <div class="not-col__label">&#x2717; Do not position GMG as</div>
+          <div class="not-col__item">A lead-generation company</div>
+          <div class="not-col__item">A testing approval engine</div>
+          <div class="not-col__item">A telehealth clinic that stamps orders</div>
+          <div class="not-col__item">A genetics-only or episodic-care provider</div>
+          <div class="not-col__item">A marketing partner&#x2019;s fulfillment arm</div>
+        </div>
+        <div class="not-col not-col--yes">
+          <div class="not-col__label">&#x2713; Position GMG + GKIM as</div>
+          <div class="not-col__item">A clinical decision and longitudinal care ecosystem</div>
+          <div class="not-col__item">A precision-primary-care orchestration platform</div>
+          <div class="not-col__item">An independent clinical layer with scalable operating infrastructure</div>
+          <div class="not-col__item">A compliant, Medicare-focused, genetics-enabled virtual PCP model</div>
+          <div class="not-col__item">A partner that makes medical solution providers commercially viable and compliant</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing__label">GEARS&#x2122; &#x2014; The One-Sentence Version</div>
+  <div class="closing__text">GMG and GKIM together give medical solution providers and marketing partners a <strong>compliant, longitudinal, precision-primary-care clinical destination</strong> &#x2014; where patients are managed over time and medical solutions are deployed only when clinically appropriate.</div>
+</div>
+
+</body>
+</html>

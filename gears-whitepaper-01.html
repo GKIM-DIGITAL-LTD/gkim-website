@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Living Business — GEARS White Paper No. 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0A0A09;
+    --bg2: #111110;
+    --bg3: #1A1A18;
+    --yellow: #FFDD00;
+    --yellow-dim: rgba(255,221,0,0.1);
+    --yellow-mid: rgba(255,221,0,0.4);
+    --light: #F2F2F2;
+    --mid: #999990;
+    --secondary: #3A3A3A;
+    --border: rgba(255,221,0,0.15);
+    --text: #D8D8D0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 230px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-logo {
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+  }
+
+  .wp-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-logo .wp-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 14px;
+    color: var(--light);
+    line-height: 1.3;
+  }
+
+  #sidebar nav a {
+    display: block;
+    padding: 7px 20px;
+    font-size: 11.5px;
+    color: var(--mid);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+
+  #sidebar nav a:hover, #sidebar nav a.active {
+    color: var(--yellow);
+    border-left-color: var(--yellow);
+    background: var(--yellow-dim);
+  }
+
+  #sidebar nav .nav-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--secondary);
+    text-transform: uppercase;
+    padding: 14px 20px 4px;
+  }
+
+  /* MAIN */
+  #main { margin-left: 230px; }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 230px; right: 0;
+    height: 2px;
+    background: var(--yellow);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 200;
+  }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 72px;
+    overflow: hidden;
+  }
+
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.45;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+  }
+
+  .wp-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wp-number::after {
+    content: '';
+    height: 1px;
+    width: 48px;
+    background: var(--yellow);
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(42px, 5.5vw, 76px);
+    color: var(--light);
+    line-height: 1.02;
+    margin-bottom: 14px;
+  }
+
+  .hero-title em { color: var(--yellow); font-style: italic; }
+
+  .hero-subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 48px;
+  }
+
+  .hero-thesis {
+    border-left: 3px solid var(--yellow);
+    padding-left: 24px;
+    max-width: 520px;
+  }
+
+  .hero-thesis p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--light);
+    line-height: 1.5;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 88px 72px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 3vw, 46px);
+    color: var(--light);
+    line-height: 1.12;
+    margin-bottom: 32px;
+    max-width: 700px;
+  }
+
+  .section-title em { color: var(--yellow); font-style: italic; }
+
+  .prose {
+    font-size: 15.5px;
+    color: var(--text);
+    max-width: 640px;
+    margin-bottom: 20px;
+    line-height: 1.72;
+  }
+
+  .prose strong { color: var(--light); font-weight: 600; }
+
+  /* TRIO */
+  .trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 44px 0;
+    max-width: 900px;
+  }
+
+  .trio-item {
+    background: var(--bg2);
+    padding: 28px;
+  }
+
+  .trio-item .era {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .trio-item .era-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--light);
+    margin-bottom: 10px;
+  }
+
+  .trio-item.active .era-title { color: var(--yellow); }
+
+  .trio-item .era-desc {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  .trio-item .era-asset {
+    font-size: 11px;
+    color: var(--yellow);
+    margin-top: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    border-left: 1px solid var(--border);
+    margin: 40px 0 40px 16px;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 14px 0 14px 28px;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 22px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+  }
+
+  .timeline-item:last-child::before {
+    background: var(--yellow);
+    box-shadow: 0 0 10px var(--yellow-mid);
+  }
+
+  .timeline-item .t-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--mid);
+    min-width: 210px;
+    padding-top: 2px;
+  }
+
+  .timeline-item:last-child .t-label { color: var(--yellow); }
+
+  .timeline-item .t-desc {
+    font-size: 13px;
+    color: var(--mid);
+    padding-top: 4px;
+    max-width: 360px;
+  }
+
+  /* CALLOUT */
+  .callout {
+    border: 1px solid rgba(255,221,0,0.5);
+    background: var(--yellow-dim);
+    padding: 26px 30px;
+    margin: 36px 0;
+    max-width: 640px;
+  }
+
+  .callout .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .callout p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--light);
+    line-height: 1.5;
+  }
+
+  /* TWO-COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 44px;
+    margin: 36px 0;
+    max-width: 840px;
+  }
+
+  .two-col h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--light);
+    margin-bottom: 10px;
+  }
+
+  .two-col p {
+    font-size: 13.5px;
+    color: var(--mid);
+    line-height: 1.65;
+  }
+
+  /* BKS STACK */
+  .bks-stack {
+    margin: 44px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 760px;
+  }
+
+  .bks-layer {
+    display: grid;
+    grid-template-columns: 48px 1fr 220px;
+    align-items: stretch;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+  }
+
+  .bks-layer:hover, .bks-layer.open {
+    border-color: rgba(255,221,0,0.7);
+    background: var(--bg3);
+  }
+
+  .bks-layer .layer-num {
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    border-right: 1px solid var(--border);
+    padding: 18px 0;
+    flex-shrink: 0;
+  }
+
+  .bks-layer.open .layer-num { color: var(--yellow); }
+
+  .bks-layer .layer-main {
+    padding: 18px 22px;
+    border-right: 1px solid var(--border);
+  }
+
+  .bks-layer .layer-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--light);
+    margin-bottom: 2px;
+  }
+
+  .bks-layer .layer-purpose {
+    font-size: 12px;
+    color: var(--mid);
+  }
+
+  .bks-layer .layer-tags {
+    padding: 18px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    align-content: center;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    padding: 3px 7px;
+    border: 1px solid var(--border);
+    color: var(--mid);
+  }
+
+  .layer-detail {
+    grid-column: 1 / -1;
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .layer-detail.open { max-height: 260px; }
+
+  .layer-detail-inner {
+    padding: 20px 20px 20px 70px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .layer-detail h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .layer-detail ul { list-style: none; }
+
+  .layer-detail ul li {
+    color: var(--mid);
+    margin-bottom: 4px;
+    font-size: 12.5px;
+  }
+
+  .layer-detail ul li::before {
+    content: '→ ';
+    color: var(--yellow);
+    font-size: 10px;
+  }
+
+  /* CANVAS CONTAINERS */
+  .canvas-container {
+    margin: 44px 0;
+    position: relative;
+    max-width: 700px;
+  }
+
+  .canvas-container canvas {
+    width: 100%;
+    display: block;
+  }
+
+  /* GRILLME */
+  .grillme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 36px 0;
+    max-width: 820px;
+  }
+
+  .gm-item {
+    background: var(--bg2);
+    padding: 24px;
+    transition: background 0.2s;
+  }
+
+  .gm-item:hover { background: var(--bg3); }
+
+  .gm-item .gm-q {
+    font-family: 'DM Serif Display', serif;
+    font-size: 19px;
+    color: var(--yellow);
+    margin-bottom: 7px;
+  }
+
+  .gm-item .gm-desc {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  /* WEIGHT GRID */
+  .weight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 36px 0;
+    max-width: 760px;
+  }
+
+  .weight-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 22px;
+  }
+
+  .weight-item .w-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: var(--yellow);
+  }
+
+  .weight-item .w-factor {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--light);
+    margin-bottom: 4px;
+  }
+
+  .weight-item .w-sub {
+    font-size: 11.5px;
+    color: var(--mid);
+    line-height: 1.45;
+  }
+
+  /* CONCLUSION */
+  #conclusion {
+    padding: 88px 72px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, var(--bg) 0%, #0e0e0c 100%);
+  }
+
+  .conclusion-quote {
+    border-left: 3px solid var(--yellow);
+    padding-left: 28px;
+    max-width: 620px;
+    margin: 44px 0;
+  }
+
+  .conclusion-quote p {
+    font-family: 'DM Serif Display', serif;
+    font-size: 21px;
+    font-style: italic;
+    color: var(--light);
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .conclusion-quote cite {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--yellow);
+    font-style: normal;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 48px;
+  }
+
+  footer .f-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+  }
+
+  footer .f-brand span { color: var(--yellow); }
+
+  @media (max-width: 900px) {
+    #sidebar { display: none; }
+    #main { margin-left: 0; }
+    #progress-bar { left: 0; }
+    .section, #conclusion { padding: 56px 28px; }
+    #hero { padding: 56px 28px; }
+    .grillme-grid, .trio, .two-col { grid-template-columns: 1fr; }
+    .weight-grid { grid-template-columns: 1fr 1fr; }
+    .bks-layer { grid-template-columns: 40px 1fr; }
+    .bks-layer .layer-tags { display: none; }
+    footer { padding: 32px 28px; flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="wp-label">GEARS · White Paper No. 1</div>
+    <div class="wp-title">The Living Business</div>
+  </div>
+  <nav>
+    <div class="nav-section">Foundations</div>
+    <a href="#hero">Overview</a>
+    <a href="#exec-summary">Three Eras</a>
+    <a href="#intro">Why Approaches Fail</a>
+    <a href="#evolution">Information to Knowledge</a>
+    <a href="#kos">Business Knowledge OS</a>
+    <div class="nav-section">Architecture</div>
+    <a href="#bks">The BK Stack</a>
+    <a href="#digital-twin">Living Digital Twin</a>
+    <a href="#gears-exec">GEARS Blueprint</a>
+    <div class="nav-section">Governance</div>
+    <a href="#continuous">Continuous Evolution</a>
+    <a href="#negotiated">Negotiated Evolution</a>
+    <a href="#grillme">Grill-Me Framework</a>
+    <a href="#weighting">Knowledge Weighting</a>
+    <div class="nav-section">Synthesis</div>
+    <a href="#self-evolving">Self-Evolving Enterprise</a>
+    <a href="#conclusion">Conclusion</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="wp-number">GEARS White Paper No. 1</div>
+    <h1 class="hero-title">The <em>Living</em> Business</h1>
+    <p class="hero-subtitle">A Knowledge Operating System for AI-Native Enterprises</p>
+    <div class="hero-thesis">
+      <p>The fundamental asset of an AI-native enterprise is not its software stack, nor its workflows — but its continuously evolving body of structured knowledge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXEC SUMMARY -->
+<section class="section" id="exec-summary">
+  <div class="section-eyebrow">Executive Summary</div>
+  <h2 class="section-title">Three Eras of <em>Business</em></h2>
+  <div class="trio">
+    <div class="trio-item">
+      <div class="era">Era I</div>
+      <div class="era-title">Traditional</div>
+      <div class="era-desc">Organisations accumulate documents. Knowledge lives in filing cabinets, inboxes and people's heads — fragile, inconsistent, and perishable.</div>
+      <div class="era-asset">PRIMARY ASSET → Documents</div>
+    </div>
+    <div class="trio-item">
+      <div class="era">Era II</div>
+      <div class="era-title">Modern</div>
+      <div class="era-desc">Organisations accumulate software. Processes are encoded in systems, but intent is buried in code and config — opaque to the people running the business.</div>
+      <div class="era-asset">PRIMARY ASSET → Software</div>
+    </div>
+    <div class="trio-item active">
+      <div class="era">Era III · Now</div>
+      <div class="era-title">AI-Native</div>
+      <div class="era-desc">Organisations accumulate knowledge. The business itself becomes a continuously evolving, executable body of structured understanding — the Knowledge Operating System.</div>
+      <div class="era-asset">PRIMARY ASSET → Knowledge</div>
+    </div>
+  </div>
+  <p class="prose">This paper introduces the <strong>Business Knowledge Operating System (Business KOS)</strong> — the architectural foundation from which a continuously evolving Digital Twin emerges — and shows how the GEARS framework provides the executable blueprint through which knowledge is transformed into operational reality.</p>
+</section>
+
+<!-- INTRO -->
+<section class="section" id="intro">
+  <div class="section-eyebrow">Section 1 · Introduction</div>
+  <h2 class="section-title">Why Current Approaches <em>Fail</em></h2>
+  <p class="prose">Every generation of information technology has promised to make organisations smarter. Each has delivered tools that store more, process faster, and report better. None has solved the deeper problem: knowledge decays, context is lost, and the gap between what a business understands and how it actually operates widens continuously.</p>
+  <div class="two-col">
+    <div>
+      <h3>The Staleness Problem</h3>
+      <p>Documents become stale. Process maps become obsolete. Digital twins are snapshots rather than living systems. AI assistants answer questions but rarely improve the business itself.</p>
+    </div>
+    <div>
+      <h3>The Conversion Gap</h3>
+      <p>Organisations possess knowledge but lack a mechanism to continuously convert that knowledge into better business architecture. The insight exists; the path from insight to redesign does not.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-label">Central Thesis</div>
+    <p>An AI-native enterprise is one that continuously transforms knowledge into improved business design.</p>
+  </div>
+</section>
+
+<!-- EVOLUTION -->
+<section class="section" id="evolution">
+  <div class="section-eyebrow">Section 2 · Historical Context</div>
+  <h2 class="section-title">From Information Systems to <em>Knowledge Systems</em></h2>
+  <p class="prose">Every previous generation of technology focused on storing information rather than evolving understanding. The shift to Business Knowledge Operating Systems is not incremental — it represents a change in what technology is fundamentally for.</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="t-label">Paper</div>
+      <div class="t-desc">Physical records. Knowledge bound to documents and individual memory — inaccessible at scale.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">Databases</div>
+      <div class="t-desc">Structured data storage. Queryable but context-free — the meaning of data was stored in people's heads.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">ERP Systems</div>
+      <div class="t-desc">Process automation. Business logic encoded in software — powerful but opaque to the humans running it.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">Business Intelligence</div>
+      <div class="t-desc">Reporting and dashboards. Excellent answers to known questions; silent on questions not yet formed.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">Knowledge Graphs</div>
+      <div class="t-desc">Semantic relationships. Meaning starts to emerge — but graph evolution remains entirely manual.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">AI Assistants</div>
+      <div class="t-desc">Conversational knowledge access. Reactive and query-driven — not architecturally aware of the business.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="t-label">Business Knowledge Operating Systems</div>
+      <div class="t-desc">Continuously evolving, executable understanding of the enterprise — the business as a learning system.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS KOS -->
+<section class="section" id="kos">
+  <div class="section-eyebrow">Section 3 · Core Concept</div>
+  <h2 class="section-title">What is a Business Knowledge <em>Operating System?</em></h2>
+  <p class="prose">A Business KOS operates across three domains simultaneously — Reality, Understanding, and Design — and it is crucial to understand their relationship correctly. The Digital Twin is not the operating system. It is an <em>emergent product</em> of the operating system.</p>
+  <div class="canvas-container" style="height: 380px;">
+    <canvas id="kos-canvas" height="380"></canvas>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Reality</h3>
+      <p>The operational evidence layer. Everything that actually happens in the business — events, transactions, telemetry — continuously observed and ingested as the ground truth against which understanding is tested.</p>
+    </div>
+    <div>
+      <h3>Understanding</h3>
+      <p>The interpretive layer. Patterns detected, hypotheses formed, insights surfaced — not from raw data alone, but from operational evidence read against the full Business Knowledge Stack.</p>
+    </div>
+  </div>
+  <div style="max-width: 380px;">
+    <h3 style="font-family:'DM Serif Display',serif; font-size:19px; color:var(--light); margin-bottom:10px;">Design</h3>
+    <p style="font-size:13.5px; color:var(--mid); line-height:1.65;">The architectural layer. The current best hypothesis about how the business should be structured — encoded in GEARS, continuously updated as understanding improves, deployed as operational architecture.</p>
+  </div>
+</section>
+
+<!-- BKS -->
+<section class="section" id="bks">
+  <div class="section-eyebrow">Section 4 · The Architecture</div>
+  <h2 class="section-title">The Business Knowledge <em>Stack</em></h2>
+  <p class="prose">The BKS is the canonical layered architecture beneath the Business Knowledge Operating System — and the formal name for what underpins every future GEARS paper. Each layer has distinct purpose, knowledge structure, primary sources, consumers, and evolution mechanisms. <strong>Click any layer to expand it.</strong></p>
+
+  <div class="bks-stack" id="bks-stack">
+
+    <div class="bks-layer" data-layer="1">
+      <div class="layer-num">L1</div>
+      <div class="layer-main">
+        <div class="layer-name">Industry Intelligence</div>
+        <div class="layer-purpose">Understand the external world</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Research</span><span class="tag">Regulations</span><span class="tag">Competitors</span><span class="tag">Analysts</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Strategic Questions Answered</h4>
+            <ul>
+              <li>Where is our market heading?</li>
+              <li>What do competitors do differently?</li>
+              <li>What regulations constrain or enable us?</li>
+              <li>What does the science say about our domain?</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Primary Sources</h4>
+            <ul>
+              <li>Research publications &amp; FOI requests</li>
+              <li>Analyst reports &amp; market data</li>
+              <li>Customer &amp; partner signals</li>
+              <li>Regulatory filings &amp; guidance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="2">
+      <div class="layer-num">L2</div>
+      <div class="layer-main">
+        <div class="layer-name">Enterprise Knowledge</div>
+        <div class="layer-purpose">Understand ourselves</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Capabilities</span><span class="tag">People</span><span class="tag">Products</span><span class="tag">Contracts</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Primary Entities</h4>
+            <ul>
+              <li>People, teams &amp; culture</li>
+              <li>Assets, technology &amp; infrastructure</li>
+              <li>Products, services &amp; offerings</li>
+              <li>Contracts, partners &amp; dependencies</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Graph Characteristics</h4>
+            <ul>
+              <li>Internal relationship-dense ontology</li>
+              <li>Capability-centred structure</li>
+              <li>Culture &amp; process encoded</li>
+              <li>Evolves continuously with the organisation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="3a">
+      <div class="layer-num">3A</div>
+      <div class="layer-main">
+        <div class="layer-name">Business Architecture</div>
+        <div class="layer-purpose">The GEARS Value Graph — how value flows</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Value Graph</span><span class="tag">GEARS Blueprint</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Purpose</h4>
+            <ul>
+              <li>Map value creation pathways</li>
+              <li>Define GEAR interdependencies</li>
+              <li>Encode strategic intent structurally</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Key Artefacts</h4>
+            <ul>
+              <li>The GEARS recursive value graph</li>
+              <li>Hub entities &amp; topology patterns</li>
+              <li>The executable business blueprint</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="3b">
+      <div class="layer-num">3B</div>
+      <div class="layer-main">
+        <div class="layer-name">Operational Design</div>
+        <div class="layer-purpose">Detailed definition of every GEAR</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Policies</span><span class="tag">Metrics</span><span class="tag">AI</span><span class="tag">Risks</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>GEAR Specification</h4>
+            <ul>
+              <li>Inputs &amp; outputs formally defined</li>
+              <li>Policies &amp; controls encoded</li>
+              <li>Automation thresholds set</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Governance Dimensions</h4>
+            <ul>
+              <li>Risk registers per GEAR</li>
+              <li>AI agent authority boundaries</li>
+              <li>Human escalation paths</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="3c">
+      <div class="layer-num">3C</div>
+      <div class="layer-main">
+        <div class="layer-name">Domain Intelligence</div>
+        <div class="layer-purpose">Expertise required to execute every GEAR</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Best Practice</span><span class="tag">Standards</span><span class="tag">Playbooks</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Knowledge Types</h4>
+            <ul>
+              <li>External domain knowledge</li>
+              <li>Industry best practice &amp; standards</li>
+              <li>Regulatory compliance knowledge</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Application</h4>
+            <ul>
+              <li>Playbooks per operational workflow</li>
+              <li>Research grounding for decisions</li>
+              <li>Contextual AI agent prompting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="4">
+      <div class="layer-num">L4</div>
+      <div class="layer-main">
+        <div class="layer-name">Operational Evidence</div>
+        <div class="layer-purpose">Everything that actually happens</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Events</span><span class="tag">Transactions</span><span class="tag">Telemetry</span><span class="tag">Logs</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Signal Types</h4>
+            <ul>
+              <li>Business events &amp; transactions</li>
+              <li>Communications &amp; interactions</li>
+              <li>System telemetry, logs &amp; observations</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Role in the KOS</h4>
+            <ul>
+              <li>Closes the feedback loop continuously</li>
+              <li>Validates or falsifies design hypotheses</li>
+              <li>Triggers improvement proposals</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="5">
+      <div class="layer-num">L5</div>
+      <div class="layer-main">
+        <div class="layer-name">Decision Memory</div>
+        <div class="layer-purpose">The most overlooked business asset</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">ADRs</span><span class="tag">Hypotheses</span><span class="tag">Trade-offs</span><span class="tag">Lessons</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>What Is Captured</h4>
+            <ul>
+              <li>Why decisions were made — not just what was decided</li>
+              <li>Architecture Decision Records</li>
+              <li>Rejected alternatives with reasoning</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Why It Matters</h4>
+            <ul>
+              <li>Prevents costly repetition of mistakes</li>
+              <li>Preserves institutional reasoning across time</li>
+              <li>Grounds future hypothesis testing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bks-layer" data-layer="6">
+      <div class="layer-num">L6</div>
+      <div class="layer-main">
+        <div class="layer-name">Simulation Models</div>
+        <div class="layer-purpose">"What happens if…"</div>
+      </div>
+      <div class="layer-tags">
+        <span class="tag">Forecasts</span><span class="tag">Monte Carlo</span><span class="tag">Scenarios</span>
+      </div>
+      <div class="layer-detail">
+        <div class="layer-detail-inner">
+          <div>
+            <h4>Model Types</h4>
+            <ul>
+              <li>Financial models &amp; forecasts</li>
+              <li>Monte Carlo scenario analysis</li>
+              <li>Stress testing &amp; digital experiments</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Role</h4>
+            <ul>
+              <li>De-risk architectural changes before deployment</li>
+              <li>Validate improvement proposals quantitatively</li>
+              <li>Explore edge cases safely without operational impact</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- DIGITAL TWIN -->
+<section class="section" id="digital-twin">
+  <div class="section-eyebrow">Section 5 · The Digital Twin</div>
+  <h2 class="section-title">The Living <em>Digital Twin</em></h2>
+  <p class="prose">The Digital Twin is no longer a static snapshot of the business at a point in time. It is the continuously integrated expression of all knowledge layers — updated in real time as operational evidence flows upward and design decisions propagate downward. The twin does not describe what the business <em>was</em>; it embodies what the business currently understands itself to be.</p>
+  <div class="canvas-container" style="height: 440px;">
+    <canvas id="lifecycle-canvas" height="440"></canvas>
+  </div>
+  <div class="callout">
+    <div class="callout-label">Key Distinction</div>
+    <p>The Digital Twin is not the operating system. It is an emergent product of the operating system — the living output of a knowledge architecture that never stops learning.</p>
+  </div>
+</section>
+
+<!-- GEARS EXEC -->
+<section class="section" id="gears-exec">
+  <div class="section-eyebrow">Section 6 · GEARS</div>
+  <h2 class="section-title">GEARS as the <em>Executable</em> Business Blueprint</h2>
+  <p class="prose">There is a critical distinction that must be held clearly. Knowledge systems know. GEARS executes. Knowledge alone does not create value — execution creates value. The relationship between them is causal and directional.</p>
+  <div class="callout">
+    <div class="callout-label">Defining Statement</div>
+    <p>GEARS is the current executable hypothesis of the enterprise — the structured bet the organisation is making about how value should be created, continuously refined as evidence accumulates.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>The Knowledge System</h3>
+      <p>Maintains the Business Knowledge Stack. Ingests evidence, forms understanding, surfaces insights. It knows — but knowing alone changes nothing. The KOS feeds intelligence into the blueprint, continuously.</p>
+    </div>
+    <div>
+      <h3>The GEARS Blueprint</h3>
+      <p>Translates understanding into operational architecture. Every GEAR is a falsifiable hypothesis about how a unit of value should be created. The blueprint is versioned, deployed, observed, and updated — an executable scientific theory of the business.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTINUOUS EVOLUTION -->
+<section class="section" id="continuous">
+  <div class="section-eyebrow">Section 7 · The Lifecycle</div>
+  <h2 class="section-title">Continuous Business <em>Evolution</em></h2>
+  <p class="prose">Rather than editing the blueprint directly — a change process that bypasses scrutiny — every observation becomes a structured Change Proposal. The business evolves through a defined lifecycle, from observation through to deployment, never skipping the steps that build confidence and reduce risk.</p>
+  <div class="canvas-container" style="height: 380px;">
+    <canvas id="loop-canvas" height="380"></canvas>
+  </div>
+</section>
+
+<!-- NEGOTIATED EVOLUTION -->
+<section class="section" id="negotiated">
+  <div class="section-eyebrow">Section 8 · Governance</div>
+  <h2 class="section-title">The Architecture of <em>Negotiated</em> Evolution</h2>
+  <p class="prose">This section addresses what may be the most consequential — and least discussed — challenge in AI-native business design. The business should never evolve because one AI says so. Evolution is negotiated. This is not a limitation; it is a feature that makes AI-driven improvement trustworthy at scale.</p>
+  <div class="canvas-container" style="height: 320px;">
+    <canvas id="neg-canvas" height="320"></canvas>
+  </div>
+  <p class="prose" style="margin-top: 32px;">Each participant contributes evidence weighted by authority and confidence. No single voice — human or AI — dominates. The negotiation surface is explicit, auditable, and contestable. The governance layer is architectural, not procedural.</p>
+  <div class="two-col">
+    <div>
+      <h3>What Each Participant Contributes</h3>
+      <p>Evidence, confidence levels, domain authority, and accountability. Every input is traceable to its source, weighted by its reliability, and considered alongside competing inputs from independent sources.</p>
+    </div>
+    <div>
+      <h3>Why This Is Foundational</h3>
+      <p>Autonomous AI systems that unilaterally redesign business architecture are unsafe. Negotiated evolution provides the governance layer that makes AI-driven improvement trustworthy — and scalable beyond any individual human's oversight capacity.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GRILL-ME -->
+<section class="section" id="grillme">
+  <div class="section-eyebrow">Section 9 · Governance Framework</div>
+  <h2 class="section-title">The <em>Grill-Me</em> Framework</h2>
+  <p class="prose">Every proposed change to the business blueprint passes through the Grill-Me Framework — a disciplined architectural review process, not an informal conversation. Nine interrogatives must be satisfied before any change proceeds to simulation or approval.</p>
+  <div class="grillme-grid">
+    <div class="gm-item">
+      <div class="gm-q">Truth</div>
+      <div class="gm-desc">Is the observation correct? What is the quality and provenance of the evidence? Is there measurement error, sampling bias, or an interpretation problem that undermines the premise?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Scope</div>
+      <div class="gm-desc">Where does this apply? Is the issue local to one GEAR, one process, one context — or does it propagate across the architecture in ways that require broader consideration?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Causality</div>
+      <div class="gm-desc">What caused this? Is the observed effect genuinely the result of the proposed cause, or are there confounding variables that produce the same signal without the same remedy?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Alternatives</div>
+      <div class="gm-desc">Could another explanation fit the evidence equally well? What hypotheses were considered and discarded? On what grounds were they rejected, and are those grounds sound?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Strategic Impact</div>
+      <div class="gm-desc">Why does this matter strategically? Does the proposed change align with the enterprise's current directional commitments, or does it require those to be revisited first?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Cost</div>
+      <div class="gm-desc">How expensive is change — in implementation effort, in disruption to operational continuity, in transition risk, and in opportunity cost relative to other improvements available?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Risk</div>
+      <div class="gm-desc">What could break? What are the second and third-order effects? Which dependent GEARs are affected by this architectural modification, and how do their stakeholders view the change?</div>
+    </div>
+    <div class="gm-item">
+      <div class="gm-q">Confidence</div>
+      <div class="gm-desc">How certain are we — on a calibrated scale? What is the probability this change produces the intended effect without producing significant unintended effects of comparable magnitude?</div>
+    </div>
+    <div class="gm-item" style="grid-column: 1 / -1;">
+      <div class="gm-q">Reversibility</div>
+      <div class="gm-desc">Can we experiment safely? Is the change reversible, partially reversible, or effectively one-way? The answer materially changes the approval threshold, timeline, and simulation requirements.</div>
+    </div>
+  </div>
+  <p class="prose">The Grill-Me Framework is the governance layer of the Business KOS — the structured mechanism through which negotiated evolution is operationalised at the level of individual architectural decisions.</p>
+</section>
+
+<!-- KNOWLEDGE WEIGHTING -->
+<section class="section" id="weighting">
+  <div class="section-eyebrow">Section 10 · Evidence Architecture</div>
+  <h2 class="section-title">Knowledge <em>Weighting</em></h2>
+  <p class="prose">Not all knowledge should carry equal influence over architectural decisions. A single confidence score is too blunt an instrument. Instead, every proposed change carries an <strong>evidence profile</strong> — a multi-dimensional assessment that reflects the independent contribution of each factor to the overall case for change.</p>
+  <div class="weight-grid">
+    <div class="weight-item"><div class="w-bar" style="width:90%"></div><div class="w-factor">Source Authority</div><div class="w-sub">Credibility of the originating source</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:85%"></div><div class="w-factor">Evidence Quality</div><div class="w-sub">Rigour of measurement and methodology</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:70%"></div><div class="w-factor">Recency</div><div class="w-sub">Temporal relevance of the signal</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:80%"></div><div class="w-factor">Independent Agreement</div><div class="w-sub">Consensus across unrelated sources</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:95%"></div><div class="w-factor">Operational Validation</div><div class="w-sub">Live evidence from business execution</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:75%"></div><div class="w-factor">Strategic Relevance</div><div class="w-sub">Alignment with current directional bets</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:88%"></div><div class="w-factor">Financial Impact</div><div class="w-sub">Magnitude of value or cost affected</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:92%"></div><div class="w-factor">Regulatory Significance</div><div class="w-sub">Compliance or legal weight of the signal</div></div>
+    <div class="weight-item"><div class="w-bar" style="width:65%"></div><div class="w-factor">Confidence Level</div><div class="w-sub">Calibrated uncertainty of the claim</div></div>
+  </div>
+</section>
+
+<!-- SELF-EVOLVING -->
+<section class="section" id="self-evolving">
+  <div class="section-eyebrow">Section 11 · Synthesis</div>
+  <h2 class="section-title">Towards a <em>Self-Evolving</em> Enterprise</h2>
+  <p class="prose">Bringing all elements together, the AI-native enterprise operates on a continuous six-stage cycle — not as a project lifecycle with a start and end, but as a persistent operational rhythm that runs alongside everything else the business does.</p>
+  <div class="bks-stack" style="max-width: 540px;">
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">①</div>
+      <div class="layer-main"><div class="layer-name">Observe</div><div class="layer-purpose">Ingest operational evidence continuously from all BKS layers</div></div>
+      <div class="layer-tags"></div>
+    </div>
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">②</div>
+      <div class="layer-main"><div class="layer-name">Understand</div><div class="layer-purpose">Detect patterns, form hypotheses, surface candidate insights</div></div>
+      <div class="layer-tags"></div>
+    </div>
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">③</div>
+      <div class="layer-main"><div class="layer-name">Negotiate</div><div class="layer-purpose">Apply the Grill-Me framework across all participant voices</div></div>
+      <div class="layer-tags"></div>
+    </div>
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">④</div>
+      <div class="layer-main"><div class="layer-name">Redesign</div><div class="layer-purpose">Update the GEARS blueprint with approved architectural changes</div></div>
+      <div class="layer-tags"></div>
+    </div>
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">⑤</div>
+      <div class="layer-main"><div class="layer-name">Deploy</div><div class="layer-purpose">Propagate changes through the operational architecture</div></div>
+      <div class="layer-tags"></div>
+    </div>
+    <div class="bks-layer" style="cursor:default;">
+      <div class="layer-num" style="color:var(--yellow);">⑥</div>
+      <div class="layer-main"><div class="layer-name">Learn</div><div class="layer-purpose">Record to Decision Memory; close the feedback loop</div></div>
+      <div class="layer-tags"></div>
+    </div>
+  </div>
+  <p class="prose">The business becomes an adaptive knowledge system rather than a static organisational chart. There is no final state — only a continuously improving approximation of optimal design, in a world that keeps changing.</p>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="section-eyebrow" style="padding: 0 72px 32px;">Conclusion</div>
+  <div style="padding: 0 72px; max-width: 1060px;">
+    <h2 class="section-title">The Destination <em>Is Movement</em></h2>
+    <p class="prose">The competitive advantage of the AI-native enterprise is not possession — of data, of AI capability, of better software. It is velocity of structured learning: the rate at which insight becomes architecture, and architecture becomes operational improvement.</p>
+    <div class="conclusion-quote">
+      <p>Businesses do not compete because they possess more information. They compete because they learn faster, redesign themselves more intelligently, and execute those improvements more effectively.</p>
+    </div>
+    <p class="prose">The purpose of a Business Knowledge Operating System is therefore not merely to document an enterprise, but to enable it to become a continuously learning, continuously improving, continuously value-creating system.</p>
+    <div class="conclusion-quote">
+      <p>The Digital Twin is not the destination. It is the living expression of an enterprise whose knowledge, architecture and operations evolve together.</p>
+      <cite>— GEARS White Paper No. 1</cite>
+    </div>
+    <div class="callout" style="margin-top:44px;">
+      <div class="callout-label">Foundation for the GEARS Series</div>
+      <p>This paper establishes the intellectual foundation for all subsequent GEARS papers. Papers on the GEAR graph, observability, the compiler, execution adapters, instrumentation, and AI-native operations each build upon the Business Knowledge Stack defined here, without needing to re-establish first principles.</p>
+    </div>
+  </div>
+  <footer>
+    <div class="f-brand">GEARS · <span>GKIM Digital</span> · White Paper Series</div>
+    <div class="f-brand" style="font-size:10px; letter-spacing:0.08em;">Knowledge Engineering &amp; AI Transformation</div>
+  </footer>
+</section>
+
+</main>
+
+<script>
+// PROGRESS BAR + SCROLLSPY
+const progressBar = document.getElementById('progress-bar');
+const navLinks = document.querySelectorAll('#sidebar nav a');
+const sections = document.querySelectorAll('[id]');
+
+window.addEventListener('scroll', () => {
+  const st = window.scrollY;
+  const dh = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.transform = `scaleX(${st / dh})`;
+  let current = '';
+  sections.forEach(s => { if (st >= s.offsetTop - 130) current = s.id; });
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+// BKS ACCORDION
+document.querySelectorAll('.bks-layer[data-layer]').forEach(layer => {
+  layer.addEventListener('click', () => {
+    const detail = layer.querySelector('.layer-detail');
+    const isOpen = detail.classList.contains('open');
+    document.querySelectorAll('.layer-detail.open').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.bks-layer.open').forEach(l => l.classList.remove('open'));
+    if (!isOpen) { detail.classList.add('open'); layer.classList.add('open'); }
+  });
+});
+
+// HERO CANVAS
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes, edges, beads;
+  function resize(){
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+    nodes = Array.from({length:16}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.35, vy: (Math.random()-.5)*.35,
+      r: Math.random()*3+1.5
+    }));
+    edges = [];
+    for(let i=0;i<nodes.length;i++) for(let j=i+1;j<nodes.length;j++) if(Math.random()<0.22) edges.push([i,j]);
+    beads = edges.map(() => ({ t: Math.random(), speed: .002+Math.random()*.003 }));
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n => { n.x+=n.vx; n.y+=n.vy; if(n.x<0||n.x>W)n.vx*=-1; if(n.y<0||n.y>H)n.vy*=-1; });
+    edges.forEach(([a,b],i) => {
+      const na=nodes[a], nb=nodes[b];
+      ctx.beginPath(); ctx.moveTo(na.x,na.y); ctx.lineTo(nb.x,nb.y);
+      ctx.strokeStyle='rgba(255,221,0,0.07)'; ctx.lineWidth=1; ctx.stroke();
+      const bd=beads[i]; bd.t=(bd.t+bd.speed)%1;
+      const bx=na.x+(nb.x-na.x)*bd.t, by=na.y+(nb.y-na.y)*bd.t;
+      ctx.beginPath(); ctx.arc(bx,by,2.5,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,221,0,.75)'; ctx.fill();
+    });
+    nodes.forEach(n => { ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle='rgba(255,221,0,.2)'; ctx.fill(); });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
+
+// KOS DIAGRAM
+(function(){
+  const canvas = document.getElementById('kos-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function draw(){
+    const W = canvas.width = canvas.offsetWidth;
+    const H = canvas.height = canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2, cy=H/2;
+    const radii=[H*.42, H*.29, H*.16];
+    const fills=['rgba(255,221,0,.09)','rgba(255,221,0,.18)','rgba(255,221,0,.3)'];
+    const strokes=['rgba(255,221,0,.2)','rgba(255,221,0,.45)','rgba(255,221,0,.85)'];
+    radii.forEach((r,i) => {
+      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.fillStyle=fills[i]; ctx.fill();
+      ctx.strokeStyle=strokes[i]; ctx.lineWidth=1; ctx.stroke();
+    });
+    const tiers=[
+      {label:'REALITY', sub:'Operational Evidence', yr:.1},
+      {label:'UNDERSTANDING', sub:'Pattern → Insight', yr:.38},
+      {label:'DESIGN', sub:'GEARS Blueprint', yr:.5}
+    ];
+    tiers.forEach(({label,sub,yr},i) => {
+      ctx.font=`${600} ${i===2?12:10}px "JetBrains Mono",monospace`;
+      ctx.textAlign='center';
+      ctx.fillStyle=i===2?'#FFDD00':'rgba(255,221,0,.85)';
+      ctx.fillText(label, cx, H*yr);
+      ctx.font='11.5px Inter,sans-serif';
+      ctx.fillStyle='rgba(242,242,242,.45)';
+      ctx.fillText(sub, cx, H*yr+16);
+    });
+    ctx.font='italic bold 13px "DM Serif Display",serif';
+    ctx.fillStyle='rgba(255,221,0,.6)';
+    ctx.fillText('Business KOS', cx, cy+40);
+
+    // Arrow annotation
+    const ax=cx+radii[0]+28, ay=cy;
+    ctx.font='10px "JetBrains Mono",monospace';
+    ctx.fillStyle='rgba(255,221,0,.6)';
+    ctx.textAlign='left';
+    ctx.fillText('↗ Living Digital Twin', ax-12, ay-10);
+    ctx.font='11px Inter,sans-serif';
+    ctx.fillStyle='rgba(153,153,144,.6)';
+    ctx.fillText('emerges from KOS', ax-12, ay+8);
+  }
+  window.addEventListener('resize', draw); draw();
+})();
+
+// LIFECYCLE CANVAS
+(function(){
+  const canvas = document.getElementById('lifecycle-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+  const steps=['Knowledge Layers','Business Knowledge OS','Living Digital Twin','Business Decisions','Business Operation','Operational Evidence','Knowledge Update'];
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    const boxW=Math.min(240,W*.42), boxH=40;
+    const gap=(H-steps.length*boxH)/(steps.length+1);
+    const cx=W/2;
+    t+=0.011;
+    const af=(t%steps.length), ai=Math.floor(af), prog=af-ai;
+    steps.forEach((step,i) => {
+      const y=gap*(i+1)+boxH*i;
+      const isActive=i===ai;
+      ctx.fillStyle=isActive?'rgba(255,221,0,.16)':'rgba(26,26,24,.85)';
+      ctx.strokeStyle=isActive?'rgba(255,221,0,.9)':'rgba(255,221,0,.18)';
+      ctx.lineWidth=isActive?1.5:1;
+      ctx.beginPath(); ctx.rect(cx-boxW/2,y,boxW,boxH); ctx.fill(); ctx.stroke();
+      ctx.font=`${isActive?'500':'400'} 13px Inter,sans-serif`;
+      ctx.textAlign='center';
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(153,153,144,.8)';
+      ctx.fillText(step, cx, y+boxH/2+5);
+      if(i<steps.length-1){
+        const ay=y+boxH, ey=y+boxH+gap;
+        ctx.strokeStyle='rgba(255,221,0,.18)'; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.moveTo(cx,ay); ctx.lineTo(cx,ey); ctx.stroke();
+        if(i===ai){ const by=ay+(ey-ay)*prog; ctx.beginPath(); ctx.arc(cx,by,3.5,0,Math.PI*2); ctx.fillStyle='rgba(255,221,0,.9)'; ctx.fill(); }
+        ctx.fillStyle='rgba(255,221,0,.3)';
+        ctx.beginPath(); ctx.moveTo(cx-5,ey-6); ctx.lineTo(cx+5,ey-6); ctx.lineTo(cx,ey); ctx.fill();
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// EVOLUTION LOOP CANVAS
+(function(){
+  const canvas = document.getElementById('loop-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+  const steps=[
+    'Observation','Difference Detected','Candidate Insight',
+    'Candidate Improvement','Evidence Gathering','Discussion',
+    'Simulation','Approval','Blueprint Update','Deployment'
+  ];
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*.36;
+    t+=0.006;
+    const ai=Math.floor(t%steps.length);
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,221,0,.12)'; ctx.lineWidth=1.5; ctx.stroke();
+    const ba=-Math.PI/2+(t%steps.length)/steps.length*Math.PI*2;
+    ctx.beginPath(); ctx.arc(cx+Math.cos(ba)*R, cy+Math.sin(ba)*R, 5,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.9)'; ctx.fill();
+    steps.forEach((s,i) => {
+      const angle=-Math.PI/2+i/steps.length*Math.PI*2;
+      const nx=cx+Math.cos(angle)*R, ny=cy+Math.sin(angle)*R;
+      const isActive=i===ai;
+      ctx.beginPath(); ctx.arc(nx,ny,isActive?7:4,0,Math.PI*2);
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(255,221,0,.3)'; ctx.fill();
+      const lx=cx+Math.cos(angle)*(R+38), ly=cy+Math.sin(angle)*(R+38);
+      const ca=Math.cos(angle);
+      ctx.font=`${isActive?'500 12px':'11px'} Inter,sans-serif`;
+      ctx.textAlign=ca>0.12?'left':ca<-0.12?'right':'center';
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(153,153,144,.8)';
+      ctx.fillText(s, lx, ly+4);
+    });
+    ctx.font='italic 13px "DM Serif Display",serif';
+    ctx.textAlign='center'; ctx.fillStyle='rgba(255,221,0,.55)';
+    ctx.fillText('Continuous', cx, cy-8); ctx.fillText('Evolution', cx, cy+12);
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// NEGOTIATION DIAGRAM
+(function(){
+  const canvas = document.getElementById('neg-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let t=0;
+  const participants=[
+    {label:'Humans', angle:-Math.PI/2},
+    {label:'AI Agents', angle:-Math.PI/2+Math.PI*2/6},
+    {label:'Domain Experts', angle:-Math.PI/2+Math.PI*4/6},
+    {label:'External Evidence', angle:-Math.PI/2+Math.PI*6/6},
+    {label:'Simulation Engines', angle:-Math.PI/2+Math.PI*8/6},
+    {label:'Operational Evidence', angle:-Math.PI/2+Math.PI*10/6},
+  ];
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth, H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2, cy=H/2, R=Math.min(W,H)*.34;
+    t+=0.007;
+    participants.forEach((p,i) => {
+      const nx=cx+Math.cos(p.angle)*R, ny=cy+Math.sin(p.angle)*R;
+      const pulse=(t*2.5+i*.9)%1;
+      const px=cx+(nx-cx)*pulse, py=cy+(ny-cy)*pulse;
+      ctx.strokeStyle='rgba(255,221,0,.13)'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny); ctx.stroke();
+      ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2); ctx.fillStyle='rgba(255,221,0,.8)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(nx,ny,7,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,221,0,.18)'; ctx.strokeStyle='rgba(255,221,0,.6)'; ctx.lineWidth=1;
+      ctx.fill(); ctx.stroke();
+      const lx=cx+Math.cos(p.angle)*(R+34), ly=cy+Math.sin(p.angle)*(R+34);
+      const ca=Math.cos(p.angle);
+      ctx.font='12px Inter,sans-serif';
+      ctx.textAlign=ca>0.1?'left':ca<-0.1?'right':'center';
+      ctx.fillStyle='rgba(153,153,144,.9)';
+      ctx.fillText(p.label, lx, ly+4);
+    });
+    ctx.beginPath(); ctx.arc(cx,cy,22,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.14)'; ctx.strokeStyle='#FFDD00'; ctx.lineWidth=1.5;
+    ctx.fill(); ctx.stroke();
+    ctx.font='bold 8.5px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillStyle='#FFDD00';
+    ctx.fillText('CHANGE', cx, cy-4); ctx.fillText('PROPOSAL', cx, cy+8);
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMG Stakeholder Map — GEARS™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark:#0A0A09; --bg-light:#F2F2F2; --bg-accent:#FFDD00;
+  --surface-dark:#202020; --surface-white:#FFFFFF;
+  --text-on-dark:#FFFFFF; --text-on-dark-muted:#D6D6D6;
+  --text-on-light:#202020; --text-on-light-muted:#5C5C5C;
+  --border-on-dark:#5C5C5C; --border-strong:#333533;
+  --type-display:'League Gothic',Impact,'Arial Narrow',sans-serif;
+  --type-body:'Figtree','Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--type-body);background:var(--bg-dark);color:var(--text-on-dark);overflow-x:hidden}
+
+.gear-header{height:64px;background:var(--bg-dark);border-bottom:1px solid var(--border-on-dark);display:flex;align-items:center;padding:0 32px;justify-content:space-between;position:sticky;top:0;z-index:100}
+.gear-header__brand{display:flex;align-items:center;gap:12px}
+.logo-text{font-family:var(--type-display);font-size:1.6rem;color:var(--text-on-dark);letter-spacing:0.06em}
+.logo-text span{color:var(--bg-accent)}
+.divider{width:1px;height:20px;background:var(--border-on-dark)}
+.app-name{font-family:var(--type-display);font-size:1rem;letter-spacing:0.06em;color:var(--text-on-dark-muted);text-transform:uppercase}
+.gear-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;background:var(--bg-accent);color:var(--text-on-light);padding:4px 10px}
+
+.hero{background:var(--bg-dark);padding:48px 40px 0;text-align:center}
+.eyebrow{font-size:0.68rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:12px}
+.hero-title{font-family:var(--type-display);font-size:clamp(2.8rem,5vw,5rem);line-height:1;color:var(--text-on-dark);margin-bottom:8px}
+.hero-title span{color:var(--bg-accent)}
+.hero-sub{font-size:0.9rem;color:var(--text-on-dark-muted);max-width:640px;margin:0 auto 40px;line-height:1.6}
+
+.center-section{display:flex;justify-content:center;padding:16px 40px 0}
+.center-node{background:var(--bg-accent);color:var(--text-on-light);padding:20px 40px;text-align:center;border:3px solid var(--border-strong);max-width:520px;width:100%}
+.center-node__eyebrow{font-size:0.6rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-on-light-muted);margin-bottom:4px}
+.center-node__title{font-family:var(--type-display);font-size:2.2rem;line-height:1;color:var(--text-on-light)}
+.center-node__desc{font-size:0.72rem;color:var(--text-on-light-muted);margin-top:6px;line-height:1.5}
+
+.connector{display:flex;justify-content:center}
+.connector__line{width:2px;height:32px;background:var(--bg-accent)}
+
+.grid-section{padding:32px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px}
+
+.card{background:var(--surface-dark);border:1px solid var(--border-on-dark);display:flex;flex-direction:column}
+.card__header{padding:16px 20px 14px;border-bottom:2px solid var(--border-on-dark);display:flex;align-items:flex-start;gap:14px}
+.card__number{font-family:var(--type-display);font-size:2.8rem;line-height:1;color:var(--bg-accent);flex-shrink:0;margin-top:-4px}
+.card__eyebrow{font-size:0.58rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-on-dark-muted);margin-bottom:2px}
+.card__title{font-family:var(--type-display);font-size:1.4rem;line-height:1.1;color:var(--text-on-dark)}
+.card__body{padding:14px 20px 16px;flex:1}
+.card__why{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:6px}
+.card__reason{font-size:0.8rem;color:var(--text-on-dark-muted);line-height:1.5;margin-bottom:10px}
+.tag-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{font-size:0.6rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:transparent;border:1px solid var(--border-on-dark);color:var(--text-on-dark-muted);padding:3px 8px}
+.tag--accent{border-color:var(--bg-accent);color:var(--bg-accent)}
+.card__tier{padding:8px 20px;border-top:1px solid var(--border-on-dark);font-size:0.6rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase}
+.tier-1{color:var(--bg-accent)}
+.tier-2{color:#8BCFFF}
+.tier-3{color:var(--text-on-dark-muted)}
+
+.framing{background:var(--surface-dark);border-top:3px solid var(--bg-accent);padding:40px;text-align:center}
+.framing__label{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:16px}
+.framing__quote{font-family:var(--type-display);font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.2;color:var(--text-on-dark);max-width:820px;margin:0 auto}
+.framing__quote span{color:var(--bg-accent)}
+</style>
+</head>
+<body>
+
+<header class="gear-header">
+  <div class="gear-header__brand">
+    <div class="logo-text">GEARS<span>&#x2122;</span></div>
+    <div class="divider"></div>
+    <div class="app-name">Stakeholder Map</div>
+  </div>
+  <div class="gear-tag">GMG Ecosystem &#x2014; 2025</div>
+</header>
+
+<div class="hero">
+  <p class="eyebrow">GEARS&#x2122; &#x2014; Ecosystem Analysis</p>
+  <h1 class="hero-title">GMG <span>STAKEHOLDER</span> MAP</h1>
+  <p class="hero-sub">8 stakeholder groups that determine whether the GMG precision-primary-care model succeeds &#x2014; mapped by commercial priority and strategic horizon.</p>
+</div>
+
+<div class="center-section">
+  <div class="center-node">
+    <div class="center-node__eyebrow">Orchestration Layer</div>
+    <div class="center-node__title">GMG PLATFORM</div>
+    <div class="center-node__desc">Precision-primary-care routing &amp; orchestration &#x2014; connecting patient acquisition, clinical decision-making, medical solution providers, and longitudinal care workflows into a single Medicare-focused ecosystem.</div>
+  </div>
+</div>
+
+<div class="connector"><div class="connector__line"></div></div>
+
+<div class="grid-section">
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">01</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Direct Revenue</div>
+        <div class="card__title">Medical Solution Providers</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they engage GMG</div>
+      <div class="card__reason">Medical necessity determination, patient acquisition, clinical workflow, longitudinal retention, and documentation. Fund acquisition because they profit from medically appropriate utilisation.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Genetic Testing Labs</span>
+        <span class="tag tag--accent">RPM Providers</span>
+        <span class="tag tag--accent">DME Suppliers</span>
+        <span class="tag">Diagnostic Providers</span>
+        <span class="tag">Home Testing</span>
+        <span class="tag">Medication Support</span>
+        <span class="tag">OneOme / Genomind / Tempus</span>
+      </div>
+    </div>
+    <div class="card__tier tier-1">&#x25CF; Tier 1 &#x2014; Direct Revenue Creator</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">02</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Patient Acquisition</div>
+        <div class="card__title">Marketing Ecosystem</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they engage GMG</div>
+      <div class="card__reason">More products to monetise, better patient lifetime value, more stable economics. GMG becomes the clinical destination that makes their traffic commercially viable.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Medicare Agencies</span>
+        <span class="tag tag--accent">Medicare Call Centres</span>
+        <span class="tag tag--accent">Lead Generators</span>
+        <span class="tag">Affiliate / CPA Networks</span>
+        <span class="tag">Senior Health Publishers</span>
+        <span class="tag">Digital Agencies</span>
+      </div>
+    </div>
+    <div class="card__tier tier-1">&#x25CF; Tier 1 &#x2014; Direct Revenue Creator</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">03</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Clinical Delivery</div>
+        <div class="card__title">Provider Ecosystem</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they engage GMG</div>
+      <div class="card__reason">Technology, workflows, documentation infrastructure, and additional patient volume. Often overlooked &#x2014; becomes critical as the longitudinal model matures.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Independent Providers</span>
+        <span class="tag tag--accent">MSOs</span>
+        <span class="tag">PCP Organisations</span>
+        <span class="tag">NP Networks</span>
+        <span class="tag">Specialist Groups</span>
+        <span class="tag">Telemedicine Groups</span>
+      </div>
+    </div>
+    <div class="card__tier tier-2">&#x25CF; Tier 2 &#x2014; Scale Enabler</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">04</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Strategic Future</div>
+        <div class="card__title">Payers</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they engage GMG</div>
+      <div class="card__reason">Better adherence, better outcomes, reduced costs. Not immediate targets &#x2014; but eventually the most transformative channel as value-based care relationships mature.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Medicare</span>
+        <span class="tag">Medicare Advantage Plans</span>
+        <span class="tag">ACOs</span>
+        <span class="tag">Value-Based Care Orgs</span>
+      </div>
+    </div>
+    <div class="card__tier tier-3">&#x25CF; Tier 3 &#x2014; Strategic Future Growth</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">05</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Care Execution</div>
+        <div class="card__title">Care Delivery Partners</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they engage GMG</div>
+      <div class="card__reason">Help GMG execute care plans as the longitudinal model expands beyond the clinical consultation &#x2014; home, pharmacy, behavioural, specialist. Essential for whole-patient outcomes.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Home Health</span>
+        <span class="tag tag--accent">Pharmacy Networks</span>
+        <span class="tag">Care Coordination</span>
+        <span class="tag">Behavioural Health</span>
+        <span class="tag">Specialist Networks</span>
+        <span class="tag">Nursing Networks</span>
+      </div>
+    </div>
+    <div class="card__tier tier-2">&#x25CF; Tier 2 &#x2014; Scale Enabler</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">06</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Platform Capability</div>
+        <div class="card__title">Technology Vendors</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they matter</div>
+      <div class="card__reason">Strategic capability providers that determine whether GMG can operate as an AI-native, workflow-driven, policy-driven platform &#x2014; rather than merely a telehealth clinic.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">AI Vendors</span>
+        <span class="tag tag--accent">Voice AI (Web Spiders)</span>
+        <span class="tag tag--accent">Billing (Stedi)</span>
+        <span class="tag">EMR Providers</span>
+        <span class="tag">Decision Support (WK)</span>
+        <span class="tag">CRM (GoHighLevel)</span>
+      </div>
+    </div>
+    <div class="card__tier tier-2">&#x25CF; Tier 2 &#x2014; Scale Enabler</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">07</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Operational Integrity</div>
+        <div class="card__title">Compliance &amp; Governance</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Why they matter</div>
+      <div class="card__reason">As GMG grows, this becomes increasingly strategic &#x2014; not just a back-office function. Medicare trajectory makes audit integrity and accreditation a competitive differentiator.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Healthcare Attorneys</span>
+        <span class="tag">Compliance Firms</span>
+        <span class="tag">Audit Firms</span>
+        <span class="tag">Accreditation Bodies</span>
+        <span class="tag">Risk Management</span>
+      </div>
+    </div>
+    <div class="card__tier tier-2">&#x25CF; Tier 2 &#x2014; Scale Enabler</div>
+  </div>
+
+  <div class="card">
+    <div class="card__header">
+      <div class="card__number">08</div>
+      <div class="card__title-block">
+        <div class="card__eyebrow">Market Context</div>
+        <div class="card__title">Competitive Landscape</div>
+      </div>
+    </div>
+    <div class="card__body">
+      <div class="card__why">Four distinct categories</div>
+      <div class="card__reason">AI vs non-AI is not a useful strategic distinction. The real differentiation is model type. Telehealth clinics are the least threatening; care navigation platforms are the most comparable.</div>
+      <div class="tag-list">
+        <span class="tag tag--accent">Care Navigation Platforms</span>
+        <span class="tag">Virtual PCP (Oak St, ChenMed)</span>
+        <span class="tag">Telehealth Clinics (RCE, TMS)</span>
+        <span class="tag">Solution-Specific (RPM, PGx)</span>
+        <span class="tag">Firefly / Included Health</span>
+      </div>
+    </div>
+    <div class="card__tier tier-3">&#x25CF; Competitive Intelligence</div>
+  </div>
+
+</div>
+
+<div class="framing">
+  <div class="framing__label">GEARS&#x2122; &#x2014; The Upframed View</div>
+  <div class="framing__quote">GMG is building a <span>precision-primary-care routing &amp; orchestration platform</span> &#x2014; connecting acquisition channels, clinical decision-makers, medical solution providers, and longitudinal care workflows into a single Medicare-focused ecosystem.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKIM Commercial Ecosystem — Partnership Proposal for Steve</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --ink:      #0D0F14;
+    --deep:     #111827;
+    --mid:      #1F2D3D;
+    --steel:    #2E4057;
+    --accent:   #3B82F6;
+    --accent-lt:#60A5FA;
+    --green:    #10B981;
+    --amber:    #F59E0B;
+    --cream:    #F8F7F4;
+    --warm:     #F0EDE6;
+    --muted:    #6B7280;
+    --white:    #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--deep);
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 90% 10%, rgba(59,130,246,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 50% at 5%  90%, rgba(16,185,129,0.08) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* Vertical rule — the signature element */
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 3.8rem;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(59,130,246,0.5) 20%, rgba(59,130,246,0.5) 80%, transparent);
+    pointer-events: none;
+  }
+
+  .cover-header {
+    padding: 2.8rem 4rem 0 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-wordmark {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .cover-wordmark span { color: var(--accent-lt); }
+
+  .cover-meta {
+    text-align: right;
+  }
+
+  .cover-meta-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .cover-meta-value {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+  }
+
+  .cover-body {
+    padding: 4rem 4rem 3rem 6rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cover-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-lt);
+    margin-bottom: 2rem;
+  }
+
+  .cover-tag::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: var(--accent-lt);
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+    font-weight: 400;
+    color: var(--white);
+    line-height: 1.08;
+    max-width: 680px;
+    margin-bottom: 0.5rem;
+  }
+
+  .cover-title em {
+    font-style: italic;
+    color: var(--accent-lt);
+  }
+
+  .cover-version {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .cover-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 3.5rem;
+  }
+
+  .cover-partners {
+    display: flex;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 560px;
+  }
+
+  .cover-partner {
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cover-partner:last-child { border-right: none; }
+
+  .cover-partner-label {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 0.3rem;
+  }
+
+  .cover-partner-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .cover-partner-role {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.38);
+    margin-top: 0.15rem;
+  }
+
+  .cover-footer {
+    padding: 1.8rem 4rem 1.8rem 6rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-footer-note {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.22);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* ── SHARED ── */
+  .section {
+    padding: 5.5rem 4rem;
+  }
+
+  .section-inner {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.85;
+    margin-bottom: 3rem;
+  }
+
+  /* ── VISION ── */
+  .vision-section { background: var(--white); }
+
+  .vision-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.25rem, 2vw, 1.6rem);
+    font-style: italic;
+    color: var(--deep);
+    line-height: 1.55;
+    padding: 2rem 2.5rem;
+    border-left: 2px solid var(--accent);
+    background: var(--cream);
+    border-radius: 0 6px 6px 0;
+    margin: 2rem 0 3rem;
+  }
+
+  .ecosystem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .ecosystem-item {
+    background: var(--white);
+    padding: 1.6rem;
+  }
+
+  .ecosystem-item:hover { background: var(--cream); }
+
+  .eco-number {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .eco-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--deep);
+    margin-bottom: 0.4rem;
+  }
+
+  .eco-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── CORE PRINCIPLE ── */
+  .principle-section { background: var(--deep); color: var(--white); }
+  .principle-section .section-title { color: var(--white); }
+  .principle-section .section-lead  { color: rgba(255,255,255,0.45); }
+  .principle-section .section-eyebrow { color: var(--accent-lt); }
+  .principle-section .section-eyebrow::before { background: var(--accent-lt); }
+
+  .principle-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .p-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 1.8rem;
+  }
+
+  .p-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .p-card-icon.blue   { background: rgba(59,130,246,0.15); }
+  .p-card-icon.green  { background: rgba(16,185,129,0.15); }
+  .p-card-icon.amber  { background: rgba(245,158,11,0.12); }
+
+  .p-card-who {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.3rem;
+  }
+
+  .p-card-who.blue  { color: var(--accent-lt); }
+  .p-card-who.green { color: #34D399; }
+  .p-card-who.amber { color: #FCD34D; }
+
+  .p-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.7rem;
+  }
+
+  .p-card-body {
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+  }
+
+  .p-card-list {
+    list-style: none;
+    margin-top: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .p-card-list li {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .p-card-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0.2rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── OPPORTUNITY OWNERSHIP ── */
+  .ownership-section { background: var(--cream); }
+
+  .ownership-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .own-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 2rem;
+    border-top: 3px solid transparent;
+  }
+
+  .own-card.steve { border-top-color: var(--accent); }
+  .own-card.gkim  { border-top-color: var(--green); }
+
+  .own-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+
+  .own-tag.steve { background: rgba(59,130,246,0.1); color: var(--accent); }
+  .own-tag.gkim  { background: rgba(16,185,129,0.1); color: var(--green); }
+
+  .own-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .own-subtitle {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+  }
+
+  .own-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .own-list li {
+    font-size: 0.88rem;
+    color: #374151;
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .own-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-size: 0.75rem;
+    top: 0.15rem;
+  }
+
+  .own-note {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1rem;
+    background: var(--warm);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── CUSTOMER PHASES ── */
+  .phases-section { background: var(--white); }
+
+  .phases-track {
+    margin-top: 2.5rem;
+    position: relative;
+  }
+
+  .phases-track::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    top: 2rem;
+    bottom: 2rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--green));
+  }
+
+  .phase-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .phase-dot {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+    color: var(--white);
+  }
+
+  .phase-dot.p1 { background: var(--accent); }
+  .phase-dot.p2 { background: #6366F1; }
+  .phase-dot.p3 { background: #8B5CF6; }
+  .phase-dot.p4 { background: var(--green); }
+
+  .phase-body {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1.5rem;
+  }
+
+  .phase-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-leads {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-lead-item {
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .lead-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .lead-dot.blue  { background: var(--accent); }
+  .lead-dot.green { background: var(--green); }
+  .lead-dot.amber { background: var(--amber); }
+
+  .phase-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ── GOVERNANCE & TERMS ── */
+  .governance-section { background: var(--deep); color: var(--white); }
+  .governance-section .section-title { color: var(--white); }
+  .governance-section .section-lead  { color: rgba(255,255,255,0.45); }
+  .governance-section .section-eyebrow { color: var(--accent-lt); }
+  .governance-section .section-eyebrow::before { background: var(--accent-lt); }
+
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .gov-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 1.8rem;
+  }
+
+  .gov-card-title {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent-lt);
+    margin-bottom: 1rem;
+  }
+
+  .gov-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .gov-list li {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.55);
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.55;
+  }
+
+  .gov-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.22);
+    font-size: 0.6rem;
+    top: 0.25rem;
+  }
+
+  .termination-note {
+    margin-top: 2.5rem;
+    background: rgba(245,158,11,0.07);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 2rem;
+  }
+
+  .termination-note-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #FCD34D;
+    margin-bottom: 0.75rem;
+  }
+
+  .termination-note-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+
+  .termination-note-body {
+    font-size: 0.87rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.75;
+  }
+
+  .termination-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.2rem;
+  }
+
+  .term-col-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.6rem;
+  }
+
+  .term-col-text {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+  }
+
+  /* ── CLOSING ── */
+  .closing-section {
+    background: var(--ink);
+    color: var(--white);
+    padding: 7rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closing-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(59,130,246,0.1) 0%, transparent 60%);
+  }
+
+  .closing-eyebrow {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-lt);
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .closing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 400;
+    line-height: 1.25;
+    max-width: 680px;
+    margin: 0 auto 1.25rem;
+    color: var(--white);
+    position: relative;
+  }
+
+  .closing-title em {
+    font-style: italic;
+    color: var(--accent-lt);
+  }
+
+  .closing-rule {
+    width: 48px;
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  .closing-body {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.42);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.85;
+    position: relative;
+  }
+
+  .closing-footer {
+    margin-top: 4rem;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.18);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    position: relative;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .section { padding: 3.5rem 1.5rem; }
+    .cover-body, .cover-header, .cover-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .cover::before { left: 0; display: none; }
+    .ecosystem-grid,
+    .principle-cards,
+    .ownership-grid,
+    .gov-grid,
+    .termination-cols { grid-template-columns: 1fr; }
+    .cover-partners { flex-direction: column; }
+    .cover-partner { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .cover-partner:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ COVER ══════════════ -->
+<div class="cover">
+  <div class="cover-header">
+    <div class="cover-wordmark">GKIM <span>×</span> Steve</div>
+    <div class="cover-meta">
+      <div class="cover-meta-label">Version</div>
+      <div class="cover-meta-value">1.0 — Discussion Draft</div>
+    </div>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-tag">Commercial Ecosystem Model</div>
+    <h1 class="cover-title">The <em>AI-native</em> operating platform for medical solution providers</h1>
+    <div class="cover-version">Confidential · 2026</div>
+    <p class="cover-desc">
+      A national platform combining commercial growth, AI-powered operations, clinical infrastructure, compliance, and patient operations — built as a repeatable operating model.
+    </p>
+
+    <div class="cover-partners">
+      <div class="cover-partner">
+        <div class="cover-partner-label">Commercial Partner</div>
+        <div class="cover-partner-name">Steve</div>
+        <div class="cover-partner-role">Commercial Growth</div>
+      </div>
+      <div class="cover-partner">
+        <div class="cover-partner-label">Operations Partner</div>
+        <div class="cover-partner-name">GKIM</div>
+        <div class="cover-partner-role">Technology & Operations</div>
+      </div>
+      <div class="cover-partner">
+        <div class="cover-partner-label">Clinical Partner</div>
+        <div class="cover-partner-name">GMG</div>
+        <div class="cover-partner-role">Clinical Infrastructure</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-note">Private &amp; Confidential</div>
+    <div class="cover-footer-note">Scroll to explore ↓</div>
+  </div>
+</div>
+
+<!-- ══════════════ VISION ══════════════ -->
+<div class="vision-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Vision</div>
+    <h2 class="section-title">The leading AI-native operating platform for medical solution providers in the United States.</h2>
+
+    <div class="vision-statement">
+      "Enable laboratories, provider groups, diagnostics companies, digital health companies, and other medical solution providers to commercialise and operate compliant healthcare programmes rapidly and at scale."
+    </div>
+
+    <div class="ecosystem-grid">
+      <div class="ecosystem-item">
+        <div class="eco-number">01</div>
+        <div class="eco-label">Commercial Growth</div>
+        <div class="eco-desc">Identifying and converting high-value opportunities across the medical solution provider landscape.</div>
+      </div>
+      <div class="ecosystem-item">
+        <div class="eco-number">02</div>
+        <div class="eco-label">AI-Powered Operations</div>
+        <div class="eco-desc">Workflow automation, CRM, patient operations, and integrations that scale without proportional headcount.</div>
+      </div>
+      <div class="ecosystem-item">
+        <div class="eco-number">03</div>
+        <div class="eco-label">Clinical Infrastructure</div>
+        <div class="eco-desc">Virtual primary care, precision medicine expertise, physician networks, and longitudinal care.</div>
+      </div>
+      <div class="ecosystem-item">
+        <div class="eco-number">04</div>
+        <div class="eco-label">Compliance Systems</div>
+        <div class="eco-desc">Documentation, governance, billing quality, and audit readiness built into every programme.</div>
+      </div>
+      <div class="ecosystem-item">
+        <div class="eco-number">05</div>
+        <div class="eco-label">Technology Platform</div>
+        <div class="eco-desc">Purpose-built infrastructure for healthcare: patient portal, clinical dashboard, compliance engine, marketplace.</div>
+      </div>
+      <div class="ecosystem-item">
+        <div class="eco-number">06</div>
+        <div class="eco-label">Patient Operations</div>
+        <div class="eco-desc">End-to-end patient engagement, scheduling, onboarding, and long-term care coordination.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CORE PRINCIPLE & ROLES ══════════════ -->
+<div class="principle-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Core Principle</div>
+    <h2 class="section-title">Business development separated from execution.</h2>
+    <p class="section-lead">Each partner focuses on their comparative advantage. The result is a faster, more credible, and more scalable offering than any single party could deliver independently.</p>
+
+    <div class="principle-cards">
+
+      <div class="p-card">
+        <div class="p-card-icon blue">🤝</div>
+        <div class="p-card-who blue">Steve</div>
+        <div class="p-card-title">Commercial Growth Partner</div>
+        <div class="p-card-body">Creates opportunities. Remains the principal commercial relationship owner throughout the sales process and beyond.</div>
+        <ul class="p-card-list">
+          <li>Identifies laboratory & medical solution provider opportunities</li>
+          <li>Introduces qualified prospects</li>
+          <li>Develops and negotiates commercial frameworks</li>
+          <li>Identifies new healthcare programmes</li>
+          <li>Acts as commercial strategist for the ecosystem</li>
+        </ul>
+      </div>
+
+      <div class="p-card">
+        <div class="p-card-icon green">⚙️</div>
+        <div class="p-card-who green">GKIM</div>
+        <div class="p-card-title">Technology & Operations Partner</div>
+        <div class="p-card-body">Converts opportunities into successful long-term customers. Becomes the primary operational relationship once implementation begins.</div>
+        <ul class="p-card-list">
+          <li>Solution architecture & AI workflow design</li>
+          <li>Patient operations & CRM</li>
+          <li>Compliance systems & integrations</li>
+          <li>Implementation & operational support</li>
+          <li>Customer success & product development</li>
+        </ul>
+      </div>
+
+      <div class="p-card">
+        <div class="p-card-icon amber">🏥</div>
+        <div class="p-card-who amber">GMG</div>
+        <div class="p-card-title">Clinical Infrastructure Partner</div>
+        <div class="p-card-body">Provides the clinical layer wherever healthcare services are required.</div>
+        <ul class="p-card-list">
+          <li>Virtual primary care</li>
+          <li>Precision medicine expertise</li>
+          <li>Physician network & medical necessity</li>
+          <li>Longitudinal care</li>
+          <li>Clinical governance</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ OPPORTUNITY OWNERSHIP ══════════════ -->
+<div class="ownership-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Opportunity Ownership</div>
+    <h2 class="section-title">Clear boundaries. No internal competition.</h2>
+    <p class="section-lead">Ownership is established at the point of origination. Both parties agree not to circumvent the other's exclusive territory, and to collaborate rather than compete for expansion.</p>
+
+    <div class="ownership-grid">
+
+      <div class="own-card steve">
+        <span class="own-tag steve">Steve's Exclusive Territory</span>
+        <div class="own-title">Steve-Originated Opportunities</div>
+        <div class="own-subtitle">GKIM will not knowingly pursue these independently while the partnership remains in force.</div>
+        <ul class="own-list">
+          <li>Laboratories introduced by Steve</li>
+          <li>Medical solution providers introduced by Steve</li>
+          <li>Marketing organisations introduced by Steve</li>
+          <li>Strategic opportunities originated by Steve</li>
+        </ul>
+        <div class="own-note">Steve remains commercial relationship owner during the sales process and continues a relationship management role thereafter.</div>
+      </div>
+
+      <div class="own-card gkim">
+        <span class="own-tag gkim">GKIM's Exclusive Territory</span>
+        <div class="own-title">GKIM-Originated Opportunities</div>
+        <div class="own-subtitle">Steve may participate where invited, but commercial responsibility rests with GKIM.</div>
+        <ul class="own-list">
+          <li>Opportunities independently generated by GKIM</li>
+          <li>Opportunities introduced by Ian or GKIM staff</li>
+          <li>Existing GKIM relationships</li>
+          <li>Inbound enquiries received directly by GKIM</li>
+        </ul>
+        <div class="own-note">Customers introduced by Steve become joint customers. No expansion proposal should be made without informing the other party.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ CUSTOMER PHASES ══════════════ -->
+<div class="phases-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Customer Relationship</div>
+    <h2 class="section-title">One integrated team. Four phases.</h2>
+    <p class="section-lead">Customers experience a single, cohesive team — not multiple independent suppliers. Leadership evolves as the relationship matures, but continuity is maintained throughout.</p>
+
+    <div class="phases-track">
+
+      <div class="phase-row">
+        <div class="phase-dot p1">01</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase One</div>
+          <div class="phase-title">Opportunity Development</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve leads</span>
+          </div>
+          <div class="phase-desc">Relationship building, commercial qualification, strategic discussions, and executive sponsorship. Steve drives the conversation; GKIM is introduced as appropriate.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p2">02</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Two</div>
+          <div class="phase-title">Solution Design</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — commercial lead</span>
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM — increasingly present</span>
+          </div>
+          <div class="phase-desc">Joint leadership. Steve continues commercial leadership while GKIM participates more actively in technical and operational discussions.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p3">03</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Three</div>
+          <div class="phase-title">Implementation</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM leads</span>
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — executive relationship</span>
+          </div>
+          <div class="phase-desc">GKIM takes the lead on implementation, onboarding, workflow configuration, integrations, and compliance. Steve remains actively involved in executive relationship management.</div>
+        </div>
+      </div>
+
+      <div class="phase-row">
+        <div class="phase-dot p4">04</div>
+        <div class="phase-body">
+          <div class="phase-label">Phase Four</div>
+          <div class="phase-title">Long-Term Growth</div>
+          <div class="phase-leads">
+            <span class="phase-lead-item"><span class="lead-dot blue"></span> Steve — expansion &amp; strategy</span>
+            <span class="phase-lead-item"><span class="lead-dot green"></span> GKIM — operational excellence</span>
+          </div>
+          <div class="phase-desc">Customer success becomes shared. Steve manages executive relationships and identifies expansion opportunities. GKIM leads operational excellence, platform evolution, and delivery.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ GOVERNANCE & TERMS ══════════════ -->
+<div class="governance-section section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Governance &amp; Terms</div>
+    <h2 class="section-title">Built for continuity.</h2>
+    <p class="section-lead">The partnership is structured to protect customers, honour existing obligations, and ensure service never depends on any single individual.</p>
+
+    <div class="gov-grid">
+
+      <div class="gov-card">
+        <div class="gov-card-title">Quarterly Reviews</div>
+        <ul class="gov-list">
+          <li>New opportunities &amp; pipeline health</li>
+          <li>Customer health &amp; satisfaction</li>
+          <li>Operational performance</li>
+          <li>Expansion opportunities</li>
+          <li>Strategic priorities</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">Exclusivity Commitments</div>
+        <ul class="gov-list">
+          <li>Steve makes GKIM/GMG the preferred technology and telemedicine platform for agreed-scope opportunities</li>
+          <li>GKIM does not pursue Steve-originated opportunities independently</li>
+          <li>Both parties agree to avoid circumvention</li>
+          <li>Expansion proposals are agreed jointly before being presented to the customer</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">Customer Relationship Philosophy</div>
+        <ul class="gov-list">
+          <li>The relationship becomes institutional rather than personal over time</li>
+          <li>Customers build direct working relationships with GKIM, GMG, and delivery teams</li>
+          <li>This protects the customer and the partnership from over-dependence on any individual</li>
+        </ul>
+      </div>
+
+      <div class="gov-card">
+        <div class="gov-card-title">On Termination</div>
+        <ul class="gov-list">
+          <li>Existing customer contracts remain in force</li>
+          <li>Operational services continue uninterrupted</li>
+          <li>Customers retain access to the platform</li>
+          <li>Neither party disrupts ongoing healthcare programmes</li>
+          <li>GKIM assumes full commercial and operational responsibility</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="termination-note">
+      <div class="termination-note-label">A Note on Commission at Termination</div>
+      <div class="termination-note-title">Separating new revenue from existing contractual rights.</div>
+      <div class="termination-note-body">A fair and durable approach distinguishes between future entitlements and accrued obligations.</div>
+      <div class="termination-cols">
+        <div>
+          <div class="term-col-label">After Termination</div>
+          <div class="term-col-text">No entitlement to future commissions on new business or future expansions, unless separately agreed in writing.</div>
+        </div>
+        <div>
+          <div class="term-col-label">Accrued Obligations</div>
+          <div class="term-col-text">Any contractual obligations that arose before termination — fixed introduction fees, defined earn-outs — are honoured in full.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ CLOSING ══════════════ -->
+<div class="closing-section">
+  <div class="closing-eyebrow">Long-Term Vision</div>
+  <h2 class="closing-title">Not built to maximise short-term commissions. Built to create a <em>national AI-native healthcare platform.</em></h2>
+  <div class="closing-rule"></div>
+  <p class="closing-body">
+    Steve as the principal commercial growth partner. GKIM as the technology and operations platform. GMG as the preferred precision medicine clinical infrastructure. And laboratories and medical solution providers gaining a trusted, scalable operating partner they can rely on for the long term.
+  </p>
+  <div class="closing-footer">GKIM Commercial Ecosystem · Version 1.0 · Discussion Draft · Confidential</div>
+</div>
+
+</body>
+</html>

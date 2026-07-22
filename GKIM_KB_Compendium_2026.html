@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKIM Digital — Knowledge Engineering Compendium 2026</title>
+<style>
+:root {
+  --bg:     #0A0A09;
+  --yellow: #FFDD00;
+  --ground: #F2F2F2;
+  --dim:    #1A1A18;
+  --mid:    #2A2A28;
+  --subtle: #3A3A38;
+  --text:   #C8C8C4;
+  --muted:  #888884;
+  --led-off:#1E1A00;
+  --node:   #111110;
+  --nav-w:  260px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'SF Pro Display','Segoe UI','Helvetica Neue',Arial,sans-serif;
+  font-size:15px;
+  line-height:1.65;
+  min-height:100vh;
+}
+
+/* ── HEADER ── */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:52px;
+  background:rgba(10,10,9,0.97);
+  border-bottom:1px solid var(--subtle);
+  display:flex;align-items:center;
+  padding:0 28px;gap:20px;
+}
+.site-header .brand{
+  font-size:11px;font-weight:700;letter-spacing:.22em;
+  color:var(--yellow);text-transform:uppercase;white-space:nowrap;
+}
+.site-header .divider{width:1px;height:18px;background:var(--subtle);}
+.site-header .tagline{font-size:12px;color:var(--muted);}
+
+/* ── LAYOUT ── */
+.layout{
+  display:flex;
+  margin-top:52px;
+  min-height:calc(100vh - 52px);
+}
+
+/* ── NAV ── */
+nav{
+  width:var(--nav-w);
+  min-width:var(--nav-w);
+  position:fixed;
+  top:52px;bottom:0;left:0;
+  overflow-y:auto;
+  border-right:1px solid var(--subtle);
+  background:var(--bg);
+  padding:28px 0 60px;
+  z-index:50;
+}
+
+nav .nav-section-label{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);padding:0 22px 10px;
+}
+
+nav a{
+  display:block;
+  padding:10px 22px;
+  text-decoration:none;
+  font-size:12.5px;
+  color:var(--text);
+  border-left:2px solid transparent;
+  transition:all .15s;
+  line-height:1.4;
+}
+nav a:hover{background:var(--dim);color:var(--ground);}
+nav a.active{
+  border-left-color:var(--yellow);
+  color:var(--yellow);
+  background:rgba(255,221,0,0.05);
+}
+nav a .nav-sub{
+  display:block;font-size:10px;color:var(--muted);
+  margin-top:2px;font-style:italic;
+}
+nav .nav-index{
+  display:inline-block;
+  font-size:10px;font-weight:700;
+  color:var(--bg);background:var(--yellow);
+  border-radius:2px;padding:1px 5px;
+  margin-right:7px;font-style:normal;
+}
+nav .nav-divider{
+  height:1px;background:var(--subtle);
+  margin:14px 22px;
+}
+nav .nav-intro-link{
+  padding:10px 22px;
+  font-size:11px;color:var(--muted);
+  display:block;text-decoration:none;
+}
+nav .nav-intro-link:hover{color:var(--text);}
+
+/* ── MAIN ── */
+main{
+  margin-left:var(--nav-w);
+  flex:1;
+  min-width:0;
+}
+
+/* ── COVER ── */
+#cover{
+  min-height:calc(100vh - 52px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 64px;
+  border-bottom:1px solid var(--subtle);
+  position:relative;
+  overflow:hidden;
+}
+#cover::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255,221,0,0.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.cover-kicker{
+  font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:24px;
+}
+.cover-title{
+  font-size:clamp(36px,5vw,64px);font-weight:700;
+  color:var(--ground);line-height:1.1;
+  letter-spacing:-.02em;margin-bottom:20px;
+  max-width:700px;
+}
+.cover-sub{
+  font-size:17px;color:var(--text);max-width:560px;
+  line-height:1.7;margin-bottom:48px;
+}
+.cover-rule{
+  width:48px;height:3px;background:var(--yellow);margin-bottom:48px;
+}
+.cover-toc{
+  display:flex;flex-direction:column;gap:0;
+  max-width:560px;
+}
+.cover-toc-item{
+  display:flex;align-items:center;gap:0;
+  border-top:1px solid var(--subtle);
+  text-decoration:none;
+  padding:14px 0;
+  transition:background .15s;
+}
+.cover-toc-item:last-child{border-bottom:1px solid var(--subtle);}
+.cover-toc-item:hover .ctoc-title{color:var(--yellow);}
+.ctoc-n{
+  font-size:11px;font-weight:700;color:var(--bg);
+  background:var(--yellow);
+  width:28px;height:28px;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-right:18px;
+}
+.ctoc-title{
+  font-size:14px;color:var(--ground);font-weight:500;
+  transition:color .15s;flex:1;
+}
+.ctoc-tag{
+  font-size:10px;color:var(--muted);font-style:italic;
+  margin-left:12px;white-space:nowrap;
+}
+.ctoc-arrow{
+  color:var(--subtle);margin-left:12px;font-size:16px;
+  transition:transform .15s;
+}
+.cover-toc-item:hover .ctoc-arrow{transform:translateX(4px);color:var(--yellow);}
+
+/* ── INTRO SECTION ── */
+#intro{
+  padding:72px 64px;
+  border-bottom:1px solid var(--subtle);
+  max-width:820px;
+}
+.intro-lead{
+  font-size:21px;font-weight:400;color:var(--ground);
+  line-height:1.6;margin-bottom:32px;
+  border-left:3px solid var(--yellow);
+  padding-left:24px;
+}
+.intro-body{font-size:15px;color:var(--text);line-height:1.75;margin-bottom:18px;}
+
+/* ── COMPANY SECTIONS ── */
+.company-section{
+  border-bottom:1px solid var(--subtle);
+}
+
+/* Graph stage */
+.graph-stage{
+  position:relative;
+  width:100%;
+  background:var(--bg);
+  border-bottom:1px solid var(--subtle);
+  overflow:hidden;
+}
+.graph-stage canvas{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.graph-label-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;
+}
+.graph-title-bar{
+  position:absolute;top:0;left:0;right:0;
+  height:48px;
+  background:rgba(10,10,9,0.85);
+  border-bottom:1px solid var(--subtle);
+  display:flex;align-items:center;
+  padding:0 24px;gap:14px;
+}
+.graph-title-bar .gn{
+  font-size:10px;font-weight:700;color:var(--bg);
+  background:var(--yellow);padding:2px 7px;
+  border-radius:2px;letter-spacing:.05em;
+}
+.graph-title-bar .gt{
+  font-size:13px;font-weight:600;color:var(--ground);
+}
+.graph-title-bar .gm{
+  font-size:10px;color:var(--muted);margin-left:auto;
+  letter-spacing:.06em;font-style:italic;
+}
+
+.graph-controls{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:10px 24px;
+  background:rgba(10,10,9,0.7);
+  border-top:1px solid rgba(58,58,56,0.5);
+  display:flex;align-items:center;gap:24px;
+  flex-wrap:wrap;
+}
+.gc-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.gc-val{font-size:10px;color:var(--yellow);min-width:28px;}
+input[type=range]{
+  -webkit-appearance:none;
+  height:2px;background:var(--subtle);outline:none;border-radius:1px;width:80px;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:11px;height:11px;
+  border-radius:50%;background:var(--yellow);cursor:pointer;
+}
+.gc-group{display:flex;align-items:center;gap:8px;}
+.gc-info{margin-left:auto;font-size:10px;color:var(--subtle);text-align:right;line-height:1.5;}
+.gc-info em{color:var(--yellow);font-style:normal;}
+
+/* Narrative */
+.narrative{
+  padding:64px 64px 80px;
+  max-width:820px;
+}
+.narrative .kicker{
+  font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:16px;
+}
+.narrative h2{
+  font-size:32px;font-weight:700;color:var(--ground);
+  letter-spacing:-.02em;line-height:1.2;
+  margin-bottom:8px;
+}
+.narrative .company-sector{
+  font-size:12px;color:var(--muted);margin-bottom:28px;
+}
+.narrative .pull{
+  font-size:18px;font-style:italic;color:var(--ground);
+  border-left:3px solid var(--yellow);
+  padding-left:22px;margin:28px 0 32px;
+  line-height:1.6;font-weight:400;
+}
+.narrative .section-head{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--yellow);margin:40px 0 14px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--subtle);
+}
+.narrative p{
+  color:var(--text);margin-bottom:18px;line-height:1.75;font-size:15px;
+}
+.narrative ul{
+  list-style:none;margin:0 0 18px 0;padding:0;
+}
+.narrative ul li{
+  padding:6px 0 6px 20px;
+  position:relative;font-size:14px;color:var(--text);line-height:1.65;
+}
+.narrative ul li::before{
+  content:'';position:absolute;left:0;top:14px;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--yellow);opacity:.7;
+}
+.narrative .meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1px;background:var(--subtle);
+  border:1px solid var(--subtle);
+  margin:0 0 32px;
+}
+.narrative .meta-cell{
+  background:var(--dim);
+  padding:14px 18px;
+}
+.narrative .meta-cell .mk{
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:4px;
+}
+.narrative .meta-cell .mv{
+  font-size:13px;color:var(--ground);font-weight:500;
+}
+
+/* ── CLOSING ── */
+#closing{
+  padding:80px 64px;
+  border-top:1px solid var(--subtle);
+  background:var(--dim);
+}
+.closing-line{
+  font-size:28px;font-weight:700;color:var(--yellow);
+  margin-bottom:8px;line-height:1.3;max-width:600px;
+}
+.closing-sub{
+  font-size:16px;color:var(--ground);font-weight:400;
+  margin-bottom:28px;
+}
+.closing-body{font-size:14px;color:var(--text);max-width:580px;line-height:1.75;margin-bottom:28px;}
+.closing-contact{font-size:12px;color:var(--muted);}
+
+/* ── SCROLLSPY ACTIVE NAV ── */
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">GKIM Digital</div>
+  <div class="divider"></div>
+  <div class="tagline">Knowledge Engineering Compendium — 2026</div>
+</header>
+
+<div class="layout">
+
+<nav id="sidebar">
+  <a href="#cover" class="nav-intro-link">← Contents</a>
+  <div class="nav-divider"></div>
+  <div class="nav-section-label">Companies</div>
+  <a href="#adora" class="nav-link" data-target="adora">
+    <span class="nav-index">01</span>Adora Health
+    <span class="nav-sub">Women's Health · Core-Satellite</span>
+  </a>
+  <a href="#asn" class="nav-link" data-target="asn">
+    <span class="nav-index">02</span>ASN
+    <span class="nav-sub">Sponsorship Intel · Hub-and-Spoke</span>
+  </a>
+  <a href="#gkim" class="nav-link" data-target="gkim">
+    <span class="nav-index">03</span>GKIM Digital
+    <span class="nav-sub">Healthcare AI · Pipeline</span>
+  </a>
+  <a href="#algodynamix" class="nav-link" data-target="algodynamix">
+    <span class="nav-index">04</span>AlgoDynamix
+    <span class="nav-sub">Fin-AI · Dual-Hub Mesh</span>
+  </a>
+  <div class="nav-divider"></div>
+  <a href="#closing" class="nav-intro-link">Closing note →</a>
+</nav>
+
+<main>
+
+<!-- ── COVER ──────────────────────────────────────────────────────────── -->
+<section id="cover">
+  <div class="cover-kicker">GKIM Digital  ·  KB Factory  ·  2026</div>
+  <h1 class="cover-title">Knowledge Engineering Compendium</h1>
+  <p class="cover-sub">Four client knowledge architectures demonstrating how AI-native businesses are built from structured knowledge — not software alone.</p>
+  <div class="cover-rule"></div>
+  <div class="cover-toc">
+    <a class="cover-toc-item" href="#adora">
+      <div class="ctoc-n">01</div>
+      <div class="ctoc-title">Adora Health</div>
+      <div class="ctoc-tag">Layered Core-Satellite</div>
+      <div class="ctoc-arrow">→</div>
+    </a>
+    <a class="cover-toc-item" href="#asn">
+      <div class="ctoc-n">02</div>
+      <div class="ctoc-title">ASN Sponsorship Intelligence</div>
+      <div class="ctoc-tag">Commercial Hub-and-Spoke</div>
+      <div class="ctoc-arrow">→</div>
+    </a>
+    <a class="cover-toc-item" href="#gkim">
+      <div class="ctoc-n">03</div>
+      <div class="ctoc-title">GKIM Digital</div>
+      <div class="ctoc-tag">Transformation Pipeline</div>
+      <div class="ctoc-arrow">→</div>
+    </a>
+    <a class="cover-toc-item" href="#algodynamix">
+      <div class="ctoc-n">04</div>
+      <div class="ctoc-title">AlgoDynamix</div>
+      <div class="ctoc-tag">Dual-Hub Analytical Mesh</div>
+      <div class="ctoc-arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── INTRO ──────────────────────────────────────────────────────────── -->
+<section id="intro">
+  <p class="intro-lead">Every AI project eventually faces the same constraint: the intelligence of the agent is limited by the quality and structure of the knowledge it can access.</p>
+  <p class="intro-body">Prompt engineering, model selection, and agent architecture are all secondary to whether the right knowledge exists, is structured correctly, and is accessible in a form that a reasoning system can use. The four engagements in this compendium span different sectors, business models, and stages of AI maturity. What they share is a recognition that building an AI-native business requires treating knowledge as a first-class engineering concern.</p>
+  <p class="intro-body">Each entry presents the knowledge graph topology as a live animated diagram — edges carry LED-animated signals showing how knowledge flows between entities. The narrative that follows explains the structural logic, the non-obvious design decisions, and what each architecture makes commercially possible.</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- 01  ADORA HEALTH                                                     -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<section id="adora" class="company-section">
+  <div class="graph-stage" style="height:520px;">
+    <canvas id="c-adora"></canvas>
+    <div class="graph-label-overlay">
+      <div class="graph-title-bar">
+        <span class="gn">01</span>
+        <span class="gt">Adora Health — Knowledge Architecture</span>
+        <span class="gm">Layered Core-Satellite · Clinical Trust Layer</span>
+      </div>
+      <div class="graph-controls" id="gc-adora">
+        <div class="gc-group">
+          <span class="gc-label">Speed</span>
+          <input type="range" min="0.2" max="3" step="0.1" value="1.0" oninput="setParam('adora','speed',this.value)" >
+          <span class="gc-val" id="gv-adora-speed">1.0×</span>
+        </div>
+        <div class="gc-group">
+          <span class="gc-label">Glow</span>
+          <input type="range" min="0" max="40" step="1" value="16" oninput="setParam('adora','glow',this.value)">
+          <span class="gc-val" id="gv-adora-glow">16</span>
+        </div>
+        <div class="gc-info"><em>LED Bead</em> · Clinical knowledge flows down into Commercial layer via AI Ann hub</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="narrative">
+    <div class="kicker">Women's Health · Employee Benefits · Digital Health</div>
+    <h2>Adora Health</h2>
+    <div class="company-sector">Growth-stage · B2B/B2B2C · MHRA Class 1 Registered</div>
+
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="mk">Topology</div><div class="mv">Layered Core-Satellite</div></div>
+      <div class="meta-cell"><div class="mk">Hub Entity</div><div class="mv">AI Ann / Operating Memory</div></div>
+      <div class="meta-cell"><div class="mk">Domain Count</div><div class="mv">10 domains</div></div>
+      <div class="meta-cell"><div class="mk">Primary Agents</div><div class="mv">6 (AI Ann, Sales, Clinical, Marketing, Ops, Revenue)</div></div>
+      <div class="meta-cell"><div class="mk">Key Constraint</div><div class="mv">Clinical accuracy + regulatory boundary enforcement</div></div>
+      <div class="meta-cell"><div class="mk">Governance Priority</div><div class="mv">Accuracy → Freshness → Completeness</div></div>
+    </div>
+
+    <div class="pull">Adora has built something rare: a knowledge architecture where clinical credibility and commercial execution share the same operating layer without contaminating each other.</div>
+
+    <div class="section-head">Business Context & Strategic Stakes</div>
+    <p>Adora Health occupies the fast-growing intersection of women's health, employer wellbeing obligations, and digital health infrastructure. It delivers clinically led menopause and peri-menopause support to employers and health-system partners — combining expert consultation, structured workplace programmes, digital tools, and a developing app. Its MHRA-registered positioning gives it a clinical moat that generic wellness providers cannot easily replicate.</p>
+    <p>The commercial opportunity is substantial but founder-dependent. Ann O'Neill carries the strategic memory, the clinical context, the sales logic, and the operational playbook. The KB Factory engagement exists to make that knowledge retrievable, executable, and eventually autonomous. Either Adora's founder knowledge becomes infrastructure, or growth is permanently constrained by a single human's bandwidth.</p>
+
+    <div class="section-head">KB Structural Design</div>
+    <p>The Adora KB is organised across ten domains, deliberately architected in three layers rather than as a flat taxonomy. The critical structural decision is that clinical knowledge does not sit inside marketing or sales — it sits above them, as a governed trust layer that commercial and agent activities must reference only through approved claims, evidence objects, and review status fields.</p>
+    <ul>
+      <li><strong>Clinical Trust Layer</strong> — Conditions, symptoms, treatment pathways, NICE and British Menopause Society guidelines, evidence sources, clinical boundaries. Every claim requires source traceability and clinical custodian review before commercial use.</li>
+      <li><strong>Commercial Layer</strong> — Employer accounts, buyer personas, sales pipeline, proposals, objection libraries, product packages, marketing assets. Drives revenue but draws only from approved clinical assertions.</li>
+      <li><strong>Execution Layer</strong> — AI Ann, agent workflows, CRM integrations, prompt versions, automation logic. The bridge between knowledge and action.</li>
+    </ul>
+    <p>The Product and Package domain acts as a formal translation layer — converting clinical expertise and evidence into structured service components with defined eligibility rules, pricing logic, and delivery workflows. This prevents the common failure where clinical knowledge either never reaches sales or reaches it uncontrolled.</p>
+
+    <div class="section-head">AI & Agent Integration</div>
+    <p>AI Ann is the centrepiece: a CEO Knowledge Centre evolving into a Chief-of-Staff operating layer. It retrieves across all ten domains subject to role and source permissions, enabling meeting preparation, commercial memory, strategic context synthesis, and follow-up discipline.</p>
+    <p>Supporting agents cover sales prospecting and proposal drafting, marketing content retrieval with boundary enforcement, clinical knowledge assistance, operations and delivery planning, and revenue pipeline monitoring. Write-back is controlled — clinical updates are draft-only until reviewed by a designated clinical custodian. No agent publishes clinical content autonomously.</p>
+
+    <div class="section-head">What This Unlocks</div>
+    <p>With this architecture in place, Adora moves from a founder-dependent operation to a knowledge-driven one. Employer sales cycles shorten. Proposals become consistent. Clinical credibility is protected structurally rather than relying on individual discipline. The same knowledge layer that powers AI Ann can later feed a consumer-facing app or employer reporting system — without rebuilding the underlying infrastructure.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- 02  ASN                                                              -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<section id="asn" class="company-section">
+  <div class="graph-stage" style="height:520px;">
+    <canvas id="c-asn"></canvas>
+    <div class="graph-label-overlay">
+      <div class="graph-title-bar">
+        <span class="gn">02</span>
+        <span class="gt">ASN — Knowledge Architecture</span>
+        <span class="gm">Commercial Hub-and-Spoke · Temporal Deal Graph</span>
+      </div>
+      <div class="graph-controls" id="gc-asn">
+        <div class="gc-group">
+          <span class="gc-label">Speed</span>
+          <input type="range" min="0.2" max="3" step="0.1" value="0.9" oninput="setParam('asn','speed',this.value)">
+          <span class="gc-val" id="gv-asn-speed">0.9×</span>
+        </div>
+        <div class="gc-group">
+          <span class="gc-label">Glow</span>
+          <input type="range" min="0" max="40" step="1" value="18" oninput="setParam('asn','glow',this.value)">
+          <span class="gc-val" id="gv-asn-glow">18</span>
+        </div>
+        <div class="gc-info"><em>Pulse Wave</em> · All commercial intelligence flows through the Sponsorship Deal hub</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="narrative">
+    <div class="kicker">Sponsorship Intelligence · Sports & Entertainment · SaaS</div>
+    <h2>ASN</h2>
+    <div class="company-sector">Established specialist · 10 years of proprietary data · Subscription SaaS</div>
+
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="mk">Topology</div><div class="mv">Commercial Hub-and-Spoke</div></div>
+      <div class="meta-cell"><div class="mk">Hub Entity</div><div class="mv">Sponsorship Deal</div></div>
+      <div class="meta-cell"><div class="mk">Domain Count</div><div class="mv">8 domains</div></div>
+      <div class="meta-cell"><div class="mk">Primary Agents</div><div class="mv">6 (Research, Opportunity, Competitive, Market, Copilot, Editorial)</div></div>
+      <div class="meta-cell"><div class="mk">Key Constraint</div><div class="mv">Accuracy-first — incorrect intel damages subscriber trust</div></div>
+      <div class="meta-cell"><div class="mk">Structural Feature</div><div class="mv">Temporal versioning on all deal records</div></div>
+    </div>
+
+    <div class="pull">ASN's most defensible asset isn't its software — it's ten years of structured sponsorship relationships that no competitor can replicate from scratch. The KB architecture makes that moat executable.</div>
+
+    <div class="section-head">Business Context & Strategic Stakes</div>
+    <p>ASN has spent a decade building what may be the most comprehensive proprietary database of sponsorship relationships, deals, brands, rights holders, agencies, and properties across Asian sports and entertainment. Most of that knowledge currently lives inside a relational database and the heads of long-serving editorial staff. The challenge is not data collection — it's making decade-deep intelligence available to AI systems that can reason across it.</p>
+    <p>Subscribers currently pay for access to a searchable database. The next revenue tier is AI-powered commercial intelligence — the ability to ask "which financial services brands are losing their Southeast Asian football sponsorships and might be open to alternatives?" and receive a reasoned, evidence-backed answer. That is the difference between a data product and an intelligence platform.</p>
+
+    <div class="section-head">KB Structural Design</div>
+    <p>The ASN knowledge graph is organised around a single, deliberately chosen hub entity: the Sponsorship Deal. Every significant entity — brands, rights holders, agencies, properties, geographies, contacts, media sources — connects through commercial relationships, and commercial relationships are always expressed as deals. This is not a simplification; it reflects the actual structure of the sponsorship market.</p>
+    <ul>
+      <li><strong>Organisations</strong> — Brands, rights holders, agencies, leagues, federations, clubs, venue operators. Heavily aliased — the KB maintains canonical identity across rebrands, mergers, and restructures.</li>
+      <li><strong>Sponsorship Deals</strong> — Contracts, activations, campaigns, renewals, extensions, terminations. Temporal versioning is critical — deals must be represented as they evolved, not just as they currently stand.</li>
+      <li><strong>Properties</strong> — Sports, competitions, seasons, events, athletes, venues. Organised in a seasonal hierarchy mirroring real-world competition structures.</li>
+      <li><strong>Geography & Taxonomy</strong> — Countries, regions, cities, industry sectors, sponsor and property categories. The layer that makes the graph intelligently filterable rather than merely traversable.</li>
+    </ul>
+    <p>The structurally interesting feature is temporal versioning at deal level. A sponsorship relationship is not a static fact — it has negotiation history, contract periods, renewals, value evolution, and category exclusivity windows. This enables queries like "which properties have had three consecutive sponsor changes in this category?" — impossible in a conventional database.</p>
+
+    <div class="section-head">AI & Agent Integration</div>
+    <p>Query patterns go well beyond keyword search. Representative examples: "Which agencies brokered deals between luxury brands and Formula One across the last five years?", "Which properties in Southeast Asian football are approaching sponsor contract expiry?", "Which financial services brands increased sponsorship investment in the region during the last two years?" These require graph traversal — following relationship chains across brands, deals, agencies, properties, and time — not text retrieval.</p>
+    <p>Agent write-back is carefully governed. Future AI agents can validate incoming information, suggest entity merges, detect duplicates, and identify missing relationships — but no automated update publishes without editorial review. ASN's accuracy-first governance reflects the commercial reality that incorrect sponsorship intelligence damages subscriber trust more than incomplete coverage does.</p>
+
+    <div class="section-head">What This Unlocks</div>
+    <p>The transformation from database to intelligence platform opens multiple commercial paths: premium intelligence products priced above the subscription tier, enterprise API access for brands and agencies embedding ASN data into their own workflows, and AI-powered commercial assistants supporting live deal negotiations, category monitoring, and opportunity identification. The knowledge architecture is the infrastructure on which every one of these revenue streams depends.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- 03  GKIM DIGITAL                                                     -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<section id="gkim" class="company-section">
+  <div class="graph-stage" style="height:520px;">
+    <canvas id="c-gkim"></canvas>
+    <div class="graph-label-overlay">
+      <div class="graph-title-bar">
+        <span class="gn">03</span>
+        <span class="gt">GKIM Digital — Knowledge Architecture</span>
+        <span class="gm">Transformation Pipeline · Gap Bridge Hub</span>
+      </div>
+      <div class="graph-controls" id="gc-gkim">
+        <div class="gc-group">
+          <span class="gc-label">Speed</span>
+          <input type="range" min="0.2" max="3" step="0.1" value="1.1" oninput="setParam('gkim','speed',this.value)">
+          <span class="gc-val" id="gv-gkim-speed">1.1×</span>
+        </div>
+        <div class="gc-group">
+          <span class="gc-label">Glow</span>
+          <input type="range" min="0" max="40" step="1" value="20" oninput="setParam('gkim','glow',this.value)">
+          <span class="gc-val" id="gv-gkim-glow">20</span>
+        </div>
+        <div class="gc-info"><em>Pulse Wave</em> · Market intelligence flows down through Transformation Gap into commercial execution</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="narrative">
+    <div class="kicker">AI Transformation Consulting · Healthcare · Knowledge Engineering</div>
+    <h2>GKIM Digital</h2>
+    <div class="company-sector">Growth-stage · Dual-track: consulting + proprietary GEARS platform</div>
+
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="mk">Topology</div><div class="mv">Layered Pipeline</div></div>
+      <div class="meta-cell"><div class="mk">Bridge Hub</div><div class="mv">Transformation Gap</div></div>
+      <div class="meta-cell"><div class="mk">Pipeline Layers</div><div class="mv">5 (Market → Assessment → Commercial → Content → GEARS)</div></div>
+      <div class="meta-cell"><div class="mk">Agent Count</div><div class="mv">15 agents across research, assessment, content, outreach, execution</div></div>
+      <div class="meta-cell"><div class="mk">Key Feature</div><div class="mv">Continuous write-back — Knowledge Factory always on</div></div>
+      <div class="meta-cell"><div class="mk">Governance Priority</div><div class="mv">Accuracy → Explainability → Traceability → Freshness</div></div>
+    </div>
+
+    <div class="pull">GKIM Digital has built its own knowledge architecture on the same principles it sells to clients — and made the Transformation Gap the structural centre of a system that converts market intelligence into commercial execution automatically.</div>
+
+    <div class="section-head">Business Context & Strategic Stakes</div>
+    <p>GKIM Digital operates at the intersection of healthcare and AI-native transformation. Its clients are healthcare solution providers — genetics laboratories, diagnostic companies, telemedicine providers, digital therapeutics businesses, medical device companies — organisations with deep domain expertise but often shallow AI maturity. GKIM's value proposition is a structured methodology that identifies exactly where knowledge gaps create commercial risk, and then engineers AI-native systems to close them.</p>
+    <p>The GKIM KB is not a reference library — it is an operational engine. It exists to power the Opportunity Discovery Workbench, drive the GEARS platform, generate AI SEO content automatically, and support a network of agents that continuously acquire, structure, validate, and deploy healthcare market knowledge. The strategic stakes are recursive: GKIM's commercial credibility depends on how well its own KB performs.</p>
+
+    <div class="section-head">KB Structural Design</div>
+    <p>The GKIM knowledge graph is organised as a five-layer pipeline, where knowledge flows from raw market intelligence at the top through structured transformation assessment into commercial execution at the bottom. Feedback loops and continuous ingestion run throughout, but the structural logic is directional.</p>
+    <ul>
+      <li><strong>Healthcare Market Intelligence</strong> — Companies, divisions, products, solution categories, regulations, competitors, and market signals. The foundation layer feeding every subsequent assessment.</li>
+      <li><strong>AI-Native Transformation Framework</strong> — GKIM's seven AI-native maturity dimensions, scored against each company to produce measurable Transformation Gaps. This is the proprietary intellectual capital that differentiates GKIM from generic AI consultancies.</li>
+      <li><strong>Commercial Opportunity Hub</strong> — The Transformation Gap entity is the structural bridge of the entire architecture. Low maturity scores translate directly into typed commercial opportunities — service recommendations, positioning angles, and revenue models — without manual translation.</li>
+      <li><strong>Services, Content & Outreach</strong> — Service deliverables, AI SEO content, webinars, outreach personas, message assets, and campaign logic. Knowledge becomes customer-facing output.</li>
+      <li><strong>GEARS Execution Layer</strong> — Recursive GEAR entities that define, simulate, and execute business workflows. The KB does not just inform decisions — through GEARS, it drives operational action.</li>
+    </ul>
+    <p>The Transformation Gap is the most architecturally significant entity. It is a typed bridge object connecting diagnostic intelligence to commercial recommendation without losing the reasoning chain. Every GKIM service proposal, content asset, and outreach campaign is traceable back through this entity to the specific maturity evidence that generated it.</p>
+
+    <div class="section-head">AI & Agent Integration</div>
+    <p>Fifteen agents operate across five functional categories. Research agents continuously acquire and structure healthcare market intelligence. Assessment agents score organisations against the seven maturity dimensions and identify typed gaps. Commercial agents translate gaps into services, positioning, pricing, and outreach. Content agents generate AI SEO material, webinars, and campaign assets from structured knowledge. Execution agents deploy GEARS workflows and monitor performance.</p>
+    <p>The Knowledge Factory is the continuous ingestion and validation layer — an always-on knowledge acquisition system rather than a periodic maintenance process. New research updates company records, new assessments update maturity scores, and agent interaction logs inform confidence scoring throughout.</p>
+
+    <div class="section-head">What This Unlocks</div>
+    <p>The GKIM KB transforms a consulting practice dependent on founder knowledge and manual research into a scalable intelligence platform. A prospect research cycle currently taking hours of manual investigation compresses to minutes. Positioning and content that currently requires senior consultant involvement can be generated from structured knowledge assets. GEARS workflows can be assembled from pre-defined components. The commercial outcome is a consulting business that scales without proportional headcount growth — the definition of an AI-native operating model.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<!-- 04  ALGODYNAMIX                                                      -->
+<!-- ════════════════════════════════════════════════════════════════════ -->
+<section id="algodynamix" class="company-section">
+  <div class="graph-stage" style="height:520px;">
+    <canvas id="c-algodynamix"></canvas>
+    <div class="graph-label-overlay">
+      <div class="graph-title-bar">
+        <span class="gn">04</span>
+        <span class="gt">AlgoDynamix — Knowledge Architecture</span>
+        <span class="gm">Dual-Hub Mesh · Forecasting × Financial Instruments</span>
+      </div>
+      <div class="graph-controls" id="gc-algodynamix">
+        <div class="gc-group">
+          <span class="gc-label">Speed</span>
+          <input type="range" min="0.2" max="3" step="0.1" value="1.3" oninput="setParam('algodynamix','speed',this.value)">
+          <span class="gc-val" id="gv-algodynamix-speed">1.3×</span>
+        </div>
+        <div class="gc-group">
+          <span class="gc-label">Glow</span>
+          <input type="range" min="0" max="40" step="1" value="22" oninput="setParam('algodynamix','glow',this.value)">
+          <span class="gc-val" id="gv-algodynamix-glow">22</span>
+        </div>
+        <div class="gc-info"><em>LED Bead</em> · Bidirectional flow between the two analytical hub clusters</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="narrative">
+    <div class="kicker">Financial AI · FinTech · Quantitative Analytics</div>
+    <h2>AlgoDynamix</h2>
+    <div class="company-sector">Established growth-stage deep-tech · Founded 2013/2014 · Enterprise B2B</div>
+
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="mk">Topology</div><div class="mv">Dual-Hub Analytical Mesh</div></div>
+      <div class="meta-cell"><div class="mk">Hub Entities</div><div class="mv">Forecasting Models + Financial Instruments</div></div>
+      <div class="meta-cell"><div class="mk">Domain Count</div><div class="mv">6 primary domains</div></div>
+      <div class="meta-cell"><div class="mk">Primary Agents</div><div class="mv">7 (Sales, Research, Support, Docs, Proposal, Marketing, Engineering)</div></div>
+      <div class="meta-cell"><div class="mk">Key Constraint</div><div class="mv">IP protection boundary — methodology accessible ≠ replicable</div></div>
+      <div class="meta-cell"><div class="mk">Governance Priority</div><div class="mv">Accuracy → IP Protection → Freshness</div></div>
+    </div>
+
+    <div class="pull">AlgoDynamix is an unusual case: AI is the product, not an internal tool. The KB architecture exists not to make AI possible, but to make the AI product explainable, trustworthy, and commercially scalable.</div>
+
+    <div class="section-head">Business Context & Strategic Stakes</div>
+    <p>AlgoDynamix builds behavioural forecasting analytics for institutional financial markets. Its core technology analyses live market behaviour and transaction dynamics to provide advance warning of significant market movements — not by replaying historical price patterns but by reading the behavioural signatures of the market itself. Customers include hedge funds, asset managers, CTAs, investment banks, family offices, and fintech software partners seeking embedded analytics.</p>
+    <p>In this context, the KB serves a different purpose than in most engagements. AlgoDynamix does not need a KB to make AI work — AI is already working, generating forecasts at scale. The KB exists to make that AI-driven output explainable to buyers, to systematise the commercial and research knowledge accumulated around the core technology, and to protect the intellectual property that differentiates the product from replicable alternatives.</p>
+
+    <div class="section-head">KB Structural Design</div>
+    <p>The AlgoDynamix knowledge graph is organised as a dual-hub mesh with two primary centres of gravity: Forecasting Models and Financial Instruments. These hubs are connected by the core analytical relationship of the business — forecasting models analyse financial instruments — and every other entity connects to one or both hubs.</p>
+    <ul>
+      <li><strong>Forecasting Models cluster</strong> — Signals and events, confidence thresholds, behavioural patterns, time-series outputs, asset class forecasts. The proprietary analytical engine — represented for explainability and sales support, but protected from exposure that would compromise core IP.</li>
+      <li><strong>Financial Instruments cluster</strong> — Asset classes, exchanges, instrument metadata, price dynamics, liquidity profiles. The domain knowledge layer grounding product documentation, sales support, and customer onboarding in real market context.</li>
+      <li><strong>Products & Customers</strong> — Product versions, subscription licences, customer organisations, use cases, commercial partnerships, embedded integrations. Connects the analytical engine to commercial reality.</li>
+      <li><strong>Research & Partnerships</strong> — Research papers, experimental benchmarks, methodology documentation, IP records, regulatory compliance, partner integrations. Structurally connected to both hub clusters but accessed through appropriate IP-protection layers.</li>
+    </ul>
+    <p>The structurally distinctive feature is the IP protection boundary. Unlike most knowledge graphs where the goal is maximum connectivity, this architecture deliberately throttles pathways between proprietary forecasting methodology and externally accessible knowledge. Validation evidence accessible to a sales copilot is a different object from validation evidence accessible to the research team.</p>
+
+    <div class="section-head">AI & Agent Integration</div>
+    <p>Agent use cases are predominantly outward-facing: sales copilot, research assistant, customer support agent, proposal generator, product documentation agent, and marketing content assistant. The sales copilot needs to explain why the behavioural forecasting approach works better than pattern-matching alternatives — requiring a KB that can surface validated research evidence in plain language without exposing proprietary methodology. This is the knowledge engineering challenge: making the product explainable without making it replicable.</p>
+    <p>Write-back is structured and approval-pathed. Research publication workflows, CRM updates, and product documentation updates all have defined approval pathways. The governance model is financial-services-grade: accuracy and IP protection are the primary constraints, with completeness and freshness secondary.</p>
+
+    <div class="section-head">What This Unlocks</div>
+    <p>A well-structured AlgoDynamix KB turns what is currently a technically sophisticated but commercially complex product into one that sales teams and enterprise customers can navigate confidently. The sales copilot alone — able to retrieve validated performance evidence, explain methodology in plain language, and map use cases to customer types — could compress enterprise sales cycles significantly. The research and documentation agents reduce overhead of maintaining accuracy across a product suite that evolves continuously as new asset classes and forecasting capabilities are added.</p>
+    <p>The longer-term unlock is embedded intelligence: as fintech partners integrate AlgoDynamix analytics into their own platforms, a knowledge layer supporting those partners with structured product documentation, explainability assets, and validation evidence becomes a commercial differentiator in the partnership market as well as the direct enterprise channel.</p>
+  </div>
+</section>
+
+<!-- ── CLOSING ──────────────────────────────────────────────────────── -->
+<section id="closing">
+  <div class="closing-line">Knowledge engineering is not a feature of AI-native businesses.</div>
+  <div class="closing-sub">It is the foundation.</div>
+  <p class="closing-body">The four architectures in this compendium span women's health, sponsorship intelligence, AI consulting, and financial forecasting. Different sectors, different topologies, different agent integration patterns — but a common underlying truth: the quality of commercial AI is bounded by the quality of the knowledge it reasons over.</p>
+  <p class="closing-body">GKIM Digital's Knowledge Base Factory produces this level of knowledge architecture for every engagement — structured, governed, agent-ready, and designed to be a long-term commercial asset rather than a one-time implementation.</p>
+  <div class="closing-contact">gkimdigital.com &nbsp;·&nbsp; hello@gkimdigital.com &nbsp;·&nbsp; 2026</div>
+</section>
+
+</main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+// OPTIMISED GRAPH ENGINE
+// Key changes vs v1:
+//  • IntersectionObserver — only animate visible graphs
+//  • Node sprites pre-rendered to offscreen canvas — no per-frame shadow
+//  • Shadow drawn once per edge as a single dim line, not per-bead save/restore
+//  • ctx.save/restore eliminated from hot path — state set once per edge batch
+//  • Single shared RAF; per-graph frame counters
+//  • DPR-aware canvas sizing — avoid blurry rendering on retina
+//  • Glow approximated via lineWidth + low-alpha compositing, not shadowBlur
+// ═══════════════════════════════════════════════════════════════════════
+
+const YELLOW  = '#FFDD00';
+const LED_OFF = '#1E1A00';
+const NODE_BG = '#111110';
+
+const params = {
+  adora:      { speed:1.0, glow:14 },
+  asn:        { speed:0.9, glow:16 },
+  gkim:       { speed:1.1, glow:18 },
+  algodynamix:{ speed:1.3, glow:20 },
+};
+
+function setParam(id, key, val) {
+  params[id][key] = parseFloat(val);
+  document.getElementById(`gv-${id}-${key}`).textContent =
+    key === 'speed' ? parseFloat(val).toFixed(1)+'×' : val;
+  // Invalidate node sprites when glow changes
+  if (key === 'glow') graphs[id] && rebuildSprites(id);
+}
+
+// ── DPR-aware canvas ─────────────────────────────────────────────────
+function setupCanvas(canvas) {
+  const dpr  = Math.min(window.devicePixelRatio || 1, 2); // cap at 2×
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const W    = rect.width;
+  const H    = parseInt(canvas.parentElement.style.height) || 520;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d', { alpha: false });
+  ctx.scale(dpr, dpr);
+  return { ctx, W, H, dpr };
+}
+
+function lerp(a,b,t){ return a + (b-a)*t; }
+
+// ── Sprite builder — pre-render each node to an offscreen canvas ─────
+// Returns an array of { canvas, ox, oy } — origin offsets for centering
+function buildSprites(nodes, glowVal) {
+  return nodes.map(n => {
+    const r   = n.r || (n.hub ? 38 : 22);
+    const pad = n.hub ? 14 : 10;           // extra px for glow halo
+    const sz  = (r + pad) * 2;
+    const oc  = document.createElement('canvas');
+    oc.width = oc.height = sz;
+    const octx = oc.getContext('2d');
+    const cx   = sz / 2, cy = sz / 2;
+
+    // Glow ring — single blurred circle drawn with globalAlpha
+    // Instead of shadowBlur (which forces a GPU compositing pass),
+    // we draw 2-3 concentric circles with decreasing alpha + larger radius
+    if (n.hub) {
+      const glowSteps = 3;
+      for (let i = glowSteps; i >= 1; i--) {
+        const gr = r + i * 4;
+        octx.beginPath();
+        octx.arc(cx, cy, gr, 0, Math.PI * 2);
+        octx.strokeStyle = `rgba(255,221,0,${0.08 * (glowSteps - i + 1)})`;
+        octx.lineWidth = 4;
+        octx.stroke();
+      }
+    } else {
+      // Single dim halo
+      octx.beginPath();
+      octx.arc(cx, cy, r + 3, 0, Math.PI * 2);
+      octx.strokeStyle = 'rgba(255,221,0,0.12)';
+      octx.lineWidth = 3;
+      octx.stroke();
+    }
+
+    // Fill
+    octx.beginPath();
+    octx.arc(cx, cy, r, 0, Math.PI * 2);
+    octx.fillStyle = n.hub ? '#1A1800' : NODE_BG;
+    octx.fill();
+
+    // Border
+    octx.beginPath();
+    octx.arc(cx, cy, r, 0, Math.PI * 2);
+    octx.strokeStyle = YELLOW;
+    octx.lineWidth   = n.hub ? 2.5 : 1.5;
+    octx.stroke();
+
+    // Label
+    const lines = n.label.split('\n');
+    octx.fillStyle    = YELLOW;
+    octx.font         = `${n.hub ? 10 : 9}px 'SF Mono',monospace`;
+    octx.textAlign    = 'center';
+    octx.textBaseline = 'middle';
+    const lh  = 11;
+    const top = cy - (lines.length - 1) * lh / 2;
+    lines.forEach((line, i) => octx.fillText(line, cx, top + i * lh));
+
+    return { canvas: oc, ox: cx, oy: cy };
+  });
+}
+
+// ── LED Beads — hot path, no save/restore, no shadowBlur ─────────────
+// Glow effect: draw bright bead at larger radius with lower alpha overlay
+function drawLEDBeads(ctx, ax,ay,bx,by, frame, speed, phase) {
+  const len   = Math.hypot(bx-ax, by-ay);
+  const steps = Math.max(5, Math.round(len / 13)) | 0;
+  const t     = frame * speed * 0.013;
+  const dx    = (bx-ax)/len, dy = (by-ay)/len;
+
+  // Dead track — single dim line (cheap)
+  ctx.strokeStyle = 'rgba(255,221,0,0.06)';
+  ctx.lineWidth   = 1.5;
+  ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
+
+  // Dead beads
+  ctx.fillStyle = LED_OFF;
+  for (let i=0; i<=steps; i++) {
+    const f = i/steps;
+    ctx.beginPath();
+    ctx.arc(lerp(ax,bx,f), lerp(ay,by,f), 2.2, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Live beads — accumulate into two passes (bright + soft halo)
+  // Pass 1: core bead
+  ctx.fillStyle = YELLOW;
+  for (let i=0; i<=steps; i++) {
+    const f    = i/steps;
+    const wave = (t + phase - f) % 1;
+    const bright = Math.max(0, (1 - Math.abs(((wave+0.5)%1)-0.5)*5.5));
+    const b2   = bright * bright;
+    if (b2 < 0.04) continue;
+    ctx.globalAlpha = b2;
+    const x = lerp(ax,bx,f), y = lerp(ay,by,f);
+    ctx.beginPath(); ctx.arc(x, y, 2.2 + b2*2, 0, Math.PI*2); ctx.fill();
+  }
+
+  // Pass 2: soft glow corona (single larger, low-alpha circle per bright bead)
+  ctx.fillStyle = 'rgba(255,221,0,0.18)';
+  for (let i=0; i<=steps; i++) {
+    const f    = i/steps;
+    const wave = (t + phase - f) % 1;
+    const bright = Math.max(0, (1 - Math.abs(((wave+0.5)%1)-0.5)*5.5));
+    const b2   = bright * bright;
+    if (b2 < 0.25) continue;
+    const x = lerp(ax,bx,f), y = lerp(ay,by,f);
+    ctx.beginPath(); ctx.arc(x, y, 5 + b2*4, 0, Math.PI*2); ctx.fill();
+  }
+
+  ctx.globalAlpha = 1;
+}
+
+// ── Pulse Wave — simplified tail, no per-segment save/restore ─────────
+function drawPulseWave(ctx, ax,ay,bx,by, frame, speed, phase) {
+  const t     = frame * speed * 0.009;
+  const len   = Math.hypot(bx-ax, by-ay);
+
+  // Dim track
+  ctx.strokeStyle = 'rgba(255,221,0,0.06)';
+  ctx.lineWidth   = 1.5;
+  ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.stroke();
+
+  // Two pulses per edge
+  for (let p = 0; p < 2; p++) {
+    const headPos = ((t + phase + p * 0.5) % 1);
+    const tailLen = 0.18;
+    const segs    = 20; // reduced from 24
+
+    // Tail — draw as a single gradient stroke using multiple line segments
+    // but avoid save/restore per segment; batch them
+    for (let s = 0; s < segs; s++) {
+      const f0 = headPos - tailLen * (s / segs);
+      const f1 = headPos - tailLen * ((s+1) / segs);
+      if (f0 < 0 || f1 < 0) continue;
+      const alpha = (1 - s/segs) * 0.8;
+      ctx.strokeStyle = `rgba(255,221,0,${alpha.toFixed(2)})`;
+      ctx.lineWidth   = 1.5 + (1 - s/segs) * 2.5;
+      ctx.beginPath();
+      ctx.moveTo(lerp(ax,bx,f0), lerp(ay,by,f0));
+      ctx.lineTo(lerp(ax,bx,f1), lerp(ay,by,f1));
+      ctx.stroke();
+    }
+
+    // Head — bright dot, no shadow, just large white circle
+    if (headPos >= 0 && headPos <= 1) {
+      const hx = lerp(ax,bx,headPos), hy = lerp(ay,by,headPos);
+      ctx.fillStyle   = 'rgba(255,255,255,0.9)';
+      ctx.beginPath(); ctx.arc(hx, hy, 3, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle   = 'rgba(255,221,0,0.3)';
+      ctx.beginPath(); ctx.arc(hx, hy, 5.5, 0, Math.PI*2); ctx.fill();
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// GRAPH DEFINITIONS (same topology as v1)
+// ═══════════════════════════════════════════════════════════════════════
+
+function graphAdora(W, H) {
+  const cx=W/2, cy=H*0.52;
+  const nodes = [
+    { x:W*.10,y:H*.18,label:'Condition\n& Symptom' },
+    { x:W*.23,y:H*.12,label:'Treatment\nPathway' },
+    { x:W*.38,y:H*.10,label:'Clinical\nGuideline' },
+    { x:W*.53,y:H*.10,label:'Evidence\nSource' },
+    { x:W*.67,y:H*.12,label:'Clinical\nBoundary' },
+    { x:W*.82,y:H*.18,label:'External\nPolicy' },
+    { x:cx, y:cy, label:'AI Ann\nOperating\nMemory', hub:true, r:42 },
+    { x:W*.12,y:H*.50,label:'Employer\nAccount' },
+    { x:W*.12,y:H*.65,label:'Buyer\nPersona' },
+    { x:W*.22,y:H*.58,label:'Opportunity\n& Proposal' },
+    { x:W*.84,y:H*.50,label:'Client\nProgramme' },
+    { x:W*.84,y:H*.65,label:'Session\n& Task' },
+    { x:W*.74,y:H*.57,label:'Content\nAsset' },
+    { x:W*.30,y:cy, label:'Product\n& Package', hub:true, r:30 },
+    { x:W*.70,y:cy, label:'Customer\nNeed', hub:true, r:30 },
+    { x:W*.20,y:H*.86,label:'Policy &\nPermission' },
+    { x:W*.40,y:H*.88,label:'Audit\nEvent' },
+    { x:W*.60,y:H*.88,label:'Review\nStatus' },
+    { x:W*.80,y:H*.86,label:'Risk &\nControl' },
+  ];
+  const edges = [
+    {a:0,b:6,phase:0.0},{a:1,b:6,phase:0.1},{a:2,b:6,phase:0.2},
+    {a:3,b:6,phase:0.3},{a:4,b:6,phase:0.4},{a:5,b:6,phase:0.5},
+    {a:6,b:13,phase:0.1},{a:6,b:14,phase:0.3},
+    {a:6,b:7,phase:0.6},{a:6,b:8,phase:0.7},{a:6,b:9,phase:0.5},
+    {a:6,b:10,phase:0.2},{a:6,b:11,phase:0.4},{a:6,b:12,phase:0.6},
+    {a:6,b:15,phase:0.8},{a:6,b:16,phase:0.9},{a:6,b:17,phase:0.7},{a:6,b:18,phase:0.85},
+    {a:2,b:13,phase:0.35},{a:3,b:13,phase:0.45},
+  ];
+  return { nodes, edges, technique:'beads' };
+}
+
+function graphASN(W, H) {
+  const cx=W/2, cy=H*0.50;
+  const nodes = [
+    { x:cx, y:cy, label:'Sponsorship\nDeal', hub:true, r:46 },
+    { x:W*.06,y:H*.22,label:'Brand' },
+    { x:W*.06,y:H*.38,label:'Rights\nHolder' },
+    { x:W*.06,y:H*.54,label:'Agency' },
+    { x:W*.06,y:H*.70,label:'League /\nFederation' },
+    { x:W*.06,y:H*.83,label:'Club &\nTeam' },
+    { x:W*.94,y:H*.22,label:'Sport' },
+    { x:W*.94,y:H*.36,label:'Competition\n& Season' },
+    { x:W*.94,y:H*.50,label:'Tournament\n& Event' },
+    { x:W*.94,y:H*.64,label:'Athlete' },
+    { x:W*.94,y:H*.78,label:'Venue' },
+    { x:W*.22,y:H*.88,label:'Country\n& Region' },
+    { x:W*.38,y:H*.90,label:'City &\nMarket' },
+    { x:W*.62,y:H*.90,label:'Industry\nSector' },
+    { x:W*.78,y:H*.88,label:'Sponsor\nCategory' },
+    { x:cx-W*.15,y:cy-H*.18,label:'Contract\n& Term' },
+    { x:cx+W*.15,y:cy-H*.18,label:'Activation\n& Campaign' },
+    { x:cx+W*.14,y:cy+H*.18,label:'Renewal /\nExpiry' },
+    { x:cx-W*.14,y:cy+H*.18,label:'Historical\nVersion' },
+    { x:W*.30,y:H*.10,label:'Media\nSource' },
+    { x:W*.50,y:H*.08,label:'Editorial\nWorkflow' },
+    { x:W*.70,y:H*.10,label:'Provenance\nAssertion' },
+  ];
+  const edges = [
+    {a:1,b:0,phase:0.0},{a:2,b:0,phase:0.1},{a:3,b:0,phase:0.2},
+    {a:4,b:0,phase:0.3},{a:5,b:0,phase:0.4},
+    {a:6,b:0,phase:0.5},{a:7,b:0,phase:0.55},{a:8,b:0,phase:0.6},
+    {a:9,b:0,phase:0.65},{a:10,b:0,phase:0.7},
+    {a:11,b:0,phase:0.75},{a:12,b:0,phase:0.78},
+    {a:13,b:0,phase:0.8},{a:14,b:0,phase:0.85},
+    {a:0,b:15,phase:0.12},{a:0,b:16,phase:0.22},{a:0,b:17,phase:0.32},{a:0,b:18,phase:0.42},
+    {a:19,b:0,phase:0.9},{a:20,b:0,phase:0.92},{a:21,b:0,phase:0.95},
+  ];
+  return { nodes, edges, technique:'pulse' };
+}
+
+function graphGKIM(W, H) {
+  const nodes = [
+    { x:W*.12,y:H*.11,label:'Healthcare\nCompany' },
+    { x:W*.27,y:H*.11,label:'Division &\nProduct' },
+    { x:W*.42,y:H*.11,label:'Solution\nCategory' },
+    { x:W*.57,y:H*.11,label:'Regulation' },
+    { x:W*.72,y:H*.11,label:'Competitor' },
+    { x:W*.87,y:H*.11,label:'Market\nSignal' },
+    { x:W*.18,y:H*.29,label:'AI Maturity\nDimension' },
+    { x:W*.38,y:H*.29,label:'Maturity\nScore' },
+    { x:W*.62,y:H*.29,label:'Assessment\nRule' },
+    { x:W*.82,y:H*.29,label:'Benchmark' },
+    { x:W*.50,y:H*.50,label:'Transformation\nGap', hub:true, r:44 },
+    { x:W*.12,y:H*.68,label:'GKIM\nService' },
+    { x:W*.27,y:H*.68,label:'Positioning\nAngle' },
+    { x:W*.42,y:H*.68,label:'Revenue\nOpportunity' },
+    { x:W*.62,y:H*.68,label:'Partner\nChannel' },
+    { x:W*.77,y:H*.68,label:'Pricing\nModel' },
+    { x:W*.90,y:H*.68,label:'Commercial\nOutcome' },
+    { x:W*.15,y:H*.86,label:'Service\nDeliverable' },
+    { x:W*.32,y:H*.86,label:'AI SEO\nContent' },
+    { x:W*.50,y:H*.86,label:'Webinar &\nCampaign' },
+    { x:W*.68,y:H*.86,label:'Outreach\nPersona' },
+    { x:W*.85,y:H*.86,label:'GEARS\nWorkflow' },
+  ];
+  const edges = [
+    {a:0,b:6,phase:0.0},{a:1,b:6,phase:0.1},{a:2,b:7,phase:0.2},
+    {a:3,b:8,phase:0.3},{a:4,b:8,phase:0.4},{a:5,b:9,phase:0.5},
+    {a:6,b:10,phase:0.1},{a:7,b:10,phase:0.2},{a:8,b:10,phase:0.3},{a:9,b:10,phase:0.4},
+    {a:10,b:11,phase:0.1},{a:10,b:12,phase:0.2},{a:10,b:13,phase:0.3},
+    {a:10,b:14,phase:0.4},{a:10,b:15,phase:0.5},{a:10,b:16,phase:0.6},
+    {a:11,b:17,phase:0.1},{a:12,b:18,phase:0.2},{a:13,b:19,phase:0.3},
+    {a:14,b:20,phase:0.4},{a:16,b:21,phase:0.5},
+  ];
+  return { nodes, edges, technique:'pulse' };
+}
+
+function graphAlgoDynamix(W, H) {
+  const cx1=W*.32, cx2=W*.68, cy=H*.50;
+  const nodes = [
+    { x:cx1, y:cy, label:'Forecasting\nModel', hub:true, r:42 },
+    { x:cx2, y:cy, label:'Financial\nInstrument', hub:true, r:42 },
+    { x:cx1-W*.14,y:cy-H*.26,label:'Signal &\nEvent' },
+    { x:cx1+W*.05,y:cy-H*.28,label:'Confidence\nThreshold' },
+    { x:cx1-W*.18,y:cy,       label:'Behavioural\nPattern' },
+    { x:cx1-W*.13,y:cy+H*.26,label:'Time Series\nOutput' },
+    { x:cx1+W*.06,y:cy+H*.28,label:'Asset Class\nForecast' },
+    { x:cx2+W*.14,y:cy-H*.26,label:'Exchange &\nMarket' },
+    { x:cx2-W*.05,y:cy-H*.28,label:'Price\nDynamics' },
+    { x:cx2+W*.18,y:cy,       label:'Instrument\nMetadata' },
+    { x:cx2+W*.13,y:cy+H*.26,label:'Liquidity\nProfile' },
+    { x:cx2-W*.05,y:cy+H*.28,label:'Asset\nClass' },
+    { x:W*.06,y:H*.22,label:'Product\n& Version' },
+    { x:W*.06,y:H*.40,label:'Subscription\nLicence' },
+    { x:W*.06,y:H*.58,label:'Customer\nOrg' },
+    { x:W*.06,y:H*.76,label:'Commercial\nPartner' },
+    { x:W*.94,y:H*.22,label:'Research\nPaper' },
+    { x:W*.94,y:H*.40,label:'Benchmark\n& Experiment' },
+    { x:W*.94,y:H*.58,label:'Methodology\n& IP' },
+    { x:W*.94,y:H*.76,label:'Partner\nIntegration' },
+  ];
+  const edges = [
+    {a:0,b:1,phase:0.0},{a:1,b:0,phase:0.5},
+    {a:2,b:0,phase:0.1},{a:3,b:0,phase:0.2},{a:4,b:0,phase:0.3},
+    {a:5,b:0,phase:0.4},{a:6,b:0,phase:0.45},
+    {a:7,b:1,phase:0.6},{a:8,b:1,phase:0.65},{a:9,b:1,phase:0.7},
+    {a:10,b:1,phase:0.75},{a:11,b:1,phase:0.8},
+    {a:12,b:0,phase:0.0},{a:13,b:0,phase:0.1},{a:14,b:0,phase:0.2},{a:15,b:0,phase:0.3},
+    {a:16,b:1,phase:0.5},{a:17,b:0,phase:0.55},{a:18,b:0,phase:0.6},{a:19,b:1,phase:0.65},
+  ];
+  return { nodes, edges, technique:'beads' };
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════════════════
+
+const graphs   = {};
+const frames   = {};
+const visible  = {};  // IntersectionObserver visibility flags
+
+function rebuildSprites(id) {
+  const g = graphs[id];
+  if (!g) return;
+  g.sprites = buildSprites(g.nodes, params[id].glow);
+}
+
+function initGraph(id, buildFn) {
+  const canvas = document.getElementById('c-' + id);
+  const { ctx, W, H } = setupCanvas(canvas);
+  const g = buildFn(W, H);
+  graphs[id] = { canvas, ctx, W, H, ...g };
+  frames[id] = 0;
+  visible[id] = false;
+  rebuildSprites(id);
+
+  // IntersectionObserver — animate only when visible
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { visible[id] = e.isIntersecting; });
+  }, { threshold: 0.05 });
+  observer.observe(canvas);
+}
+
+function renderGraph(id) {
+  const g = graphs[id];
+  if (!g) return;
+  const { ctx, nodes, edges, sprites, technique, W, H } = g;
+  const { speed } = params[id];
+  const frame = ++frames[id];
+
+  // Clear — use fillRect (faster than clearRect on opaque canvas)
+  ctx.fillStyle = '#0A0A09';
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw all edges first (no interleaving with nodes = better batching)
+  // Set shared state once
+  ctx.lineCap = 'round';
+
+  if (technique === 'beads') {
+    edges.forEach(e => {
+      const A = nodes[e.a], B = nodes[e.b];
+      if (A && B) drawLEDBeads(ctx, A.x,A.y, B.x,B.y, frame, speed, e.phase);
+    });
+  } else {
+    edges.forEach(e => {
+      const A = nodes[e.a], B = nodes[e.b];
+      if (A && B) drawPulseWave(ctx, A.x,A.y, B.x,B.y, frame, speed, e.phase);
+    });
+  }
+
+  // Blit pre-rendered node sprites (drawImage is very fast)
+  ctx.globalAlpha = 1;
+  sprites.forEach((sp, i) => {
+    const n = nodes[i];
+    ctx.drawImage(sp.canvas, n.x - sp.ox, n.y - sp.oy);
+  });
+}
+
+// Single shared RAF — only renders visible graphs
+function loop() {
+  const ids = Object.keys(graphs);
+  for (let i = 0; i < ids.length; i++) {
+    if (visible[ids[i]]) renderGraph(ids[i]);
+  }
+  requestAnimationFrame(loop);
+}
+
+// ── Init ─────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  initGraph('adora',       graphAdora);
+  initGraph('asn',         graphASN);
+  initGraph('gkim',        graphGKIM);
+  initGraph('algodynamix', graphAlgoDynamix);
+  loop();
+
+  // Resize — debounced
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const buildFns = { adora:graphAdora, asn:graphASN, gkim:graphGKIM, algodynamix:graphAlgoDynamix };
+      Object.keys(graphs).forEach(id => {
+        const g = graphs[id];
+        const { ctx, W: newW, H: newH } = setupCanvas(g.canvas);
+        const newG = buildFns[id](newW, newH);
+        Object.assign(g, { ctx, W: newW, H: newH, nodes: newG.nodes, edges: newG.edges });
+        rebuildSprites(id);
+      });
+    }, 150);
+  });
+});
+
+// ── Scrollspy ─────────────────────────────────────────────────────────
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + window.innerHeight * 0.4;
+  let active = null;
+  ['adora','asn','gkim','algodynamix','closing'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) active = id;
+  });
+  navLinks.forEach(a => a.classList.toggle('active', a.dataset.target === active));
+}, { passive: true });
+</script>
+</body>
+</html>

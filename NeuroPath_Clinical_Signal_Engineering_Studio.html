@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeuroPath · Clinical Signal Engineering Studio™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e5560;
+  --teal:#2a7d84;
+  --sage:#5fa093;
+  --sage-2:#82b6ab;
+  --mint:#e9f2ef;
+  --mint-2:#dcede8;
+  --paper:#ffffff;
+  --slate:#33434b;
+  --muted:#6b7d84;
+  --line:#d5e4df;
+  --amber:#c07a2b;
+  --blue:#3a6ea5;
+  --rose:#c05f5c;
+  --shadow:0 18px 50px -22px rgba(14,85,96,.45);
+  --shadow-sm:0 8px 24px -14px rgba(14,85,96,.4);
+  --display:'Poppins',system-ui,sans-serif;
+  --body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--body);
+  color:var(--slate);
+  background:
+    radial-gradient(1200px 700px at 82% -10%, #f0f7f4 0%, rgba(240,247,244,0) 60%),
+    radial-gradient(900px 600px at 0% 110%, #eef5f2 0%, rgba(238,245,242,0) 55%),
+    var(--paper);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- Deck frame ---------- */
+.deck{position:fixed;inset:0;display:flex;flex-direction:column}
+.progress{height:4px;background:var(--mint-2);flex:0 0 auto;position:relative;z-index:40}
+.progress__bar{height:100%;width:0;background:linear-gradient(90deg,var(--sage),var(--ink));transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+.topbar{
+  position:absolute;top:16px;left:0;right:0;z-index:35;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,4vw,54px);pointer-events:none;
+}
+.brand{display:flex;align-items:center;gap:11px;pointer-events:auto}
+.brand__word{font-family:var(--display);font-weight:600;color:var(--ink);font-size:15px;letter-spacing:.2px;line-height:1}
+.brand__word small{display:block;font-family:var(--body);font-weight:500;color:var(--sage);font-size:9px;letter-spacing:2.4px;text-transform:uppercase;margin-top:3px}
+.meta{display:flex;align-items:center;gap:14px;pointer-events:auto}
+.eyebrow-chip{font-family:var(--display);font-weight:500;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);background:var(--mint);padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.counter{font-family:var(--display);font-weight:600;color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
+.counter span{color:var(--muted);font-weight:500}
+
+/* ---------- Stage / slides ---------- */
+.stage{flex:1 1 auto;position:relative;overflow:hidden}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(74px,9vh,110px) clamp(20px,5vw,72px) clamp(78px,8vh,96px);
+  opacity:0;visibility:hidden;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease,visibility .5s;
+  overflow-y:auto;
+}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:5}
+.slide.exit-left{transform:translateY(-14px)}
+.slide__inner{width:100%;max-width:1120px;margin:0 auto}
+
+/* reveal children on active */
+.slide.active .reveal{animation:rise .6s cubic-bezier(.2,.7,.2,1) both}
+.slide.active .reveal:nth-child(2){animation-delay:.06s}
+.slide.active .reveal:nth-child(3){animation-delay:.12s}
+.slide.active .reveal:nth-child(4){animation-delay:.18s}
+.slide.active .reveal:nth-child(5){animation-delay:.24s}
+.slide.active .reveal:nth-child(6){animation-delay:.30s}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ---------- Typography ---------- */
+.eyebrow{font-family:var(--display);font-weight:600;font-size:clamp(11px,1.1vw,13px);letter-spacing:2.6px;text-transform:uppercase;color:var(--sage);margin-bottom:14px}
+h1.title{font-family:var(--display);font-weight:700;color:var(--ink);font-size:clamp(30px,4.6vw,58px);line-height:1.04;letter-spacing:-.5px}
+h1.title .tm{font-size:.45em;vertical-align:super;font-weight:600;color:var(--sage)}
+h2.head{font-family:var(--display);font-weight:700;color:var(--ink);font-size:clamp(26px,3.6vw,44px);line-height:1.08;letter-spacing:-.4px}
+.sub{font-size:clamp(15px,1.7vw,20px);color:var(--teal);font-weight:500;line-height:1.5;margin-top:12px;max-width:46ch}
+.lead{font-size:clamp(15px,1.6vw,19px);line-height:1.6;color:var(--slate);max-width:60ch}
+.hl{color:var(--ink);font-weight:600}
+.big-quote{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(20px,2.6vw,30px);line-height:1.28;letter-spacing:-.3px}
+.mark{background:linear-gradient(180deg,transparent 60%,#cfe7df 60%);padding:0 2px}
+.footnote{margin-top:22px;font-size:13px;color:var(--muted)}
+
+/* ---------- Title slide ---------- */
+.title-slide .slide__inner{max-width:1000px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.logo-hero{width:clamp(96px,13vw,140px);height:auto;margin-bottom:26px}
+.title-slide .sub{margin-inline:auto;text-align:center;max-width:38ch}
+.narrative{margin-top:34px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.narrative p{font-size:clamp(15px,1.6vw,19px);line-height:1.55;color:var(--slate);max-width:56ch}
+.narrative .accent{color:var(--ink);font-weight:600;font-family:var(--display)}
+.beat{display:inline-flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.beat b{font-family:var(--display);color:var(--ink);font-weight:600;font-size:clamp(16px,1.9vw,22px)}
+.engine-tag{margin-top:30px;display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#eaf5f1;font-family:var(--display);font-weight:500;font-size:clamp(13px,1.4vw,16px);padding:12px 22px;border-radius:999px;box-shadow:var(--shadow)}
+.engine-tag .dot{width:8px;height:8px;border-radius:50%;background:var(--sage-2);box-shadow:0 0 0 4px rgba(130,182,171,.28)}
+
+/* ---------- Grid / cards ---------- */
+.grid{display:grid;gap:16px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-6{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;box-shadow:var(--shadow-sm);position:relative}
+.card--mint{background:var(--mint);border-color:transparent}
+.card__k{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(15px,1.5vw,18px);margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.card__k .n{width:24px;height:24px;flex:0 0 auto;border-radius:7px;background:var(--ink);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:600}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.card li{font-size:13.5px;color:var(--slate);padding-left:15px;position:relative;line-height:1.4}
+.card li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--sage)}
+
+/* ---------- Pipeline (horizontal, "loses knowledge") ---------- */
+.pipeline{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px 6px;margin-top:6px}
+.pipe-node{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:11px 14px;font-family:var(--display);font-weight:500;font-size:13px;color:var(--ink);display:flex;align-items:center;box-shadow:var(--shadow-sm);white-space:nowrap}
+.pipe-node.start{background:var(--mint);border-color:transparent}
+.pipe-node.end{background:var(--ink);color:#eaf5f1;border-color:transparent}
+.pipe-arrow{display:flex;align-items:center;color:var(--sage-2);font-size:18px;line-height:1}
+.loss-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.loss-tag{font-size:12.5px;color:var(--rose);background:#fbeceb;border:1px solid #f3d6d4;border-radius:8px;padding:6px 11px;font-weight:500}
+
+/* ---------- Vertical / equation stacks ---------- */
+.vstack{display:flex;flex-direction:column;align-items:center;gap:2px}
+.vstack .step{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:11px 20px;font-family:var(--display);font-weight:500;color:var(--ink);box-shadow:var(--shadow-sm);text-align:center;min-width:230px}
+.vstack .step.emph{background:var(--ink);color:#eaf5f1;border-color:transparent;font-weight:600}
+.vstack .down{color:var(--sage-2);font-size:16px;line-height:1;padding:2px 0}
+
+/* equation of inputs */
+.equation{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px}
+.eq-term{background:var(--mint);border:1px solid transparent;border-radius:11px;padding:12px 16px;font-family:var(--display);font-weight:500;color:var(--ink);font-size:14px;box-shadow:var(--shadow-sm)}
+.eq-op{font-family:var(--display);font-weight:600;color:var(--sage);font-size:22px}
+.eq-result{background:var(--ink);color:#eaf5f1;border-radius:12px;padding:14px 22px;font-family:var(--display);font-weight:600;font-size:clamp(15px,1.7vw,19px);box-shadow:var(--shadow)}
+.outcomes{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}
+.outcome{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:500;color:var(--teal);font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:9px 16px;box-shadow:var(--shadow-sm)}
+.outcome .a{color:var(--sage);font-size:15px}
+
+/* ---------- "Do not sell" ---------- */
+.negate{display:flex;flex-wrap:wrap;gap:10px}
+.negate span{font-family:var(--display);font-weight:500;font-size:15px;color:var(--muted);background:#f3f6f5;border:1px dashed var(--line);border-radius:10px;padding:9px 15px;text-decoration:line-through;text-decoration-color:var(--rose);text-decoration-thickness:2px}
+.doctrine{margin-top:20px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+.doctrine .card--mint{flex:1 1 260px}
+.rules{display:flex;flex-direction:column;gap:8px}
+.rule{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--slate)}
+.rule svg{flex:0 0 auto}
+.decides{font-family:var(--display);font-weight:600;color:var(--ink);font-size:clamp(16px,1.8vw,21px);margin-top:6px}
+
+/* ---------- Factory (looping vertical) ---------- */
+.factory{display:grid;grid-template-columns:1fr 1fr;gap:18px 40px;align-items:center}
+.factory-note{align-self:center}
+
+/* ---------- Flywheel (SVG) ---------- */
+.wheel-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.9fr);gap:30px;align-items:center}
+.wheel{width:100%;max-width:440px;margin:0 auto;display:block}
+.wheel .ring{fill:none;stroke:var(--mint-2);stroke-width:14}
+.wheel .arc{fill:none;stroke:url(#wheelgrad);stroke-width:14;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 2.6s ease forwards .3s}
+@keyframes draw{to{stroke-dashoffset:120}}
+.wheel .orbit{fill:var(--ink)}
+.wheel-core{fill:var(--ink)}
+.wheel-node text{font-family:var(--body);font-size:8.2px;fill:var(--slate);font-weight:500}
+.wheel-node circle{fill:var(--paper);stroke:var(--sage);stroke-width:2}
+.spin{transform-origin:200px 200px;animation:spin 26s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Contrast rows (engineering vs research, why matters) ---------- */
+.contrast{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.crow{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
+.crow .from{background:#f3f6f5;border:1px solid var(--line);border-radius:12px;padding:13px 16px;font-size:14px;color:var(--muted);font-family:var(--display);font-weight:500}
+.crow .arrow{color:var(--sage);font-size:18px;font-weight:700}
+.crow .to{background:var(--mint);border-radius:12px;padding:13px 16px;font-size:14px;color:var(--ink);font-family:var(--display);font-weight:600;border:1px solid transparent}
+
+.compound-list{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.compound-list li{list-style:none;display:flex;align-items:center;gap:11px;font-size:15px;color:var(--slate)}
+.compound-list li b{color:var(--ink);font-weight:600}
+.compound-list .ic{width:26px;height:26px;border-radius:8px;background:var(--mint);display:grid;place-items:center;color:var(--teal);flex:0 0 auto}
+
+.statement{background:var(--ink);color:#eaf5f1;border-radius:18px;padding:clamp(22px,3vw,34px);box-shadow:var(--shadow);margin-top:22px}
+.statement p{font-family:var(--display);font-weight:500;font-size:clamp(16px,1.9vw,22px);line-height:1.4}
+.statement .k{color:var(--sage-2);font-weight:600}
+
+/* ---------- Controls ---------- */
+.controls{
+  position:absolute;bottom:16px;left:0;right:0;z-index:35;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  padding:0 clamp(16px,4vw,54px);pointer-events:none;
+}
+.nav-btn{
+  pointer-events:auto;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--paper);color:var(--ink);cursor:pointer;display:grid;place-items:center;
+  box-shadow:var(--shadow-sm);transition:transform .15s ease,background .15s,border-color .15s;
+}
+.nav-btn:hover{background:var(--mint);border-color:var(--sage-2);transform:translateY(-1px)}
+.nav-btn:active{transform:translateY(0)}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;background:var(--paper)}
+.dots{pointer-events:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;max-width:60vw;justify-content:center}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--mint-2);border:none;cursor:pointer;padding:0;transition:all .2s}
+.dot:hover{background:var(--sage-2)}
+.dot.active{background:var(--ink);width:26px;border-radius:6px}
+.util{position:absolute;bottom:16px;right:clamp(16px,4vw,54px);z-index:36;display:flex;gap:8px;pointer-events:auto}
+.util .nav-btn{width:40px;height:40px}
+
+/* ---------- Overview ---------- */
+.overview{position:fixed;inset:0;z-index:60;background:rgba(11,58,64,.86);backdrop-filter:blur(8px);
+  display:none;padding:clamp(24px,6vh,60px) clamp(20px,6vw,80px);overflow-y:auto}
+.overview.open{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.overview h3{color:#fff;font-family:var(--display);font-weight:600;font-size:20px;margin-bottom:6px}
+.overview .ohint{color:#bcdcd4;font-size:13px;margin-bottom:26px}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ov-card{text-align:left;cursor:pointer;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:16px 16px 14px;color:#eaf5f1;transition:all .18s}
+.ov-card:hover{background:rgba(255,255,255,.14);border-color:var(--sage-2);transform:translateY(-2px)}
+.ov-card.current{border-color:var(--sage-2);background:rgba(130,182,171,.2)}
+.ov-card .num{font-family:var(--display);font-weight:600;color:var(--sage-2);font-size:12px;letter-spacing:1px}
+.ov-card .t{font-family:var(--display);font-weight:600;font-size:15px;margin-top:6px;line-height:1.25}
+.ov-close{position:fixed;top:22px;right:26px;z-index:61;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff;width:42px;height:42px;border-radius:12px;cursor:pointer;font-size:18px}
+.ov-close:hover{background:rgba(255,255,255,.2)}
+
+.kbd{font-family:var(--body);font-size:11px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:1px 6px;color:#eaf5f1}
+
+/* ---------- Responsive ---------- */
+@media (max-width:820px){
+  .g-2,.g-3,.g-6,.factory,.wheel-wrap{grid-template-columns:1fr}
+  .crow{grid-template-columns:1fr;text-align:center}
+  .crow .arrow{transform:rotate(90deg)}
+  .brand__word small{display:none}
+  .eyebrow-chip{display:none}
+  .dots{max-width:44vw}
+}
+@media (max-width:520px){
+  .dots .dot:not(.active){display:none}
+  .dots::before{content:attr(data-label);color:var(--muted);font-size:12px;font-family:var(--display);font-weight:600}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.12s !important}
+  .wheel .arc{stroke-dashoffset:120}
+}
+</style>
+</head>
+<body>
+
+<div class="deck">
+  <div class="progress"><div class="progress__bar" id="bar"></div></div>
+
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+        <g fill="none" stroke="var(--sage)" stroke-width="3.4" stroke-linecap="round">
+          <path d="M31 13 A41 41 0 0 0 31 87"/>
+          <path d="M69 13 A41 41 0 0 1 69 87"/>
+          <path d="M50 90 L50 33"/>
+          <path d="M50 66 C44 66 40 60 36 56"/><path d="M50 66 C56 66 60 60 64 56"/>
+          <path d="M50 52 C45 51 41 46 39 41"/><path d="M50 52 C55 51 59 46 61 41"/>
+          <path d="M50 41 C48 38 46 35 45 31"/><path d="M50 41 C52 38 54 35 55 31"/>
+        </g>
+        <g fill="var(--sage)">
+          <circle cx="36" cy="56" r="3.2"/><circle cx="64" cy="56" r="3.2"/>
+          <circle cx="39" cy="41" r="3.2"/><circle cx="61" cy="41" r="3.2"/>
+          <circle cx="45" cy="31" r="3.2"/><circle cx="55" cy="31" r="3.2"/>
+          <circle cx="15" cy="50" r="3.4"/><circle cx="85" cy="50" r="3.4"/><circle cx="50" cy="33" r="3.4"/>
+        </g>
+      </svg>
+      <div class="brand__word">NeuroPath<small>Biosciences</small></div>
+    </div>
+    <div class="meta">
+      <span class="eyebrow-chip" id="chip">Foundational Architecture</span>
+      <span class="counter"><b id="cur">1</b><span> / <b id="tot">11</b></span></span>
+    </div>
+  </div>
+
+  <div class="stage" id="stage">
+
+    <!-- SLIDE 1 · TITLE -->
+    <section class="slide title-slide active" data-title="The Studio">
+      <div class="slide__inner">
+        <svg class="logo-hero reveal" viewBox="0 0 100 100" aria-hidden="true">
+          <g fill="none" stroke="var(--sage)" stroke-width="3" stroke-linecap="round">
+            <path d="M31 13 A41 41 0 0 0 31 87"/>
+            <path d="M69 13 A41 41 0 0 1 69 87"/>
+            <path d="M50 91 L50 33"/>
+            <path d="M50 66 C44 66 40 60 36 56"/><path d="M50 66 C56 66 60 60 64 56"/>
+            <path d="M50 52 C45 51 41 46 39 41"/><path d="M50 52 C55 51 59 46 61 41"/>
+            <path d="M50 41 C48 38 46 35 45 31"/><path d="M50 41 C52 38 54 35 55 31"/>
+          </g>
+          <g fill="var(--sage)">
+            <circle cx="36" cy="56" r="3"/><circle cx="64" cy="56" r="3"/>
+            <circle cx="39" cy="41" r="3"/><circle cx="61" cy="41" r="3"/>
+            <circle cx="45" cy="31" r="3"/><circle cx="55" cy="31" r="3"/>
+            <circle cx="15" cy="50" r="3.2"/><circle cx="85" cy="50" r="3.2"/><circle cx="50" cy="33" r="3.2"/>
+          </g>
+        </svg>
+        <h1 class="title reveal">NeuroPath Clinical Signal<br>Engineering Studio<span class="tm">™</span></h1>
+        <p class="sub reveal">Engineering Objective Clinical Signals for Precision Mental Health</p>
+        <div class="narrative reveal">
+          <p>Every healthcare company has a product.</p>
+          <p class="accent">NeuroPath has a different ambition.</p>
+          <p>We build the capability to repeatedly transform scientific discovery into clinically useful <span class="hl">Objective Clinical Signals</span>.</p>
+          <div class="beat"><b>Not once.</b><b style="color:var(--sage)">Continuously.</b></div>
+        </div>
+        <div class="engine-tag reveal"><span class="dot"></span>The Studio is the organisational engine that makes this possible</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 · THE PROBLEM -->
+    <section class="slide" data-title="The Problem">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">The Problem</div>
+        <h2 class="head reveal">Science discovers. Healthcare delivers.<br>Few organisations translate one into the other.</h2>
+        <div class="pipeline reveal" style="margin-top:26px">
+          <div class="pipe-node start">Scientific Discovery</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node">Published Papers</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node">Biomarkers</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node">Research Projects</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node">Prototype Tests</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node">Commercial Products</div><div class="pipe-arrow">→</div>
+          <div class="pipe-node end">Clinical Adoption</div>
+        </div>
+        <div class="loss-row reveal">
+          <span class="loss-tag">Every stage loses knowledge</span>
+          <span class="loss-tag">Every project starts again</span>
+          <span class="loss-tag">Every team builds differently</span>
+          <span class="loss-tag">Evidence becomes fragmented</span>
+          <span class="loss-tag">Assets disconnect from the science</span>
+        </div>
+        <p class="lead reveal" style="margin-top:24px">NeuroPath believes this translation process should itself become an <span class="hl">engineered capability</span> — not a series of one-off projects.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 · PHILOSOPHY -->
+    <section class="slide" data-title="The Philosophy">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">The NeuroPath Philosophy</div>
+        <h2 class="head reveal" style="margin-bottom:20px">We don't sell the parts.<br>We engineer the signal.</h2>
+        <div class="negate reveal">
+          <span>Blood tests</span><span>Algorithms</span><span>AI</span><span>Diagnostics</span>
+        </div>
+        <div class="doctrine reveal">
+          <div class="card--mint card" style="flex:1 1 300px">
+            <div class="card__k">Everything we build creates one thing</div>
+            <div class="big-quote" style="margin:2px 0 8px">An Objective Clinical Signal</div>
+            <p style="font-size:14px;color:var(--slate);line-height:1.5">Additional, evidence-based information that <span class="hl">supports</span> clinical judgement.</p>
+          </div>
+          <div style="flex:1 1 300px">
+            <div class="rules">
+              <div class="rule"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>It never replaces clinical judgement</div>
+              <div class="rule"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>It never gates care</div>
+              <div class="rule"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--rose)" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>It never determines treatment</div>
+            </div>
+            <div class="decides">The clinician always decides.</div>
+            <p class="footnote" style="margin-top:8px">This principle becomes permanent doctrine.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 · WHAT IS AN OCS -->
+    <section class="slide" data-title="Objective Clinical Signal">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Definition</div>
+        <h2 class="head reveal" style="margin-bottom:22px">What is an Objective Clinical Signal?</h2>
+        <div class="equation reveal">
+          <span class="eq-term">Behaviour</span><span class="eq-op">+</span>
+          <span class="eq-term">Biological Measurements</span><span class="eq-op">+</span>
+          <span class="eq-term">Biomarker Panels</span><span class="eq-op">+</span>
+          <span class="eq-term">Scientific Evidence</span><span class="eq-op">+</span>
+          <span class="eq-term">AI Interpretation</span><span class="eq-op">+</span>
+          <span class="eq-term">Clinical Translation</span>
+          <span class="eq-op" style="font-size:26px">=</span>
+          <span class="eq-result">Objective Clinical Signal</span>
+        </div>
+        <div class="outcomes reveal">
+          <span class="outcome"><span class="a">↓</span>Supports clinical judgement</span>
+          <span class="outcome"><span class="a">↓</span>Improves earlier intervention</span>
+          <span class="outcome"><span class="a">↓</span>Improves patient outcomes</span>
+        </div>
+        <p class="big-quote reveal" style="text-align:center;margin-top:30px">The signal — not the assay — is the true product.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 · THE FACTORY -->
+    <section class="slide" data-title="Clinical Signal Factory">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">The Clinical Signal Factory</div>
+        <h2 class="head reveal" style="margin-bottom:18px">The Studio continuously<br>manufactures Clinical Signals.</h2>
+        <div class="factory">
+          <div class="vstack reveal">
+            <div class="step">Scientific Discovery</div><div class="down">↓</div>
+            <div class="step">Biological Knowledge</div><div class="down">↓</div>
+            <div class="step">Biomarker Engineering</div><div class="down">↓</div>
+            <div class="step">Interpretation Models</div><div class="down">↓</div>
+            <div class="step">Clinical Translation</div><div class="down">↓</div>
+            <div class="step emph">Objective Clinical Signal</div><div class="down">↓</div>
+            <div class="step">Clinical Deployment</div><div class="down">↓</div>
+            <div class="step">Outcome Learning</div><div class="down">↺</div>
+            <div class="step" style="border-style:dashed">Improved Scientific Knowledge</div>
+          </div>
+          <div class="factory-note reveal">
+            <div class="statement" style="margin-top:0">
+              <p>Every deployed signal <span class="k">improves the next one</span>.</p>
+              <p style="margin-top:14px;font-size:clamp(15px,1.7vw,19px)">The platform becomes smarter with every patient — outcome learning feeds straight back into scientific knowledge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 · CANONICAL SIGNAL -->
+    <section class="slide" data-title="The Canonical Signal">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Structure</div>
+        <h2 class="head reveal" style="margin-bottom:6px">The Canonical Clinical Signal</h2>
+        <p class="sub reveal" style="margin-bottom:18px;max-width:56ch">Every signal exists as a structured engineering object — never only as a slide.</p>
+        <div class="grid g-2 reveal">
+          <div class="card"><div class="card__k"><span class="n">1</span>Scientific Definition</div><ul><li>Biomarkers</li><li>Behavioural inputs</li><li>Target population</li><li>Mechanistic rationale</li><li>Supporting literature</li></ul></div>
+          <div class="card"><div class="card__k"><span class="n">2</span>Interpretation</div><ul><li>AI model</li><li>Confidence</li><li>Explainability</li><li>Limitations</li><li>Calibration</li></ul></div>
+          <div class="card"><div class="card__k"><span class="n">3</span>Clinical Translation</div><ul><li>Clinical meaning</li><li>Clinical considerations</li><li>Evidence strength</li><li>Intended use</li><li>Governance</li></ul></div>
+          <div class="card"><div class="card__k"><span class="n">4</span>Lifecycle</div><ul><li>Version</li><li>Validation</li><li>Regulatory status</li><li>Outcome evidence</li><li>Roadmap</li></ul></div>
+        </div>
+        <p class="footnote reveal">Everything exists as structured organisational knowledge.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 7 · KNOWLEDGE LIBRARIES -->
+    <section class="slide" data-title="Knowledge Libraries">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Permanent Assets</div>
+        <h2 class="head reveal" style="margin-bottom:6px">The Permanent Knowledge Libraries</h2>
+        <p class="sub reveal" style="margin-bottom:18px;max-width:60ch">Reusable knowledge the Studio maintains continuously. Every new discovery enriches every future signal.</p>
+        <div class="grid g-6 reveal">
+          <div class="card card--mint"><div class="card__k">Biological Knowledge</div><ul><li>Mechanisms</li><li>Biomarkers</li><li>Metabolites</li><li>Literature</li></ul></div>
+          <div class="card card--mint"><div class="card__k">Biomarker Panels</div><ul><li>Reusable panels</li><li>Reference populations</li><li>Assays</li></ul></div>
+          <div class="card card--mint"><div class="card__k">Interpretation</div><ul><li>Algorithms</li><li>Signal fusion</li><li>Confidence models</li><li>Explainability</li></ul></div>
+          <div class="card card--mint"><div class="card__k">Signal Catalogue</div><ul><li>Canonical signals</li><li>Version history</li><li>Validation status</li><li>Clinical meaning</li></ul></div>
+          <div class="card card--mint"><div class="card__k">Clinical Translation</div><ul><li>Considerations</li><li>Outcome pathways</li><li>Governance</li></ul></div>
+          <div class="card card--mint"><div class="card__k">Outcome Learning</div><ul><li>Clinical outcomes</li><li>Real-world evidence</li><li>Continuous validation</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8 · ENGINEERING NOT RESEARCH -->
+    <section class="slide" data-title="Engineering, not Research">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Engineering Rather Than Research</div>
+        <h2 class="head reveal" style="margin-bottom:18px">We produce reusable capability,<br>not documents.</h2>
+        <div class="contrast reveal">
+          <div class="crow"><div class="from">Traditional research produces papers</div><div class="arrow">→</div><div class="to">The Studio produces reusable capability</div></div>
+          <div class="crow"><div class="from">Traditional diagnostics produce tests</div><div class="arrow">→</div><div class="to">Every project contributes back to the platform</div></div>
+        </div>
+        <ul class="compound-list reveal" style="margin-top:22px">
+          <li><span class="ic">+</span><span><b>New biomarkers</b> improve existing signals</span></li>
+          <li><span class="ic">+</span><span><b>New evidence</b> improves existing models</span></li>
+          <li><span class="ic">+</span><span><b>New outcomes</b> improve future interpretation</span></li>
+          <li><span class="ic">+</span><span><b>Commercial experience</b> improves future deployment</span></li>
+        </ul>
+        <p class="big-quote reveal" style="margin-top:22px">The organisation compounds knowledge rather than accumulating documents.</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 9 · FLYWHEEL -->
+    <section class="slide" data-title="The Compounding Flywheel">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Continuous Learning</div>
+        <h2 class="head reveal" style="margin-bottom:8px">The Studio never finishes.</h2>
+        <div class="wheel-wrap reveal">
+          <svg class="wheel" viewBox="0 0 400 400" role="img" aria-label="Compounding flywheel of continuous learning">
+            <defs><linearGradient id="wheelgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5fa093"/><stop offset="1" stop-color="#0e5560"/></linearGradient></defs>
+            <circle class="ring" cx="200" cy="200" r="150"/>
+            <circle class="arc" cx="200" cy="200" r="150" transform="rotate(-90 200 200)"/>
+            <g class="spin"><circle class="orbit" cx="200" cy="50" r="9"/></g>
+            <circle class="wheel-core" cx="200" cy="200" r="58"/>
+            <text x="200" y="193" text-anchor="middle" fill="#eaf5f1" font-family="Poppins" font-weight="600" font-size="13">Compounding</text>
+            <text x="200" y="211" text-anchor="middle" fill="#82b6ab" font-family="Poppins" font-weight="600" font-size="13">Flywheel</text>
+            <g class="wheel-node" id="wnodes"></g>
+          </svg>
+          <div>
+            <div class="statement" style="margin-top:0">
+              <p>The platform becomes <span class="k">more valuable every year</span>.</p>
+            </div>
+            <p class="lead" style="margin-top:16px;font-size:15px">Discovery → validation → deployment → real-world outcomes → evidence → better models → improved signals → better outcomes → more evidence. The loop never closes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10 · WHY IT MATTERS -->
+    <section class="slide" data-title="Why This Matters">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Why This Matters</div>
+        <h2 class="head reveal" style="margin-bottom:18px">The organisation becomes<br>simpler as it grows.</h2>
+        <div class="contrast reveal">
+          <div class="crow"><div class="from">Future products</div><div class="arrow">→</div><div class="to">Configurations, not new developments</div></div>
+          <div class="crow"><div class="from">Future clinical indications</div><div class="arrow">→</div><div class="to">Extensions, not reinventions</div></div>
+          <div class="crow"><div class="from">Future commercial offerings</div><div class="arrow">→</div><div class="to">Assemblies, not bespoke projects</div></div>
+        </div>
+        <div class="statement reveal">
+          <p>The Studio is not a product development process. It is the <span class="k">operating system</span> that transforms scientific discovery into measurable improvements in patient outcomes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11 · PRINCIPLES -->
+    <section class="slide" data-title="Core Design Principles">
+      <div class="slide__inner">
+        <div class="eyebrow reveal">Appendix</div>
+        <h2 class="head reveal" style="margin-bottom:18px">Core Design Principles</h2>
+        <div class="grid g-3 reveal">
+          <div class="card"><div class="card__k"><span class="n">1</span>Signal Before Test</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">The Objective Clinical Signal is the product. The assay is one delivery mechanism.</p></div>
+          <div class="card"><div class="card__k"><span class="n">2</span>Evidence Before Marketing</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">Every claim is traceable to supporting evidence. Marketing never outruns validation.</p></div>
+          <div class="card"><div class="card__k"><span class="n">3</span>Judgement Before Automation</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">AI informs. Clinicians decide. Accountability always remains clinical.</p></div>
+          <div class="card"><div class="card__k"><span class="n">4</span>Reuse Before Reinvention</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">Every new indication reuses existing knowledge wherever possible.</p></div>
+          <div class="card"><div class="card__k"><span class="n">5</span>Continuous Learning</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">Every deployment strengthens the platform. Every patient contributes to future understanding.</p></div>
+          <div class="card"><div class="card__k"><span class="n">6</span>Platform Before Product</div><p style="font-size:13.5px;color:var(--slate);line-height:1.5">Products evolve. The Clinical Signal Engineering capability is the enduring strategic asset.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /stage -->
+
+  <div class="controls">
+    <button class="nav-btn" id="prev" aria-label="Previous slide">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="dots" id="dots" data-label="Slide"></div>
+    <button class="nav-btn" id="next" aria-label="Next slide">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <div class="util">
+    <button class="nav-btn" id="grid" aria-label="Overview" title="Overview (O)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    </button>
+    <button class="nav-btn" id="full" aria-label="Fullscreen" title="Fullscreen (F)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- Overview overlay -->
+<div class="overview" id="overview">
+  <button class="ov-close" id="ovClose" aria-label="Close overview">✕</button>
+  <h3>NeuroPath Clinical Signal Engineering Studio™</h3>
+  <p class="ohint">Jump to any slide · <span class="kbd">←</span> <span class="kbd">→</span> navigate · <span class="kbd">O</span> overview · <span class="kbd">F</span> fullscreen</p>
+  <div class="ov-grid" id="ovGrid"></div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var idx = 0;
+  var bar = document.getElementById('bar');
+  var cur = document.getElementById('cur');
+  var chip = document.getElementById('chip');
+  var dotsWrap = document.getElementById('dots');
+  var ovGrid = document.getElementById('ovGrid');
+  var overview = document.getElementById('overview');
+  var prevBtn = document.getElementById('prev');
+  var nextBtn = document.getElementById('next');
+
+  document.getElementById('tot').textContent = total;
+
+  // build flywheel node labels around the ring
+  (function buildWheel(){
+    var g = document.getElementById('wnodes');
+    if(!g) return;
+    var labels = ['Discovery','Validation','Deployment','Real-World\u2009Outcomes','Evidence\u2009Growth','Model\u2009Improvement','Improved\u2009Signals','Better\u2009Outcomes'];
+    var cx=200, cy=200, r=150, n=labels.length;
+    var ns='http://www.w3.org/2000/svg';
+    labels.forEach(function(lab,i){
+      var a = (i/n)*2*Math.PI - Math.PI/2;
+      var x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
+      var c = document.createElementNS(ns,'circle');
+      c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',7);
+      g.appendChild(c);
+      var t = document.createElementNS(ns,'text');
+      var out = 27;
+      t.setAttribute('x', cx + (r+out)*Math.cos(a));
+      t.setAttribute('y', cy + (r+out)*Math.sin(a)+3);
+      var right = Math.cos(a) > 0.15, left = Math.cos(a) < -0.15;
+      t.setAttribute('text-anchor', right ? 'start' : left ? 'end' : 'middle');
+      t.textContent = lab.replace(/\u2009/g,' ');
+      g.appendChild(t);
+    });
+  })();
+
+  // build dots + overview cards
+  slides.forEach(function(s,i){
+    var d = document.createElement('button');
+    d.className='dot'; d.setAttribute('aria-label','Go to slide '+(i+1));
+    d.addEventListener('click',function(){go(i)});
+    dotsWrap.appendChild(d);
+
+    var card = document.createElement('button');
+    card.className='ov-card';
+    card.innerHTML = '<div class="num">'+String(i+1).padStart(2,'0')+'</div><div class="t">'+(s.dataset.title||('Slide '+(i+1)))+'</div>';
+    card.addEventListener('click',function(){ go(i); closeOverview(); });
+    ovGrid.appendChild(card);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.children);
+  var ovCards = Array.prototype.slice.call(ovGrid.children);
+
+  function render(){
+    slides.forEach(function(s,i){
+      s.classList.toggle('active', i===idx);
+      s.classList.toggle('exit-left', i<idx);
+    });
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===idx); });
+    ovCards.forEach(function(c,i){ c.classList.toggle('current', i===idx); });
+    bar.style.width = ((idx+1)/total*100)+'%';
+    cur.textContent = idx+1;
+    chip.textContent = slides[idx].dataset.title || 'Foundational Architecture';
+    prevBtn.disabled = idx===0;
+    nextBtn.disabled = idx===total-1;
+    // reset scroll of active slide
+    slides[idx].scrollTop = 0;
+  }
+  function go(i){ idx = Math.max(0, Math.min(total-1, i)); render(); }
+  function next(){ if(idx<total-1) go(idx+1); }
+  function prev(){ if(idx>0) go(idx-1); }
+
+  prevBtn.addEventListener('click',prev);
+  nextBtn.addEventListener('click',next);
+
+  // overview
+  function openOverview(){ overview.classList.add('open'); }
+  function closeOverview(){ overview.classList.remove('open'); }
+  document.getElementById('grid').addEventListener('click',openOverview);
+  document.getElementById('ovClose').addEventListener('click',closeOverview);
+  overview.addEventListener('click',function(e){ if(e.target===overview) closeOverview(); });
+
+  // fullscreen
+  document.getElementById('full').addEventListener('click',function(){
+    if(!document.fullscreenElement){ (document.documentElement.requestFullscreen||function(){})(); }
+    else if(document.exitFullscreen){ document.exitFullscreen(); }
+  });
+
+  // keyboard
+  document.addEventListener('keydown',function(e){
+    if(overview.classList.contains('open')){
+      if(e.key==='Escape') closeOverview();
+      return;
+    }
+    switch(e.key){
+      case 'ArrowRight': case ' ': case 'PageDown': e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'PageUp': e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); go(0); break;
+      case 'End': e.preventDefault(); go(total-1); break;
+      case 'o': case 'O': openOverview(); break;
+      case 'f': case 'F':
+        if(!document.fullscreenElement){ (document.documentElement.requestFullscreen||function(){})(); }
+        else if(document.exitFullscreen){ document.exitFullscreen(); }
+        break;
+    }
+  });
+
+  // touch swipe
+  var tx=0, ty=0;
+  document.getElementById('stage').addEventListener('touchstart',function(e){
+    tx=e.changedTouches[0].clientX; ty=e.changedTouches[0].clientY;
+  },{passive:true});
+  document.getElementById('stage').addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)){ dx<0 ? next() : prev(); }
+  },{passive:true});
+
+  render();
+})();
+</script>
+</body>
+</html>

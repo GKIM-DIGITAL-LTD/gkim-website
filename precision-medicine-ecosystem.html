@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building a Compliant AI-Native Precision Medicine Ecosystem</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg:        #06090F;
+    --surface:   #0D1117;
+    --card:      #111827;
+    --border:    rgba(255,255,255,0.07);
+    --violet:    #7C3AED;
+    --violet-lt: #A78BFA;
+    --teal:      #0D9488;
+    --teal-lt:   #2DD4BF;
+    --gold:      #D97706;
+    --gold-lt:   #FCD34D;
+    --rose:      #E11D48;
+    --rose-lt:   #FB7185;
+    --muted:     rgba(255,255,255,0.42);
+    --dim:       rgba(255,255,255,0.18);
+    --white:     #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(6,9,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 3rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--violet-lt); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(124,58,237,0.15);
+    color: var(--violet-lt);
+    border: 1px solid rgba(124,58,237,0.3);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
+  }
+
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .hero-glow-1 {
+    width: 500px; height: 500px;
+    background: rgba(124,58,237,0.12);
+    top: -100px; right: -100px;
+  }
+
+  .hero-glow-2 {
+    width: 400px; height: 400px;
+    background: rgba(13,148,136,0.09);
+    bottom: 0; left: 10%;
+  }
+
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--violet-lt);
+    margin-bottom: 2rem;
+  }
+
+  .hero-eyebrow-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--violet-lt);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--violet-lt);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 580px;
+    line-height: 1.85;
+    margin-bottom: 3.5rem;
+  }
+
+  .hero-participants {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .participant-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 0.82rem;
+  }
+
+  .chip-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  .chip-dot.violet { background: var(--violet-lt); }
+  .chip-dot.teal   { background: var(--teal-lt); }
+  .chip-dot.gold   { background: var(--gold-lt); }
+  .chip-dot.rose   { background: var(--rose-lt); }
+
+  .chip-name { font-weight: 500; }
+  .chip-role { color: var(--muted); font-size: 0.75rem; }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--dim), transparent);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--violet-lt);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--violet-lt);
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 620px;
+    line-height: 1.85;
+    margin-bottom: 3rem;
+  }
+
+  /* ── VISION ── */
+  .vision-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .vision-pillar {
+    background: var(--card);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+
+  .vision-pillar:hover { background: #161e2e; }
+
+  .vp-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .vp-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .vp-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── ROLES — TABS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tab-btn:hover {
+    background: var(--card);
+    color: var(--white);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .tab-btn.active {
+    color: var(--white);
+    border-color: transparent;
+  }
+
+  .tab-btn.active.violet { background: rgba(124,58,237,0.2); border-color: rgba(124,58,237,0.4); color: var(--violet-lt); }
+  .tab-btn.active.teal   { background: rgba(13,148,136,0.2); border-color: rgba(13,148,136,0.4); color: var(--teal-lt); }
+  .tab-btn.active.gold   { background: rgba(217,119,6,0.15); border-color: rgba(217,119,6,0.3);  color: var(--gold-lt); }
+  .tab-btn.active.rose   { background: rgba(225,29,72,0.15); border-color: rgba(225,29,72,0.3);  color: var(--rose-lt); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .role-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .role-card-full { grid-column: 1 / -1; }
+
+  .role-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-label.violet { color: var(--violet-lt); }
+  .role-label.teal   { color: var(--teal-lt); }
+  .role-label.gold   { color: var(--gold-lt); }
+  .role-label.rose   { color: var(--rose-lt); }
+
+  .role-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .role-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .role-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .role-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    top: 0.2rem;
+    color: var(--dim);
+  }
+
+  .role-note {
+    margin-top: 1.2rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .role-note.violet { background: rgba(124,58,237,0.08); color: rgba(167,139,250,0.7); border: 1px solid rgba(124,58,237,0.15); }
+  .role-note.teal   { background: rgba(13,148,136,0.08); color: rgba(45,212,191,0.7);  border: 1px solid rgba(13,148,136,0.15); }
+  .role-note.gold   { background: rgba(217,119,6,0.08);  color: rgba(252,211,77,0.7);  border: 1px solid rgba(217,119,6,0.15); }
+  .role-note.rose   { background: rgba(225,29,72,0.08);  color: rgba(251,113,133,0.7); border: 1px solid rgba(225,29,72,0.15); }
+
+  /* ── PATIENT JOURNEY ── */
+  .journey-section { background: var(--surface); }
+
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .journey-step {
+    background: var(--card);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .journey-step:hover, .journey-step.active { background: #161e2e; }
+
+  .journey-step.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--violet-lt);
+  }
+
+  .step-num {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--dim);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .step-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .step-owner {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .journey-detail {
+    margin-top: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 100px;
+    transition: all 0.2s;
+  }
+
+  .journey-detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .journey-detail-body {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .owner-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .owner-tag {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+
+  .owner-tag.violet { background: rgba(124,58,237,0.15); color: var(--violet-lt); }
+  .owner-tag.teal   { background: rgba(13,148,136,0.15); color: var(--teal-lt); }
+  .owner-tag.gold   { background: rgba(217,119,6,0.12);  color: var(--gold-lt); }
+  .owner-tag.rose   { background: rgba(225,29,72,0.12);  color: var(--rose-lt); }
+
+  /* ── COMMERCIAL ── */
+  .commercial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .com-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .com-card-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--violet-lt);
+    margin-bottom: 1rem;
+  }
+
+  .com-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .com-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .com-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-size: 0.7rem;
+    color: var(--teal-lt);
+    top: 0.15rem;
+  }
+
+  .com-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.2rem 0;
+  }
+
+  .com-cross-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--rose-lt);
+    margin-bottom: 0.75rem;
+  }
+
+  .com-cross-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .com-cross-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .com-cross-list li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    font-size: 0.65rem;
+    color: var(--rose-lt);
+    top: 0.2rem;
+  }
+
+  /* ── WORKSHOP AGENDA ── */
+  .agenda-section { background: var(--surface); }
+
+  .agenda-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+
+  .agenda-item {
+    background: var(--card);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .agenda-item:hover { background: #161e2e; }
+
+  .agenda-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--dim);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .agenda-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .agenda-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .agenda-pill {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .pill-all    { background: rgba(124,58,237,0.12); color: var(--violet-lt); }
+  .pill-open   { background: rgba(13,148,136,0.12); color: var(--teal-lt); }
+  .pill-next   { background: rgba(217,119,6,0.1);   color: var(--gold-lt); }
+
+  /* ── FUTURE VISION ── */
+  .future-section {
+    background: linear-gradient(135deg, #0D0F1A 0%, #0A1628 50%, #0D1117 100%);
+    text-align: center;
+  }
+
+  .future-section .section-eyebrow {
+    justify-content: center;
+  }
+
+  .future-section .section-eyebrow::before { display: none; }
+  .future-section .section-eyebrow::after {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--violet-lt);
+    flex-shrink: 0;
+  }
+
+  .future-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+    max-width: 720px;
+    margin: 0 auto 3rem;
+  }
+
+  .future-statement em { color: var(--violet-lt); font-style: normal; }
+
+  .future-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .future-item {
+    background: var(--card);
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+  }
+
+  .future-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+
+  .future-label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .future-desc {
+    font-size: 0.76rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── CLOSING CTA ── */
+  .cta-section {
+    border-top: 1px solid var(--border);
+    padding: 6rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    width: 600px; height: 300px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.08);
+    filter: blur(80px);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    max-width: 640px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+  }
+
+  .cta-title em { font-style: italic; color: var(--violet-lt); }
+
+  .cta-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .cta-chips {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .cta-chip {
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .cta-chip.primary {
+    background: var(--violet);
+    border-color: var(--violet);
+    color: var(--white);
+  }
+
+  .cta-chip.secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+
+  .cta-footer {
+    margin-top: 4rem;
+    font-size: 0.68rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    position: relative;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .hero, .section, .cta-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .vision-pillars,
+    .journey-steps,
+    .commercial-grid,
+    .future-grid { grid-template-columns: 1fr; }
+    .tab-panel.active { grid-template-columns: 1fr; }
+    .role-card-full { grid-column: 1; }
+    .journey-steps { grid-template-columns: 1fr 1fr; }
+    .future-grid { grid-template-columns: 1fr 1fr; }
+    .agenda-item { grid-template-columns: 2rem 1fr; }
+    .agenda-pill { display: none; }
+    .hero-participants { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Precision Medicine <span>Ecosystem</span></div>
+  <ul class="nav-links">
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#roles">Roles</a></li>
+    <li><a href="#journey">Patient Journey</a></li>
+    <li><a href="#commercial">Commercial</a></li>
+    <li><a href="#workshop">Workshop</a></li>
+  </ul>
+  <div class="nav-badge">Discussion Draft</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot"></span>
+      Compliant AI-Native Precision Medicine
+    </div>
+    <h1 class="hero-title">We are building something<br><em>none of us could build alone.</em></h1>
+    <p class="hero-sub">
+      This document sets out a shared vision, clear roles, and a common operating model for a precision medicine ecosystem that can grow, scale, and serve patients at a national level.
+    </p>
+
+    <div class="hero-participants">
+      <div class="participant-chip">
+        <span class="chip-dot rose"></span>
+        <span class="chip-name">Knucks Laboratories</span>
+        <span class="chip-role">Laboratory Partner</span>
+      </div>
+      <div class="participant-chip">
+        <span class="chip-dot gold"></span>
+        <span class="chip-name">Arcanum Studios</span>
+        <span class="chip-role">Marketing Partner</span>
+      </div>
+      <div class="participant-chip">
+        <span class="chip-dot teal"></span>
+        <span class="chip-name">GKIM Digital</span>
+        <span class="chip-role">Technology Partner</span>
+      </div>
+      <div class="participant-chip">
+        <span class="chip-dot violet"></span>
+        <span class="chip-name">GMG</span>
+        <span class="chip-role">Clinical Infrastructure</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="section" id="vision">
+  <div class="section-inner">
+    <div class="section-eyebrow">Shared Vision</div>
+    <h2 class="section-title">Long-term healthcare programmes — not one-off testing campaigns.</h2>
+    <p class="section-lead">Our collective ambition is to create a scalable, compliant ecosystem that serves patients across multiple precision medicine programmes. We are building infrastructure — not a single engagement.</p>
+
+    <div class="vision-pillars">
+      <div class="vision-pillar">
+        <div class="vp-icon">🧬</div>
+        <div class="vp-title">Compliant Patient Acquisition</div>
+        <div class="vp-desc">Patients enter the ecosystem through ethically run, legally sound marketing programmes that prioritise quality over volume.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vp-icon">🤖</div>
+        <div class="vp-title">AI-Assisted Operations</div>
+        <div class="vp-desc">Workflow automation removes friction at every step — from first enquiry through to longitudinal care — allowing each partner to focus on what they do best.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vp-icon">🩺</div>
+        <div class="vp-title">Virtual Primary Care</div>
+        <div class="vp-desc">Physicians supported by technology — not replaced by it. Every clinical decision remains grounded in genuine medical necessity.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vp-icon">🔬</div>
+        <div class="vp-title">Laboratory Excellence</div>
+        <div class="vp-desc">Knucks brings specimen processing quality and operational rigour that underpins the credibility of every programme we run.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vp-icon">📈</div>
+        <div class="vp-title">Sustainable Economics</div>
+        <div class="vp-desc">Every partner earns returns that allow them to invest, innovate, and improve. We optimise for durability — not short-term margins.</div>
+      </div>
+      <div class="vision-pillar">
+        <div class="vp-icon">🔄</div>
+        <div class="vp-title">Continuous Innovation</div>
+        <div class="vp-desc">The ecosystem is designed to grow. New programmes, new laboratories, new disease areas — all run on the same proven infrastructure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="section" id="roles" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-eyebrow">Roles & Responsibilities</div>
+    <h2 class="section-title">Every partner owns their lane entirely.</h2>
+    <p class="section-lead">The ecosystem works because each party focuses on their genuine comparative advantage. Overlap is minimised. Accountability is clear. Select a partner below to explore their role.</p>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active violet" onclick="showTab('arcanum', this, 'violet')">
+        <span style="color:var(--gold-lt)">●</span> Arcanum Studios
+      </button>
+      <button class="tab-btn" onclick="showTab('gkim', this, 'teal')">
+        <span style="color:var(--teal-lt)">●</span> GKIM Digital
+      </button>
+      <button class="tab-btn" onclick="showTab('gmg', this, 'violet')">
+        <span style="color:var(--violet-lt)">●</span> GMG
+      </button>
+      <button class="tab-btn" onclick="showTab('knucks', this, 'rose')">
+        <span style="color:var(--rose-lt)">●</span> Knucks Laboratories
+      </button>
+    </div>
+
+    <!-- Arcanum -->
+    <div id="tab-arcanum" class="tab-panel active">
+      <div class="role-card">
+        <div class="role-label gold">Arcanum Studios</div>
+        <div class="role-title">Marketing Partner</div>
+        <ul class="role-list">
+          <li>Marketing strategy and campaign execution</li>
+          <li>Patient acquisition and lead generation</li>
+          <li>Brand development and market positioning</li>
+          <li>Compliant patient-facing communications</li>
+        </ul>
+        <div class="role-note gold" style="margin-top:1.2rem;">Arcanum's responsibility concludes once a qualified patient has entered the healthcare workflow. From that point, GKIM and GMG take over — so Arcanum can focus entirely on what it does best.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-label gold">Shared Objectives</div>
+        <div class="role-title">What Arcanum gains</div>
+        <ul class="role-list">
+          <li>High-quality patients driving better conversion rates</li>
+          <li>Reduced operational friction and post-acquisition burden</li>
+          <li>Scalable campaign infrastructure with compliance built in</li>
+          <li>A clinical partner that supports rather than constrains marketing</li>
+          <li>Long-term programme economics rather than campaign-by-campaign income</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GKIM -->
+    <div id="tab-gkim" class="tab-panel">
+      <div class="role-card">
+        <div class="role-label teal">GKIM Digital</div>
+        <div class="role-title">Technology & Operations Partner</div>
+        <ul class="role-list">
+          <li>AI-powered patient operations and workflow orchestration</li>
+          <li>Scheduling, CRM, and patient engagement</li>
+          <li>Compliance systems and operational automation</li>
+          <li>Reporting and operational intelligence</li>
+          <li>Integration across all ecosystem participants</li>
+        </ul>
+        <div class="role-note teal" style="margin-top:1.2rem;">GKIM is the operational engine connecting every participant. Once implementation begins, GKIM becomes the primary operational point of contact — allowing all parties to rely on one accountable technology partner.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-label teal">Shared Objectives</div>
+        <div class="role-title">What GKIM gains</div>
+        <ul class="role-list">
+          <li>AI-native infrastructure deployed at meaningful scale</li>
+          <li>Long-term patient relationships generating recurring operational revenue</li>
+          <li>A platform that expands to new programmes and laboratories over time</li>
+          <li>Product development driven by real-world precision medicine workflows</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- GMG -->
+    <div id="tab-gmg" class="tab-panel">
+      <div class="role-card">
+        <div class="role-label violet">GMG</div>
+        <div class="role-title">Clinical Infrastructure Partner</div>
+        <ul class="role-list">
+          <li>Virtual primary care and precision medicine expertise</li>
+          <li>Physician network and medical necessity assessment</li>
+          <li>Clinical governance and compliance oversight</li>
+          <li>Longitudinal care management</li>
+        </ul>
+        <div class="role-note violet" style="margin-top:1.2rem;">GMG provides the clinical credibility that underpins the entire ecosystem. Every patient interaction is supported by qualified physicians operating within a robust governance framework.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-label violet">Shared Objectives</div>
+        <div class="role-title">What GMG gains</div>
+        <ul class="role-list">
+          <li>Compliant, scalable virtual care delivery at volume</li>
+          <li>Long-term patient relationships across multiple programmes</li>
+          <li>A technology platform that automates administrative burden</li>
+          <li>An expandable ecosystem that introduces new clinical programmes</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Knucks -->
+    <div id="tab-knucks" class="tab-panel">
+      <div class="role-card">
+        <div class="role-label rose">Knucks Laboratories</div>
+        <div class="role-title">Laboratory Partner</div>
+        <ul class="role-list">
+          <li>Specimen processing and laboratory operations</li>
+          <li>Quality assurance and laboratory compliance</li>
+          <li>Laboratory billing and results reporting</li>
+        </ul>
+        <div class="role-note rose" style="margin-top:1.2rem;">Knucks brings the laboratory excellence that makes clinical decisions credible. A consistent, high-quality specimen pipeline underpins patient trust and payer confidence across every programme.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-label rose">Shared Objectives</div>
+        <div class="role-title">What Knucks gains</div>
+        <ul class="role-list">
+          <li>Sustainable, growing specimen volume without commercial risk</li>
+          <li>Improved laboratory utilisation through consistent programme demand</li>
+          <li>Regulatory compliance supported by ecosystem governance</li>
+          <li>Preserved laboratory margins with reduced commercial overhead</li>
+          <li>A pathway to multiple programmes through one trusted operating partner</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PATIENT JOURNEY -->
+<section class="section journey-section" id="journey">
+  <div class="section-inner">
+    <div class="section-eyebrow">Patient Journey</div>
+    <h2 class="section-title">Every handoff is deliberate. Every responsibility is owned.</h2>
+    <p class="section-lead">The patient journey spans twelve defined stages. Click any stage to see who owns it and what happens at that point. No step falls between the cracks.</p>
+
+    <div class="journey-steps" id="journeySteps"></div>
+    <div class="journey-detail" id="journeyDetail">
+      <div class="journey-detail-title">Select a stage above to explore it</div>
+      <div class="journey-detail-body">Each stage has a defined owner, a clear outcome, and an explicit handoff point — so every participant knows exactly where their responsibility begins and ends.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMERCIAL -->
+<section class="section" id="commercial">
+  <div class="section-inner">
+    <div class="section-eyebrow">Commercial Principles</div>
+    <h2 class="section-title">Fair, transparent, and built to last.</h2>
+    <p class="section-lead">Commercial arrangements follow three principles: fair market value, sustainable economics for all parties, and complete transparency about who does what and who earns what.</p>
+
+    <div class="commercial-grid">
+      <div class="com-card">
+        <div class="com-card-title">Pricing is based on</div>
+        <ul class="com-list">
+          <li>Technology and platform infrastructure</li>
+          <li>Operational support and staffing</li>
+          <li>Workflow complexity</li>
+          <li>Compliance infrastructure</li>
+          <li>AI automation investment</li>
+        </ul>
+        <hr class="com-divider">
+        <div class="com-cross-title">Pricing is never driven by</div>
+        <ul class="com-cross-list">
+          <li>Laboratory reimbursement levels</li>
+          <li>Physician ordering behaviour</li>
+          <li>Medical necessity decisions</li>
+          <li>Clinical outcomes</li>
+        </ul>
+      </div>
+
+      <div class="com-card">
+        <div class="com-card-title">Topics for the workshop</div>
+        <ul class="com-list">
+          <li>Which services are contracted separately vs bundled</li>
+          <li>Implementation and platform fee structure</li>
+          <li>Launch pricing and scaling principles</li>
+          <li>Periodic fair market value reviews</li>
+          <li>How to onboard additional laboratories</li>
+          <li>How additional marketing groups participate</li>
+          <li>How new healthcare programmes are introduced</li>
+        </ul>
+      </div>
+
+      <div class="com-card" style="grid-column: 1 / -1;">
+        <div class="com-card-title">AI Roadmap Priorities</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:0.5rem;">
+          <div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;">Near-term</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.35rem;">
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Patient engagement automation</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Call automation</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Scheduling workflows</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;">Mid-term</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.35rem;">
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Clinical decision support</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Compliance monitoring</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Reporting dashboards</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;">Long-term</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.35rem;">
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Operational intelligence</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Predictive patient management</li>
+              <li style="font-size:0.83rem;color:rgba(255,255,255,0.75);">Ecosystem-wide analytics</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.4rem;">Principle</div>
+            <p style="font-size:0.82rem;color:var(--muted);line-height:1.65;">Every automation decision serves patient care and operational compliance — not cost reduction for its own sake.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOP AGENDA -->
+<section class="section agenda-section" id="workshop" style="background: var(--surface);">
+  <div class="section-inner">
+    <div class="section-eyebrow">Workshop Agenda</div>
+    <h2 class="section-title">Seven things we must align on. Together.</h2>
+    <p class="section-lead">The first workshop is not about presentations. It is about reaching genuine alignment on the foundations that will define how this ecosystem operates for years to come.</p>
+
+    <div class="agenda-items">
+      <div class="agenda-item">
+        <div class="agenda-num">1</div>
+        <div>
+          <div class="agenda-text">Shared Vision</div>
+          <div class="agenda-sub">What are we actually building, and what does success look like for each organisation?</div>
+        </div>
+        <div class="agenda-pill pill-all">All Parties</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">2</div>
+        <div>
+          <div class="agenda-text">Patient Journey</div>
+          <div class="agenda-sub">Walk every stage end-to-end. Confirm who owns each handoff.</div>
+        </div>
+        <div class="agenda-pill pill-all">All Parties</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">3</div>
+        <div>
+          <div class="agenda-text">Roles & Responsibilities</div>
+          <div class="agenda-sub">Resolve any ambiguity. Agree the boundaries that will prevent future friction.</div>
+        </div>
+        <div class="agenda-pill pill-all">All Parties</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">4</div>
+        <div>
+          <div class="agenda-text">Commercial Principles</div>
+          <div class="agenda-sub">Align on fair market value, pricing philosophy, and sustainability before any numbers are discussed.</div>
+        </div>
+        <div class="agenda-pill pill-open">Open Discussion</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">5</div>
+        <div>
+          <div class="agenda-text">Initial Operating Model</div>
+          <div class="agenda-sub">How do we operate on day one? What are the minimum viable processes to launch safely?</div>
+        </div>
+        <div class="agenda-pill pill-open">Open Discussion</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">6</div>
+        <div>
+          <div class="agenda-text">Priority Healthcare Programmes</div>
+          <div class="agenda-sub">Which programmes do we launch first? What are the criteria for sequencing?</div>
+        </div>
+        <div class="agenda-pill pill-open">Open Discussion</div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-num">7</div>
+        <div>
+          <div class="agenda-text">Next Steps</div>
+          <div class="agenda-sub">Named owners, clear deadlines, and the decision that unlocks everything that follows.</div>
+        </div>
+        <div class="agenda-pill pill-next">Action Items</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE VISION -->
+<section class="section future-section" id="future">
+  <div class="section-inner">
+    <div class="section-eyebrow">Where This Goes</div>
+    <div class="future-statement">
+      "The opportunity is not another laboratory relationship.<br>
+      The opportunity is an <em>AI-native precision medicine ecosystem</em><br>
+      that serves patients at a national scale."
+    </div>
+
+    <div class="future-grid">
+      <div class="future-item">
+        <div class="future-icon">🏥</div>
+        <div class="future-label">Multiple Laboratories</div>
+        <div class="future-desc">Additional lab partners onboarded onto the same proven infrastructure</div>
+      </div>
+      <div class="future-item">
+        <div class="future-icon">📣</div>
+        <div class="future-label">Multiple Marketing Groups</div>
+        <div class="future-desc">New acquisition channels expanding patient volume with consistent compliance</div>
+      </div>
+      <div class="future-item">
+        <div class="future-icon">👨‍⚕️</div>
+        <div class="future-label">Multiple Provider Groups</div>
+        <div class="future-desc">Clinical capacity that grows alongside commercial demand</div>
+      </div>
+      <div class="future-item">
+        <div class="future-icon">🧬</div>
+        <div class="future-label">Multiple Disease Areas</div>
+        <div class="future-desc">New precision medicine programmes launched on the same operating foundation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title">Laboratories grow with confidence.<br>Physicians focus on <em>patients.</em><br>Technology handles the rest.</h2>
+  <p class="cta-sub">If we align around those principles, the detailed commercial arrangements follow naturally. The workshop is where that alignment begins.</p>
+  <div class="cta-chips">
+    <div class="cta-chip primary">Ready for the workshop</div>
+    <div class="cta-chip secondary">Discussion Draft · 2026 · Confidential</div>
+  </div>
+  <div class="cta-footer">Knucks Laboratories · Arcanum Studios · GKIM Digital · Genetics Medical Group</div>
+</section>
+
+<script>
+  // ── TABS ──
+  function showTab(id, btn, color) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active', 'violet', 'teal', 'gold', 'rose');
+    });
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active', color);
+  }
+
+  // ── PATIENT JOURNEY ──
+  const journeyData = [
+    {
+      name: 'Marketing',
+      owner: 'Arcanum Studios',
+      ownerClass: 'gold',
+      desc: 'Arcanum runs compliant, targeted campaigns to identify patients who may benefit from precision medicine programmes. Patient-facing communications are ethically designed and legally reviewed before launch.',
+      tags: [{ label: 'Arcanum Studios', cls: 'gold' }]
+    },
+    {
+      name: 'Patient Enquiry',
+      owner: 'GKIM / Arcanum',
+      ownerClass: 'teal',
+      desc: 'Inbound patient enquiries are captured through GKIM-powered CRM infrastructure. Arcanum\'s marketing drives the enquiry; GKIM manages the intake workflow from the first interaction.',
+      tags: [{ label: 'Arcanum Studios', cls: 'gold' }, { label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Qualification',
+      owner: 'GKIM',
+      ownerClass: 'teal',
+      desc: 'AI-assisted qualification screens patients against programme eligibility criteria. GKIM\'s workflow automation ensures consistent, compliant qualification without clinical staff involvement at this stage.',
+      tags: [{ label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Patient Screening',
+      owner: 'GMG / GKIM',
+      ownerClass: 'violet',
+      desc: 'Qualified patients move into clinical screening. GMG\'s physician network reviews initial patient information. GKIM\'s platform orchestrates the scheduling and documentation.',
+      tags: [{ label: 'GMG', cls: 'violet' }, { label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Medical Necessity',
+      owner: 'GMG',
+      ownerClass: 'violet',
+      desc: 'GMG physicians assess medical necessity in accordance with clinical guidelines and payer requirements. This is a clinical decision — made by qualified physicians, supported by AI documentation tools.',
+      tags: [{ label: 'GMG', cls: 'violet' }]
+    },
+    {
+      name: 'Scheduling',
+      owner: 'GKIM',
+      ownerClass: 'teal',
+      desc: 'GKIM\'s scheduling automation manages appointment booking, reminders, and rescheduling across the physician network — removing administrative burden from clinical staff.',
+      tags: [{ label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Telemedicine Consult',
+      owner: 'GMG',
+      ownerClass: 'violet',
+      desc: 'Patients attend a virtual consultation with a GMG physician. The consultation is documented within GKIM\'s platform, with AI-assisted note-taking and coding support.',
+      tags: [{ label: 'GMG', cls: 'violet' }, { label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Clinical Decision',
+      owner: 'GMG',
+      ownerClass: 'violet',
+      desc: 'The ordering physician makes an independent clinical decision. Laboratory testing is ordered only where medically appropriate. This decision is documented and audit-ready.',
+      tags: [{ label: 'GMG', cls: 'violet' }]
+    },
+    {
+      name: 'Lab Testing',
+      owner: 'Knucks Laboratories',
+      ownerClass: 'rose',
+      desc: 'Knucks processes specimens to the highest quality standards. Laboratory operations, quality assurance, and compliance reporting are owned entirely by Knucks.',
+      tags: [{ label: 'Knucks Laboratories', cls: 'rose' }]
+    },
+    {
+      name: 'Results Delivery',
+      owner: 'GMG / GKIM',
+      ownerClass: 'violet',
+      desc: 'Results are delivered to the ordering physician and communicated to the patient through GKIM\'s patient portal. GMG physicians interpret and contextualise results where appropriate.',
+      tags: [{ label: 'GMG', cls: 'violet' }, { label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Follow-up',
+      owner: 'GMG / GKIM',
+      ownerClass: 'teal',
+      desc: 'Post-result follow-up is managed by GMG clinicians, supported by GKIM\'s automated patient engagement tools. No patient is left without clear guidance on their results.',
+      tags: [{ label: 'GMG', cls: 'violet' }, { label: 'GKIM Digital', cls: 'teal' }]
+    },
+    {
+      name: 'Longitudinal Care',
+      owner: 'GMG',
+      ownerClass: 'violet',
+      desc: 'GMG manages the ongoing patient relationship — annual check-ins, programme updates, and additional clinical programmes where appropriate. This is where long-term patient lifetime value is created.',
+      tags: [{ label: 'GMG', cls: 'violet' }, { label: 'GKIM Digital', cls: 'teal' }]
+    }
+  ];
+
+  const stepsContainer = document.getElementById('journeySteps');
+  const detailContainer = document.getElementById('journeyDetail');
+
+  journeyData.forEach((step, i) => {
+    const el = document.createElement('div');
+    el.className = 'journey-step';
+    el.innerHTML = `
+      <div class="step-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="step-name">${step.name}</div>
+      <div class="step-owner">${step.owner}</div>
+    `;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.journey-step').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      const tagsHtml = step.tags.map(t => `<span class="owner-tag ${t.cls}">${t.label}</span>`).join('');
+      detailContainer.innerHTML = `
+        <div class="journey-detail-title">${step.name}</div>
+        <div class="journey-detail-body">${step.desc}</div>
+        <div class="owner-tags">${tagsHtml}</div>
+      `;
+    });
+    stepsContainer.appendChild(el);
+  });
+
+  // Trigger first step
+  stepsContainer.querySelector('.journey-step').click();
+</script>
+</body>
+</html>

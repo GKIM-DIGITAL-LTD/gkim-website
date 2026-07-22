@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Business Evolution Platform — GEARS White Paper No. 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:#0A0A09; --bg2:#111110; --bg3:#1A1A18; --bg4:#1E1E1C;
+    --yellow:#FFDD00; --ydim:rgba(255,221,0,.09); --ymid:rgba(255,221,0,.35);
+    --light:#F2F2F2; --mid:#999990; --dim:#555550; --secondary:#3A3A3A;
+    --border:rgba(255,221,0,.14); --text:#D0D0C8;
+    --green:#34D399; --blue:#60A5FA; --orange:#FB923C; --pink:#F472B6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+
+  /* SIDEBAR */
+  #sidebar{position:fixed;left:0;top:0;bottom:0;width:234px;background:var(--bg2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;padding:28px 0;overflow-y:auto;}
+  .sidebar-logo{padding:0 20px 22px;border-bottom:1px solid var(--border);margin-bottom:18px;}
+  .wp-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase;margin-bottom:5px;}
+  .sidebar-logo .wp-title{font-family:'DM Serif Display',serif;font-size:13px;color:var(--light);line-height:1.3;}
+  #sidebar nav a{display:block;padding:6px 20px;font-size:11.5px;color:var(--mid);text-decoration:none;border-left:2px solid transparent;transition:all .2s;line-height:1.4;}
+  #sidebar nav a:hover,#sidebar nav a.active{color:var(--yellow);border-left-color:var(--yellow);background:var(--ydim);}
+  #sidebar nav .nav-section{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--secondary);text-transform:uppercase;padding:13px 20px 4px;}
+
+  /* MAIN */
+  #main{margin-left:234px;}
+  #progress-bar{position:fixed;top:0;left:234px;right:0;height:2px;background:var(--yellow);transform-origin:left;transform:scaleX(0);z-index:200;}
+
+  /* HERO */
+  #hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:80px 72px;overflow:hidden;}
+  #hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.38;}
+  .hero-content{position:relative;z-index:2;max-width:700px;}
+  .wp-number{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--yellow);text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+  .wp-number::after{content:'';height:1px;width:48px;background:var(--yellow);}
+  .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(40px,5.5vw,74px);color:var(--light);line-height:1.02;margin-bottom:14px;}
+  .hero-title em{color:var(--yellow);font-style:italic;}
+  .hero-subtitle{font-size:17px;font-weight:300;color:var(--mid);margin-bottom:44px;}
+  .hero-thesis{border-left:3px solid var(--yellow);padding-left:24px;max-width:520px;}
+  .hero-thesis p{font-family:'DM Serif Display',serif;font-size:19px;font-style:italic;color:var(--light);line-height:1.5;}
+
+  /* SECTIONS */
+  .section{padding:84px 72px;border-top:1px solid var(--border);}
+  .section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--yellow);text-transform:uppercase;margin-bottom:13px;}
+  .section-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,3vw,44px);color:var(--light);line-height:1.12;margin-bottom:30px;max-width:680px;}
+  .section-title em{color:var(--yellow);font-style:italic;}
+  .prose{font-size:15.5px;color:var(--text);max-width:640px;margin-bottom:20px;line-height:1.72;}
+  .prose strong{color:var(--light);font-weight:600;}
+
+  /* CALLOUT */
+  .callout{border:1px solid rgba(255,221,0,.45);background:var(--ydim);padding:24px 28px;margin:32px 0;max-width:640px;}
+  .callout .callout-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase;margin-bottom:7px;}
+  .callout p{font-family:'DM Serif Display',serif;font-size:17px;font-style:italic;color:var(--light);line-height:1.5;}
+
+  /* TWO-COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px 0;max-width:840px;}
+  .two-col h3{font-family:'DM Serif Display',serif;font-size:18px;color:var(--light);margin-bottom:9px;}
+  .two-col p{font-size:13.5px;color:var(--mid);line-height:1.65;}
+
+  /* THREE-COL */
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin:32px 0;max-width:860px;}
+  .col-item{background:var(--bg2);padding:22px;}
+  .col-item .col-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--yellow);text-transform:uppercase;margin-bottom:7px;}
+  .col-item h3{font-family:'DM Serif Display',serif;font-size:17px;color:var(--light);margin-bottom:7px;}
+  .col-item p{font-size:13px;color:var(--mid);line-height:1.6;}
+
+  /* PULLQUOTE */
+  .pullquote{border-left:3px solid var(--yellow);padding-left:28px;max-width:580px;margin:32px 0;}
+  .pullquote p{font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--light);line-height:1.5;}
+
+  /* DIAGRAM WRAPPER */
+  .diagram{margin:40px 0;position:relative;}
+  .diagram canvas{display:block;width:100%;}
+  .diagram-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;margin-top:9px;}
+
+  /* ── UI MOCKUP SHELL ── */
+  .mockup-shell{background:var(--bg3);border:1px solid var(--border);margin:44px 0;max-width:960px;overflow:hidden;}
+  .mockup-titlebar{background:var(--bg2);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+  .mockup-titlebar .dot{width:10px;height:10px;border-radius:50%;}
+  .mockup-titlebar .dot-r{background:#FF5F57;}
+  .mockup-titlebar .dot-y{background:#FFBD2E;}
+  .mockup-titlebar .dot-g{background:#27C840;}
+  .mockup-titlebar .title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);margin-left:8px;letter-spacing:.08em;}
+  .mockup-body{display:flex;min-height:460px;}
+
+  /* Mockup sidebar */
+  .mock-sidebar{width:180px;background:var(--bg2);border-right:1px solid var(--border);padding:16px 0;flex-shrink:0;}
+  .mock-sidebar .mock-logo{padding:0 16px 16px;margin-bottom:8px;border-bottom:1px solid var(--border);}
+  .mock-sidebar .mock-logo-text{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--yellow);letter-spacing:.1em;}
+  .mock-sidebar .mock-logo-sub{font-size:10px;color:var(--mid);margin-top:1px;}
+  .mock-nav-section{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;padding:12px 16px 4px;}
+  .mock-nav-item{display:flex;align-items:center;gap:8px;padding:6px 16px;font-size:11.5px;color:var(--mid);cursor:default;}
+  .mock-nav-item.active{color:var(--yellow);background:rgba(255,221,0,.08);border-left:2px solid var(--yellow);}
+  .mock-nav-item .nav-dot{width:6px;height:6px;border-radius:50%;background:var(--dim);flex-shrink:0;}
+  .mock-nav-item.active .nav-dot{background:var(--yellow);}
+  .mock-nav-badge{margin-left:auto;background:rgba(255,221,0,.2);color:var(--yellow);font-family:'JetBrains Mono',monospace;font-size:8px;padding:1px 5px;}
+
+  /* Mockup content area */
+  .mock-content{flex:1;padding:20px 24px;overflow:hidden;}
+  .mock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .mock-page-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--light);}
+  .mock-page-sub{font-size:11px;color:var(--mid);margin-top:2px;}
+  .mock-btn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;padding:6px 14px;background:var(--yellow);color:var(--bg);cursor:default;text-transform:uppercase;}
+  .mock-btn-ghost{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;padding:5px 13px;border:1px solid var(--border);color:var(--mid);cursor:default;text-transform:uppercase;}
+
+  /* Stat row */
+  .mock-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;}
+  .mock-stat{background:var(--bg2);border:1px solid var(--border);padding:12px 14px;}
+  .mock-stat .stat-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--light);}
+  .mock-stat .stat-val.hi{color:var(--yellow);}
+  .mock-stat .stat-val.warn{color:var(--orange);}
+  .mock-stat .stat-val.ok{color:var(--green);}
+  .mock-stat .stat-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:var(--mid);text-transform:uppercase;margin-top:2px;}
+  .mock-stat .stat-delta{font-size:10px;color:var(--green);margin-top:1px;}
+
+  /* Table */
+  .mock-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .mock-table th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;color:var(--mid);text-transform:uppercase;padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);}
+  .mock-table td{padding:7px 10px;border-bottom:1px solid rgba(255,221,0,.06);color:var(--text);vertical-align:middle;}
+  .mock-table tr:hover td{background:rgba(255,221,0,.03);}
+  .mock-table .stage-pill{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:2px 7px;background:rgba(255,221,0,.12);color:var(--yellow);}
+  .mock-table .stage-pill.evidence{background:rgba(96,165,250,.12);color:var(--blue);}
+  .mock-table .stage-pill.proposal{background:rgba(52,211,153,.12);color:var(--green);}
+  .mock-table .stage-pill.deploy{background:rgba(251,146,60,.12);color:var(--orange);}
+  .mock-table .prio-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;}
+  .mock-table .prio-dot.high{background:#FF5F57;}
+  .mock-table .prio-dot.med{background:#FFBD2E;}
+  .mock-table .prio-dot.low{background:var(--dim);}
+  .mock-table .conf-bar{display:inline-block;height:4px;border-radius:2px;background:var(--yellow);vertical-align:middle;margin-right:5px;}
+
+  /* Investigation workspace panels */
+  .mock-workspace{display:grid;grid-template-columns:1fr 280px;gap:10px;}
+  .mock-panel{background:var(--bg2);border:1px solid var(--border);padding:14px;}
+  .mock-panel-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--yellow);text-transform:uppercase;margin-bottom:10px;}
+  .mock-hypothesis{padding:9px 10px;border:1px solid var(--border);margin-bottom:6px;background:var(--bg3);}
+  .mock-hypothesis.leading{border-color:rgba(255,221,0,.5);background:rgba(255,221,0,.05);}
+  .mock-hyp-title{font-size:12px;color:var(--light);margin-bottom:3px;}
+  .mock-hyp-conf{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--mid);}
+  .mock-hyp-conf span{color:var(--yellow);}
+  .mock-evidence-item{padding:7px 0;border-bottom:1px solid rgba(255,221,0,.06);font-size:11.5px;}
+  .mock-evidence-item .ev-source{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--yellow);margin-bottom:1px;}
+  .mock-evidence-item .ev-text{color:var(--mid);}
+  .mock-evidence-item .ev-fresh{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--green);}
+  .mock-evidence-item .ev-fresh.stale{color:var(--orange);}
+
+  /* GEAR explorer mockup */
+  .mock-gear-graph{flex:1;position:relative;height:360px;overflow:hidden;}
+  .mock-gear-sidebar{width:220px;background:var(--bg2);border-left:1px solid var(--border);padding:14px;flex-shrink:0;}
+  .mock-gear-detail h4{font-family:'DM Serif Display',serif;font-size:16px;color:var(--light);margin-bottom:6px;}
+  .mock-gear-detail .detail-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,221,0,.06);font-size:11px;}
+  .mock-gear-detail .detail-row .dk{color:var(--mid);}
+  .mock-gear-detail .detail-row .dv{color:var(--light);font-family:'JetBrains Mono',monospace;font-size:10px;}
+
+  /* AGENT CARDS */
+  .agent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:36px 0;max-width:900px;}
+  .agent-card{background:var(--bg2);padding:22px;transition:background .2s;}
+  .agent-card:hover{background:var(--bg3);}
+  .agent-icon{font-size:22px;margin-bottom:10px;}
+  .agent-name{font-family:'DM Serif Display',serif;font-size:16px;color:var(--yellow);margin-bottom:4px;}
+  .agent-role{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-bottom:8px;}
+  .agent-desc{font-size:12px;color:var(--mid);line-height:1.55;}
+  .agent-cap{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;}
+  .agent-cap span{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;border:1px solid var(--border);color:var(--dim);}
+
+  /* KNOWLEDGE PROVIDERS */
+  .provider-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:36px 0;max-width:820px;}
+  .provider-card{background:var(--bg2);border:1px solid var(--border);padding:18px;display:flex;gap:14px;align-items:flex-start;transition:border-color .2s;}
+  .provider-card:hover{border-color:rgba(255,221,0,.45);}
+  .provider-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);}
+  .provider-name{font-size:13px;color:var(--light);font-weight:500;margin-bottom:3px;}
+  .provider-type{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--yellow);letter-spacing:.08em;margin-bottom:4px;}
+  .provider-desc{font-size:11.5px;color:var(--mid);line-height:1.5;}
+
+  /* CORE OBJECTS TABLE */
+  .objects-table{width:100%;border-collapse:collapse;margin:36px 0;max-width:860px;}
+  .objects-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--mid);text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}
+  .objects-table td{padding:10px 12px;border-bottom:1px solid rgba(255,221,0,.06);font-size:13px;vertical-align:top;}
+  .objects-table .obj-name{color:var(--yellow);font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .objects-table .obj-desc{color:var(--mid);font-size:12.5px;line-height:1.5;}
+  .objects-table .obj-gear{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--dim);}
+  .objects-table tr:hover td{background:rgba(255,221,0,.025);}
+
+  /* CONCLUSION */
+  #conclusion{padding:84px 72px;border-top:1px solid var(--border);background:linear-gradient(180deg,var(--bg) 0%,#0d0d0b 100%);}
+  .conclusion-quote{border-left:3px solid var(--yellow);padding-left:26px;max-width:600px;margin:40px 0;}
+  .conclusion-quote p{font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--light);line-height:1.5;margin-bottom:9px;}
+  .conclusion-quote cite{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--yellow);font-style:normal;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:36px 72px;display:flex;justify-content:space-between;align-items:center;margin-top:48px;}
+  footer .f-brand{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--mid);}
+  footer .f-brand span{color:var(--yellow);}
+
+  @media(max-width:900px){
+    #sidebar{display:none;} #main{margin-left:0;} #progress-bar{left:0;}
+    .section,#conclusion{padding:52px 26px;} #hero{padding:52px 26px;}
+    .two-col,.three-col,.agent-grid,.provider-grid{grid-template-columns:1fr;}
+    .mock-stats{grid-template-columns:1fr 1fr;} .mock-workspace{grid-template-columns:1fr;}
+    .mockup-body{flex-direction:column;} .mock-sidebar{width:100%;}
+    footer{padding:28px 26px;flex-direction:column;gap:10px;}
+  }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <div class="wp-label">GEARS · White Paper No. 3</div>
+    <div class="wp-title">The Business Evolution Platform</div>
+  </div>
+  <nav>
+    <div class="nav-section">Foundations</div>
+    <a href="#hero">Overview</a>
+    <a href="#context">From ACMS to Platform</a>
+    <a href="#thesis">The Manager Thesis</a>
+    <div class="nav-section">Reference Architecture</div>
+    <a href="#layers">Platform Layers</a>
+    <a href="#objects">Core Object Model</a>
+    <a href="#principles">Design Principles</a>
+    <div class="nav-section">Manager Experience</div>
+    <a href="#home">Home Dashboard</a>
+    <a href="#investigations">Investigations</a>
+    <a href="#workspace">Investigation Workspace</a>
+    <a href="#gear-explorer">GEAR Explorer</a>
+    <div class="nav-section">Platform Capabilities</div>
+    <a href="#agents">Agent Capabilities</a>
+    <a href="#knowledge">Knowledge Providers</a>
+    <a href="#governance-ux">Governance UX</a>
+    <a href="#config">Configuration</a>
+    <div class="nav-section">Synthesis</div>
+    <a href="#exec-day">A Manager's Day</a>
+    <a href="#conclusion">Conclusion</a>
+  </nav>
+</aside>
+
+<main id="main">
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="wp-number">GEARS White Paper No. 3</div>
+    <h1 class="hero-title">The Business <em>Evolution</em> Platform</h1>
+    <p class="hero-subtitle">Reference Architecture for the Agentic Change Management System</p>
+    <div class="hero-thesis">
+      <p>Managers manage investigations, evidence, experiments and GEAR evolution — not AI agents.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section class="section" id="context">
+  <div class="section-eyebrow">Section 1 · Context</div>
+  <h2 class="section-title">From Inquiry Engine to <em>Platform</em></h2>
+  <p class="prose">White Paper No. 2 defined the Agentic Change Management System as an architectural inquiry engine — a system whose primary outputs are structured investigations, evidence profiles, and governed architectural decisions rather than completed tasks.</p>
+  <p class="prose">This paper defines what the platform that runs that engine looks like. It specifies a <strong>reference architecture</strong> — the layered structure of the Business Evolution Platform — along with the Manager UX, the core object model, the knowledge provider interface, and the agent capability taxonomy. It does not specify a technology stack. The reference architecture is intentionally <strong>execution-agnostic</strong>: the principles and structures described here should be implementable across a wide range of technical choices.</p>
+  <div class="callout">
+    <div class="callout-label">Design Mandate</div>
+    <p>The platform must make managers feel they are doing their most important work — guiding the architectural evolution of their enterprise — not managing a fleet of AI agents.</p>
+  </div>
+  <div class="three-col">
+    <div class="col-item">
+      <div class="col-label">WP1 Defined</div>
+      <h3>The Knowledge System</h3>
+      <p>The Business Knowledge Stack — six layers of continuously evolving enterprise knowledge from which the Living Digital Twin emerges.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">WP2 Defined</div>
+      <h3>The Inquiry Engine</h3>
+      <p>The ACMS — the fourteen-stage pipeline that transforms signals into governed architectural decisions through structured investigation.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">WP3 Defines</div>
+      <h3>The Platform</h3>
+      <p>The Business Evolution Platform — the reference architecture, UX, object model, and capability set through which humans govern the ACMS.</p>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="section-eyebrow">Section 2 · Core Thesis</div>
+  <h2 class="section-title">Managers Govern <em>Investigations</em>, Not Agents</h2>
+  <p class="prose">The most important design decision in the Business Evolution Platform is also the most counterintuitive one: the platform does not surface AI agents as first-class objects in the manager experience. Agents are infrastructure. What managers interact with — what they prioritise, challenge, approve, and learn from — are <strong>investigations</strong>.</p>
+  <p class="prose">This is not a cosmetic choice. Platforms that surface agents as first-class objects create a cognitive model in which humans are managing AI behaviour: reviewing agent outputs, approving agent actions, correcting agent errors. This is both exhausting and brittle. It recreates the micromanagement dynamic that good managers have learned to avoid with human teams — now applied, at scale, to automated systems.</p>
+  <div class="pullquote">
+    <p>When a manager opens the platform each morning, she does not see what the agents did overnight. She sees what the business learned, what proposals are awaiting her judgment, and what is at risk.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Agent-Centric Design (avoid)</h3>
+      <p>The manager sees agents, their statuses, their queues, their errors. She spends her time understanding what the agents did and correcting their behaviour. Her mental model is: I am managing a fleet of AI workers.</p>
+    </div>
+    <div>
+      <h3>Investigation-Centric Design (adopt)</h3>
+      <p>The manager sees investigations, their evidence states, their confidence levels, their proximity to a governance decision. Her mental model is: I am guiding the architectural evolution of my enterprise.</p>
+    </div>
+  </div>
+  <p class="prose">Agents are named and visible in the platform — specifically in the Investigation Workspace, where their contributions to the evidence record and their challenge positions in negotiation are surfaced. But they are contributors to investigations, not subjects of management attention.</p>
+</section>
+
+<!-- REFERENCE ARCHITECTURE -->
+<section class="section" id="layers">
+  <div class="section-eyebrow">Section 3 · Reference Architecture</div>
+  <h2 class="section-title">The Platform <em>Layer Stack</em></h2>
+  <p class="prose">The Business Evolution Platform is structured as six horizontal layers. Each layer has a distinct responsibility, and the interfaces between layers are defined and stable — allowing individual layers to be replaced or upgraded without requiring changes to adjacent layers.</p>
+
+  <div class="diagram">
+    <canvas id="layers-canvas" height="460"></canvas>
+    <div class="diagram-label">Business Evolution Platform · Six-Layer Reference Architecture · Execution-Agnostic</div>
+  </div>
+
+  <div class="two-col" style="margin-top:44px;">
+    <div>
+      <h3>Layer 1 · Manager UX</h3>
+      <p>The interface through which managers interact with investigations, evidence, proposals, governance decisions, and the GEAR topology. Investigation-centric; agents are infrastructure. Twelve primary views.</p>
+    </div>
+    <div>
+      <h3>Layer 2 · ACMS Control Plane</h3>
+      <p>The fourteen-stage pipeline defined in WP2. Manages investigation state, routes between stages, enforces confidence thresholds, and triggers governance gates. Stateful and event-driven.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Layer 3 · Agent Runtime</h3>
+      <p>The execution environment for investigative agents. Provides capability sandboxing, tool access, evidence ledger write permissions, and KAS execution authority. Agents do not have direct GEAR write access — only proposals do.</p>
+    </div>
+    <div>
+      <h3>Layer 4 · Knowledge Integration</h3>
+      <p>The common evidence interface through which Knowledge Providers — internal systems, external data, domain sources — expose structured evidence to the ACMS. All evidence carries provenance, freshness, and weighting metadata.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Layer 5 · GEAR Graph Store</h3>
+      <p>The persistent store of the GEARS Blueprint — the versioned, append-only record of every GEAR, its configuration, its relationships, and its change history. The VGQL query layer provides traversal and diagnostic access.</p>
+    </div>
+    <div>
+      <h3>Layer 6 · Business Knowledge OS</h3>
+      <p>The Business Knowledge Stack from WP1: the six-layer architecture from Industry Intelligence to Simulation Models. The BKS is the ACMS's primary evidence source and the GEAR graph's semantic context.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CORE OBJECT MODEL -->
+<section class="section" id="objects">
+  <div class="section-eyebrow">Section 4 · Object Model</div>
+  <h2 class="section-title">Fourteen <em>Core Objects</em></h2>
+  <p class="prose">The Business Evolution Platform is built around fourteen core objects. Every significant piece of data in the system is an instance of one of these objects. Every object belongs to a GEAR — either directly (a Trigger is raised against a GEAR), or through a chain of ownership (a Hypothesis belongs to an Investigation which targets a GEAR).</p>
+
+  <table class="objects-table">
+    <thead>
+      <tr>
+        <th>Object</th>
+        <th>Description</th>
+        <th>GEAR Relationship</th>
+        <th>Versioned</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="obj-name">Trigger</td><td class="obj-desc">A signal that enters the system and is assessed for investigation worthiness. Carries source, timestamp, signal type, and initial confidence.</td><td class="obj-gear">Raised against a GEAR or topology scope</td><td>✓</td></tr>
+      <tr><td class="obj-name">Investigation</td><td class="obj-desc">The primary business object. Contains Trigger, Architectural Questions, Evidence Ledger, Hypothesis Register, Uncertainty State, and KAS. Never deleted — closed with full record.</td><td class="obj-gear">Targets one or more GEARs</td><td>✓</td></tr>
+      <tr><td class="obj-name">Issue Frame</td><td class="obj-desc">The structured definition of the Architectural Questions the Investigation must answer — scoped, ordered by epistemic dependency, and expressed as falsifiable propositions.</td><td class="obj-gear">Scoped to GEAR blast radius</td><td>✓</td></tr>
+      <tr><td class="obj-name">Target GEAR</td><td class="obj-desc">The GEAR or GEARs identified as the starting point of recursive diagnosis. Not necessarily where the root cause lies — the starting point of discovery.</td><td class="obj-gear">IS a GEAR; joins Investigation ↔ GEAR</td><td>✓</td></tr>
+      <tr><td class="obj-name">Knowledge Acquisition Strategy</td><td class="obj-desc">The adaptive plan specifying what evidence is needed, from which BKS layers, in what sequence, with what freshness requirements, and at what cost-confidence trade-off.</td><td class="obj-gear">Scoped to Investigation's GEAR context</td><td>✓</td></tr>
+      <tr><td class="obj-name">Evidence</td><td class="obj-desc">A single piece of evidence: source, content, provenance, collection timestamp, freshness score, applied weighting, and the Architectural Question it was gathered to answer. Immutable.</td><td class="obj-gear">Indexed against GEAR context</td><td>Append-only</td></tr>
+      <tr><td class="obj-name">Hypothesis</td><td class="obj-desc">A causal claim with supporting evidence references, scope assertion, proposed remedy class, and calibrated confidence. Multiple hypotheses coexist until discriminated.</td><td class="obj-gear">Claims about GEAR behaviour or configuration</td><td>✓</td></tr>
+      <tr><td class="obj-name">Agent Opinion</td><td class="obj-desc">A structured contribution from an investigative agent: challenge, supporting argument, confidence level, and the evidence references that ground it. Visible in negotiation.</td><td class="obj-gear">Contextualised to GEAR scope</td><td>✓</td></tr>
+      <tr><td class="obj-name">Change Proposal</td><td class="obj-desc">The formal proposal to modify the GEARS Blueprint. Contains: architectural change spec, evidence profile, Grill-Me responses, blast radius map, reversibility class, and rejected alternatives.</td><td class="obj-gear">Proposes changes to specific GEARs</td><td>✓</td></tr>
+      <tr><td class="obj-name">Experiment</td><td class="obj-desc">A time-bounded, reversible deployment of a Change Proposal with defined success criteria, monitoring plan, and automatic rollback conditions. The preferred deployment mode for uncertain changes.</td><td class="obj-gear">Operates within GEAR boundary</td><td>✓</td></tr>
+      <tr><td class="obj-name">Governance Decision</td><td class="obj-desc">The formal record of a governance decision: inputs reviewed, decision type, conditions, authority level, dissenting views noted. Immutable after issue.</td><td class="obj-gear">Authorises change to GEAR(s)</td><td>Immutable</td></tr>
+      <tr><td class="obj-name">Deployment</td><td class="obj-desc">The record of a blueprint update: before/after state, deployment type, monitoring thresholds, rollback plan activation status, and post-deployment observation triggers.</td><td class="obj-gear">Updates GEAR configuration</td><td>✓</td></tr>
+      <tr><td class="obj-name">Observation</td><td class="obj-desc">A post-deployment measurement matched against the Change Proposal's predicted outcome. Observations may spawn new Triggers if outcomes diverge from prediction.</td><td class="obj-gear">Measured against GEAR telemetry</td><td>Append-only</td></tr>
+      <tr><td class="obj-name">Decision Memory</td><td class="obj-desc">The closed Investigation record written to permanent store. Contains complete investigation history, evidence quality retrospective, and lessons available to future investigations.</td><td class="obj-gear">Tagged to all involved GEARs</td><td>Immutable</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="section" id="principles">
+  <div class="section-eyebrow">Section 5 · Design Principles</div>
+  <h2 class="section-title">Seven Platform <em>Principles</em></h2>
+  <p class="prose">The following principles are not guidelines — they are architectural constraints that every implementation of the Business Evolution Platform must satisfy. A platform that violates any one of them cannot correctly be called an implementation of this reference architecture.</p>
+  <div class="three-col">
+    <div class="col-item">
+      <div class="col-label">Principle 1</div>
+      <h3>Every Object Belongs to a GEAR</h3>
+      <p>Every Trigger, Investigation, Evidence item, Hypothesis, Proposal, and Decision is owned by — and indexed against — a GEAR. There are no platform-wide objects that float free of the GEAR topology.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Principle 2</div>
+      <h3>Recursive Diagnosis Is Mandatory</h3>
+      <p>No Investigation may produce a Change Proposal without first completing a recursive GEAR diagnosis — traversing both upstream (causal) and downstream (consequential) from the target GEAR to establish blast radius.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Principle 3</div>
+      <h3>Temporary Working Graphs</h3>
+      <p>Each Investigation builds its own temporary knowledge sub-graph from relevant BKS fragments. This graph is the investigative workspace. It is discarded on close; its conclusions are written to Decision Memory.</p>
+    </div>
+  </div>
+  <div class="three-col" style="margin-top:2px;">
+    <div class="col-item">
+      <div class="col-label">Principle 4</div>
+      <h3>Uncertainty Is Explicit</h3>
+      <p>Every Investigation carries an explicit uncertainty state. Known unknowns are listed, confidence floors are enforced at each pipeline gate, and compound uncertainty is tracked and surfaced in governance documentation.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Principle 5</div>
+      <h3>Evidence Decays</h3>
+      <p>Evidence has freshness requirements derived from the rate of change of its subject domain. Evidence that has passed its freshness threshold must be re-acquired before being used to support a Change Proposal.</p>
+    </div>
+    <div class="col-item">
+      <div class="col-label">Principle 6</div>
+      <h3>Everything Is Versioned</h3>
+      <p>Every core object is versioned. The GEAR graph is append-only. Governance decisions are immutable. Evidence is append-only. No platform action permanently destroys or overwrites historical data.</p>
+    </div>
+  </div>
+  <div class="callout" style="margin-top:32px;">
+    <div class="callout-label">Principle 7</div>
+    <p>Agents propose; humans decide. No agent has write access to the GEARS Blueprint. Only a Governance Decision, issued by an authorised human, can cause a blueprint update. This constraint is architectural, not procedural.</p>
+  </div>
+</section>
+
+<!-- HOME DASHBOARD MOCKUP -->
+<section class="section" id="home">
+  <div class="section-eyebrow">Section 6 · Manager UX · Home Dashboard</div>
+  <h2 class="section-title">The Manager's <em>Morning View</em></h2>
+  <p class="prose">The Home Dashboard is the manager's daily entry point. It surfaces the information that matters most to governing architectural evolution: what is at risk, what is ready for her attention, what the platform learned while she was away. It does not surface what the agents did.</p>
+
+  <div class="mockup-shell">
+    <div class="mockup-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="title">GEARS Business Evolution Platform · Home</div>
+    </div>
+    <div class="mockup-body">
+      <div class="mock-sidebar">
+        <div class="mock-logo"><div class="mock-logo-text">GEARS</div><div class="mock-logo-sub">Evolution Platform</div></div>
+        <div class="mock-nav-section">Overview</div>
+        <div class="mock-nav-item active"><div class="nav-dot"></div>Home</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Change Radar</div>
+        <div class="mock-nav-section">Investigations</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>All Investigations <span class="mock-nav-badge">14</span></div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Evolution Backlog</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>GEAR Explorer</div>
+        <div class="mock-nav-section">Evidence</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Evidence Library</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Agent Discussions <span class="mock-nav-badge">3</span></div>
+        <div class="mock-nav-section">Governance</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Pending Decisions <span class="mock-nav-badge">2</span></div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Experiments</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Decision Memory</div>
+        <div class="mock-nav-section">System</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Configuration</div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-header">
+          <div><div class="mock-page-title">Good morning, Sarah.</div><div class="mock-page-sub">Sunday 29 Jun 2026 · 3 items need your attention today</div></div>
+          <div style="display:flex;gap:8px;"><div class="mock-btn-ghost">Export</div><div class="mock-btn">New Trigger</div></div>
+        </div>
+        <div class="mock-stats">
+          <div class="mock-stat"><div class="stat-val hi">14</div><div class="stat-label">Open Investigations</div><div class="stat-delta">↑ 2 new this week</div></div>
+          <div class="mock-stat"><div class="stat-val warn">2</div><div class="stat-label">Pending Decisions</div><div class="stat-delta">Oldest: 3 days</div></div>
+          <div class="mock-stat"><div class="stat-val ok">3</div><div class="stat-label">Active Experiments</div><div class="stat-delta">All within bounds</div></div>
+          <div class="mock-stat"><div class="stat-val">68%</div><div class="stat-label">Avg. Evidence Confidence</div><div class="stat-delta">↑ 4pts from last week</div></div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;color:var(--mid);text-transform:uppercase;margin-bottom:8px;">Awaiting Your Attention</div>
+        <table class="mock-table">
+          <thead><tr><th>Investigation</th><th>Stage</th><th>Priority</th><th>Confidence</th><th>Age</th><th>Next Action</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Revenue recognition GEAR — delay anomaly</td>
+              <td><span class="stage-pill proposal">Change Proposal</span></td>
+              <td><span class="prio-dot high"></span>High</td>
+              <td><span class="conf-bar" style="width:52px"></span>74%</td>
+              <td>18d</td>
+              <td style="color:var(--yellow);font-size:12px;">Review proposal →</td>
+            </tr>
+            <tr>
+              <td>Onboarding dropout — mobile cohort</td>
+              <td><span class="stage-pill evidence">Evidence</span></td>
+              <td><span class="prio-dot high"></span>High</td>
+              <td><span class="conf-bar" style="width:36px"></span>51%</td>
+              <td>7d</td>
+              <td style="color:var(--yellow);font-size:12px;">Review hypotheses →</td>
+            </tr>
+            <tr>
+              <td>Auth refactor — staged rollout approval</td>
+              <td><span class="stage-pill deploy">Governance</span></td>
+              <td><span class="prio-dot med"></span>Med</td>
+              <td><span class="conf-bar" style="width:64px"></span>88%</td>
+              <td>30d</td>
+              <td style="color:var(--yellow);font-size:12px;">Issue decision →</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <p class="prose">The manager sees her enterprise's learning velocity, not her agents' activity. The stat row quantifies the portfolio of open architectural questions. The attention list is ordered by decision proximity — investigations closest to requiring her judgment appear first.</p>
+</section>
+
+<!-- INVESTIGATIONS MOCKUP -->
+<section class="section" id="investigations">
+  <div class="section-eyebrow">Section 7 · Manager UX · Investigations</div>
+  <h2 class="section-title">The Evolution <em>Backlog</em> View</h2>
+  <p class="prose">The Investigations view is the manager's portfolio of open architectural questions — sorted, filtered, and prioritised across the fourteen pipeline stages. It answers the question: <em>what does the business currently not understand about its own architecture, and how mature is each inquiry?</em></p>
+
+  <div class="mockup-shell">
+    <div class="mockup-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="title">GEARS Business Evolution Platform · Investigations</div>
+    </div>
+    <div class="mockup-body">
+      <div class="mock-sidebar">
+        <div class="mock-logo"><div class="mock-logo-text">GEARS</div><div class="mock-logo-sub">Evolution Platform</div></div>
+        <div class="mock-nav-section">Overview</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Home</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Change Radar</div>
+        <div class="mock-nav-section">Investigations</div>
+        <div class="mock-nav-item active"><div class="nav-dot"></div>All Investigations <span class="mock-nav-badge">14</span></div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Evolution Backlog</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>GEAR Explorer</div>
+        <div class="mock-nav-section">Evidence</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Evidence Library</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Agent Discussions</div>
+        <div class="mock-nav-section">Governance</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Pending Decisions <span class="mock-nav-badge">2</span></div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Experiments</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Decision Memory</div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-header">
+          <div><div class="mock-page-title">All Investigations</div><div class="mock-page-sub">14 open · 2 pending decision · sorted by attention score</div></div>
+          <div style="display:flex;gap:8px;"><div class="mock-btn-ghost">Filter</div><div class="mock-btn-ghost">Group by GEAR</div><div class="mock-btn">Open Investigation</div></div>
+        </div>
+        <table class="mock-table">
+          <thead><tr><th>Investigation</th><th>Target GEAR</th><th>Stage</th><th>Confidence</th><th>Priority</th><th>Age</th></tr></thead>
+          <tbody>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">Revenue recognition delay anomaly</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">finance.revenue-calc</td>
+              <td><span class="stage-pill proposal">Change Proposal</span></td>
+              <td><span class="conf-bar" style="width:52px"></span>74%</td>
+              <td><span class="prio-dot high"></span>High</td>
+              <td>18d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">Mobile onboarding dropout — cohort Q2</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">cx.onboarding</td>
+              <td><span class="stage-pill evidence">Evidence</span></td>
+              <td><span class="conf-bar" style="width:36px"></span>51%</td>
+              <td><span class="prio-dot high"></span>High</td>
+              <td>7d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">ML model drift — churn prediction</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">analytics.churn-model</td>
+              <td><span class="stage-pill">Hypothesis</span></td>
+              <td><span class="conf-bar" style="width:44px"></span>63%</td>
+              <td><span class="prio-dot med"></span>Med</td>
+              <td>5d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">Partner data freshness — SLA breach</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">ops.data-pipeline</td>
+              <td><span class="stage-pill evidence">Evidence</span></td>
+              <td><span class="conf-bar" style="width:28px"></span>40%</td>
+              <td><span class="prio-dot low"></span>Low</td>
+              <td>2d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">Pricing GEAR — latency spike pattern</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">commerce.pricing</td>
+              <td><span class="stage-pill">Issue Frame</span></td>
+              <td><span class="conf-bar" style="width:20px"></span>28%</td>
+              <td><span class="prio-dot med"></span>Med</td>
+              <td>7d</td>
+            </tr>
+            <tr>
+              <td style="color:var(--light);font-size:13px;">Regulatory compliance gap — GDPR Art. 22</td>
+              <td style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--mid);">compliance.gdpr</td>
+              <td><span class="stage-pill evidence">Evidence</span></td>
+              <td><span class="conf-bar" style="width:48px"></span>69%</td>
+              <td><span class="prio-dot high"></span>High</td>
+              <td>12d</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTIGATION WORKSPACE MOCKUP -->
+<section class="section" id="workspace">
+  <div class="section-eyebrow">Section 8 · Manager UX · Investigation Workspace</div>
+  <h2 class="section-title">Inside an <em>Investigation</em></h2>
+  <p class="prose">The Investigation Workspace is the deepest view in the platform. It surfaces the full anatomy of a single investigation: its Architectural Questions, Evidence Ledger, Hypothesis Register, open uncertainties, and agent contributions. This is where the manager reviews what the business has learned — and where she challenges it.</p>
+
+  <div class="mockup-shell">
+    <div class="mockup-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="title">Investigation · Revenue Recognition Delay Anomaly · finance.revenue-calc</div>
+    </div>
+    <div class="mockup-body">
+      <div class="mock-sidebar" style="width:160px;">
+        <div style="padding:12px 14px;border-bottom:1px solid var(--border);margin-bottom:10px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--yellow);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;">INV-0047</div>
+          <div style="font-size:11px;color:var(--mid);">Revenue Recognition<br>Delay Anomaly</div>
+        </div>
+        <div class="mock-nav-section">Workspace</div>
+        <div class="mock-nav-item active"><div class="nav-dot"></div>Summary</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Arch. Questions</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Evidence Ledger</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Hypotheses</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>GEAR Diagnosis</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Agent Opinions</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Change Proposal</div>
+        <div class="mock-nav-item"><div class="nav-dot"></div>Uncertainty State</div>
+        <div style="margin:16px 14px 0;padding:10px;background:rgba(255,221,0,.08);border:1px solid rgba(255,221,0,.25);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--yellow);margin-bottom:4px;">CONFIDENCE</div>
+          <div style="font-size:20px;font-family:'DM Serif Display',serif;color:var(--yellow);">74%</div>
+          <div style="font-size:10px;color:var(--mid);">2 hypotheses<br>active</div>
+        </div>
+      </div>
+      <div class="mock-content">
+        <div class="mock-header">
+          <div><div class="mock-page-title">Revenue Recognition Delay</div><div class="mock-page-sub">Stage: Change Proposal · Target: finance.revenue-calc · Day 18</div></div>
+          <div style="display:flex;gap:8px;"><div class="mock-btn-ghost">Run Grill-Me</div><div class="mock-btn">Review Proposal</div></div>
+        </div>
+        <div class="mock-workspace">
+          <div>
+            <div class="mock-panel" style="margin-bottom:10px;">
+              <div class="mock-panel-title">Hypotheses</div>
+              <div class="mock-hypothesis leading">
+                <div class="mock-hyp-title">H1 · Batch processing window mismatch</div>
+                <div class="mock-hyp-conf">Confidence: <span>74%</span> · 8 supporting evidence items · Leading</div>
+              </div>
+              <div class="mock-hypothesis">
+                <div class="mock-hyp-title">H2 · Upstream data pipeline latency</div>
+                <div class="mock-hyp-conf">Confidence: <span style="color:var(--mid)">31%</span> · 3 supporting items · Active</div>
+              </div>
+              <div style="font-size:11px;color:var(--dim);margin-top:8px;font-family:'JetBrains Mono',monospace;">1 hypothesis eliminated · view in record</div>
+            </div>
+            <div class="mock-panel">
+              <div class="mock-panel-title">Recent Evidence</div>
+              <div class="mock-evidence-item">
+                <div class="ev-source">L4 Operational Telemetry</div>
+                <div class="ev-text">Batch processing window ends at 23:50; recognition jobs queue at 23:48 on 87% of delay events</div>
+                <div class="ev-fresh">FRESH · collected 2h ago</div>
+              </div>
+              <div class="mock-evidence-item">
+                <div class="ev-source">L2 Enterprise Knowledge</div>
+                <div class="ev-text">Batch window was shortened from 01:00 to 23:50 during infra migration — March 2026</div>
+                <div class="ev-fresh">FRESH · collected 6h ago</div>
+              </div>
+              <div class="mock-evidence-item">
+                <div class="ev-source">L5 Decision Memory</div>
+                <div class="ev-text">INV-0031 identified similar pattern in payments GEAR — resolved by window shift</div>
+                <div class="ev-fresh stale">STALE · 47 days · re-acquisition queued</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="mock-panel" style="margin-bottom:10px;">
+              <div class="mock-panel-title">Blast Radius</div>
+              <div style="font-size:11.5px;color:var(--mid);margin-bottom:8px;">3 GEARs in scope</div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div style="padding:6px 9px;background:rgba(255,221,0,.1);border:1px solid rgba(255,221,0,.4);font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;">finance.revenue-calc <span style="color:var(--mid)">(primary)</span></div>
+                <div style="padding:6px 9px;background:var(--bg3);border:1px solid var(--border);font-size:11px;color:var(--mid);font-family:'JetBrains Mono',monospace;">ops.batch-scheduler <span style="color:var(--dim)">(upstream)</span></div>
+                <div style="padding:6px 9px;background:var(--bg3);border:1px solid var(--border);font-size:11px;color:var(--mid);font-family:'JetBrains Mono',monospace;">finance.reporting <span style="color:var(--dim)">(downstream)</span></div>
+              </div>
+            </div>
+            <div class="mock-panel">
+              <div class="mock-panel-title">Uncertainty State</div>
+              <div style="font-size:11.5px;color:var(--mid);margin-bottom:8px;">1 known unknown</div>
+              <div style="padding:8px;background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.25);font-size:11px;color:rgba(251,146,60,.9);margin-bottom:6px;">Impact on SLA reporting window not yet quantified</div>
+              <div style="font-size:10px;color:var(--dim);font-family:'JetBrains Mono',monospace;">KAS track open · ETA 4h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GEAR EXPLORER MOCKUP -->
+<section class="section" id="gear-explorer">
+  <div class="section-eyebrow">Section 9 · Manager UX · GEAR Explorer</div>
+  <h2 class="section-title">The GEAR <em>Explorer</em></h2>
+  <p class="prose">The GEAR Explorer is the platform's topological view of the business blueprint. It renders the GEAR graph as a navigable, interactive canvas — showing every GEAR, its relationships, its health status, its active investigations, and its change history. This is the manager's map of the living business.</p>
+
+  <div class="mockup-shell">
+    <div class="mockup-titlebar">
+      <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+      <div class="title">GEARS Business Evolution Platform · GEAR Explorer</div>
+    </div>
+    <div class="mockup-body" style="height:360px;min-height:unset;">
+      <div class="mock-gear-graph">
+        <canvas id="gear-explorer-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
+      </div>
+      <div class="mock-gear-sidebar" style="width:200px;">
+        <div class="mock-panel-title">Selected GEAR</div>
+        <div class="mock-gear-detail">
+          <h4>finance.revenue-calc</h4>
+          <div style="font-size:11px;color:var(--mid);margin-bottom:12px;">Revenue Calculation GEAR</div>
+          <div class="detail-row"><span class="dk">Status</span><span class="dv" style="color:var(--orange);">UNDER INV.</span></div>
+          <div class="detail-row"><span class="dk">Health</span><span class="dv" style="color:var(--yellow);">74%</span></div>
+          <div class="detail-row"><span class="dk">Version</span><span class="dv">v2.4.1</span></div>
+          <div class="detail-row"><span class="dk">Last change</span><span class="dv">14d ago</span></div>
+          <div class="detail-row"><span class="dk">Open inv.</span><span class="dv" style="color:var(--yellow);">1</span></div>
+          <div class="detail-row"><span class="dk">Upstream</span><span class="dv">2 GEARs</span></div>
+          <div class="detail-row"><span class="dk">Downstream</span><span class="dv">3 GEARs</span></div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
+            <div class="mock-btn" style="text-align:center;font-size:8.5px;">Open Investigation</div>
+            <div class="mock-btn-ghost" style="text-align:center;font-size:8.5px;">View Decision Memory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="prose">GEARs with active investigations are highlighted. The manager can drill from the topological view directly into any GEAR's investigation record, its upstream and downstream dependencies, or its full Decision Memory.</p>
+</section>
+
+<!-- AGENT CAPABILITIES -->
+<section class="section" id="agents">
+  <div class="section-eyebrow">Section 10 · Agent Taxonomy</div>
+  <h2 class="section-title">Ten Agent <em>Capabilities</em></h2>
+  <p class="prose">The Business Evolution Platform defines ten investigative agent capabilities. Each capability is a bounded role with defined tool access, evidence write permissions, and contribution types. Capabilities can be composed — an Investigation may engage multiple agents simultaneously, each working on a different Architectural Question within the same investigation.</p>
+  <p class="prose">Agents are not named individuals with persistent identity across investigations. They are capability instances — the platform instantiates the appropriate capability for each investigative task and retires it when the task is complete.</p>
+
+  <div class="agent-grid">
+    <div class="agent-card">
+      <div class="agent-icon">🔎</div>
+      <div class="agent-name">Triage</div>
+      <div class="agent-role">Signal Assessment</div>
+      <div class="agent-desc">Assesses incoming triggers for investigation worthiness. Deduplicates against open investigations. Sets initial priority and scope hypothesis.</div>
+      <div class="agent-cap"><span>Trigger read</span><span>Backlog read</span><span>Investigation create</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">🏗️</div>
+      <div class="agent-name">Architecture</div>
+      <div class="agent-role">GEAR Diagnosis</div>
+      <div class="agent-desc">Executes recursive GEAR diagnosis. Traverses the GEAR graph bidirectionally. Produces blast radius maps and architectural dependency analysis.</div>
+      <div class="agent-cap"><span>GEAR graph read</span><span>Diagnosis write</span><span>BKS L3 access</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">🧩</div>
+      <div class="agent-name">Evidence</div>
+      <div class="agent-role">Evidence Gathering</div>
+      <div class="agent-desc">Executes the Knowledge Acquisition Strategy. Pulls from configured Knowledge Providers. Scores freshness, applies weighting, flags conflicts.</div>
+      <div class="agent-cap"><span>KAS read/write</span><span>Evidence write</span><span>Provider access</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">📚</div>
+      <div class="agent-name">Domain Research</div>
+      <div class="agent-role">External Intelligence</div>
+      <div class="agent-desc">Queries external knowledge sources: industry research, regulatory databases, scientific literature. Contextualises findings to investigation scope.</div>
+      <div class="agent-cap"><span>BKS L1 write</span><span>External sources</span><span>Evidence write</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">⚙️</div>
+      <div class="agent-name">Operations</div>
+      <div class="agent-role">Operational Analysis</div>
+      <div class="agent-desc">Analyses operational telemetry, logs, and transaction data. Identifies anomaly patterns. Provides quantitative grounding for causal hypotheses.</div>
+      <div class="agent-cap"><span>BKS L4 access</span><span>Telemetry read</span><span>Hypothesis write</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">💰</div>
+      <div class="agent-name">Finance</div>
+      <div class="agent-role">Impact Quantification</div>
+      <div class="agent-desc">Quantifies the financial impact of identified issues and proposed changes. Populates the evidence profile's financial impact dimension.</div>
+      <div class="agent-cap"><span>Financial models</span><span>BKS L6 read</span><span>Evidence write</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">⚖️</div>
+      <div class="agent-name">Compliance</div>
+      <div class="agent-role">Regulatory Assessment</div>
+      <div class="agent-desc">Evaluates proposals against regulatory requirements and compliance obligations. Flags conflicts and quantifies regulatory risk in the evidence profile.</div>
+      <div class="agent-cap"><span>BKS L1 regulatory</span><span>Compliance DB</span><span>Evidence write</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">🔬</div>
+      <div class="agent-name">Simulation</div>
+      <div class="agent-role">Quantitative Stress</div>
+      <div class="agent-desc">Runs simulation models against proposed changes. Designed to find failure conditions, not confirm expected outcomes. Reports to governance gate.</div>
+      <div class="agent-cap"><span>BKS L6 full</span><span>Sim model write</span><span>Governance write</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">📋</div>
+      <div class="agent-name">Executive Briefing</div>
+      <div class="agent-role">Communication</div>
+      <div class="agent-desc">Synthesises investigation findings into governance-ready briefings: evidence summary, competing hypotheses, recommendation, and confidence statement.</div>
+      <div class="agent-cap"><span>Investigation read</span><span>Briefing write</span><span>Proposal read</span></div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-icon">🧠</div>
+      <div class="agent-name">Decision Memory</div>
+      <div class="agent-role">Institutional Learning</div>
+      <div class="agent-desc">Writes closed investigation records to Decision Memory. Identifies patterns across historical investigations. Surfaces relevant prior decisions to new investigations.</div>
+      <div class="agent-cap"><span>Decision Memory write</span><span>History read</span><span>Pattern detection</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- KNOWLEDGE PROVIDERS -->
+<section class="section" id="knowledge">
+  <div class="section-eyebrow">Section 11 · Knowledge Integration</div>
+  <h2 class="section-title">Knowledge <em>Providers</em></h2>
+  <p class="prose">Knowledge Providers are the sources through which the Business Evolution Platform populates the Business Knowledge Stack with live, structured evidence. Every provider is accessed through a common evidence interface — ensuring that evidence from different sources carries consistent metadata regardless of origin.</p>
+  <p class="prose">The evidence interface enforces: source identity and authority weight, collection timestamp and freshness decay function, content structure and BKS layer assignment, and conflict registration with other evidence items on the same subject.</p>
+
+  <div class="provider-grid">
+    <div class="provider-card">
+      <div class="provider-icon">📊</div>
+      <div>
+        <div class="provider-type">Operational · BKS L4</div>
+        <div class="provider-name">CRM Systems</div>
+        <div class="provider-desc">Customer interactions, pipeline state, satisfaction signals, and relationship history. High freshness — daily or real-time.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">🏢</div>
+      <div>
+        <div class="provider-type">Operational · BKS L2+L4</div>
+        <div class="provider-name">ERP Systems</div>
+        <div class="provider-desc">Financial transactions, inventory, supply chain state, and operational process telemetry. Authoritative for financial evidence.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">📄</div>
+      <div>
+        <div class="provider-type">Structural · BKS L2</div>
+        <div class="provider-name">Document Repositories</div>
+        <div class="provider-desc">Policies, contracts, SOPs, and governance documents. Freshness assessed per document type; contracts may be years-valid.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">⚖️</div>
+      <div>
+        <div class="provider-type">External · BKS L1</div>
+        <div class="provider-name">Regulatory Databases</div>
+        <div class="provider-desc">Regulatory guidance, legislation, and enforcement precedent. High authority weight; freshness varies by jurisdiction and activity level.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">🔬</div>
+      <div>
+        <div class="provider-type">External · BKS L1</div>
+        <div class="provider-name">Research &amp; Literature</div>
+        <div class="provider-desc">Academic research, industry reports, analyst publications, and scientific literature. Domain Research agent is primary consumer.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">📡</div>
+      <div>
+        <div class="provider-type">Operational · BKS L4</div>
+        <div class="provider-name">System Telemetry</div>
+        <div class="provider-desc">Infrastructure metrics, application performance, event logs, and error streams. Highest freshness requirement — often minutes or seconds.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">💬</div>
+      <div>
+        <div class="provider-type">Contextual · BKS L2</div>
+        <div class="provider-name">Collaboration Tools</div>
+        <div class="provider-desc">Decisions made in meetings, Slack threads, email threads. Captures informal institutional knowledge that formal systems miss.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">🌐</div>
+      <div>
+        <div class="provider-type">External · BKS L1</div>
+        <div class="provider-name">External Intelligence</div>
+        <div class="provider-desc">Competitor signals, market data, news, and macro-economic indicators. Feeds Industry Intelligence layer; freshness is continuous.</div>
+      </div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-icon">🧪</div>
+      <div>
+        <div class="provider-type">Internal · BKS L6</div>
+        <div class="provider-name">Simulation Models</div>
+        <div class="provider-desc">Financial models, Monte Carlo engines, and digital experiment frameworks. Both a provider and a consumer of BKS knowledge.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNANCE UX -->
+<section class="section" id="governance-ux">
+  <div class="section-eyebrow">Section 12 · Manager UX · Governance</div>
+  <h2 class="section-title">Governance as <em>Decision Architecture</em></h2>
+  <p class="prose">The governance layer of the Business Evolution Platform is not a workflow approval system. It is a decision architecture — the structured environment in which authorised humans review fully evidenced proposals, understand what the investigation found, what it couldn't find, what the simulation stress-tested, and what the agents challenged.</p>
+
+  <div class="diagram">
+    <canvas id="governance-canvas" height="360"></canvas>
+    <div class="diagram-label">Governance Gate · Four-Stage Review Process · Authority levels by reversibility class</div>
+  </div>
+
+  <div class="two-col" style="margin-top:44px;">
+    <div>
+      <h3>Reversibility Classification</h3>
+      <p>Every Change Proposal is classified by reversibility before governance review. <strong>Reversible</strong> changes may proceed as Experiments with manager-level authority. <strong>Partially reversible</strong> changes require senior authority and a defined rollback cost assessment. <strong>Irreversible</strong> changes require full governance board review with complete simulation documentation.</p>
+    </div>
+    <div>
+      <h3>Dissent as Data</h3>
+      <p>The governance record captures not just the decision but dissenting views — from human participants, from agents whose challenge positions were not addressed, and from simulation runs that flagged conditional risks. Dissent is not overridden; it is recorded alongside the decision and surfaces in the Deployment monitoring plan as risk indicators to watch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIGURATION -->
+<section class="section" id="config">
+  <div class="section-eyebrow">Section 13 · Platform Configuration</div>
+  <h2 class="section-title">Configuring the <em>Evolution Engine</em></h2>
+  <p class="prose">The Business Evolution Platform is configured at eight dimensions. Configuration is versioned, audited, and GEAR-scoped where applicable — configurations that affect specific GEARs are recorded in that GEAR's history.</p>
+
+  <div class="diagram">
+    <canvas id="config-canvas" height="340"></canvas>
+    <div class="diagram-label">Configuration Dimensions · Eight axes of platform behaviour · All versioned and audited</div>
+  </div>
+
+  <div class="two-col" style="margin-top:44px;">
+    <div>
+      <h3>GEARSet Configuration</h3>
+      <p>The canonical definition of the GEAR topology — which GEARs exist, how they relate, what their ownership structure is, and what their monitoring thresholds are. This is the primary business configuration and the foundation against which all investigations are scoped.</p>
+    </div>
+    <div>
+      <h3>Trigger Rules</h3>
+      <p>The conditions under which the platform automatically opens an investigation. Trigger rules are configured per GEAR, per metric, and per signal type — with sensitivity thresholds, noise filters, and deduplication windows. Rules are versioned; changes to trigger rules are investigations in themselves.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Governance Policies</h3>
+      <p>The authority levels required for each type of governance decision, mapped to reversibility class. Policies define who can approve what, under what evidence standards, and with what mandatory review steps. Policy changes require senior authority and full audit trail.</p>
+    </div>
+    <div>
+      <h3>Risk Profiles</h3>
+      <p>GEAR-level risk configurations that set confidence thresholds, mandatory simulation requirements, and monitoring sensitivity for specific parts of the GEAR topology. High-criticality GEARs carry more conservative risk profiles than experimental or low-impact ones.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXEC DAY -->
+<section class="section" id="exec-day">
+  <div class="section-eyebrow">Section 14 · The Manager Experience</div>
+  <h2 class="section-title">A Manager's <em>Morning</em></h2>
+  <p class="prose">The design mandate of the Business Evolution Platform is most clearly expressed by describing what a manager's experience actually looks like — not as a process walkthrough, but as the felt experience of governing an enterprise that is continuously improving itself.</p>
+
+  <div class="diagram">
+    <canvas id="day-canvas" height="280"></canvas>
+    <div class="diagram-label">Manager Morning Flow · Attention-ordered governance activity · Not agent management</div>
+  </div>
+
+  <p class="prose" style="margin-top:44px;">Sarah opens the platform at 08:30. She does not see a list of agent tasks completed overnight. She sees three things that need her attention: a Change Proposal ready for her review, a Hypothesis that has reached sufficient confidence to draft a proposal but is waiting for her to confirm the blast radius scope, and a Governance Decision she issued two weeks ago whose monitoring observations have now diverged from prediction — triggering a recommendation to open a new investigation.</p>
+  <p class="prose">She spends forty minutes on these three items. The revenue recognition proposal is compelling — the evidence is strong, the blast radius is bounded, the simulation found no failure modes under normal load. She approves it as an Experiment: reversible, time-bounded to 30 days, with an automatic rollback threshold set.</p>
+  <div class="pullquote" style="margin-top:32px;">
+    <p>She has not managed an AI agent this morning. She has made three architectural decisions about her enterprise, backed by fourteen days of structured investigation, scored evidence, and simulation stress-testing. That is the purpose of the platform.</p>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="section-eyebrow" style="padding:0 72px 28px;">Conclusion</div>
+  <div style="padding:0 72px;max-width:1040px;">
+    <h2 class="section-title">The Platform Is the <em>Governance Layer</em></h2>
+    <p class="prose">The Business Evolution Platform described in this paper is the operational realisation of the theory established in White Papers 1 and 2. WP1 defined what an AI-native enterprise knows. WP2 defined how it changes. WP3 defines what it looks like to work inside one — the screens a manager sees, the objects she interacts with, the agents she never has to manage.</p>
+    <p class="prose">The reference architecture is intentionally execution-agnostic. The choice of graph database, agent orchestration framework, knowledge graph technology, or UI stack does not determine whether a platform implements this architecture. What determines that is whether it satisfies the seven principles — particularly the last and most important one: agents propose; humans decide.</p>
+    <div class="conclusion-quote">
+      <p>The Business Evolution Platform does not make the enterprise autonomous. It makes the enterprise governable — at the speed and scale that AI-native operation demands.</p>
+    </div>
+    <p class="prose">An enterprise that deploys this platform does not hand its architectural evolution to AI. It gains a system that continuously surfaces what it does not yet understand about itself, gathers the evidence to fill those gaps, and presents the results — structured, evidenced, and challenged — to the humans who have the authority and the judgment to act on them.</p>
+    <div class="conclusion-quote">
+      <p>The best AI-native enterprises will not be the ones where AI makes the most decisions. They will be the ones where humans make better decisions, faster, because the evidence behind every decision has already been rigorously assembled.</p>
+      <cite>— GEARS White Paper No. 3</cite>
+    </div>
+    <div class="callout" style="margin-top:40px;">
+      <div class="callout-label">Series Continuity</div>
+      <p>White Paper No. 4 will address GEAR execution, runtime instrumentation, and the telemetry architecture through which operational evidence flows back into the Business Knowledge Stack — closing the loop from architectural decision to operational observation and back again.</p>
+    </div>
+  </div>
+  <footer>
+    <div class="f-brand">GEARS · <span>GKIM Digital</span> · White Paper Series</div>
+    <div class="f-brand" style="font-size:10px;letter-spacing:.08em;">Knowledge Engineering &amp; AI Transformation</div>
+  </footer>
+</section>
+</main>
+
+<script>
+// SCROLL + PROGRESS
+const progressBar=document.getElementById('progress-bar');
+const navLinks=document.querySelectorAll('#sidebar nav a');
+const sections=document.querySelectorAll('[id]');
+window.addEventListener('scroll',()=>{
+  const st=window.scrollY,dh=document.documentElement.scrollHeight-window.innerHeight;
+  progressBar.style.transform=`scaleX(${st/dh})`;
+  let cur='';
+  sections.forEach(s=>{if(st>=s.offsetTop-130)cur=s.id;});
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+// HERO CANVAS — grid/interface feel
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,t=0;
+  function resize(){
+    W=canvas.width=canvas.offsetWidth;
+    H=canvas.height=canvas.offsetHeight;
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t+=.005;
+    // Grid lines
+    const gx=60,gy=60;
+    for(let x=0;x<W;x+=gx){
+      ctx.strokeStyle='rgba(255,221,0,0.04)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+    }
+    for(let y=0;y<H;y+=gy){
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+    }
+    // Nodes at grid intersections
+    for(let x=0;x<W;x+=gx) for(let y=0;y<H;y+=gy){
+      const bright=Math.sin(t+x*.02+y*.015)*.5+.5;
+      if(bright>.6){
+        ctx.beginPath();ctx.arc(x,y,2+bright*2,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,221,0,${bright*.35})`;ctx.fill();
+      }
+    }
+    // Horizontal beads moving right — like data flowing through UI
+    for(let i=0;i<6;i++){
+      const y=80+i*80+Math.sin(t*.4+i)*.2;
+      const bx=((t*.8+i*.23)%1)*W;
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);
+      ctx.strokeStyle='rgba(255,221,0,0.05)';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(bx,y,3.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,221,0,${.4+i*.05})`;ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);resize();draw();
+})();
+
+// PLATFORM LAYERS CANVAS — six horizontal layer stack with data flows
+(function(){
+  const canvas=document.getElementById('layers-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let t=0;
+
+  const layers=[
+    {label:'Layer 1 · Manager UX',sub:'Home · Change Radar · Investigations · Workspace · GEAR Explorer · Governance',col:'rgba(255,221,0,1)'},
+    {label:'Layer 2 · ACMS Control Plane',sub:'Investigation lifecycle · State machine · Confidence gates · Governance triggers',col:'rgba(255,221,0,.85)'},
+    {label:'Layer 3 · Agent Runtime',sub:'Triage · Architecture · Evidence · Domain · Ops · Finance · Compliance · Simulation · Briefing · Memory',col:'rgba(255,221,0,.7)'},
+    {label:'Layer 4 · Knowledge Integration',sub:'Common evidence interface · Provenance · Freshness decay · Weighting · Conflict resolution',col:'rgba(255,221,0,.55)'},
+    {label:'Layer 5 · GEAR Graph Store',sub:'GEARS Blueprint · Versioned · Append-only · VGQL query layer · Change history',col:'rgba(255,221,0,.4)'},
+    {label:'Layer 6 · Business Knowledge OS',sub:'BKS L1–L6 · Industry Intelligence → Enterprise → Architecture → Evidence → Decision Memory → Simulation',col:'rgba(255,221,0,.28)'},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth,H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+
+    const padX=32,padY=16;
+    const layerH=(H-padY*2-5*(layers.length-1))/layers.length;
+
+    layers.forEach((layer,i)=>{
+      const y=padY+i*(layerH+5);
+
+      // Layer box
+      ctx.fillStyle='rgba(17,17,16,.95)';
+      ctx.strokeStyle=layer.col.replace(/[\d.]+\)$/,`${.25+i*.02})`)||'rgba(255,221,0,.2)';
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.rect(padX,y,W-padX*2,layerH);ctx.fill();ctx.stroke();
+
+      // Colour accent left bar
+      const accentW=4;
+      ctx.fillStyle=layer.col;
+      ctx.beginPath();ctx.rect(padX,y,accentW,layerH);ctx.fill();
+
+      // Label
+      ctx.font='500 12px Inter,sans-serif';ctx.textAlign='left';
+      ctx.fillStyle=layer.col;
+      ctx.fillText(layer.label,padX+14,y+layerH/2-5);
+
+      ctx.font='10.5px Inter,sans-serif';
+      ctx.fillStyle='rgba(153,153,144,.7)';
+      ctx.fillText(layer.sub,padX+14,y+layerH/2+10);
+
+      // Animated data beads flowing right within layer
+      const nBeads=2+i;
+      for(let b=0;b<nBeads;b++){
+        const bx=padX+accentW+((t*.8+b/nBeads+i*.18)%1)*(W-padX*2-accentW*2-10)+5;
+        ctx.beginPath();ctx.arc(bx,y+layerH/2,2,0,Math.PI*2);
+        ctx.fillStyle=layer.col.replace(/[\d.]+\)$/,'.55)');ctx.fill();
+      }
+    });
+
+    // Vertical arrows between layers (right side)
+    for(let i=0;i<layers.length-1;i++){
+      const ay=padY+i*(layerH+5)+layerH+2;
+      const ax=W-padX-20;
+      ctx.strokeStyle='rgba(255,221,0,.2)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax,ay+3);ctx.stroke();
+      ctx.fillStyle='rgba(255,221,0,.3)';
+      ctx.beginPath();ctx.moveTo(ax-4,ay+1);ctx.lineTo(ax+4,ay+1);ctx.lineTo(ax,ay+5);ctx.fill();
+    }
+
+    // Upward arrows on left (telemetry feedback)
+    for(let i=layers.length-1;i>0;i--){
+      const ay=padY+i*(layerH+5)-3;
+      const ax=padX+20;
+      ctx.strokeStyle='rgba(255,221,0,.1)';ctx.lineWidth=1;ctx.setLineDash([3,4]);
+      ctx.beginPath();ctx.moveTo(ax,ay+1);ctx.lineTo(ax,ay-3);ctx.stroke();ctx.setLineDash([]);
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// GEAR EXPLORER CANVAS
+(function(){
+  const canvas=document.getElementById('gear-explorer-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let t=0;
+
+  const gears=[
+    {id:'cx.onboarding',label:'Onboarding',x:.18,y:.3,status:'ok'},
+    {id:'cx.portal',label:'Customer Portal',x:.12,y:.62,status:'ok'},
+    {id:'finance.revenue-calc',label:'Revenue Calc',x:.42,y:.35,status:'warn',selected:true},
+    {id:'commerce.pricing',label:'Pricing',x:.32,y:.62,status:'active'},
+    {id:'ops.batch-scheduler',label:'Batch Scheduler',x:.55,y:.6,status:'ok'},
+    {id:'finance.reporting',label:'Reporting',x:.62,y:.25,status:'ok'},
+    {id:'analytics.churn-model',label:'Churn Model',x:.75,y:.52,status:'active'},
+    {id:'compliance.gdpr',label:'GDPR Compliance',x:.82,y:.28,status:'warn'},
+    {id:'ops.data-pipeline',label:'Data Pipeline',x:.68,y:.72,status:'ok'},
+  ];
+  const edges=[
+    [0,2],[1,2],[1,3],[3,2],[4,2],[2,5],[2,6],[5,7],[4,8],[8,6]
+  ];
+  const statusCol={ok:'rgba(52,211,153,.7)',warn:'rgba(251,146,60,.85)',active:'rgba(255,221,0,.9)'};
+  const statusFill={ok:'rgba(52,211,153,.12)',warn:'rgba(251,146,60,.12)',active:'rgba(255,221,0,.18)'};
+
+  function draw(){
+    const container=canvas.parentElement;
+    const W=canvas.width=container.offsetWidth||600;
+    const H=canvas.height=container.offsetHeight||360;
+    ctx.clearRect(0,0,W,H);
+    t+=.005;
+
+    // Edges
+    edges.forEach(([a,b])=>{
+      const ga=gears[a],gb=gears[b];
+      const ax=ga.x*W,ay=ga.y*H,bx=gb.x*W,by=gb.y*H;
+      ctx.strokeStyle='rgba(255,221,0,.13)';ctx.lineWidth=1;ctx.setLineDash([]);
+      ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+      // Bead
+      const bt=((t+a*.3+b*.2)%1);
+      ctx.beginPath();ctx.arc(ax+(bx-ax)*bt,ay+(by-ay)*bt,2.5,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,221,0,.6)';ctx.fill();
+    });
+
+    // GEAR nodes
+    gears.forEach(g=>{
+      const gx=g.x*W,gy=g.y*H;
+      const isSelected=g.selected;
+      const r=isSelected?28:20;
+
+      // Pulse for selected/warn
+      if(isSelected||g.status==='warn'){
+        const pr=r+6+Math.sin(t*3)*4;
+        ctx.beginPath();ctx.arc(gx,gy,pr,0,Math.PI*2);
+        ctx.strokeStyle=isSelected?'rgba(255,221,0,.3)':'rgba(251,146,60,.25)';
+        ctx.lineWidth=1;ctx.stroke();
+      }
+
+      ctx.beginPath();ctx.arc(gx,gy,r,0,Math.PI*2);
+      ctx.fillStyle=isSelected?'rgba(255,221,0,.22)':statusFill[g.status]||'rgba(26,26,24,.9)';
+      ctx.strokeStyle=isSelected?'#FFDD00':statusCol[g.status]||'rgba(255,221,0,.3)';
+      ctx.lineWidth=isSelected?2:1.5;
+      ctx.fill();ctx.stroke();
+
+      // Label
+      const shortLabel=g.label.split(' ').slice(0,2).join('\n');
+      const lines=shortLabel.split('\n');
+      ctx.font=`${isSelected?'500':'400'} ${isSelected?10:9}px Inter,sans-serif`;
+      ctx.textAlign='center';
+      ctx.fillStyle=isSelected?'#FFDD00':statusCol[g.status]||'rgba(200,200,192,.8)';
+      lines.forEach((l,li)=>ctx.fillText(l,gx,gy-(lines.length-1)*6+li*12+3));
+
+      // Investigation dot
+      if(g.status==='warn'||g.status==='active'){
+        ctx.beginPath();ctx.arc(gx+r*.65,gy-r*.65,5,0,Math.PI*2);
+        ctx.fillStyle=g.status==='warn'?'#FB923C':'#FFDD00';ctx.fill();
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// GOVERNANCE CANVAS
+(function(){
+  const canvas=document.getElementById('governance-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let t=0;
+
+  const gates=[
+    {label:'Investigation\nScope Approval',sub:'Before major\nevidence acquisition',auth:'Manager'},
+    {label:'Hypothesis\nApproval',sub:'Before Change\nProposal drafted',auth:'Manager'},
+    {label:'Simulation\nGate',sub:'After simulation\nresults available',auth:'Senior Manager'},
+    {label:'Deployment\nDecision',sub:'Final authority\nwith full record',auth:'Board / Exec'},
+  ];
+
+  const revClasses=[
+    {label:'Reversible',col:'rgba(52,211,153,.8)',auth:'Manager'},
+    {label:'Partial',col:'rgba(255,221,0,.8)',auth:'Senior'},
+    {label:'Irreversible',col:'rgba(251,146,60,.8)',auth:'Board'},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth,H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+
+    const padX=48,padY=40;
+    const gateW=(W-padX*2-3*24)/4;
+    const gateH=H*.48;
+
+    // Reversibility legend top right
+    ctx.font='9px "JetBrains Mono",monospace';ctx.textAlign='left';ctx.fillStyle='rgba(153,153,144,.6)';
+    ctx.fillText('REVERSIBILITY CLASS',W-220,18);
+    revClasses.forEach((r,i)=>{
+      const rx=W-220+i*72;
+      ctx.fillStyle=r.col;ctx.beginPath();ctx.arc(rx+6,32,5,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(153,153,144,.7)';ctx.font='9px Inter,sans-serif';ctx.fillText(r.label,rx+14,36);
+    });
+
+    gates.forEach((g,i)=>{
+      const x=padX+i*(gateW+24);
+      const y=padY;
+      const isActive=Math.floor(t*1.5)%gates.length===i;
+
+      // Connector arrow
+      if(i<gates.length-1){
+        const ax=x+gateW,ay=y+gateH/2;
+        ctx.strokeStyle='rgba(255,221,0,.2)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+24,ay);ctx.stroke();
+        ctx.fillStyle='rgba(255,221,0,.3)';
+        ctx.beginPath();ctx.moveTo(ax+18,ay-4);ctx.lineTo(ax+24,ay);ctx.lineTo(ax+18,ay+4);ctx.fill();
+        // Bead on connector
+        const bfrac=((t*1.5+i*.5)%1);
+        const bx=ax+24*bfrac;
+        ctx.beginPath();ctx.arc(bx,ay,3,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,221,0,.8)';ctx.fill();
+      }
+
+      // Gate box
+      ctx.fillStyle=isActive?'rgba(255,221,0,.12)':'rgba(17,17,16,.95)';
+      ctx.strokeStyle=isActive?'rgba(255,221,0,.8)':'rgba(255,221,0,.22)';
+      ctx.lineWidth=isActive?1.5:1;
+      ctx.beginPath();ctx.rect(x,y,gateW,gateH);ctx.fill();ctx.stroke();
+
+      // Gate number
+      ctx.font='10px "JetBrains Mono",monospace';ctx.textAlign='center';
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(153,153,144,.5)';
+      ctx.fillText(`GATE ${i+1}`,x+gateW/2,y+14);
+
+      // Gate label (multiline)
+      ctx.font=`${isActive?'500':'400'} 12px Inter,sans-serif`;
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(242,242,242,.85)';
+      g.label.split('\n').forEach((l,li)=>ctx.fillText(l,x+gateW/2,y+gateH/2-8+li*16));
+
+      // Sub
+      ctx.font='10px Inter,sans-serif';ctx.fillStyle='rgba(153,153,144,.65)';
+      g.sub.split('\n').forEach((l,li)=>ctx.fillText(l,x+gateW/2,y+gateH-30+li*13));
+
+      // Auth tag
+      ctx.fillStyle=isActive?'rgba(255,221,0,.2)':'rgba(26,26,24,.9)';
+      ctx.strokeStyle=isActive?'rgba(255,221,0,.6)':'rgba(255,221,0,.2)';ctx.lineWidth=1;
+      const tagH=20,tagW=gateW-24,tagX=x+12,tagY=y+gateH+10;
+      ctx.beginPath();ctx.rect(tagX,tagY,tagW,tagH);ctx.fill();ctx.stroke();
+      ctx.font='9px "JetBrains Mono",monospace';ctx.fillStyle=isActive?'#FFDD00':'rgba(153,153,144,.7)';
+      ctx.fillText(g.auth,x+gateW/2,tagY+13);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// CONFIG CANVAS — eight config dimensions as octagon
+(function(){
+  const canvas=document.getElementById('config-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let t=0;
+
+  const configs=[
+    {label:'GEARSet\nConfiguration',sub:'Topology & ownership'},
+    {label:'Knowledge\nProviders',sub:'Sources & interfaces'},
+    {label:'Trigger Rules',sub:'Sensitivity & filters'},
+    {label:'Knowledge\nAcquisition\nStrategies',sub:'Evidence planning'},
+    {label:'Agent\nCapabilities',sub:'Roles & permissions'},
+    {label:'Governance\nPolicies',sub:'Authority & criteria'},
+    {label:'Approval Rules',sub:'Thresholds & gates'},
+    {label:'Risk Profiles',sub:'Per-GEAR settings'},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth,H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.005;
+    const cx=W/2,cy=H/2,R=Math.min(W,H)*.34;
+    const activeIdx=Math.floor(t*1.5)%configs.length;
+
+    // Outer ring
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,221,0,.1)';ctx.lineWidth=1;ctx.stroke();
+
+    // Inner ring
+    ctx.beginPath();ctx.arc(cx,cy,R*.45,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,221,0,.08)';ctx.lineWidth=1;ctx.stroke();
+
+    // Centre
+    ctx.beginPath();ctx.arc(cx,cy,22,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.12)';ctx.strokeStyle='rgba(255,221,0,.7)';ctx.lineWidth=1.5;
+    ctx.fill();ctx.stroke();
+    ctx.font='bold 8px "JetBrains Mono",monospace';ctx.textAlign='center';ctx.fillStyle='#FFDD00';
+    ctx.fillText('GEARS',cx,cy-4);ctx.fillText('CONFIG',cx,cy+8);
+
+    configs.forEach((c,i)=>{
+      const angle=-Math.PI/2+i/configs.length*Math.PI*2;
+      const nx=cx+Math.cos(angle)*R,ny=cy+Math.sin(angle)*R;
+      const isActive=i===activeIdx;
+
+      // Spoke
+      ctx.strokeStyle=isActive?'rgba(255,221,0,.45)':'rgba(255,221,0,.12)';
+      ctx.lineWidth=isActive?1.5:1;ctx.setLineDash([]);
+      ctx.beginPath();ctx.moveTo(cx+Math.cos(angle)*22,cy+Math.sin(angle)*22);ctx.lineTo(nx,ny);ctx.stroke();
+
+      // Animated bead on spoke
+      if(isActive){
+        const bf=((t*3)%1);
+        const bx=cx+Math.cos(angle)*(22+(R-22)*bf),by=cy+Math.sin(angle)*(22+(R-22)*bf);
+        ctx.beginPath();ctx.arc(bx,by,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,221,0,.9)';ctx.fill();
+      }
+
+      // Node
+      const nr=isActive?9:6;
+      ctx.beginPath();ctx.arc(nx,ny,nr,0,Math.PI*2);
+      ctx.fillStyle=isActive?'rgba(255,221,0,.25)':'rgba(26,26,24,.95)';
+      ctx.strokeStyle=isActive?'#FFDD00':'rgba(255,221,0,.4)';ctx.lineWidth=isActive?1.5:1;
+      ctx.fill();ctx.stroke();
+
+      // Label
+      const lx=cx+Math.cos(angle)*(R+42),ly=cy+Math.sin(angle)*(R+42);
+      const ca=Math.cos(angle);
+      ctx.textAlign=ca>0.1?'left':ca<-0.1?'right':'center';
+      const lines=c.label.split('\n');
+      ctx.font=`${isActive?'500':'400'} ${isActive?11:10}px Inter,sans-serif`;
+      ctx.fillStyle=isActive?'#FFDD00':'rgba(200,200,192,.8)';
+      lines.forEach((l,li)=>ctx.fillText(l,lx,ly-(lines.length-1)*6.5+li*13));
+      ctx.font='9px Inter,sans-serif';ctx.fillStyle='rgba(153,153,144,.55)';
+      ctx.fillText(c.sub,lx,ly+(lines.length)*.5*13+4);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// MANAGER DAY CANVAS — timeline
+(function(){
+  const canvas=document.getElementById('day-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let t=0;
+
+  const events=[
+    {time:'08:30',label:'Opens platform',sub:'Home Dashboard',type:'start'},
+    {time:'08:32',label:'Reviews Change Radar',sub:'3 new signals overnight',type:'review'},
+    {time:'08:38',label:'Opens INV-0047',sub:'Revenue recognition delay',type:'review'},
+    {time:'08:52',label:'Reviews evidence',sub:'14 items, 74% confidence',type:'evidence'},
+    {time:'09:05',label:'Challenges scope',sub:'Requests broader blast radius check',type:'challenge'},
+    {time:'09:12',label:'Reviews simulation',sub:'No failure modes at normal load',type:'sim'},
+    {time:'09:18',label:'Approves as Experiment',sub:'30 days · auto-rollback at threshold',type:'decision'},
+    {time:'09:22',label:'Reviews INV-0031',sub:'Onboarding hypothesis confidence 51%',type:'review'},
+    {time:'09:35',label:'Day complete',sub:'3 decisions made · 0 agents managed',type:'end'},
+  ];
+
+  function draw(){
+    const W=canvas.width=canvas.offsetWidth,H=canvas.height=canvas.offsetHeight;
+    ctx.clearRect(0,0,W,H);
+    t+=.006;
+
+    const n=events.length;
+    const padX=60,padY=24;
+    const stepW=(W-padX*2)/(n-1);
+    const lineY=H/2;
+
+    // Timeline line
+    ctx.strokeStyle='rgba(255,221,0,.18)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(padX,lineY);ctx.lineTo(W-padX,lineY);ctx.stroke();
+
+    // Animated progress bead
+    const progFrac=((t*.4)%1);
+    const progX=padX+(W-padX*2)*progFrac;
+    ctx.beginPath();ctx.arc(progX,lineY,5,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,221,0,.9)';ctx.fill();
+
+    events.forEach((ev,i)=>{
+      const x=padX+i*stepW;
+      const passed=x<=progX;
+      const typeCol={start:'.7',review:'.6',evidence:'.65',challenge:'.7',sim:'.5',decision:'1',end:'.5'};
+      const alpha=passed?(typeCol[ev.type]||'.6'):'.2';
+      const isDecision=ev.type==='decision';
+
+      // Event node
+      const r=isDecision?9:6;
+      ctx.beginPath();ctx.arc(x,lineY,r,0,Math.PI*2);
+      ctx.fillStyle=isDecision&&passed?`rgba(255,221,0,.3)`:`rgba(17,17,16,.95)`;
+      ctx.strokeStyle=`rgba(255,221,0,${passed?alpha:'.15'})`;
+      ctx.lineWidth=isDecision&&passed?2:1;
+      ctx.fill();ctx.stroke();
+
+      // Vertical connector
+      const above=i%2===0;
+      const connH=above?-44:44;
+      const textY=lineY+connH+(above?-10:24);
+
+      ctx.strokeStyle=`rgba(255,221,0,${passed?'.2':'.08'})`;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(x,lineY+(above?-r:r));ctx.lineTo(x,lineY+connH/1.5);ctx.stroke();
+
+      // Time
+      ctx.font='9px "JetBrains Mono",monospace';ctx.textAlign='center';
+      ctx.fillStyle=`rgba(255,221,0,${passed?'.6':'.2'})`;
+      ctx.fillText(ev.time,x,textY);
+
+      // Label
+      ctx.font=`${isDecision&&passed?'500':'400'} 11px Inter,sans-serif`;
+      ctx.fillStyle=`rgba(242,242,242,${passed?'.9':'.3'})`;
+      ctx.fillText(ev.label,x,textY+14);
+
+      // Sub
+      ctx.font='9.5px Inter,sans-serif';
+      ctx.fillStyle=`rgba(153,153,144,${passed?'.65':'.2'})`;
+      ctx.fillText(ev.sub,x,textY+26);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
