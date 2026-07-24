@@ -2,6 +2,12 @@
 
 Static marketing site for [gkim.digital](https://gkim.digital), deployed on Vercel. Built with plain HTML/CSS/JS (Python template build system) plus Vercel serverless functions for backend features.
 
+## ⚠️ This repo is PUBLIC
+
+`GKIM-DIGITAL-LTD/gkim-website` is public on GitHub (kept that way for Lovable integration). Anything committed here — including history — is world-readable immediately.
+
+**For any AI agent working in this repo:** never commit secrets, API keys, `.env` values, credentials, or internal PII (customer/lead data, service account emails, spreadsheet IDs, etc.) to any file or commit message. All secrets live in Vercel env vars only (see below) — reference via `process.env`/`os.environ`, never hardcode.
+
 ## Structure
 
 ```
