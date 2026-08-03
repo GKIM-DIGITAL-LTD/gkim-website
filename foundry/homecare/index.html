@@ -214,8 +214,12 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .initiative-visual{
   background:var(--surface-dark);border:1px solid var(--border-on-dark);
   min-height:200px;display:flex;align-items:center;justify-content:center;padding:var(--space-8);
+  overflow:hidden;
 }
 @media(min-width:860px){.initiative-visual{min-height:260px;}}
+.initiative-visual:has(img){padding:0;height:200px;}
+@media(min-width:860px){.initiative-visual:has(img){height:260px;}}
+.initiative-visual img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
 
 /* ---------- Join this Foundry ---------- */
 .join-copy{max-width:720px;margin-top:var(--space-6);}
@@ -223,7 +227,7 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .compare-grid{display:grid;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-12);}
 @media(min-width:700px){.compare-grid{grid-template-columns:1fr 1fr;}}
 .compare-col{background:var(--surface-white);border:1px solid var(--border-on-light);padding:var(--space-8);}
-.compare-col.primary{border:2px solid var(--bg-accent);}
+.compare-col.primary{background:var(--bg-accent);border:2px solid var(--bg-accent);}
 .compare-heading{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-on-light);margin-bottom:var(--space-5);}
 .compare-col.later .compare-heading{color:var(--text-on-light-muted);}
 .compare-list{list-style:none;display:flex;flex-direction:column;gap:var(--space-3);}
@@ -231,9 +235,34 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .compare-list .mark{flex-shrink:0;width:18px;height:18px;margin-top:1px;color:var(--text-on-light);}
 .compare-col.later .compare-list li{color:var(--text-on-light-muted);}
 .compare-col.later .mark{color:var(--text-on-light-muted);}
-.join-help{max-width:680px;margin:var(--space-16) auto 0;text-align:center;background:var(--surface-white);border:1px solid var(--border-on-light);padding:var(--space-12) var(--space-8);}
-.join-help h3{font-size:22px;font-weight:700;color:var(--text-on-light);margin-bottom:var(--space-3);}
-.join-help p{font-size:15.5px;line-height:1.65;color:var(--text-on-light-muted);margin-bottom:var(--space-8);}
+
+/* ---------- Sign-up ---------- */
+.signup-copy{max-width:640px;margin-top:var(--space-6);}
+.signup-copy p{font-size:17px;line-height:1.7;color:var(--text-on-dark-muted);}
+.signup-form{display:grid;grid-template-columns:1fr;gap:var(--space-5);max-width:680px;margin-top:var(--space-10);}
+@media(min-width:700px){.signup-form{grid-template-columns:1fr 1fr;}}
+.field{display:flex;flex-direction:column;gap:var(--space-2);}
+.field label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-dark-muted);}
+.field input,.field select{
+  background:var(--surface-dark);border:1px solid var(--border-on-dark);color:var(--text-on-dark);
+  padding:14px var(--space-4);font-family:'Figtree',sans-serif;font-size:15px;border-radius:0;
+  transition:border-color .15s;
+}
+.field input::placeholder{color:rgba(255,255,255,.35);}
+.field input:focus,.field select:focus{outline:none;border-color:var(--bg-accent);}
+.field select{
+  appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:40px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6D6D6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+}
+.field select:invalid{color:rgba(255,255,255,.35);}
+.field-submit{grid-column:1/-1;margin-top:var(--space-2);}
+.signup-form .btn{width:100%;justify-content:center;}
+@media(min-width:520px){.signup-form .btn{width:auto;}}
+.form-note{font-size:13px;color:var(--text-on-dark-muted);margin-top:var(--space-4);}
+.form-error{display:none;font-size:14px;color:#FF8A80;margin-top:var(--space-4);}
+.cal-step{max-width:900px;margin-top:var(--space-10);}
+.cal-step p{font-size:15.5px;color:var(--text-on-dark-muted);margin-bottom:var(--space-6);}
 
 /* ---------- Footer ---------- */
 footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
@@ -265,7 +294,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
       </svg>
     </div>
-    <a href="mailto:hello@gkim.digital" class="btn btn-primary btn-sm header-cta">Get in touch
+    <a href="#signup" class="btn btn-primary btn-sm header-cta">Join the Foundry
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </div>
@@ -281,10 +310,10 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   <div class="hero-bg-overlay"></div>
   <div class="container">
     <p class="eyebrow accent">Home Care Foundry</p>
-    <h1 class="h-large reveal visible">Take the Coordination Cost out of Homecare.</h1>
-    <p class="hero-lede">GKIM builds the AI-native operating system that runs homecare coordination: scheduling, matching, and compliance.<br>More of your budget goes to care, not overhead.</p>
+    <h1 class="h-large reveal visible">More margin. More growth. Less overhead.</h1>
+    <p class="hero-lede">GKIM builds the AI-native operating system that runs homecare coordination, so you can take on more clients and keep more of what you earn.</p>
     <div class="hero-ctas">
-      <a href="#join" class="btn btn-primary">Join as Founding Operator
+      <a href="#signup" class="btn btn-primary">Join as Founding Operator
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="#about" class="btn btn-sec-dark">How it works</a>
@@ -459,7 +488,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
     </div>
 
     <div class="system-join">
-      <a href="#join" class="btn btn-primary">Join this Foundry
+      <a href="#signup" class="btn btn-primary">Join this Foundry
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -517,6 +546,12 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         <p class="benefit-body">Stable, predictable schedules mean less churn. When the rota stops changing every week, good carers stay.</p>
       </div>
     </div>
+
+    <div class="system-join">
+      <a href="#signup" class="btn btn-primary">Join as Founding Operators
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -535,7 +570,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <p class="initiative-text">It finds who's free, who's closest, and who the client already knows, and rebuilds the schedule before anyone picks up the phone.</p>
           <span class="initiative-badge">No coordinator needed</span>
         </div>
-        <div class="initiative-visual"></div>
+        <div class="initiative-visual"><img src="/foundry/homecare/media/cover-found.png" alt="A carer greets a client at the door while a &quot;Cover found&quot; notification shows James off sick, reassigned to Maria — 4 minutes away, known to the client, rota updated."></div>
       </div>
       <div class="initiative-row reverse reveal">
         <div class="initiative-body-col">
@@ -544,7 +579,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <p class="initiative-text">"Assigned Maria: 4 minutes away, has cared for this client before, and speaks the family's language." Every decision comes with its reasoning.</p>
           <span class="initiative-badge">A judgment call, made in a second</span>
         </div>
-        <div class="initiative-visual"></div>
+        <div class="initiative-visual"><img src="/foundry/homecare/media/why-match.png" alt="A matching screen showing three carers considered for Mrs Doyle's 2pm visit, with Maria highlighted as best match — 4 minutes away, has cared for this client before, speaks the family's language — and assigned in 0.8 seconds."></div>
       </div>
       <div class="initiative-row reveal">
         <div class="initiative-body-col">
@@ -553,8 +588,14 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <p class="initiative-text">Families ask how their mum's doing, or what a new diagnosis means, and get a clear, informed answer, drawn from the actual care record.</p>
           <span class="initiative-badge">This used to be three phone calls</span>
         </div>
-        <div class="initiative-visual"></div>
+        <div class="initiative-visual"><img src="/foundry/homecare/media/family-update.png" alt="A daughter's message asking how her mum's day went, answered instantly with a care update: she had a good day, ate a full lunch, and her next visit is tomorrow at 10am."></div>
       </div>
+    </div>
+
+    <div class="system-join">
+      <a href="#signup" class="btn btn-primary">Join the Foundry
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -589,12 +630,60 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       </div>
     </div>
 
-    <div class="join-help">
-      <h3>Help us found the Foundry.</h3>
-      <p>If you own a homecare business and want to build the AI-native operating system for the industry with us, we'd like to talk.</p>
-      <button type="button" class="btn btn-dark">Become a Founding Operator
+    <div class="system-join">
+      <a href="#signup" class="btn btn-primary">Join the Foundry
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGN UP ============ -->
+<section class="section bg-dark grid-overlay" id="signup">
+  <div class="container">
+    <p class="eyebrow accent">Get started</p>
+    <h2 class="h2 reveal">Found the Foundry With Us</h2>
+    <div class="signup-copy">
+      <p>If you own a homecare business and want to build the AI-native operating system for the industry with us, we'd like to talk.</p>
+    </div>
+
+    <div id="signupFormStep">
+      <form id="foundrySignupForm" class="signup-form" novalidate>
+        <div class="field">
+          <label for="leadName">Name</label>
+          <input type="text" id="leadName" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="leadEmail">Work email</label>
+          <input type="email" id="leadEmail" name="email" placeholder="you@yourcompany.com" required>
+        </div>
+        <div class="field">
+          <label for="leadRole">Which best describes you?</label>
+          <select id="leadRole" name="role" required>
+            <option value="" disabled selected>Select one</option>
+            <option value="Homecare owner">Homecare owner</option>
+            <option value="Looking to start a homecare business">Looking to start a homecare business</option>
+            <option value="Potential partner">Potential partner</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="leadCompany">Company name</label>
+          <input type="text" id="leadCompany" name="company" placeholder="Your homecare business" required>
+        </div>
+        <div class="field-submit">
+          <button type="submit" class="btn btn-primary" id="foundrySubmitBtn">Book a call
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="form-note">We'll use your details only to arrange a call about the Foundry.</p>
+          <p class="form-error" id="foundryFormError"></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="cal-step" id="signupCalStep" hidden>
+      <p>Pick a time that works — we've already passed along your details.</p>
+      <div id="foundryCalInline" style="width:100%;overflow:scroll;min-height:600px;"></div>
     </div>
   </div>
 </section>
@@ -623,8 +712,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       </div>
     </div>
     <div class="footer-col">
-      <strong>Get in touch</strong>
-      <span>Book a call</span>
+      <strong>Get started</strong>
+      <a href="#signup">Join the Foundry</a>
     </div>
     <div class="footer-col">
       <strong>Ian Morrison</strong>
@@ -660,6 +749,78 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, {threshold:0.1});
 revealEls.forEach(el => observer.observe(el));
+
+// ---------- Foundry sign-up form ----------
+const foundryForm = document.getElementById('foundrySignupForm');
+const foundryFormStep = document.getElementById('signupFormStep');
+const foundryCalStep = document.getElementById('signupCalStep');
+const foundryErrEl = document.getElementById('foundryFormError');
+const foundrySubmitBtn = document.getElementById('foundrySubmitBtn');
+
+function showFoundryError(msg){
+  foundryErrEl.textContent = msg;
+  foundryErrEl.style.display = 'block';
+}
+
+function initFoundryCalEmbed(name, email, company, role){
+  (function(C,A,L){
+    let p=function(a,ar){a.q.push(ar)};let d=C.document;
+    C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;
+      if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}
+      if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];
+      if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,[L,ns,ar[2]])}else p(cal,ar);return}p(cal,ar)
+    }
+  })(window,"https://app.cal.com/embed/embed.js","init");
+  Cal("init", {origin:"https://app.cal.com"});
+  Cal("inline", {
+    elementOrSelector: "#foundryCalInline",
+    calLink: "ian-morrison-ri6tnc/gkim-discovery-session",
+    layout: "month_view",
+    config: { name: name, email: email, notes: `Company: ${company}\nThey are: ${role}` }
+  });
+  Cal("ui", {styles:{branding:{brandColor:"#FFDD00"}}, hideEventTypeDetails:true, layout:"month_view"});
+}
+
+foundryForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  foundryErrEl.style.display = 'none';
+
+  const name = document.getElementById('leadName').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const role = document.getElementById('leadRole').value;
+  const company = document.getElementById('leadCompany').value.trim();
+
+  if(!name){ showFoundryError('Please enter your name.'); return; }
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showFoundryError('Please enter a valid work email.'); return; }
+  if(!role){ showFoundryError('Please tell us which best describes you.'); return; }
+  if(!company){ showFoundryError('Please enter your company name.'); return; }
+
+  const originalLabel = foundrySubmitBtn.innerHTML;
+  foundrySubmitBtn.disabled = true;
+  foundrySubmitBtn.textContent = 'Sending…';
+
+  try{
+    const res = await fetch('/api/foundry-signup', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, email, role, company})
+    });
+    const json = await res.json().catch(() => ({}));
+    if(!res.ok){
+      showFoundryError(json.error || 'Something went wrong. Please try again.');
+      foundrySubmitBtn.disabled = false;
+      foundrySubmitBtn.innerHTML = originalLabel;
+      return;
+    }
+    foundryFormStep.hidden = true;
+    foundryCalStep.hidden = false;
+    initFoundryCalEmbed(name, email, company, role);
+  }catch(err){
+    showFoundryError('Network error. Please check your connection and try again.');
+    foundrySubmitBtn.disabled = false;
+    foundrySubmitBtn.innerHTML = originalLabel;
+  }
+});
 </script>
 </body>
 </html>
