@@ -57,13 +57,14 @@ export default async function handler(req, res) {
   const email = String(body.email).trim().slice(0, 200);
   const company = String(body.company).trim().slice(0, 120);
   const role = String(body.role).trim().slice(0, 120);
+  const foundry = String(body.foundry || 'Home Care Foundry').trim().slice(0, 120);
   const submitted = new Date().toLocaleString('en-GB', {
     dateStyle: 'long',
     timeStyle: 'short',
     timeZone: 'Europe/London',
   });
 
-  const text = `A new sign-up came through the Home Care Foundry page.
+  const text = `A new sign-up came through the ${foundry} page.
 
 Name: ${name}
 Email: ${email}
@@ -78,7 +79,7 @@ They've been sent to the scheduler to book a call.`;
       from: FROM_EMAIL,
       to: INTERNAL_EMAILS,
       replyTo: email,
-      subject: `New Homecare Foundry lead: ${name} — ${company}`,
+      subject: `New ${foundry} lead: ${name} — ${company}`,
       text,
     });
     return res.status(200).json({ ok: true });
