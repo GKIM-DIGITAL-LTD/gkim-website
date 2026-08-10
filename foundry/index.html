@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundry | GKIM GEARS™</title>
+<meta name="description" content="A GKIM Foundry is a permanent team pointed at one industry, building the AI-native businesses, platforms, and systems that run it. Explore the Telehealth and Home Care Foundries.">
+<link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0A0A09;
+  --bg-light:#F2F2F2;
+  --bg-accent:#FFDD00;
+  --surface-white:#FFFFFF;
+  --surface-dark:#202020;
+  --surface-header-scrolled:#202020eb;
+  --text-on-dark:#FFFFFF;
+  --text-on-dark-muted:#D6D6D6;
+  --text-on-light:#202020;
+  --text-on-light-muted:#5C5C5C;
+  --border-on-dark:#5C5C5C;
+  --border-on-light:#D6D6D6;
+  --border-strong:#333533;
+
+  --container-max:1120px;
+  --header-h-desktop:116px;
+  --header-h-mobile:84px;
+  --grid-cell:72px;
+
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+  --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+  --space-18:72px;--space-20:80px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:'Figtree',system-ui,-apple-system,sans-serif;
+  background:var(--bg-dark);
+  color:var(--text-on-dark);
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- Typography ---------- */
+.h-large{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.05;font-size:clamp(48px,9vw,80px);}
+.h2{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.05;font-size:clamp(38px,6vw,64px);}
+.h3{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.1;font-size:clamp(24px,3.4vw,34px);}
+.eyebrow{
+  font-family:'League Gothic',Impact,sans-serif;font-weight:400;
+  font-size:12px;line-height:1;letter-spacing:1.96px;text-transform:uppercase;
+  display:inline-block;margin-bottom:var(--space-5);
+}
+.accent{color:var(--bg-accent);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* ---------- Layout ---------- */
+.section{position:relative;padding:var(--space-20) var(--space-6);overflow:hidden;}
+@media(min-width:768px){.section{padding:120px var(--space-12);}}
+.container{max-width:var(--container-max);margin:0 auto;position:relative;z-index:2;}
+
+.bg-dark{background:var(--bg-dark);color:var(--text-on-dark);}
+.bg-light{background:var(--bg-light);color:var(--text-on-light);}
+.bg-accent{background:var(--bg-accent);color:var(--text-on-light);}
+.bg-white{background:var(--surface-white);color:var(--text-on-light);}
+
+.grid-overlay::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.10) 1px, transparent 1px);
+  background-size:var(--grid-cell) var(--grid-cell);
+}
+.bg-light.grid-overlay::before,.bg-accent.grid-overlay::before,.bg-white.grid-overlay::before{
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.06) 1px, transparent 1px);
+  background-size:var(--grid-cell) var(--grid-cell);
+}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;
+  padding:14px var(--space-6);border-radius:0;border:none;cursor:pointer;
+  text-decoration:none;transition:opacity .15s,background .15s;white-space:nowrap;
+}
+.btn-primary{background:var(--bg-accent);color:var(--text-on-light);}
+.btn-primary:hover{opacity:.88;}
+.btn-dark{background:transparent;color:var(--text-on-light);border:1.5px solid var(--text-on-light);}
+.btn-dark:hover{background:rgba(0,0,0,.08);}
+.btn-sec-dark{background:transparent;color:var(--text-on-dark);border:1.5px solid var(--border-on-dark);}
+.btn-sec-dark:hover{border-color:var(--text-on-dark);}
+.btn-sm{padding:10px var(--space-5);font-size:14px;}
+.arrow{width:16px;height:16px;flex-shrink:0;}
+:focus-visible{outline:2px solid var(--bg-accent);outline-offset:2px;}
+
+/* ---------- Header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--header-h-mobile);
+  transition:background .25s,backdrop-filter .25s;
+}
+@media(min-width:1280px){header{height:var(--header-h-desktop);}}
+header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.header-inner{
+  max-width:var(--container-max);margin:0 auto;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--space-6);
+}
+@media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
+.logo{display:flex;align-items:center;}
+.logo svg{height:28px;width:auto;}
+.nav-desktop{display:none;align-items:center;gap:var(--space-5);}
+@media(min-width:1280px){.nav-desktop{display:flex;}}
+.nav-link{color:var(--text-on-dark);text-decoration:none;font-size:15px;font-weight:500;transition:color .15s;}
+.nav-link:hover{color:var(--bg-accent);}
+.header-cta{display:none;}
+@media(min-width:1280px){.header-cta{display:inline-flex;}}
+.hamburger{background:none;border:none;color:var(--text-on-dark);cursor:pointer;padding:var(--space-2);}
+.hamburger svg{display:block;width:24px;height:24px;}
+@media(min-width:1280px){.hamburger{display:none;}}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:99;background:var(--surface-dark);
+  display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+  transform:translateX(100%);transition:transform .28s ease;
+}
+.drawer.open{transform:translateX(0);}
+.drawer a{
+  color:var(--text-on-dark);text-decoration:none;font-size:24px;font-weight:600;
+  padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-dark);
+}
+.drawer a:hover{color:var(--bg-accent);}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:calc(var(--header-h-mobile) + var(--space-16));
+  padding-bottom:var(--space-20);
+  text-align:center;
+}
+.hero .container{display:flex;flex-direction:column;align-items:center;}
+@media(min-width:1280px){.hero{padding-top:calc(var(--header-h-desktop) + var(--space-16));}}
+.hero-bg-video{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;object-fit:cover;object-position:center;
+}
+.hero-bg-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg, rgba(10,10,9,.72) 0%, rgba(10,10,9,.78) 45%, rgba(10,10,9,.92) 100%);
+}
+.hero-line2{display:inline;}
+@media(min-width:1024px){.hero-line2{display:block;}}
+.hero-lede{max-width:960px;font-size:18px;line-height:1.65;color:var(--text-on-dark-muted);margin:var(--space-6) auto 0;}
+.hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-4);margin-top:var(--space-10);}
+.hero-note{
+  max-width:640px;margin:var(--space-12) auto 0;font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:18px;line-height:1.5;color:var(--text-on-dark-muted);
+}
+
+/* ---------- Section heads ---------- */
+.section-lede{max-width:680px;font-size:17px;line-height:1.7;margin-top:var(--space-6);}
+.section-lede + .section-lede{margin-top:var(--space-4);}
+
+/* ---------- Vision layout ---------- */
+#vision .section-lede{max-width:780px;}
+.vision-cta{margin-top:var(--space-8);}
+
+/* ---------- How It Works ---------- */
+#about h2{font-size:clamp(46px,7vw,72px);}
+.about-layout{display:grid;grid-template-columns:1fr;gap:var(--space-10);margin-top:var(--space-12);}
+@media(min-width:960px){.about-layout{grid-template-columns:1fr 420px;gap:var(--space-12);align-items:start;}}
+
+.timeline{}
+.timeline-item{position:relative;padding:0 0 var(--space-10) var(--space-10);border-left:2px solid var(--border-on-dark);}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-num{
+  position:absolute;left:-15px;top:0;
+  width:28px;height:28px;
+  background:var(--bg-dark);border:2px solid var(--bg-accent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'League Gothic',Impact,sans-serif;font-size:13px;line-height:1;color:var(--bg-accent);
+}
+.timeline-text{font-size:16px;line-height:1.7;color:var(--text-on-dark-muted);}
+.timeline-text strong{color:var(--text-on-dark);}
+
+/* ---------- Proof (How It Works) ---------- */
+.proof-card{background:var(--surface-dark);border:1px solid var(--border-on-dark);padding:var(--space-8);display:flex;flex-direction:column;height:100%;}
+.proof-title{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(22px,3vw,28px);line-height:1.15;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.proof-body{font-size:15.5px;line-height:1.7;color:var(--text-on-dark-muted);margin-bottom:var(--space-5);}
+.proof-link{font-size:14px;font-weight:600;color:var(--bg-accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-top:auto;}
+.proof-link:hover{opacity:.85;}
+.proof-link .arrow{width:14px;height:14px;}
+.chain-note{
+  max-width:720px;margin:var(--space-8) 0 0;font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:19px;line-height:1.5;color:var(--text-on-dark-muted);
+}
+#loop .chain-note{color:var(--text-on-light-muted);}
+.timeline-col{display:flex;flex-direction:column;}
+
+/* ---------- Operating loop ---------- */
+.loop-widget{margin-top:var(--space-10);}
+.loop-track{position:relative;}
+.loop-track-line{position:absolute;top:calc(var(--space-5) + 22px);left:0;right:0;height:2px;background:var(--border-on-light);z-index:0;}
+.loop-track-progress{height:100%;width:0%;background:var(--bg-accent);}
+.loop-nodes{position:relative;z-index:1;display:flex;gap:1px;list-style:none;margin:0;padding:0;}
+.loop-node{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:var(--space-3);
+  background:none;border:none;cursor:pointer;padding:var(--space-5) var(--space-2);
+  font-family:'Figtree',sans-serif;transition:background-color .2s;
+}
+.loop-node-icon{
+  width:48px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:var(--surface-white);border:2px solid var(--border-on-light);border-radius:4px;
+  transition:border-color .2s,background-color .2s,transform .2s;
+}
+.loop-node-icon svg{width:100%;height:100%;}
+.loop-node-icon .icon-selected{display:none;}
+.loop-node[aria-selected="true"] .loop-node-icon .icon-default{display:none;}
+.loop-node[aria-selected="true"] .loop-node-icon .icon-selected{display:block;}
+.loop-node-label{font-size:13px;font-weight:600;color:var(--text-on-light-muted);transition:color .2s;}
+.loop-node:hover .loop-node-icon{border-color:var(--text-on-light-muted);}
+.loop-node:focus-visible{outline:2px solid var(--bg-accent);outline-offset:-2px;}
+.loop-node[aria-selected="true"] .loop-node-icon{border-color:var(--bg-accent);background:var(--bg-accent);transform:scale(1.08);}
+.loop-node[aria-selected="true"] .loop-node-label{color:var(--text-on-light);}
+@media(max-width:480px){
+  .loop-node-label{display:none;}
+  .loop-node{padding:var(--space-4) var(--space-1);}
+  .loop-node-icon{width:38px;height:32px;}
+  .loop-track-line{top:calc(var(--space-4) + 17px);}
+}
+
+.loop-panel{display:none;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-6);padding:var(--space-8);background:var(--bg-dark);border-radius:4px;}
+.loop-panel.active{display:grid;}
+@media(min-width:700px){.loop-panel.active{grid-template-columns:180px 1fr;gap:var(--space-8);align-items:center;}}
+.loop-panel-icon{width:100%;max-width:180px;aspect-ratio:180/150;flex-shrink:0;margin:0 auto;}
+.loop-panel-icon svg{width:100%;height:100%;}
+.loop-panel-eyebrow{font-size:13px;font-weight:600;color:var(--text-on-dark-muted);margin-bottom:var(--space-2);}
+.loop-panel-title{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(24px,3vw,30px);line-height:1.15;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.loop-panel-text{font-size:15.5px;line-height:1.7;color:var(--text-on-dark-muted);margin-bottom:var(--space-5);}
+.loop-panel-result{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  background:rgba(255,221,0,.1);border-radius:4px;
+  padding:10px var(--space-4);font-size:14px;color:var(--bg-accent);
+}
+.loop-panel-result svg{width:15px;height:15px;flex-shrink:0;color:var(--bg-accent);}
+.loop-result-label{font-weight:700;color:var(--bg-accent);margin-right:2px;}
+
+.loop-footer-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4);margin-top:var(--space-8);}
+.loop-refresh-note{margin-top:0;max-width:none;flex:1 1 auto;min-width:0;}
+.loop-nav-btns{display:flex;gap:var(--space-2);flex-shrink:0;}
+.loop-nav-btn{
+  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+  background:var(--surface-white);border:1px solid var(--border-on-light);color:var(--text-on-light);border-radius:4px;
+  cursor:pointer;padding:0;transition:border-color .15s,background-color .15s;
+}
+.loop-nav-btn:hover{background:var(--bg-light);border-color:var(--text-on-light-muted);}
+.loop-nav-btn:focus-visible{outline:2px solid var(--bg-accent);outline-offset:2px;}
+.loop-nav-btn svg{width:18px;height:18px;}
+
+/* ---------- Benefits ---------- */
+.benefits-layout{display:grid;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-12);}
+@media(min-width:860px){.benefits-layout{grid-template-columns:300px 1fr;gap:var(--space-6);align-items:stretch;}}
+.benefits-panel{
+  background:var(--bg-dark);color:var(--text-on-dark);
+  padding:var(--space-10) var(--space-8);
+  display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-10);
+}
+.benefits-panel .eyebrow{margin-bottom:var(--space-5);}
+.benefits-panel h2{margin-bottom:0;font-size:clamp(38px,6.5vw,58px);}
+.benefits-panel .btn{align-self:flex-start;}
+
+.benefits-items{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border-on-light);}
+@media(min-width:640px){.benefits-items{grid-template-columns:repeat(2,1fr);}}
+.benefit-item{background:var(--surface-white);padding:var(--space-6);display:flex;gap:var(--space-4);align-items:flex-start;}
+.benefit-item-icon{
+  --accent:var(--text-on-light);--line:var(--border-on-light);--bg:var(--bg-light);
+  flex:0 0 auto;width:40px;height:40px;background:var(--bg-light);
+  display:flex;align-items:center;justify-content:center;
+}
+.benefit-item-icon svg{width:20px;height:20px;}
+.benefit-item-title{font-size:15px;font-weight:700;color:var(--text-on-light);margin-bottom:var(--space-2);}
+.benefit-item-desc{font-size:13.5px;line-height:1.6;color:var(--text-on-light-muted);}
+
+/* ---------- Current initiatives ---------- */
+.initiative-list{margin-top:var(--space-12);display:flex;flex-direction:column;}
+.initiative-row{
+  display:grid;grid-template-columns:1fr;gap:var(--space-6);align-items:center;
+  padding:var(--space-10) 0;border-top:1px solid var(--border-on-dark);
+}
+.initiative-row:last-child{border-bottom:1px solid var(--border-on-dark);}
+@media(min-width:860px){
+  .initiative-row{grid-template-columns:1fr 1.2fr;gap:var(--space-10);}
+  .initiative-row.reverse .initiative-visual{order:-1;}
+}
+.initiative-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:var(--space-3);}
+.initiative-body-col{max-width:520px;}
+.initiative-headline{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.15;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.initiative-text{font-size:15.5px;line-height:1.7;color:var(--text-on-dark-muted);}
+.initiative-visual{
+  background:var(--surface-dark);border:1px dashed var(--border-on-dark);
+  min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);
+  padding:var(--space-8);overflow:hidden;color:var(--text-on-dark-muted);
+}
+@media(min-width:860px){.initiative-visual{min-height:260px;}}
+.initiative-visual svg{width:36px;height:36px;opacity:.5;}
+.initiative-visual span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.initiative-visual:has(video){padding:0;border-style:solid;}
+.initiative-visual video{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.system-join{display:flex;justify-content:center;margin-top:var(--space-12);}
+
+/* ---------- Join / Sign-up ---------- */
+.signup-layout{display:grid;grid-template-columns:1fr;gap:var(--space-10);}
+@media(min-width:960px){.signup-layout{grid-template-columns:1fr 1.15fr;gap:var(--space-16);align-items:start;}}
+.signup-intro h2{margin-top:0;}
+.join-copy{max-width:520px;margin-top:var(--space-6);}
+.join-copy p{font-size:17px;line-height:1.7;color:var(--text-on-light-muted);}
+.signup-form{display:grid;grid-template-columns:1fr;gap:var(--space-5);margin-top:0;}
+@media(min-width:600px){.signup-form{grid-template-columns:1fr 1fr;}}
+.field{display:flex;flex-direction:column;gap:var(--space-2);}
+.field label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-light);}
+.field input,.field textarea{
+  background:var(--bg-light);border:1px solid var(--border-on-light);color:var(--text-on-light);
+  padding:14px var(--space-4);font-family:'Figtree',sans-serif;font-size:15px;border-radius:0;
+  transition:border-color .15s,box-shadow .15s;
+}
+.field textarea{resize:vertical;min-height:110px;}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-on-light-muted);opacity:.6;}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--bg-accent);box-shadow:0 0 0 2px var(--bg-accent);}
+.field-wide{grid-column:1/-1;}
+.field-submit{grid-column:1/-1;margin-top:var(--space-2);}
+.signup-form .btn{width:100%;justify-content:center;}
+@media(min-width:520px){.signup-form .btn{width:auto;}}
+.form-note{font-size:13px;color:var(--text-on-light-muted);margin-top:var(--space-4);}
+.form-error{display:none;font-size:14px;color:#C0392B;margin-top:var(--space-4);font-weight:600;}
+.cal-step{max-width:900px;margin-top:var(--space-10);}
+.cal-step p{font-size:15.5px;color:var(--text-on-light-muted);margin-bottom:var(--space-6);}
+
+/* ---------- Footer ---------- */
+footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
+.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;gap:var(--space-10);}
+.footer-brand{flex:0 0 160px;}
+.footer-logo svg{height:36px;width:auto;}
+.footer-socials{display:flex;gap:8px;margin-top:var(--space-5);}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.1);color:var(--text-on-dark-muted);text-decoration:none;transition:background .18s,color .18s;}
+.footer-social-btn:hover{background:var(--bg-accent);color:var(--bg-dark);}
+.footer-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px;}
+.footer-col strong{color:var(--text-on-dark);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:var(--space-2);display:block;}
+.footer-col a,.footer-col span{color:var(--text-on-dark-muted);font-size:13px;line-height:1.6;text-decoration:none;}
+.footer-col a:hover{color:var(--text-on-dark);}
+.footer-bottom{max-width:var(--container-max);margin:var(--space-12) auto 0;padding-top:var(--space-6);border-top:1px solid var(--border-on-dark);text-align:center;color:var(--text-on-dark-muted);font-size:12px;}
+
+/* ---------- Foundry video cards (hero + picker) ---------- */
+.foundry-cards{display:grid;grid-template-columns:1fr;gap:var(--space-4);margin-top:var(--space-10);width:100%;}
+@media(min-width:700px){.foundry-cards{grid-template-columns:repeat(2,1fr);gap:var(--space-5);}}
+.foundry-card{
+  position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  min-height:300px;overflow:hidden;text-decoration:none;text-align:left;
+}
+@media(min-width:700px){.foundry-card{min-height:360px;}}
+.foundry-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s ease;}
+.foundry-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,9,.72) 0%, rgba(10,10,9,.78) 50%, rgba(10,10,9,.94) 100%);}
+.foundry-card:hover video{transform:scale(1.06);}
+.foundry-card-body{position:relative;z-index:1;padding:var(--space-8);}
+.foundry-card-name{display:block;font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(26px,3.2vw,34px);line-height:1.1;color:#fff;margin-bottom:var(--space-2);}
+.foundry-card-desc{font-size:15px;line-height:1.6;color:var(--text-on-dark-muted);max-width:360px;}
+.foundry-card-cta{display:inline-flex;align-items:center;gap:var(--space-2);font-size:15px;font-weight:600;color:#fff;}
+.foundry-card-cta .arrow{transition:transform .15s;}
+.foundry-card:hover .foundry-card-cta .arrow{transform:translateX(4px);}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="header-inner">
+    <a href="/en" class="logo" aria-label="GKIM home">
+      <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+        <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+      </svg>
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/en#proof" class="nav-link">Proof</a>
+      <a href="/foundry/" class="nav-link">Foundries</a>
+      <a href="/about" class="nav-link">About</a>
+    </nav>
+    <a href="/discovery/" class="btn btn-primary btn-sm header-cta">Book a call
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <a href="/en#proof">Proof</a>
+  <a href="/foundry/">Foundries</a>
+  <a href="/about">About</a>
+  <a href="/discovery/">Book a call</a>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="section bg-dark grid-overlay hero">
+  <div class="container">
+    <p class="eyebrow accent">Foundry</p>
+    <h1 class="h-large reveal visible">A factory for AI-native businesses</h1>
+    <p class="hero-lede">A GKIM Foundry is a permanent engine pointed at one industry. It builds the businesses, platforms, and systems that run it, and keeps everything it learns. You plug in and inherit years of build, already done.</p>
+
+    <div class="foundry-cards">
+      <a href="/foundry/telehealth/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/telehealth/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">Telehealth Foundry</span>
+          <p class="foundry-card-desc">Grow your order volume without building the machine behind it.</p>
+        </div>
+      </a>
+      <a href="/foundry/homecare/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/homecare/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">Home Care Foundry</span>
+          <p class="foundry-card-desc">More margin. More growth. Less overhead.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OPERATING LOOP ============ -->
+<section class="section bg-white grid-overlay" id="loop">
+  <div class="container">
+    <h2 class="h2 reveal">What AI-Native Actually Means</h2>
+    <p class="section-lede" style="color:var(--text-on-light-muted);">Bolting a chatbot or a copilot onto the old way of working is AI-assisted, it just makes the old machine a little faster.</p>
+    <p class="section-lede" style="color:var(--text-on-light-muted);">AI-native means the machine is built around AI from the ground up: it learns the industry, designs the solution, builds it, and operates it live, while people step in for judgment, not labor.</p>
+
+    <p class="sr-only" id="loopSrSummary">
+      The operating loop has four stages, and repeats continuously.
+      Stage 1, Learn the industry: AI ingests the whole domain and produces MBA-grade analysis — market, players, where money and friction sit. Result: an industry view, published.
+      Stage 2, Design the solution: GEARS maps the domain into a value graph — every node a place value is created, every edge a way to capture it. Result: a GEARS value graph.
+      Stage 3, Build the solution: AI-native tooling turns the design into a running system in hours, not months. Result: a running system.
+      Stage 4, Operate the solution: AI agents run the live operation around the clock, escalating only what needs a human. Result: data that feeds the next build.
+      Each cycle compounds — output from Operate becomes input for the next Learn.
+    </p>
+
+    <div class="loop-widget reveal">
+      <div class="loop-track">
+        <div class="loop-track-line"><div class="loop-track-progress" id="loopProgress"></div></div>
+        <div class="loop-nodes" role="tablist" aria-label="The operating loop, four stages" aria-describedby="loopSrSummary">
+          <button class="loop-node" type="button" role="tab" id="loopTab-0" aria-controls="loopPanel-0" aria-selected="true" data-stage="0" aria-label="Stage 1: Learn the industry">
+            <span class="loop-node-icon"><svg class="icon-default" width="46" height="38" viewBox="0 0 46 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M30.1352 5.02222H7.53516V33.1467H30.1352V5.02222Z" fill="white"/>
+<path d="M30.3204 4.83386V33.335H7.34375V4.83386H30.3204ZM7.72042 32.9583H29.9437V5.21053H7.72042V32.9583Z" fill="#D6D6D6"/>
+<path d="M26.6197 9.66772V10.4211H11.0508V9.66772H26.6197Z" fill="#202020"/>
+<path d="M24.1086 12.8066V13.3089H11.0508V12.8066H24.1086Z" fill="#D6D6D6"/>
+<path d="M26.1174 15.3177V15.82H11.0508V15.3177H26.1174Z" fill="#D6D6D6"/>
+<path d="M14.0641 20.0889H11.0508V28.6266H14.0641V20.0889Z" fill="#FFDD00"/>
+<path d="M18.0797 23.1022H15.0664V28.6266H18.0797V23.1022Z" fill="#FFDD00"/>
+<path d="M22.0993 18.08H19.0859V28.6266H22.0993V18.08Z" fill="#FFDD00"/>
+<path d="M26.1149 21.5956H23.1016V28.6267H26.1149V21.5956Z" fill="#FFDD00"/>
+<path d="M37.2911 26.1156C37.2911 23.2725 34.9863 20.9678 32.1433 20.9678C29.3003 20.9678 26.9955 23.2725 26.9955 26.1156C26.9955 28.9586 29.3003 31.2634 32.1433 31.2634C34.9863 31.2634 37.2911 28.9586 37.2911 26.1156ZM38.0444 26.1156C38.0444 29.3747 35.4024 32.0167 32.1433 32.0167C28.8842 32.0167 26.2422 29.3747 26.2422 26.1156C26.2422 22.8565 28.8842 20.2145 32.1433 20.2145C35.4024 20.2145 38.0444 22.8565 38.0444 26.1156Z" fill="#202020"/>
+<path d="M35.8033 29.7782C35.9995 29.5821 36.3174 29.5821 36.5135 29.7782L40.0291 33.2938C40.2252 33.4899 40.2252 33.8078 40.0291 34.0039C39.8329 34.2001 39.515 34.2001 39.3189 34.0039L35.8033 30.4884C35.6072 30.2922 35.6072 29.9743 35.8033 29.7782Z" fill="#202020"/>
+</svg>
+            <svg class="icon-selected" width="44" height="36" viewBox="0 0 44 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M28.7992 4.80005H7.19922V31.68H28.7992V4.80005Z" fill="white"/>
+<path d="M28.9795 4.62V31.86H7.01953V4.62H28.9795ZM7.37953 31.5H28.6195V4.98H7.37953V31.5Z" fill="#D6D6D6"/>
+<path d="M25.4386 9.23999V9.95999H10.5586V9.23999H25.4386Z" fill="#202020"/>
+<path d="M23.0386 12.24V12.72H10.5586V12.24H23.0386Z" fill="#D6D6D6"/>
+<path d="M24.9586 14.64V15.12H10.5586V14.64H24.9586Z" fill="#D6D6D6"/>
+<path d="M13.4386 19.2H10.5586V27.36H13.4386V19.2Z" fill="#FFDD00"/>
+<path d="M17.2784 22.08H14.3984V27.36H17.2784V22.08Z" fill="#FFDD00"/>
+<path d="M21.1183 17.28H18.2383V27.36H21.1183V17.28Z" fill="#FFDD00"/>
+<path d="M24.9581 20.64H22.0781V27.36H24.9581V20.64Z" fill="#FFDD00"/>
+<path d="M35.6381 24.9599C35.6381 22.2427 33.4354 20.0399 30.7181 20.0399C28.0009 20.0399 25.7981 22.2427 25.7981 24.9599C25.7981 27.6772 28.0009 29.8799 30.7181 29.8799C33.4354 29.8799 35.6381 27.6772 35.6381 24.9599ZM36.3581 24.9599C36.3581 28.0748 33.833 30.5999 30.7181 30.5999C27.6032 30.5999 25.0781 28.0748 25.0781 24.9599C25.0781 21.8451 27.6032 19.3199 30.7181 19.3199C33.833 19.3199 36.3581 21.8451 36.3581 24.9599Z" fill="#202020"/>
+<path d="M34.2187 28.4607C34.4062 28.2732 34.71 28.2732 34.8975 28.4607L38.2575 31.8207C38.4449 32.0081 38.4449 32.312 38.2575 32.4994C38.07 32.6869 37.7662 32.6869 37.5787 32.4994L34.2187 29.1394C34.0313 28.952 34.0313 28.6481 34.2187 28.4607Z" fill="#202020"/>
+</svg></span>
+            <span class="loop-node-label">Learn</span>
+          </button>
+          <button class="loop-node" type="button" role="tab" id="loopTab-1" aria-controls="loopPanel-1" aria-selected="false" tabindex="-1" data-stage="1" aria-label="Stage 2: Design the solution">
+            <span class="loop-node-icon"><svg class="icon-default" width="42" height="35" viewBox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M21.1334 17.3089L20.8659 17.6912L9.19922 9.52457L9.46673 9.14221L21.1334 17.3089Z" fill="#9E9E9E"/>
+<path d="M32.8689 9.61994L21.2023 17.7866L20.8008 17.2133L32.4674 9.04663L32.8689 9.61994Z" fill="#9E9E9E"/>
+<path d="M21.1536 17.6743L10.6536 27.0076L10.3438 26.659L20.8438 17.3257L21.1536 17.6743Z" fill="#9E9E9E"/>
+<path d="M32.8762 25.852L32.4596 26.4148L20.793 17.7815L21.2095 17.2186L32.8762 25.852Z" fill="#9E9E9E"/>
+<path d="M32.9003 9.33337V26.1334H32.4336V9.33337H32.9003Z" fill="#9E9E9E"/>
+<path d="M9.33229 11.9001C10.7498 11.9001 11.899 10.7509 11.899 9.33339C11.899 7.91586 10.7498 6.76672 9.33229 6.76672C7.91476 6.76672 6.76562 7.91586 6.76562 9.33339C6.76562 10.7509 7.91476 11.9001 9.33229 11.9001Z" fill="white"/>
+<path d="M11.6685 9.33333C11.6685 8.04466 10.6238 6.99999 9.33516 6.99999C8.04649 6.99999 7.00182 8.04466 7.00182 9.33333C7.00182 10.622 8.04649 11.6667 9.33516 11.6667C10.6238 11.6667 11.6685 10.622 11.6685 9.33333ZM12.1352 9.33333C12.1352 10.8797 10.8816 12.1333 9.33516 12.1333C7.78876 12.1333 6.53516 10.8797 6.53516 9.33333C6.53516 7.78693 7.78876 6.53333 9.33516 6.53333C10.8816 6.53333 12.1352 7.78693 12.1352 9.33333Z" fill="#202020"/>
+<path d="M32.6682 11.9001C34.0858 11.9001 35.2349 10.7509 35.2349 9.33339C35.2349 7.91586 34.0858 6.76672 32.6682 6.76672C31.2507 6.76672 30.1016 7.91586 30.1016 9.33339C30.1016 10.7509 31.2507 11.9001 32.6682 11.9001Z" fill="#FFDD00"/>
+<path d="M35.0005 9.33333C35.0005 8.04466 33.9559 6.99999 32.6672 6.99999C31.3785 6.99999 30.3339 8.04466 30.3339 9.33333C30.3339 10.622 31.3785 11.6667 32.6672 11.6667C33.9559 11.6667 35.0005 10.622 35.0005 9.33333ZM35.4672 9.33333C35.4672 10.8797 34.2136 12.1333 32.6672 12.1333C31.1208 12.1333 29.8672 10.8797 29.8672 9.33333C29.8672 7.78693 31.1208 6.53333 32.6672 6.53333C34.2136 6.53333 35.4672 7.78693 35.4672 9.33333Z" fill="#202020"/>
+<path d="M21.001 20.7666C22.8052 20.7666 24.2677 19.3041 24.2677 17.4999C24.2677 15.6958 22.8052 14.2333 21.001 14.2333C19.1969 14.2333 17.7344 15.6958 17.7344 17.4999C17.7344 19.3041 19.1969 20.7666 21.001 20.7666Z" fill="#FFDD00"/>
+<path d="M24.0333 17.5C24.0333 15.8247 22.6753 14.4667 21 14.4667C19.3247 14.4667 17.9667 15.8247 17.9667 17.5C17.9667 19.1753 19.3247 20.5333 21 20.5333C22.6753 20.5333 24.0333 19.1753 24.0333 17.5ZM24.5 17.5C24.5 19.433 22.933 21 21 21C19.067 21 17.5 19.433 17.5 17.5C17.5 15.567 19.067 14 21 14C22.933 14 24.5 15.567 24.5 17.5Z" fill="#202020"/>
+<path d="M10.5003 29.4001C11.9178 29.4001 13.0669 28.2509 13.0669 26.8334C13.0669 25.4159 11.9178 24.2667 10.5003 24.2667C9.08273 24.2667 7.93359 25.4159 7.93359 26.8334C7.93359 28.2509 9.08273 29.4001 10.5003 29.4001Z" fill="white"/>
+<path d="M12.8326 26.8333C12.8326 25.5447 11.7879 24.5 10.4992 24.5C9.21055 24.5 8.16589 25.5447 8.16589 26.8333C8.16589 28.122 9.21055 29.1667 10.4992 29.1667C11.7879 29.1667 12.8326 28.122 12.8326 26.8333ZM13.2992 26.8333C13.2992 28.3797 12.0456 29.6333 10.4992 29.6333C8.95282 29.6333 7.69922 28.3797 7.69922 26.8333C7.69922 25.2869 8.95282 24.0333 10.4992 24.0333C12.0456 24.0333 13.2992 25.2869 13.2992 26.8333Z" fill="#202020"/>
+<path d="M32.6682 28.7C34.0858 28.7 35.2349 27.5508 35.2349 26.1333C35.2349 24.7158 34.0858 23.5667 32.6682 23.5667C31.2507 23.5667 30.1016 24.7158 30.1016 26.1333C30.1016 27.5508 31.2507 28.7 32.6682 28.7Z" fill="#FFDD00"/>
+<path d="M35.0005 26.1334C35.0005 24.8447 33.9559 23.8 32.6672 23.8C31.3785 23.8 30.3339 24.8447 30.3339 26.1334C30.3339 27.422 31.3785 28.4667 32.6672 28.4667C33.9559 28.4667 35.0005 27.422 35.0005 26.1334ZM35.4672 26.1334C35.4672 27.6798 34.2136 28.9334 32.6672 28.9334C31.1208 28.9334 29.8672 27.6798 29.8672 26.1334C29.8672 24.587 31.1208 23.3334 32.6672 23.3334C34.2136 23.3334 35.4672 24.587 35.4672 26.1334Z" fill="#202020"/>
+</svg>
+            <svg class="icon-selected" width="44" height="37" viewBox="0 0 44 37" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M22.1392 18.1331L21.8589 18.5336L9.63672 9.97808L9.91697 9.57751L22.1392 18.1331Z" fill="#9E9E9E"/>
+<path d="M34.4319 10.078L22.2097 18.6336L21.7891 18.033L34.0113 9.47742L34.4319 10.078Z" fill="#9E9E9E"/>
+<path d="M22.1606 18.516L11.1606 28.2938L10.8359 27.9285L21.8359 18.1508L22.1606 18.516Z" fill="#9E9E9E"/>
+<path d="M34.4398 27.083L34.0035 27.6726L21.7812 18.6282L22.2176 18.0386L34.4398 27.083Z" fill="#9E9E9E"/>
+<path d="M34.4655 9.77783V27.3778H33.9766V9.77783H34.4655Z" fill="#9E9E9E"/>
+<path d="M9.77873 12.4666C11.2638 12.4666 12.4676 11.2628 12.4676 9.77776C12.4676 8.29272 11.2638 7.08887 9.77873 7.08887C8.2937 7.08887 7.08984 8.29272 7.08984 9.77776C7.08984 11.2628 8.2937 12.4666 9.77873 12.4666Z" fill="white"/>
+<path d="M12.2215 9.77782C12.2215 8.42779 11.1271 7.33337 9.77708 7.33337C8.42705 7.33337 7.33264 8.42779 7.33264 9.77782C7.33264 11.1278 8.42705 12.2223 9.77708 12.2223C11.1271 12.2223 12.2215 11.1278 12.2215 9.77782ZM12.7104 9.77782C12.7104 11.3979 11.3971 12.7111 9.77708 12.7111C8.15705 12.7111 6.84375 11.3979 6.84375 9.77782C6.84375 8.15778 8.15705 6.84448 9.77708 6.84448C11.3971 6.84448 12.7104 8.15778 12.7104 9.77782Z" fill="#202020"/>
+<path d="M34.224 12.4666C35.7091 12.4666 36.9129 11.2628 36.9129 9.77776C36.9129 8.29272 35.7091 7.08887 34.224 7.08887C32.739 7.08887 31.5352 8.29272 31.5352 9.77776C31.5352 11.2628 32.739 12.4666 34.224 12.4666Z" fill="white"/>
+<path d="M36.6668 9.77782C36.6668 8.42779 35.5724 7.33337 34.2224 7.33337C32.8724 7.33337 31.778 8.42779 31.778 9.77782C31.778 11.1278 32.8724 12.2223 34.2224 12.2223C35.5724 12.2223 36.6668 11.1278 36.6668 9.77782ZM37.1557 9.77782C37.1557 11.3979 35.8424 12.7111 34.2224 12.7111C32.6024 12.7111 31.2891 11.3979 31.2891 9.77782C31.2891 8.15778 32.6024 6.84448 34.2224 6.84448C35.8424 6.84448 37.1557 8.15778 37.1557 9.77782Z" fill="#202020"/>
+<path d="M22.0003 21.7556C23.8904 21.7556 25.4226 20.2234 25.4226 18.3334C25.4226 16.4433 23.8904 14.9111 22.0003 14.9111C20.1103 14.9111 18.5781 16.4433 18.5781 18.3334C18.5781 20.2234 20.1103 21.7556 22.0003 21.7556Z" fill="#FFDD00"/>
+<path d="M25.1765 18.3333C25.1765 16.5783 23.7537 15.1555 21.9987 15.1555C20.2437 15.1555 18.8209 16.5783 18.8209 18.3333C18.8209 20.0883 20.2437 21.5111 21.9987 21.5111C23.7537 21.5111 25.1765 20.0883 25.1765 18.3333ZM25.6654 18.3333C25.6654 20.3583 24.0237 22 21.9987 22C19.9737 22 18.332 20.3583 18.332 18.3333C18.332 16.3082 19.9737 14.6666 21.9987 14.6666C24.0237 14.6666 25.6654 16.3082 25.6654 18.3333Z" fill="#202020"/>
+<path d="M11.0014 30.8C12.4864 30.8 13.6903 29.5962 13.6903 28.1111C13.6903 26.6261 12.4864 25.4222 11.0014 25.4222C9.51636 25.4222 8.3125 26.6261 8.3125 28.1111C8.3125 29.5962 9.51636 30.8 11.0014 30.8Z" fill="white"/>
+<path d="M13.4442 28.1111C13.4442 26.761 12.3498 25.6666 10.9997 25.6666C9.64971 25.6666 8.5553 26.761 8.5553 28.1111C8.5553 29.4611 9.64971 30.5555 10.9997 30.5555C12.3498 30.5555 13.4442 29.4611 13.4442 28.1111ZM13.9331 28.1111C13.9331 29.7311 12.6198 31.0444 10.9997 31.0444C9.3797 31.0444 8.06641 29.7311 8.06641 28.1111C8.06641 26.491 9.3797 25.1777 10.9997 25.1777C12.6198 25.1777 13.9331 26.491 13.9331 28.1111Z" fill="#202020"/>
+<path d="M34.224 30.0666C35.7091 30.0666 36.9129 28.8628 36.9129 27.3777C36.9129 25.8927 35.7091 24.6888 34.224 24.6888C32.739 24.6888 31.5352 25.8927 31.5352 27.3777C31.5352 28.8628 32.739 30.0666 34.224 30.0666Z" fill="white"/>
+<path d="M36.6668 27.3778C36.6668 26.0278 35.5724 24.9333 34.2224 24.9333C32.8724 24.9333 31.778 26.0278 31.778 27.3778C31.778 28.7278 32.8724 29.8222 34.2224 29.8222C35.5724 29.8222 36.6668 28.7278 36.6668 27.3778ZM37.1557 27.3778C37.1557 28.9978 35.8424 30.3111 34.2224 30.3111C32.6024 30.3111 31.2891 28.9978 31.2891 27.3778C31.2891 25.7578 32.6024 24.4445 34.2224 24.4445C35.8424 24.4445 37.1557 25.7578 37.1557 27.3778Z" fill="#202020"/>
+</svg></span>
+            <span class="loop-node-label">Design</span>
+          </button>
+          <button class="loop-node" type="button" role="tab" id="loopTab-2" aria-controls="loopPanel-2" aria-selected="false" tabindex="-1" data-stage="2" aria-label="Stage 3: Build the solution">
+            <span class="loop-node-icon"><svg class="icon-default" width="42" height="35" viewBox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M30.3344 24.2667H11.6677C11.1522 24.2667 10.7344 24.6846 10.7344 25.2001V28.0001C10.7344 28.5155 11.1522 28.9334 11.6677 28.9334H30.3344C30.8498 28.9334 31.2677 28.5155 31.2677 28.0001V25.2001C31.2677 24.6846 30.8498 24.2667 30.3344 24.2667Z" fill="#202020"/>
+<path d="M28.9328 18.6666H13.0661C12.5507 18.6666 12.1328 19.0845 12.1328 19.6V22.4C12.1328 22.9154 12.5507 23.3333 13.0661 23.3333H28.9328C29.4483 23.3333 29.8661 22.9154 29.8661 22.4V19.6C29.8661 19.0845 29.4483 18.6666 28.9328 18.6666Z" fill="#5C5C5C"/>
+<path d="M27.5352 13.0667H14.4685C13.953 13.0667 13.5352 13.4845 13.5352 14V16.8C13.5352 17.3154 13.953 17.7333 14.4685 17.7333H27.5352C28.0506 17.7333 28.4685 17.3154 28.4685 16.8V14C28.4685 13.4845 28.0506 13.0667 27.5352 13.0667Z" fill="#9E9E9E"/>
+<path d="M24.732 7H17.2654C16.7499 7 16.332 7.41787 16.332 7.93333V10.7333C16.332 11.2488 16.7499 11.6667 17.2654 11.6667H24.732C25.2475 11.6667 25.6654 11.2488 25.6654 10.7333V7.93333C25.6654 7.41787 25.2475 7 24.732 7Z" fill="white"/>
+<path d="M16.9395 11.4169C17.0388 11.4648 17.1503 11.4916 17.2685 11.4916H17.6951V11.8416H17.2685C17.0965 11.8416 16.9332 11.8023 16.7875 11.732L16.8633 11.5743L16.9395 11.4169ZM19.1885 11.4916V11.8416H18.3351V11.4916H19.1885ZM20.6819 11.4916V11.8416H19.8285V11.4916H20.6819ZM22.1751 11.4916V11.8416H21.3217V11.4916H22.1751ZM23.6685 11.4916V11.8416H22.8152V11.4916H23.6685ZM25.1403 11.5743L25.2162 11.732C25.0705 11.8023 24.9072 11.8416 24.7352 11.8416H24.3086V11.4916H24.7352C24.8534 11.4916 24.9649 11.4648 25.0642 11.4169L25.1403 11.5743ZM16.1602 10.7333V10.3334H16.5102V10.7333C16.5102 10.8515 16.537 10.963 16.5849 11.0623L16.4274 11.1384L16.2698 11.2143C16.1995 11.0686 16.1602 10.9053 16.1602 10.7333ZM25.4935 10.7333V10.3334H25.8435V10.7333C25.8435 10.9053 25.8042 11.0686 25.7339 11.2143L25.5762 11.1384L25.4188 11.0623C25.4667 10.963 25.4935 10.8515 25.4935 10.7333ZM16.5102 8.93338V9.73319H16.1602V8.93338H16.5102ZM25.8435 8.93338V9.73319H25.4935V8.93338H25.8435ZM16.1602 7.93328C16.1602 7.76128 16.1995 7.59796 16.2698 7.45226L16.4274 7.52814L16.5849 7.60425C16.537 7.70355 16.5102 7.81505 16.5102 7.93328V8.33319H16.1602V7.93328ZM25.4935 7.93328C25.4935 7.81505 25.4667 7.70355 25.4188 7.60425L25.5762 7.52814L25.7339 7.45226C25.8042 7.59796 25.8435 7.76128 25.8435 7.93328V8.33319H25.4935V7.93328ZM17.6951 6.82495V7.17495H17.2685C17.1503 7.17495 17.0388 7.20179 16.9395 7.24969L16.8633 7.09224L16.7875 6.93455C16.9332 6.86427 17.0965 6.82495 17.2685 6.82495H17.6951ZM24.7352 6.82495C24.9072 6.82495 25.0705 6.86427 25.2162 6.93455L25.1403 7.09224L25.0642 7.24969C24.9649 7.20179 24.8534 7.17495 24.7352 7.17495H24.3086V6.82495H24.7352ZM19.1885 6.82495V7.17495H18.3351V6.82495H19.1885ZM20.6819 6.82495V7.17495H19.8285V6.82495H20.6819ZM22.1751 6.82495V7.17495H21.3217V6.82495H22.1751ZM23.6685 6.82495V7.17495H22.8152V6.82495H23.6685Z" fill="#202020"/>
+<path d="M38.4432 7.93333C38.4432 6.03255 36.9023 4.49166 35.0016 4.49166C33.1008 4.49166 31.5599 6.03255 31.5599 7.93333C31.5599 9.83411 33.1008 11.375 35.0016 11.375C36.9023 11.375 38.4432 9.83411 38.4432 7.93333ZM39.0266 7.93333C39.0266 10.1563 37.2245 11.9583 35.0016 11.9583C32.7786 11.9583 30.9766 10.1563 30.9766 7.93333C30.9766 5.71038 32.7786 3.90833 35.0016 3.90833C37.2245 3.90833 39.0266 5.71038 39.0266 7.93333Z" fill="#FFDD00"/>
+<path d="M34.707 7.93335V5.60002C34.707 5.43893 34.8376 5.30835 34.9987 5.30835C35.1598 5.30835 35.2904 5.43893 35.2904 5.60002V7.93335C35.2904 8.09443 35.1598 8.22502 34.9987 8.22502C34.8376 8.22502 34.707 8.09443 34.707 7.93335Z" fill="#FFDD00"/>
+<path d="M34.7378 7.80296C34.8098 7.65891 34.985 7.60043 35.1291 7.67239L36.9957 8.60573C37.1398 8.67775 37.1983 8.85291 37.1263 8.99697C37.0543 9.14102 36.8791 9.19951 36.7351 9.12754L34.8684 8.1942C34.7243 8.12218 34.6659 7.94702 34.7378 7.80296Z" fill="#FFDD00"/>
+</svg>
+            <svg class="icon-selected" width="44" height="37" viewBox="0 0 44 37" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M31.7794 25.4222H12.2239C11.6839 25.4222 11.2461 25.86 11.2461 26.4V29.3334C11.2461 29.8734 11.6839 30.3111 12.2239 30.3111H31.7794C32.3194 30.3111 32.7572 29.8734 32.7572 29.3334V26.4C32.7572 25.86 32.3194 25.4222 31.7794 25.4222Z" fill="#202020"/>
+<path d="M30.3109 19.5555H13.6887C13.1487 19.5555 12.7109 19.9933 12.7109 20.5333V23.4667C12.7109 24.0067 13.1487 24.4444 13.6887 24.4444H30.3109C30.851 24.4444 31.2887 24.0067 31.2887 23.4667V20.5333C31.2887 19.9933 30.851 19.5555 30.3109 19.5555Z" fill="#5C5C5C"/>
+<path d="M28.8464 13.6888H15.1575C14.6175 13.6888 14.1797 14.1266 14.1797 14.6666V17.6C14.1797 18.14 14.6175 18.5777 15.1575 18.5777H28.8464C29.3864 18.5777 29.8241 18.14 29.8241 17.6V14.6666C29.8241 14.1266 29.3864 13.6888 28.8464 13.6888Z" fill="#9E9E9E"/>
+<path d="M25.9094 7.33337H18.0872C17.5471 7.33337 17.1094 7.77114 17.1094 8.31115V11.2445C17.1094 11.7845 17.5471 12.2223 18.0872 12.2223H25.9094C26.4494 12.2223 26.8872 11.7845 26.8872 11.2445V8.31115C26.8872 7.77114 26.4494 7.33337 25.9094 7.33337Z" fill="white"/>
+<path d="M17.7461 11.9606C17.8501 12.0108 17.9669 12.0389 18.0908 12.0389H18.5377V12.4056H18.0908C17.9106 12.4056 17.7395 12.3644 17.5869 12.2908L17.6664 12.1256L17.7461 11.9606ZM20.1022 12.0389V12.4056H19.2082V12.0389H20.1022ZM21.6668 12.0389V12.4056H20.7728V12.0389H21.6668ZM23.2311 12.0389V12.4056H22.3371V12.0389H23.2311ZM24.7956 12.0389V12.4056H23.9016V12.0389H24.7956ZM26.3375 12.1256L26.4169 12.2908C26.2643 12.3644 26.0932 12.4056 25.913 12.4056H25.4661V12.0389H25.913C26.0369 12.0389 26.1537 12.0108 26.2577 11.9606L26.3375 12.1256ZM16.9297 11.2445V10.8255H17.2964V11.2445C17.2964 11.3683 17.3245 11.4851 17.3747 11.5892L17.2097 11.6689L17.0445 11.7484C16.9709 11.5958 16.9297 11.4247 16.9297 11.2445ZM26.7075 11.2445V10.8255H27.0741V11.2445C27.0741 11.4247 27.0329 11.5958 26.9593 11.7484L26.7941 11.6689L26.6292 11.5892C26.6794 11.4851 26.7075 11.3683 26.7075 11.2445ZM17.2964 9.35886V10.1967H16.9297V9.35886H17.2964ZM27.0741 9.35886V10.1967H26.7075V9.35886H27.0741ZM16.9297 8.31114C16.9297 8.13094 16.9709 7.95985 17.0445 7.80721L17.2097 7.8867L17.3747 7.96643C17.3245 8.07046 17.2964 8.18727 17.2964 8.31114V8.73008H16.9297V8.31114ZM26.7075 8.31114C26.7075 8.18727 26.6794 8.07046 26.6292 7.96643L26.7941 7.8867L26.9593 7.80721C27.0329 7.95985 27.0741 8.13094 27.0741 8.31114V8.73008H26.7075V8.31114ZM18.5377 7.15002V7.51669H18.0908C17.9669 7.51669 17.8501 7.5448 17.7461 7.59499L17.6664 7.43004L17.5869 7.26485C17.7395 7.19122 17.9106 7.15002 18.0908 7.15002H18.5377ZM25.913 7.15002C26.0932 7.15002 26.2643 7.19122 26.4169 7.26485L26.3375 7.43004L26.2577 7.59499C26.1537 7.5448 26.0369 7.51669 25.913 7.51669H25.4661V7.15002H25.913ZM20.1022 7.15002V7.51669H19.2082V7.15002H20.1022ZM21.6668 7.15002V7.51669H20.7728V7.15002H21.6668ZM23.2311 7.15002V7.51669H22.3371V7.15002H23.2311ZM24.7956 7.15002V7.51669H23.9016V7.15002H24.7956Z" fill="#202020"/>
+<path d="M40.2714 8.31115C40.2714 6.31986 38.6572 4.70559 36.6659 4.70559C34.6746 4.70559 33.0603 6.31986 33.0603 8.31115C33.0603 10.3024 34.6746 11.9167 36.6659 11.9167C38.6572 11.9167 40.2714 10.3024 40.2714 8.31115ZM40.8826 8.31115C40.8826 10.6399 38.9947 12.5278 36.6659 12.5278C34.3371 12.5278 32.4492 10.6399 32.4492 8.31115C32.4492 5.98235 34.3371 4.09448 36.6659 4.09448C38.9947 4.09448 40.8826 5.98235 40.8826 8.31115Z" fill="#202020"/>
+<path d="M36.3594 8.31116V5.86671C36.3594 5.69796 36.4962 5.56116 36.6649 5.56116C36.8337 5.56116 36.9705 5.69796 36.9705 5.86671V8.31116C36.9705 8.47991 36.8337 8.61671 36.6649 8.61671C36.4962 8.61671 36.3594 8.47991 36.3594 8.31116Z" fill="#202020"/>
+<path d="M36.3916 8.17454C36.4671 8.02363 36.6506 7.96236 36.8015 8.03775L38.7571 9.01553C38.908 9.09098 38.9692 9.27448 38.8938 9.4254C38.8184 9.57631 38.6349 9.63758 38.484 9.56219L36.5284 8.58441C36.3775 8.50896 36.3162 8.32546 36.3916 8.17454Z" fill="#202020"/>
+</svg></span>
+            <span class="loop-node-label">Build</span>
+          </button>
+          <button class="loop-node" type="button" role="tab" id="loopTab-3" aria-controls="loopPanel-3" aria-selected="false" tabindex="-1" data-stage="3" aria-label="Stage 4: Operate the solution">
+            <span class="loop-node-icon"><svg class="icon-default" width="42" height="35" viewBox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M7.41016 17.5C7.41016 16.3707 7.85889 15.2876 8.65749 14.489C9.45608 13.6904 10.5391 13.2417 11.6685 13.2417C11.8296 13.2417 11.9602 13.3723 11.9602 13.5334C11.9602 13.6944 11.8296 13.825 11.6685 13.825C10.6938 13.825 9.75912 14.2123 9.06992 14.9015C8.38073 15.5907 7.99349 16.5254 7.99349 17.5C7.99349 18.4747 8.38073 19.4094 9.06992 20.0986C9.75912 20.7878 10.6938 21.175 11.6685 21.175C11.8296 21.175 11.9602 21.3056 11.9602 21.4667C11.9602 21.6278 11.8296 21.7584 11.6685 21.7584C10.5391 21.7584 9.45608 21.3096 8.65749 20.511C7.85889 19.7124 7.41016 18.6294 7.41016 17.5Z" fill="#333533"/>
+<path d="M3.67578 17.5C3.67578 15.8755 4.3211 14.3176 5.46976 13.169C6.61842 12.0203 8.17633 11.375 9.80078 11.375C9.96186 11.375 10.0924 11.5056 10.0924 11.6667C10.0924 11.8277 9.96186 11.9583 9.80078 11.9583C8.33104 11.9583 6.92146 12.5421 5.88219 13.5814C4.84293 14.6207 4.25911 16.0303 4.25911 17.5C4.25911 18.9697 4.84293 20.3793 5.88219 21.4186C6.92146 22.4579 8.33104 23.0417 9.80078 23.0417C9.96186 23.0417 10.0924 23.1723 10.0924 23.3333C10.0924 23.4944 9.96186 23.625 9.80078 23.625C8.17633 23.625 6.61842 22.9797 5.46976 21.831C4.3211 20.6824 3.67578 19.1245 3.67578 17.5Z" fill="#9E9E9E"/>
+<path d="M34.0096 17.5C34.0096 16.5254 33.6224 15.5907 32.9332 14.9015C32.244 14.2123 31.3093 13.825 30.3346 13.825C30.1736 13.825 30.043 13.6944 30.043 13.5334C30.043 13.3723 30.1736 13.2417 30.3346 13.2417C31.464 13.2417 32.547 13.6904 33.3456 14.489C34.1442 15.2876 34.593 16.3707 34.593 17.5C34.593 18.6294 34.1442 19.7124 33.3456 20.511C32.547 21.3096 31.464 21.7584 30.3346 21.7584C30.1736 21.7584 30.043 21.6278 30.043 21.4667C30.043 21.3056 30.1736 21.175 30.3346 21.175C31.3093 21.175 32.244 20.7878 32.9332 20.0986C33.6224 19.4094 34.0096 18.4747 34.0096 17.5Z" fill="#333533"/>
+<path d="M37.7435 17.5C37.7435 16.0303 37.1597 14.6207 36.1204 13.5814C35.0811 12.5421 33.6716 11.9583 32.2018 11.9583C32.0407 11.9583 31.9102 11.8277 31.9102 11.6667C31.9102 11.5056 32.0407 11.375 32.2018 11.375C33.8263 11.375 35.3842 12.0203 36.5328 13.169C37.6815 14.3176 38.3268 15.8755 38.3268 17.5C38.3268 19.1245 37.6815 20.6824 36.5328 21.831C35.3842 22.9797 33.8263 23.625 32.2018 23.625C32.0407 23.625 31.9102 23.4944 31.9102 23.3333C31.9102 23.1723 32.0407 23.0417 32.2018 23.0417C33.6716 23.0417 35.0811 22.4579 36.1204 21.4186C37.1597 20.3793 37.7435 18.9697 37.7435 17.5Z" fill="#9E9E9E"/>
+<path d="M20.707 10.2667V7.46672C20.707 7.30563 20.8376 7.17505 20.9987 7.17505C21.1598 7.17505 21.2904 7.30563 21.2904 7.46672V10.2667C21.2904 10.4278 21.1598 10.5584 20.9987 10.5584C20.8376 10.5584 20.707 10.4278 20.707 10.2667Z" fill="#333533"/>
+<path d="M20.9992 7.58334C21.5791 7.58334 22.0492 7.11324 22.0492 6.53334C22.0492 5.95344 21.5791 5.48334 20.9992 5.48334C20.4193 5.48334 19.9492 5.95344 19.9492 6.53334C19.9492 7.11324 20.4193 7.58334 20.9992 7.58334Z" fill="#FFDD00"/>
+<path d="M24.5005 23.3334H17.5005C16.5985 23.3334 15.8672 24.0646 15.8672 24.9667V27.3C15.8672 28.2021 16.5985 28.9334 17.5005 28.9334H24.5005C25.4026 28.9334 26.1339 28.2021 26.1339 27.3V24.9667C26.1339 24.0646 25.4026 23.3334 24.5005 23.3334Z" fill="#202020"/>
+<path d="M25.4352 10.7333H16.5685C14.8932 10.7333 13.5352 12.0913 13.5352 13.7666V19.3666C13.5352 21.0419 14.8932 22.3999 16.5685 22.3999H25.4352C27.1104 22.3999 28.4685 21.0419 28.4685 19.3666V13.7666C28.4685 12.0913 27.1104 10.7333 25.4352 10.7333Z" fill="#FFDD00"/>
+<path d="M28.2341 13.7667C28.2341 12.2203 26.9805 10.9667 25.4341 10.9667H16.5674C15.0211 10.9667 13.7674 12.2203 13.7674 13.7667V19.3667C13.7674 20.9131 15.0211 22.1667 16.5674 22.1667H25.4341C26.9805 22.1667 28.2341 20.9131 28.2341 19.3667V13.7667ZM28.7008 19.3667C28.7008 21.1708 27.2382 22.6333 25.4341 22.6333H16.5674C14.7633 22.6333 13.3008 21.1708 13.3008 19.3667V13.7667C13.3008 11.9625 14.7633 10.5 16.5674 10.5H25.4341C27.2382 10.5 28.7008 11.9625 28.7008 13.7667V19.3667Z" fill="#202020"/>
+<path d="M17.7315 16.9166C18.5691 16.9166 19.2482 16.2376 19.2482 15.4C19.2482 14.5623 18.5691 13.8833 17.7315 13.8833C16.8939 13.8833 16.2148 14.5623 16.2148 15.4C16.2148 16.2376 16.8939 16.9166 17.7315 16.9166Z" fill="white"/>
+<path d="M24.2667 16.9166C25.1043 16.9166 25.7833 16.2376 25.7833 15.4C25.7833 14.5623 25.1043 13.8833 24.2667 13.8833C23.429 13.8833 22.75 14.5623 22.75 15.4C22.75 16.2376 23.429 16.9166 24.2667 16.9166Z" fill="white"/>
+<path d="M17.7316 16.03C18.0795 16.03 18.3616 15.748 18.3616 15.4C18.3616 15.0521 18.0795 14.77 17.7316 14.77C17.3836 14.77 17.1016 15.0521 17.1016 15.4C17.1016 15.748 17.3836 16.03 17.7316 16.03Z" fill="#412402"/>
+<path d="M24.2667 16.03C24.6147 16.03 24.8967 15.748 24.8967 15.4C24.8967 15.0521 24.6147 14.77 24.2667 14.77C23.9188 14.77 23.6367 15.0521 23.6367 15.4C23.6367 15.748 23.9188 16.03 24.2667 16.03Z" fill="#412402"/>
+<path d="M23.2159 18.6666H18.7826C18.4604 18.6666 18.1992 18.9278 18.1992 19.25C18.1992 19.5721 18.4604 19.8333 18.7826 19.8333H23.2159C23.5381 19.8333 23.7992 19.5721 23.7992 19.25C23.7992 18.9278 23.5381 18.6666 23.2159 18.6666Z" fill="#333533"/>
+</svg>
+            <svg class="icon-selected" width="44" height="37" viewBox="0 0 44 37" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<path d="M7.76172 18.3333C7.76172 17.1501 8.23183 16.0155 9.06845 15.1789C9.90507 14.3423 11.0397 13.8722 12.2228 13.8722C12.3916 13.8722 12.5284 14.009 12.5284 14.1777C12.5284 14.3465 12.3916 14.4833 12.2228 14.4833C11.2017 14.4833 10.2225 14.889 9.50052 15.611C8.77851 16.333 8.37283 17.3122 8.37283 18.3333C8.37283 19.3544 8.77851 20.3336 9.50052 21.0556C10.2225 21.7776 11.2017 22.1833 12.2228 22.1833C12.3916 22.1833 12.5284 22.3201 12.5284 22.4889C12.5284 22.6576 12.3916 22.7944 12.2228 22.7944C11.0397 22.7944 9.90507 22.3243 9.06845 21.4877C8.23183 20.6511 7.76172 19.5165 7.76172 18.3333Z" fill="#333533"/>
+<path d="M3.85156 18.3333C3.85156 16.6315 4.52761 14.9994 5.73097 13.796C6.93433 12.5927 8.56642 11.9166 10.2682 11.9166C10.437 11.9166 10.5738 12.0534 10.5738 12.2222C10.5738 12.3909 10.437 12.5277 10.2682 12.5277C8.7285 12.5277 7.2518 13.1394 6.16304 14.2281C5.07429 15.3169 4.46267 16.7936 4.46267 18.3333C4.46267 19.873 5.07429 21.3497 6.16304 22.4385C7.2518 23.5272 8.7285 24.1388 10.2682 24.1388C10.437 24.1388 10.5738 24.2756 10.5738 24.4444C10.5738 24.6132 10.437 24.75 10.2682 24.75C8.56642 24.75 6.93433 24.0739 5.73097 22.8706C4.52761 21.6672 3.85156 20.0351 3.85156 18.3333Z" fill="#9E9E9E"/>
+<path d="M35.6282 18.3333C35.6282 17.3122 35.2225 16.333 34.5005 15.611C33.7785 14.889 32.7993 14.4833 31.7782 14.4833C31.6095 14.4833 31.4727 14.3465 31.4727 14.1777C31.4727 14.009 31.6095 13.8722 31.7782 13.8722C32.9614 13.8722 34.096 14.3423 34.9326 15.1789C35.7692 16.0155 36.2393 17.1501 36.2393 18.3333C36.2393 19.5165 35.7692 20.6511 34.9326 21.4877C34.096 22.3243 32.9614 22.7944 31.7782 22.7944C31.6095 22.7944 31.4727 22.6576 31.4727 22.4889C31.4727 22.3201 31.6095 22.1833 31.7782 22.1833C32.7993 22.1833 33.7785 21.7776 34.5005 21.0556C35.2225 20.3336 35.6282 19.3544 35.6282 18.3333Z" fill="#333533"/>
+<path d="M39.5408 18.3333C39.5408 16.7936 38.9292 15.3169 37.8404 14.2281C36.7517 13.1394 35.275 12.5277 33.7352 12.5277C33.5665 12.5277 33.4297 12.3909 33.4297 12.2222C33.4297 12.0534 33.5665 11.9166 33.7352 11.9166C35.437 11.9166 37.0691 12.5927 38.2725 13.796C39.4759 14.9994 40.1519 16.6315 40.1519 18.3333C40.1519 20.0351 39.4759 21.6672 38.2725 22.8706C37.0691 24.0739 35.437 24.75 33.7352 24.75C33.5665 24.75 33.4297 24.6132 33.4297 24.4444C33.4297 24.2756 33.5665 24.1388 33.7352 24.1388C35.275 24.1388 36.7517 23.5272 37.8404 22.4385C38.9292 21.3497 39.5408 19.873 39.5408 18.3333Z" fill="#9E9E9E"/>
+<path d="M21.6953 10.7556V7.82228C21.6953 7.65353 21.8321 7.51672 22.0009 7.51672C22.1696 7.51672 22.3064 7.65353 22.3064 7.82228V10.7556C22.3064 10.9244 22.1696 11.0612 22.0009 11.0612C21.8321 11.0612 21.6953 10.9244 21.6953 10.7556Z" fill="#333533"/>
+<path d="M21.9984 7.94445C22.606 7.94445 23.0984 7.45196 23.0984 6.84445C23.0984 6.23693 22.606 5.74445 21.9984 5.74445C21.3909 5.74445 20.8984 6.23693 20.8984 6.84445C20.8984 7.45196 21.3909 7.94445 21.9984 7.94445Z" fill="#FFDD00"/>
+<path d="M25.6655 24.4445H18.3322C17.3872 24.4445 16.6211 25.2105 16.6211 26.1556V28.6C16.6211 29.545 17.3872 30.3111 18.3322 30.3111H25.6655C26.6106 30.3111 27.3766 29.545 27.3766 28.6V26.1556C27.3766 25.2105 26.6106 24.4445 25.6655 24.4445Z" fill="#202020"/>
+<path d="M26.6464 11.2444H17.3575C15.6024 11.2444 14.1797 12.6671 14.1797 14.4222V20.2888C14.1797 22.0439 15.6024 23.4666 17.3575 23.4666H26.6464C28.4014 23.4666 29.8241 22.0439 29.8241 20.2888V14.4222C29.8241 12.6671 28.4014 11.2444 26.6464 11.2444Z" fill="#FFDD00"/>
+<path d="M29.578 14.4222C29.578 12.8022 28.2647 11.4889 26.6447 11.4889H17.3558C15.7358 11.4889 14.4225 12.8022 14.4225 14.4222V20.2889C14.4225 21.9089 15.7358 23.2222 17.3558 23.2222H26.6447C28.2647 23.2222 29.578 21.9089 29.578 20.2889V14.4222ZM30.0669 20.2889C30.0669 22.1789 28.5347 23.7111 26.6447 23.7111H17.3558C15.4658 23.7111 13.9336 22.1789 13.9336 20.2889V14.4222C13.9336 12.5322 15.4658 11 17.3558 11H26.6447C28.5347 11 30.0669 12.5322 30.0669 14.4222V20.2889Z" fill="#202020"/>
+<path d="M18.5772 17.7222C19.4547 17.7222 20.1661 17.0108 20.1661 16.1333C20.1661 15.2558 19.4547 14.5444 18.5772 14.5444C17.6997 14.5444 16.9883 15.2558 16.9883 16.1333C16.9883 17.0108 17.6997 17.7222 18.5772 17.7222Z" fill="white"/>
+<path d="M25.4209 17.7222C26.2984 17.7222 27.0098 17.0108 27.0098 16.1333C27.0098 15.2558 26.2984 14.5444 25.4209 14.5444C24.5434 14.5444 23.832 15.2558 23.832 16.1333C23.832 17.0108 24.5434 17.7222 25.4209 17.7222Z" fill="white"/>
+<path d="M18.578 16.7934C18.9425 16.7934 19.238 16.4979 19.238 16.1334C19.238 15.7689 18.9425 15.4734 18.578 15.4734C18.2135 15.4734 17.918 15.7689 17.918 16.1334C17.918 16.4979 18.2135 16.7934 18.578 16.7934Z" fill="#412402"/>
+<path d="M25.4217 16.7934C25.7862 16.7934 26.0817 16.4979 26.0817 16.1334C26.0817 15.7689 25.7862 15.4734 25.4217 15.4734C25.0572 15.4734 24.7617 15.7689 24.7617 16.1334C24.7617 16.4979 25.0572 16.7934 25.4217 16.7934Z" fill="#412402"/>
+<path d="M24.322 19.5555H19.6775C19.34 19.5555 19.0664 19.8291 19.0664 20.1667C19.0664 20.5042 19.34 20.7778 19.6775 20.7778H24.322C24.6595 20.7778 24.9331 20.5042 24.9331 20.1667C24.9331 19.8291 24.6595 19.5555 24.322 19.5555Z" fill="#333533"/>
+</svg></span>
+            <span class="loop-node-label">Operate</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="loop-panel active" id="loopPanel-0" role="tabpanel" aria-labelledby="loopTab-0" tabindex="0">
+        <div class="loop-panel-icon"><svg viewBox="0 0 180 150" role="img" aria-labelledby="loopIcon0">
+          <title id="loopIcon0">Learn the industry — a market report with rising bars and a magnifying glass</title>
+          <path d="M120 20H30V132H120V20Z" fill="#5C5C5C"/>
+          <path d="M120.75 19.25V132.75H29.25V19.25H120.75ZM30.75 131.25H119.25V20.75H30.75V131.25Z" fill="#D6D6D6"/>
+          <path d="M106 38.5V41.5H44V38.5H106Z" fill="white"/>
+          <path d="M96 51V53H44V51H96Z" fill="#D6D6D6"/>
+          <path d="M104 61V63H44V61H104Z" fill="#D6D6D6"/>
+          <path d="M56 80H44V114H56V80Z" fill="#FFDD00"/>
+          <path d="M72 92H60V114H72V92Z" fill="#FFDD00"/>
+          <path d="M88 72H76V114H88V72Z" fill="#FFDD00"/>
+          <path d="M104 86H92V114H104V86Z" fill="#FFDD00"/>
+          <path d="M148.5 104C148.5 92.6782 139.322 83.5 128 83.5C116.678 83.5 107.5 92.6782 107.5 104C107.5 115.322 116.678 124.5 128 124.5C139.322 124.5 148.5 115.322 148.5 104ZM151.5 104C151.5 116.979 140.979 127.5 128 127.5C115.021 127.5 104.5 116.979 104.5 104C104.5 91.0213 115.021 80.5 128 80.5C140.979 80.5 151.5 91.0213 151.5 104Z" fill="white"/>
+          <path d="M142.586 118.586C143.367 117.805 144.633 117.805 145.414 118.586L159.414 132.586C160.195 133.367 160.195 134.633 159.414 135.414C158.633 136.195 157.367 136.195 156.586 135.414L142.586 121.414C141.805 120.633 141.805 119.367 142.586 118.586Z" fill="white"/>
+        </svg></div>
+        <div class="loop-panel-body">
+          <p class="loop-panel-eyebrow">Stage 1 of 4</p>
+          <h3 class="loop-panel-title">Learn the industry</h3>
+          <p class="loop-panel-text">AI ingests the whole domain and produces MBA-grade analysis: market, players, where money and friction sit.</p>
+          <p class="loop-panel-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 10v7h-7"/></svg><span class="loop-result-label">Result:</span>An industry view, published.</p>
+        </div>
+      </div>
+
+      <div class="loop-panel" id="loopPanel-1" role="tabpanel" aria-labelledby="loopTab-1" tabindex="0" hidden>
+        <div class="loop-panel-icon"><svg viewBox="0 0 180 150" role="img" aria-labelledby="loopIcon1">
+          <title id="loopIcon1">Design the solution — a value graph of connected nodes</title>
+          <path d="M90.5723 74.1807L89.4258 75.8193L39.4258 40.8193L40.5723 39.1807L90.5723 74.1807Z" fill="#9E9E9E"/>
+          <path d="M140.861 41.2285L90.8613 76.2285L89.1406 73.7715L139.141 38.7715L140.861 41.2285Z" fill="#9E9E9E"/>
+          <path d="M90.6641 75.7471L45.6641 115.747L44.3359 114.253L89.3359 74.2529L90.6641 75.7471Z" fill="#9E9E9E"/>
+          <path d="M140.895 110.794L139.109 113.206L89.1094 76.2061L90.8945 73.7939L140.895 110.794Z" fill="#9E9E9E"/>
+          <path d="M141 40V112H139V40H141Z" fill="#9E9E9E"/>
+          <path d="M40 51C46.0751 51 51 46.0751 51 40C51 33.9249 46.0751 29 40 29C33.9249 29 29 33.9249 29 40C29 46.0751 33.9249 51 40 51Z" fill="white"/>
+          <path d="M50 40C50 34.4772 45.5229 30 40 30C34.4772 30 30 34.4772 30 40C30 45.5228 34.4772 50 40 50C45.5229 50 50 45.5228 50 40ZM52 40C52 46.6274 46.6274 52 40 52C33.3726 52 28 46.6274 28 40C28 33.3726 33.3726 28 40 28C46.6274 28 52 33.3726 52 40Z" fill="#202020"/>
+          <path d="M140 51C146.075 51 151 46.0751 151 40C151 33.9249 146.075 29 140 29C133.925 29 129 33.9249 129 40C129 46.0751 133.925 51 140 51Z" fill="#FFDD00"/>
+          <path d="M150 40C150 34.4772 145.523 30 140 30C134.477 30 130 34.4772 130 40C130 45.5228 134.477 50 140 50C145.523 50 150 45.5228 150 40ZM152 40C152 46.6274 146.627 52 140 52C133.373 52 128 46.6274 128 40C128 33.3726 133.373 28 140 28C146.627 28 152 33.3726 152 40Z" fill="#202020"/>
+          <path d="M90 89C97.732 89 104 82.732 104 75C104 67.268 97.732 61 90 61C82.268 61 76 67.268 76 75C76 82.732 82.268 89 90 89Z" fill="#FFDD00"/>
+          <path d="M103 75C103 67.8203 97.1797 62 90 62C82.8203 62 77 67.8203 77 75C77 82.1797 82.8203 88 90 88C97.1797 88 103 82.1797 103 75ZM105 75C105 83.2843 98.2843 90 90 90C81.7157 90 75 83.2843 75 75C75 66.7157 81.7157 60 90 60C98.2843 60 105 66.7157 105 75Z" fill="#202020"/>
+          <path d="M45 126C51.0751 126 56 121.075 56 115C56 108.925 51.0751 104 45 104C38.9249 104 34 108.925 34 115C34 121.075 38.9249 126 45 126Z" fill="white"/>
+          <path d="M55 115C55 109.477 50.5229 105 45 105C39.4772 105 35 109.477 35 115C35 120.523 39.4772 125 45 125C50.5229 125 55 120.523 55 115ZM57 115C57 121.627 51.6274 127 45 127C38.3726 127 33 121.627 33 115C33 108.373 38.3726 103 45 103C51.6274 103 57 108.373 57 115Z" fill="#202020"/>
+          <path d="M140 123C146.075 123 151 118.075 151 112C151 105.925 146.075 101 140 101C133.925 101 129 105.925 129 112C129 118.075 133.925 123 140 123Z" fill="#FFDD00"/>
+          <path d="M150 112C150 106.477 145.523 102 140 102C134.477 102 130 106.477 130 112C130 117.523 134.477 122 140 122C145.523 122 150 117.523 150 112ZM152 112C152 118.627 146.627 124 140 124C133.373 124 128 118.627 128 112C128 105.373 133.373 100 140 100C146.627 100 152 105.373 152 112Z" fill="#202020"/>
+        </svg></div>
+        <div class="loop-panel-body">
+          <p class="loop-panel-eyebrow">Stage 2 of 4</p>
+          <h3 class="loop-panel-title">Design the solution</h3>
+          <p class="loop-panel-text">GEARS maps the domain into a value graph: every node a place value is created, every edge a way to capture it.</p>
+          <p class="loop-panel-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 10v7h-7"/></svg><span class="loop-result-label">Result:</span>A GEARS value graph.</p>
+        </div>
+      </div>
+
+      <div class="loop-panel" id="loopPanel-2" role="tabpanel" aria-labelledby="loopTab-2" tabindex="0" hidden>
+        <div class="loop-panel-icon"><svg viewBox="0 0 180 150" role="img" aria-labelledby="loopIcon2">
+          <title id="loopIcon2">Build the solution — stacked layers assembling fast, timer running</title>
+          <path d="M130 104H50C47.7909 104 46 105.791 46 108V120C46 122.209 47.7909 124 50 124H130C132.209 124 134 122.209 134 120V108C134 105.791 132.209 104 130 104Z" fill="#FFDD00"/>
+          <path d="M124 80H56C53.7909 80 52 81.7909 52 84V96C52 98.2091 53.7909 100 56 100H124C126.209 100 128 98.2091 128 96V84C128 81.7909 126.209 80 124 80Z" fill="#5C5C5C"/>
+          <path d="M118 56H62C59.7909 56 58 57.7909 58 60V72C58 74.2091 59.7909 76 62 76H118C120.209 76 122 74.2091 122 72V60C122 57.7909 120.209 56 118 56Z" fill="#9E9E9E"/>
+          <path d="M106 30H74C71.7909 30 70 31.7909 70 34V46C70 48.2091 71.7909 50 74 50H106C108.209 50 110 48.2091 110 46V34C110 31.7909 108.209 30 106 30Z" fill="white"/>
+          <path d="M72.5898 48.9297C73.0154 49.135 73.4933 49.25 74 49.25H75.8281V50.75H74C73.2628 50.75 72.5629 50.5815 71.9385 50.2803L72.2637 49.6045L72.5898 48.9297ZM82.2285 49.25V50.75H78.5713V49.25H82.2285ZM88.6289 49.25V50.75H84.9717V49.25H88.6289ZM95.0283 49.25V50.75H91.3711V49.25H95.0283ZM101.429 49.25V50.75H97.7715V49.25H101.429ZM107.736 49.6045L108.062 50.2803C107.437 50.5815 106.737 50.75 106 50.75H104.172V49.25H106C106.507 49.25 106.985 49.135 107.41 48.9297L107.736 49.6045ZM69.25 46V44.2861H70.75V46C70.75 46.5067 70.865 46.9846 71.0703 47.4102L70.3955 47.7363L69.7197 48.0615C69.4185 47.4371 69.25 46.7372 69.25 46ZM109.25 46V44.2861H110.75V46C110.75 46.7372 110.581 47.4371 110.28 48.0615L109.604 47.7363L108.93 47.4102C109.135 46.9846 109.25 46.5067 109.25 46ZM70.75 38.2861V41.7139H69.25V38.2861H70.75ZM110.75 38.2861V41.7139H109.25V38.2861H110.75ZM69.25 34C69.25 33.2628 69.4185 32.5629 69.7197 31.9385L70.3955 32.2637L71.0703 32.5898C70.865 33.0154 70.75 33.4933 70.75 34V35.7139H69.25V34ZM109.25 34C109.25 33.4933 109.135 33.0154 108.93 32.5898L109.604 32.2637L110.28 31.9385C110.581 32.5629 110.75 33.2628 110.75 34V35.7139H109.25V34ZM75.8281 29.25V30.75H74C73.4933 30.75 73.0154 30.865 72.5898 31.0703L72.2637 30.3955L71.9385 29.7197C72.5629 29.4185 73.2628 29.25 74 29.25H75.8281ZM106 29.25C106.737 29.25 107.437 29.4185 108.062 29.7197L107.736 30.3955L107.41 31.0703C106.985 30.865 106.507 30.75 106 30.75H104.172V29.25H106ZM82.2285 29.25V30.75H78.5713V29.25H82.2285ZM88.6289 29.25V30.75H84.9717V29.25H88.6289ZM95.0283 29.25V30.75H91.3711V29.25H95.0283ZM101.429 29.25V30.75H97.7715V29.25H101.429Z" fill="#5C5C5C"/>
+          <path d="M164.75 34C164.75 25.8538 158.146 19.25 150 19.25C141.854 19.25 135.25 25.8538 135.25 34C135.25 42.1462 141.854 48.75 150 48.75C158.146 48.75 164.75 42.1462 164.75 34ZM167.25 34C167.25 43.5269 159.527 51.25 150 51.25C140.473 51.25 132.75 43.5269 132.75 34C132.75 24.4731 140.473 16.75 150 16.75C159.527 16.75 167.25 24.4731 167.25 34Z" fill="#FFDD00"/>
+          <path d="M148.75 34V24C148.75 23.3096 149.31 22.75 150 22.75C150.69 22.75 151.25 23.3096 151.25 24V34C151.25 34.6904 150.69 35.25 150 35.25C149.31 35.25 148.75 34.6904 148.75 34Z" fill="#FFDD00"/>
+          <path d="M148.882 33.4414C149.191 32.8241 149.941 32.5734 150.559 32.8818L158.559 36.8819C159.176 37.1905 159.427 37.9412 159.118 38.5586C158.81 39.176 158.059 39.4266 157.442 39.1182L149.442 35.1182C148.824 34.8095 148.574 34.0588 148.882 33.4414Z" fill="#FFDD00"/>
+        </svg></div>
+        <div class="loop-panel-body">
+          <p class="loop-panel-eyebrow">Stage 3 of 4</p>
+          <h3 class="loop-panel-title">Build the solution</h3>
+          <p class="loop-panel-text">AI-native tooling turns the design into a running system in hours, not months.</p>
+          <p class="loop-panel-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 10v7h-7"/></svg><span class="loop-result-label">Result:</span>A running system.</p>
+        </div>
+      </div>
+
+      <div class="loop-panel" id="loopPanel-3" role="tabpanel" aria-labelledby="loopTab-3" tabindex="0" hidden>
+        <div class="loop-panel-icon"><svg viewBox="0 0 180 150" role="img" aria-labelledby="loopIcon3">
+          <title id="loopIcon3">Operate the solution — an AI agent live and connected</title>
+          <path d="M31.75 75C31.75 70.1598 33.6732 65.5182 37.0957 62.0957C40.5182 58.6732 45.1598 56.75 50 56.75C50.6904 56.75 51.25 57.3096 51.25 58C51.25 58.6904 50.6904 59.25 50 59.25C45.8228 59.25 41.817 60.9096 38.8633 63.8633C35.9096 66.817 34.25 70.8228 34.25 75C34.25 79.1772 35.9096 83.183 38.8633 86.1367C41.817 89.0904 45.8228 90.75 50 90.75C50.6904 90.75 51.25 91.3096 51.25 92C51.25 92.6904 50.6904 93.25 50 93.25C45.1598 93.25 40.5182 91.3268 37.0957 87.9043C33.6732 84.4818 31.75 79.8402 31.75 75Z" fill="white"/>
+          <path d="M15.75 75C15.75 68.0381 18.5156 61.3613 23.4385 56.4385C28.3613 51.5156 35.0381 48.75 42 48.75C42.6904 48.75 43.25 49.3096 43.25 50C43.25 50.6904 42.6904 51.25 42 51.25C35.7011 51.25 29.66 53.7521 25.2061 58.2061C20.7521 62.66 18.25 68.7011 18.25 75C18.25 81.2989 20.7521 87.34 25.2061 91.7939C29.66 96.2479 35.7011 98.75 42 98.75C42.6904 98.75 43.25 99.3096 43.25 100C43.25 100.69 42.6904 101.25 42 101.25C35.0381 101.25 28.3613 98.4844 23.4385 93.5615C18.5156 88.6387 15.75 81.9619 15.75 75Z" fill="#E6E6E6"/>
+          <path d="M145.75 75C145.75 70.8228 144.09 66.817 141.137 63.8633C138.183 60.9096 134.177 59.25 130 59.25C129.31 59.25 128.75 58.6904 128.75 58C128.75 57.3096 129.31 56.75 130 56.75C134.84 56.75 139.482 58.6732 142.904 62.0957C146.327 65.5182 148.25 70.1598 148.25 75C148.25 79.8402 146.327 84.4818 142.904 87.9043C139.482 91.3268 134.84 93.25 130 93.25C129.31 93.25 128.75 92.6904 128.75 92C128.75 91.3096 129.31 90.75 130 90.75C134.177 90.75 138.183 89.0904 141.137 86.1367C144.09 83.183 145.75 79.1772 145.75 75Z" fill="white"/>
+          <path d="M161.75 75C161.75 68.7011 159.248 62.66 154.794 58.2061C150.34 53.7521 144.299 51.25 138 51.25C137.31 51.25 136.75 50.6904 136.75 50C136.75 49.3096 137.31 48.75 138 48.75C144.962 48.75 151.639 51.5156 156.562 56.4385C161.484 61.3613 164.25 68.0381 164.25 75C164.25 81.9619 161.484 88.6387 156.562 93.5615C151.639 98.4843 144.962 101.25 138 101.25C137.31 101.25 136.75 100.69 136.75 100C136.75 99.3096 137.31 98.75 138 98.75C144.299 98.75 150.34 96.2479 154.794 91.7939C159.248 87.34 161.75 81.2989 161.75 75Z" fill="#E6E6E6"/>
+          <path d="M88.75 44V32C88.75 31.3096 89.3096 30.75 90 30.75C90.6904 30.75 91.25 31.3096 91.25 32V44C91.25 44.6904 90.6904 45.25 90 45.25C89.3096 45.25 88.75 44.6904 88.75 44Z" fill="#9E9E9E"/>
+          <path d="M90 32.5C92.4853 32.5 94.5 30.4853 94.5 28C94.5 25.5147 92.4853 23.5 90 23.5C87.5147 23.5 85.5 25.5147 85.5 28C85.5 30.4853 87.5147 32.5 90 32.5Z" fill="#FFDD00"/>
+          <path d="M105 100H75C71.134 100 68 103.134 68 107V117C68 120.866 71.134 124 75 124H105C108.866 124 112 120.866 112 117V107C112 103.134 108.866 100 105 100Z" fill="#5C5C5C"/>
+          <path d="M109 46H71C63.8203 46 58 51.8203 58 59V83C58 90.1797 63.8203 96 71 96H109C116.18 96 122 90.1797 122 83V59C122 51.8203 116.18 46 109 46Z" fill="#FFDD00"/>
+          <path d="M121 59C121 52.3726 115.627 47 109 47H71C64.3726 47 59 52.3726 59 59V83C59 89.6274 64.3726 95 71 95H109C115.627 95 121 89.6274 121 83V59ZM123 83C123 90.732 116.732 97 109 97H71C63.268 97 57 90.732 57 83V59C57 51.268 63.268 45 71 45H109C116.732 45 123 51.268 123 59V83Z" fill="white"/>
+          <path d="M76 72.5C79.5899 72.5 82.5 69.5899 82.5 66C82.5 62.4101 79.5899 59.5 76 59.5C72.4101 59.5 69.5 62.4101 69.5 66C69.5 69.5899 72.4101 72.5 76 72.5Z" fill="white"/>
+          <path d="M104 72.5C107.59 72.5 110.5 69.5899 110.5 66C110.5 62.4101 107.59 59.5 104 59.5C100.41 59.5 97.5 62.4101 97.5 66C97.5 69.5899 100.41 72.5 104 72.5Z" fill="white"/>
+          <path d="M76.0008 68.7C77.4919 68.7 78.7008 67.4912 78.7008 66C78.7008 64.5089 77.4919 63.3 76.0008 63.3C74.5096 63.3 73.3008 64.5089 73.3008 66C73.3008 67.4912 74.5096 68.7 76.0008 68.7Z" fill="#412402"/>
+          <path d="M104.001 68.7C105.492 68.7 106.701 67.4912 106.701 66C106.701 64.5089 105.492 63.3 104.001 63.3C102.51 63.3 101.301 64.5089 101.301 66C101.301 67.4912 102.51 68.7 104.001 68.7Z" fill="#412402"/>
+          <path d="M99.5 80H80.5C79.1193 80 78 81.1193 78 82.5C78 83.8807 79.1193 85 80.5 85H99.5C100.881 85 102 83.8807 102 82.5C102 81.1193 100.881 80 99.5 80Z" fill="#333533"/>
+        </svg></div>
+        <div class="loop-panel-body">
+          <p class="loop-panel-eyebrow">Stage 4 of 4</p>
+          <h3 class="loop-panel-title">Operate the solution</h3>
+          <p class="loop-panel-text">AI agents run the live operation around the clock, escalating only what needs a human.</p>
+          <p class="loop-panel-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 10v7h-7"/></svg><span class="loop-result-label">Result:</span>Data that feeds the next build.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop-footer-row">
+      <p class="chain-note reveal loop-refresh-note">That's why the system you plug into is already built, already running, and scales without adding headcount.</p>
+      <div class="loop-nav-btns">
+        <button type="button" class="loop-nav-btn" id="loopPrev" aria-label="Previous stage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button type="button" class="loop-nav-btn" id="loopNext" aria-label="Next stage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ PICK THE FOUNDRY ============ -->
+<section class="section bg-light grid-overlay" id="foundries">
+  <div class="container">
+    <p class="eyebrow">The Foundries</p>
+    <h2 class="h2 reveal">Pick the Foundry built for your industry.</h2>
+
+    <div class="foundry-cards">
+      <a href="/foundry/telehealth/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/telehealth/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">Telehealth Foundry</span>
+          <span class="foundry-card-cta">Explore the Telehealth Foundry
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+      <a href="/foundry/homecare/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/homecare/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">Home Care Foundry</span>
+          <span class="foundry-card-cta">Explore the Home Care Foundry
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM" role="img">
+          <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+          <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+          <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+          <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/gkimdigital/posts/?feedView=all" class="footer-social-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.facebook.com/gkimdigital" class="footer-social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <strong>Explore</strong>
+      <a href="/en/#proof">Proof</a>
+      <a href="/foundry/">Foundries</a>
+      <a href="/about">About</a>
+      <a href="/discovery/">Book a call</a>
+    </div>
+    <div class="footer-col">
+      <strong>Ian Morrison</strong>
+      <span>Mobile &amp; WhatsApp:<br><a href="tel:+447385542874">(+44) 738 5542874</a><br><a href="tel:+84907280831">(+84) 90 728 0831</a></span>
+      <a href="mailto:hello@gkim.digital">hello@gkim.digital</a>
+    </div>
+    <div class="footer-col">
+      <strong>UK Office</strong>
+      <span>17 South Rd, Impington,<br>Cambridge CB24 9PB</span>
+      <a href="tel:+447385542874">(+44) 738 5542874</a>
+    </div>
+    <div class="footer-col">
+      <strong>Vietnam Office</strong>
+      <span>C00.07 Sarina Tower C1, Sala Residence<br>62 Hoang The Thien Street,<br>Thu Duc, Ho Chi Minh city</span>
+      <a href="tel:+84283511886">(+84) 28 3511 8866</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© Copyright <span id="year"></span> GKIM Digital Ltd.</span>
+  </div>
+</footer>
+
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+const burger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+function setDrawer(open){
+  drawer.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.innerHTML = open
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+}
+burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDrawer(false)));
+
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, {threshold:0.1});
+revealEls.forEach(el => observer.observe(el));
+
+// ---------- Foundry card videos (only decode/play while on screen) ----------
+(function(){
+  const cardVideos = document.querySelectorAll('.foundry-card-video');
+  if(!cardVideos.length) return;
+  const vidObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const video = entry.target;
+      if(entry.isIntersecting){ video.play().catch(()=>{}); }
+      else { video.pause(); }
+    });
+  }, {threshold:0.25});
+  cardVideos.forEach(v => vidObserver.observe(v));
+})();
+
+// ---------- Operating loop ----------
+(function(){
+  const tablist = document.querySelector('.loop-nodes');
+  if(!tablist) return;
+  const nodes = [...tablist.querySelectorAll('.loop-node')];
+  const panels = [...document.querySelectorAll('.loop-panel')];
+  const progress = document.getElementById('loopProgress');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const STAGE_MS = 4000;
+  let current = 0;
+  let autoplay = !prefersReducedMotion;
+  let timerId = null;
+
+  function setProgress(index, durationMs){
+    const pct = ((index + 1) / nodes.length) * 100;
+    if(!durationMs){
+      progress.style.transition = 'none';
+      progress.style.width = pct + '%';
+      return;
+    }
+    progress.style.transition = 'none';
+    progress.style.width = ((index) / nodes.length * 100) + '%';
+    void progress.offsetWidth;
+    progress.style.transition = `width ${durationMs}ms linear`;
+    requestAnimationFrame(() => { progress.style.width = pct + '%'; });
+  }
+
+  function showStage(index, durationMs){
+    current = index;
+    nodes.forEach((node, i) => {
+      const active = i === index;
+      node.setAttribute('aria-selected', String(active));
+      node.tabIndex = active ? 0 : -1;
+    });
+    panels.forEach((panel, i) => {
+      const active = i === index;
+      panel.classList.toggle('active', active);
+      panel.hidden = !active;
+    });
+    setProgress(index, prefersReducedMotion ? 0 : durationMs);
+  }
+
+  function stopAutoplay(){
+    autoplay = false;
+    if(timerId){ clearTimeout(timerId); timerId = null; }
+  }
+
+  function scheduleNext(){
+    if(!autoplay || prefersReducedMotion) return;
+    timerId = setTimeout(() => {
+      showStage((current + 1) % nodes.length, STAGE_MS);
+      scheduleNext();
+    }, STAGE_MS);
+  }
+
+  nodes.forEach(node => {
+    node.addEventListener('click', () => {
+      stopAutoplay();
+      showStage(Number(node.dataset.stage));
+    });
+  });
+
+  tablist.addEventListener('keydown', (e) => {
+    if(!['ArrowRight','ArrowLeft','Home','End'].includes(e.key)) return;
+    e.preventDefault();
+    stopAutoplay();
+    let next = current;
+    if(e.key === 'ArrowRight') next = (current + 1) % nodes.length;
+    if(e.key === 'ArrowLeft') next = (current - 1 + nodes.length) % nodes.length;
+    if(e.key === 'Home') next = 0;
+    if(e.key === 'End') next = nodes.length - 1;
+    showStage(next);
+    nodes[next].focus();
+  });
+
+  tablist.addEventListener('focusin', stopAutoplay);
+
+  const prevBtn = document.getElementById('loopPrev');
+  const nextBtn = document.getElementById('loopNext');
+  if(prevBtn) prevBtn.addEventListener('click', () => {
+    stopAutoplay();
+    showStage((current - 1 + nodes.length) % nodes.length);
+  });
+  if(nextBtn) nextBtn.addEventListener('click', () => {
+    stopAutoplay();
+    showStage((current + 1) % nodes.length);
+  });
+
+  showStage(0, STAGE_MS);
+  scheduleNext();
+})();
+</script>
+</body>
+</html>

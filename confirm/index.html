@@ -77,6 +77,22 @@ header{
 .nav-link:hover{color:var(--text-on-dark-muted);}
 .header-cta{display:none;}
 @media(min-width:1280px){.header-cta{display:inline-flex;}}
+.hamburger{background:none;border:none;color:var(--text-on-dark);cursor:pointer;padding:var(--space-2);}
+.hamburger svg{display:block;width:24px;height:24px;}
+@media(min-width:1280px){.hamburger{display:none;}}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:99;background:var(--surface-dark);
+  display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+  transform:translateX(100%);transition:transform .28s ease;
+}
+.drawer.open{transform:translateX(0);}
+.drawer a{
+  color:var(--text-on-dark);text-decoration:none;font-size:24px;font-weight:600;
+  padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-dark);
+}
+.drawer a:hover{color:var(--bg-accent);}
 
 /* ── MAIN ── */
 .main-wrap{
@@ -218,7 +234,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <body>
 
 <!-- ═══ HEADER ═══ -->
-<header>
+<header id="header">
   <div class="header-inner">
     <a href="/en/" class="logo" aria-label="GKIM home">
       <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -231,15 +247,26 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       </svg>
     </a>
     <nav class="nav-desktop" aria-label="Primary">
-      <a href="/en/#gears" class="nav-link">GEARS™</a>
       <a href="/en/#proof" class="nav-link">Proof</a>
+      <a href="/foundry/" class="nav-link">Foundries</a>
       <a href="/about" class="nav-link">About</a>
     </nav>
     <a href="/discovery/" class="btn btn-primary btn-sm header-cta">Book a call
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <a href="/en/#proof">Proof</a>
+  <a href="/foundry/">Foundries</a>
+  <a href="/about">About</a>
+  <a href="/discovery/">Book a call</a>
+</div>
 
 <!-- ═══ MAIN ═══ -->
 <div class="main-wrap">
@@ -354,8 +381,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
     <!-- Explore -->
     <div class="footer-col">
       <strong>Explore</strong>
-      <a href="/en/#gears">GEARS™</a>
       <a href="/en/#proof">Proof</a>
+      <a href="/foundry/">Foundries</a>
       <a href="/about">About</a>
       <a href="/discovery/">Book a call</a>
     </div>
@@ -385,6 +412,19 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+
+const burger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+function setDrawer(open){
+  drawer.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.innerHTML = open
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+}
+burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDrawer(false)));
 
 // Read booking data from sessionStorage
 (function() {
