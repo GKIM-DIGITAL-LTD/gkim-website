@@ -9,13 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:wght@300;400;500;600;700&ZCOOL+XiaoWei|Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="alternate" hreflang="en" href="https://gkim.digital/en/">
-  <link rel="alternate" hreflang="de" href="https://gkim.digital/de/">
-  <link rel="alternate" hreflang="fr" href="https://gkim.digital/fr/">
-  <link rel="alternate" hreflang="nl" href="https://gkim.digital/nl/">
-  <link rel="alternate" hreflang="zh-Hans" href="https://gkim.digital/zh/">
-  <link rel="alternate" hreflang="vi" href="https://gkim.digital/vi/">
-  <link rel="alternate" hreflang="x-default" href="https://gkim.digital/en/">
+<link rel="canonical" href="https://gkim.digital/zh">
+  <link rel="alternate" hreflang="en" href="https://gkim.digital/en">
+  <link rel="alternate" hreflang="x-default" href="https://gkim.digital/en">
 <style>
 :root{
   --bg-dark:#0A0A09;
@@ -95,25 +91,21 @@ body{
 
 /* ---------- Buttons ---------- */
 .btn{
-  font-family:'Figtree',sans-serif;font-size:20px;font-weight:600;line-height:1;
-  border-radius:0;border:2px solid;cursor:pointer;text-decoration:none;
   display:inline-flex;align-items:center;gap:var(--space-2);
-  padding:var(--space-2) var(--space-5);
-  transition:background .18s ease,color .18s ease,transform .08s ease;
-  white-space:nowrap;
+  font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;
+  padding:14px var(--space-6);border-radius:0;border:none;cursor:pointer;
+  text-decoration:none;transition:opacity .15s,background .15s;white-space:nowrap;
 }
-.btn:active{transform:translateY(1px);}
-.btn .arrow{width:20px;height:20px;flex-shrink:0;transition:transform .18s ease;}
-.btn:hover .arrow{transform:translateX(4px);}
-.btn-sm{font-size:16px;padding:6px var(--space-6);}
-.btn-sm .arrow{width:16px;height:16px;}
-
-.btn-primary{background:var(--bg-accent);color:var(--text-on-light);border-color:var(--bg-accent);}
-.btn-primary:hover{background:#ffe640;border-color:#ffe640;}
-.btn-sec-dark{background:transparent;color:var(--text-on-dark);border-color:var(--text-on-dark);}
-.btn-sec-dark:hover{background:var(--text-on-dark);color:var(--bg-dark);}
-.btn-sec-light{background:transparent;color:var(--text-on-light);border-color:var(--border-strong);}
+.btn-primary{background:var(--bg-accent);color:var(--text-on-light);}
+.btn-primary:hover{opacity:.88;}
+.btn-dark{background:transparent;color:var(--text-on-light);border:1.5px solid var(--text-on-light);}
+.btn-dark:hover{background:rgba(0,0,0,.08);}
+.btn-sec-dark{background:transparent;color:var(--text-on-dark);border:1.5px solid var(--border-on-dark);}
+.btn-sec-dark:hover{border-color:var(--text-on-dark);}
+.btn-sec-light{background:transparent;color:var(--text-on-light);border:1.5px solid var(--border-strong);}
 .btn-sec-light:hover{background:var(--surface-dark);color:var(--text-on-dark);border-color:var(--surface-dark);}
+.btn-sm{padding:10px var(--space-5);font-size:14px;}
+.arrow{width:16px;height:16px;flex-shrink:0;}
 
 :focus-visible{outline:2px solid var(--bg-accent);outline-offset:2px;}
 .bg-light :focus-visible,.bg-accent :focus-visible{outline-color:var(--bg-dark);}
@@ -122,50 +114,40 @@ body{
 header{
   position:fixed;top:0;left:0;right:0;z-index:100;
   height:var(--header-h-mobile);
-  display:flex;align-items:center;
-  transition:background .3s ease,backdrop-filter .3s ease;
+  transition:background .25s,backdrop-filter .25s;
 }
 @media(min-width:1280px){header{height:var(--header-h-desktop);}}
 header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
 .header-inner{
-  width:100%;max-width:var(--container-max);margin:0 auto;
-  padding:0 var(--space-4);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);
+  max-width:var(--container-max);margin:0 auto;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--space-6);
 }
 @media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
 .logo{display:flex;align-items:center;}
-.logo svg{height:28px;width:auto;display:block;}
-@media(min-width:1280px){.logo svg{height:40px;}}
-
+.logo svg{height:28px;width:auto;}
 .nav-desktop{display:none;align-items:center;gap:var(--space-5);}
 @media(min-width:1280px){.nav-desktop{display:flex;}}
-.nav-link{
-  font-family:'Figtree',sans-serif;font-size:16px;font-weight:400;
-  color:var(--text-on-dark);text-decoration:none;transition:color .18s ease;
-}
-.nav-link:hover{color:var(--text-on-dark-muted);}
-
+.nav-link{color:var(--text-on-dark);text-decoration:none;font-size:15px;font-weight:500;transition:color .15s;}
+.nav-link:hover,.nav-link.active{color:var(--bg-accent);}
 .header-cta{display:none;}
 @media(min-width:1280px){.header-cta{display:inline-flex;}}
-
-.hamburger{
-  display:flex;align-items:center;justify-content:center;
-  background:none;border:none;cursor:pointer;width:44px;height:44px;color:var(--text-on-dark);
-}
+.hamburger{background:none;border:none;color:var(--text-on-dark);cursor:pointer;padding:var(--space-2);}
+.hamburger svg{display:block;width:24px;height:24px;}
 @media(min-width:1280px){.hamburger{display:none;}}
-.hamburger svg{width:28px;height:28px;}
 
 /* mobile drawer */
 .drawer{
-  position:fixed;inset:0;z-index:99;background:var(--surface-white);
-  transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  position:fixed;inset:0;z-index:99;background:var(--surface-dark);
   display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+  transform:translateX(100%);transition:transform .28s ease;
 }
 .drawer.open{transform:translateX(0);}
 .drawer a{
-  font-family:'Figtree',sans-serif;font-size:24px;color:var(--text-on-light);
-  text-decoration:none;padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-light);
+  color:var(--text-on-dark);text-decoration:none;font-size:24px;font-weight:600;
+  padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-dark);
 }
-.drawer a:hover{color:var(--border-strong);}
+.drawer a:hover{color:var(--bg-accent);}
 
 /* ---------- Hero ---------- */
 .hero{
@@ -182,6 +164,7 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
   .hero-break{display:inline;}
 }
 .hero h1 .accent{color:var(--bg-accent);}
+.hero-subtitle{max-width:48ch;color:#fff;margin-bottom:var(--space-6);font-size:clamp(18px,2vw,24px);line-height:1.4;font-weight:500;}
 .hero-sub{max-width:64ch;color:#A8A8A8;margin-bottom:var(--space-10);font-size:16px;line-height:1.6;}
 .hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);}
 
@@ -244,12 +227,14 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 /* ---------- Position ---------- */
 .position-nots{display:grid;grid-template-columns:1fr;gap:var(--space-6);margin-top:var(--space-12);}
 @media(min-width:768px){.position-nots{grid-template-columns:repeat(3,1fr);}}
-.not-card{border:1px solid var(--border-on-dark);padding:var(--space-8);}
-.not-card .x{font-family:'League Gothic',Impact,sans-serif;font-size:40px;color:var(--border-on-dark);line-height:1;}
-.not-card.is{border-color:var(--bg-accent);}
-.not-card.is .x{color:var(--bg-accent);}
+.not-card{border:1px solid var(--border-on-light);padding:var(--space-8);}
+.not-card .x{font-family:'League Gothic',Impact,sans-serif;font-size:40px;color:var(--border-on-light);line-height:1;}
+.not-card.is{border-color:var(--bg-accent);background:var(--bg-accent);}
+.not-card.is .x{color:var(--text-on-light);}
+.not-card.is h4{color:var(--text-on-light);}
+.not-card.is p{color:var(--text-on-light);}
 .not-card h4{margin:var(--space-4) 0 var(--space-3);}
-.not-card p{color:var(--text-on-dark-muted);font-size:15px;}
+.not-card p{color:var(--text-on-light-muted);font-size:15px;}
 
 /* ---------- GEARS ---------- */
 .gears-h-break{display:none;}
@@ -285,12 +270,12 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .quote-section{padding-top:140px;padding-bottom:140px;}
 .quote{
   font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.1;
-  font-size:clamp(36px,6vw,80px);color:var(--text-on-light);
+  font-size:clamp(36px,6vw,80px);color:var(--text-on-dark);
 }
 .quote .b{display:block;}
 @media(min-width:768px){.quote{font-size:clamp(48px,6vw,80px);}}
 @media(min-width:1280px){.quote{font-size:clamp(64px,6vw,80px);}}
-.quote-attr{margin-top:var(--space-8);font-size:14px;text-transform:uppercase;letter-spacing:1.96px;color:var(--text-on-light);}
+.quote-attr{margin-top:var(--space-8);font-size:14px;text-transform:uppercase;letter-spacing:1.96px;color:var(--text-on-dark-muted);}
 
 /* ---------- Proof / cases ---------- */
 .cases{display:grid;grid-template-columns:1fr;gap:var(--space-1);margin-top:var(--space-16);}
@@ -331,6 +316,23 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 @media(min-width:1024px){.human-h-break{display:inline;}}
 #human .section-head{max-width:none;}
 #human .lead{font-size:16px;}
+/* ---------- The Path ---------- */
+#path .section-head{max-width:none;}
+#path .path-lead{max-width:60ch;margin-bottom:var(--space-16);}
+.path-timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+.path-timeline::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:2px;background:var(--border-on-dark);}
+@media(min-width:768px){.path-timeline::before{left:22px;}}
+.path-step{display:grid;grid-template-columns:44px 1fr;gap:var(--space-8);padding-bottom:var(--space-16);position:relative;}
+@media(min-width:768px){.path-step{grid-template-columns:48px 1fr;gap:var(--space-10);}}
+.path-step:last-child{padding-bottom:0;}
+.path-step-num{width:36px;height:36px;border:2px solid var(--border-on-dark);display:flex;align-items:center;justify-content:center;font-family:'League Gothic',Impact,sans-serif;font-size:16px;color:var(--text-on-dark-muted);background:var(--bg-dark);flex-shrink:0;position:relative;z-index:1;}
+@media(min-width:768px){.path-step-num{width:44px;height:44px;font-size:18px;}}
+.path-step-body{padding-top:6px;}
+.path-step-body h3{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(22px,3vw,30px);line-height:1.1;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.path-step-body p{color:var(--text-on-dark-muted);font-size:16px;line-height:1.65;max-width:56ch;}
+.path-closing{margin-top:var(--space-16);max-width:56ch;color:var(--text-on-dark-muted);font-size:16px;line-height:1.65;}
+.path-closing strong{color:var(--text-on-dark);}
+
 /* ---------- Human role ---------- */
 .human-grid{display:grid;grid-template-columns:1fr;gap:var(--space-12);margin-top:var(--space-12);}
 @media(min-width:1024px){.human-grid{grid-template-columns:1fr 1fr;gap:var(--space-20);}}
@@ -346,14 +348,17 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 
 /* ---------- Footer ---------- */
 footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
-.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-12);}
-@media(min-width:768px){.footer-inner{flex-direction:row;justify-content:space-between;align-items:flex-start;}}
-.footer-logo svg{height:40px;width:auto;}
-.footer-tag{color:var(--text-on-dark-muted);font-size:14px;margin-top:var(--space-5);max-width:34ch;}
-.footer-links{display:flex;flex-direction:column;gap:var(--space-3);}
-.footer-links a{color:var(--text-on-dark-muted);text-decoration:none;font-size:15px;transition:color .18s;}
-.footer-links a:hover{color:var(--text-on-dark);}
-.footer-bottom{max-width:var(--container-max);margin:var(--space-16) auto 0;padding-top:var(--space-8);border-top:1px solid var(--border-on-dark);display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between;color:var(--text-on-dark-muted);font-size:12px;}
+.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;gap:var(--space-10);}
+.footer-brand{flex:0 0 160px;}
+.footer-logo svg{height:36px;width:auto;}
+.footer-socials{display:flex;gap:8px;margin-top:var(--space-5);}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.1);color:var(--text-on-dark-muted);text-decoration:none;transition:background .18s,color .18s;}
+.footer-social-btn:hover{background:var(--bg-accent);color:var(--bg-dark);}
+.footer-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px;}
+.footer-col strong{color:var(--text-on-dark);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:var(--space-2);display:block;}
+.footer-col a,.footer-col span{color:var(--text-on-dark-muted);font-size:13px;line-height:1.6;text-decoration:none;}
+.footer-col a:hover{color:var(--text-on-dark);}
+.footer-bottom{max-width:var(--container-max);margin:var(--space-12) auto 0;padding-top:var(--space-6);border-top:1px solid var(--border-on-dark);text-align:center;color:var(--text-on-dark-muted);font-size:12px;}
 
 /* ---------- reveal animation ---------- */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
@@ -410,12 +415,11 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       </svg>
     </a>
     <nav class="nav-desktop" aria-label="Primary">
-      <a href="#shift" class="nav-link">The Shift</a>
-      <a href="#problem" class="nav-link">The Problem</a>
-      <a href="#gears" class="nav-link">GEARS</a>
       <a href="#proof" class="nav-link">Proof</a>
+      <a href="/foundry/" class="nav-link">Foundry</a>
+      <a href="/about" class="nav-link">About</a>
     </nav>
-    <a href="https://cal.com/ian-morrison-ri6tnc/gkim-discovery-session" class="btn btn-primary btn-sm header-cta" target="_blank" rel="noopener noreferrer">Book a call
+    <a href="/discovery/" class="btn btn-primary btn-sm header-cta">Book a call
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
@@ -426,12 +430,9 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 
 <!-- mobile drawer -->
 <div class="drawer" id="drawer">
-  <a href="#shift">The Shift</a>
-  <a href="#problem">The Problem</a>
-  <a href="#position">GKIM</a>
-  <a href="#gears">GEARS</a>
   <a href="#proof">Proof</a>
-  <a href="#human">The Human Role</a>
+  <a href="/foundry/">Foundry</a>
+  <a href="/about">About</a>
 </div>
 
 <main id="top">
@@ -440,10 +441,11 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <section class="section bg-dark grid-overlay hero">
   <div class="container">
     <span class="eyebrow reveal">The next generation of companies</span>
-    <h1 class="h-large reveal" style="transition-delay:.05s">Your business should<br class="hero-break"> <span class="accent">run, learn, and improve</span> on its own.</h1>
+    <h1 class="h-large reveal" style="transition-delay:.05s">Partnering for success in the<br class="hero-break"> <span class="accent">AI-native future</span></h1>
+    <p class="hero-subtitle reveal" style="transition-delay:.075s">Your business should run, learn, and improve on its own.</p>
     <p class="hero-sub reveal" style="transition-delay:.1s">The next generation of companies won't be managed as disconnected workflows. They'll operate as intelligently designed systems that are measurable, adaptive, and continuously improving. GKIM designs that business with you.</p>
     <div class="hero-actions reveal" style="transition-delay:.15s">
-      <a href="https://cal.com/ian-morrison-ri6tnc/gkim-discovery-session" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Book a call
+      <a href="/discovery/" class="btn btn-primary">Book a call
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="#shift" class="btn btn-sec-dark">Read the thesis</a>
@@ -520,11 +522,56 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   </div>
 </section>
 
-<!-- ============ THE GKIM POSITION (dark) ============ -->
-<section class="section bg-dark grid-overlay" id="position">
+<!-- ============ THE PATH (dark) ============ -->
+<section class="section bg-dark grid-overlay" id="path">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">03 / The GKIM View</span>
+      <span class="eyebrow">03 / The Path</span>
+      <h2 class="h2">Three steps to AI-native.</h2>
+    </div>
+    <p class="lead path-lead reveal" style="transition-delay:.05s">The companies that win the next decade are being designed right now.</p>
+
+    <div class="path-timeline">
+
+      <div class="path-step reveal" style="transition-delay:.08s">
+        <div class="path-step-num">01</div>
+        <div class="path-step-body">
+          <h3>Build the Knowledge-graph</h3>
+          <p>To know more than your rival, we build a knowledge-graph of your market at a depth no conventional research can match — the white space, the dynamics, the things your competitors can't see.<br><br>This is your intelligence advantage. Built before you commit a single decision.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.12s">
+        <div class="path-step-num">02</div>
+        <div class="path-step-body">
+          <h3>Design the Business Blueprint</h3>
+          <p>GEARS™ is GKIM's proprietary business design framework. It takes the intelligence you've gathered and turns it into a precise, engineered blueprint. Every workflow, every handoff, every stakeholder relationship, designed before anything is built.</p>
+        </div>
+      </div>
+
+      <div class="path-step reveal" style="transition-delay:.16s">
+        <div class="path-step-num">03</div>
+        <div class="path-step-body">
+          <h3>Put Agents to Work</h3>
+          <p>When the blueprint is clear, execution is fast. In the age of AI, build is as fast as buy. GKIM deploys bespoke AI agents across every stakeholder relationship: customers, employees, partners, investors, combining best-in-class AI applications with agents built specifically for your business. In days, not months.<br><br><strong>One team. Every relationship. Always on.</strong></p>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="path-closing reveal" style="transition-delay:.2s">Whether you're reinventing a business that's outgrown its model, or designing one built to win from day one, the three steps are the same.<br><br><strong>The question is whether you take them before your competitors do.</strong></p>
+
+    <div class="reveal" style="transition-delay:.24s;margin-top:var(--space-10);">
+      <a href="#discovery" class="btn btn-primary">Talk to GKIM</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE GKIM POSITION (light) ============ -->
+<section class="section bg-light grid-overlay" id="position">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">04 / The GKIM View</span>
       <h2 class="h2">A long-term design<br class="position-h-break"> and operating partner.</h2>
     </div>
     <p class="lead position-lead reveal" style="transition-delay:.05s">GKIM believes the next generation of successful companies will be intentionally designed as AI-native business systems. This isn't only a technology challenge. It's a business architecture challenge.</p>
@@ -549,37 +596,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   </div>
 </section>
 
-<!-- ============ GEARS (gray, interactive) ============ -->
-<section class="section bg-light grid-overlay" id="gears">
-  <div class="container">
-    <div class="gears-head reveal">
-      <span class="eyebrow">04 / The GEARS Approach</span>
-      <h2 class="h2">Six connected stages that turn<br class="gears-h-break"> an idea into a living business system.</h2>
-    </div>
-
-    <div class="gears-tabs reveal" role="tablist" aria-label="GEARS stages">
-      <button class="gear-tab" role="tab" aria-selected="true"  data-i="0"><span class="num">01</span><span class="name">Define</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="1"><span class="num">02</span><span class="name">Design</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="2"><span class="num">03</span><span class="name">Simulate</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="3"><span class="num">04</span><span class="name">Build</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="4"><span class="num">05</span><span class="name">Operate</span></button>
-      <button class="gear-tab" role="tab" aria-selected="false" data-i="5"><span class="num">06</span><span class="name">Evolve</span></button>
-    </div>
-
-    <div class="gear-panel reveal" role="tabpanel">
-      <div class="gp-num" id="gpNum">01</div>
-      <div>
-        <div class="gp-name" id="gpName">Define</div>
-        <p class="gp-desc" id="gpDesc">Discover the true economic engine of the business: how value is actually created, before any system is designed or built.</p>
-      </div>
-    </div>
-
-    <div class="gears-cycle-note reveal"><span class="dot"></span> Define → Design → Simulate → Build → Operate → Evolve runs as a continuous cycle, not a one-time project.</div>
-  </div>
-</section>
-
 <!-- ============ QUOTE (yellow) ============ -->
-<section class="section bg-accent grid-overlay quote-section">
+<section class="section bg-dark grid-overlay quote-section">
   <div class="container">
     <blockquote class="quote reveal"><span class="b">The result is not software.</span><span class="b">It is a living business system.</span></blockquote>
     <div class="quote-attr reveal" style="transition-delay:.1s">The GEARS Philosophy</div>
@@ -649,26 +667,6 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           </div>
         </div>
       </div>
-      <div class="case reveal" style="transition-delay:.12s">
-        <div class="case-img-wrap">
-          
-          <div class="case-img">
-            <img src="../img/marketing-systems.jpg" alt="Marketing Systems">
-          </div>
-          
-        </div>
-        <div class="case-body">
-          <div>
-            <div class="case-name">Marketing Systems</div>
-            <div class="case-tag">Walking the talk</div>
-            
-          </div>
-          <div>
-            <div class="case-metric">Internal <span class="unit">methodology</span></div>
-            <p>GKIM uses its own methodology internally to coordinate marketing, outreach, positioning, and campaign execution, applying AI-native operational design to its own business before recommending it to yours.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -701,7 +699,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
     <span class="eyebrow reveal" style="display:block;margin-bottom:var(--space-6)">Design the business before you build the software</span>
     <h2 class="h-large reveal" style="transition-delay:.05s">Let's build your AI-native business.</h2>
     <div class="cta-actions reveal" style="transition-delay:.1s">
-      <a href="https://cal.com/ian-morrison-ri6tnc/gkim-discovery-session" class="btn btn-sec-light" target="_blank" rel="noopener noreferrer">Book a discovery call
+      <a href="/discovery/" class="btn btn-sec-light">Book a discovery call
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -713,7 +711,8 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="footer-inner">
-    <div>
+    <!-- Brand -->
+    <div class="footer-brand">
       <div class="footer-logo">
         <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM" role="img">
           <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
@@ -722,19 +721,44 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
         </svg>
       </div>
-      <p class="footer-tag">Designing AI-native business systems through GEARS. Define → Design → Simulate → Build → Operate → Evolve.</p>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/gkimdigital/posts/?feedView=all" class="footer-social-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.facebook.com/gkimdigital" class="footer-social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
     </div>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="#shift">The Shift</a>
-      <a href="#problem">The Problem</a>
-      <a href="#gears">GEARS</a>
-      <a href="#proof">Commercial Proof</a>
-      <a href="https://cal.com/ian-morrison-ri6tnc/gkim-discovery-session" target="_blank" rel="noopener noreferrer">Book a call</a>
-    </nav>
+    <!-- Explore -->
+    <div class="footer-col">
+      <strong>Explore</strong>
+      <a href="#proof">Proof</a>
+      <a href="/foundry/">Foundry</a>
+      <a href="/about">About</a>
+      <a href="/discovery/">Book a call</a>
+    </div>
+    <!-- Ian Morrison -->
+    <div class="footer-col">
+      <strong>Ian Morrison</strong>
+      <span>Mobile &amp; WhatsApp:<br><a href="tel:+447385542874">(+44) 738 5542874</a><br><a href="tel:+84907280831">(+84) 90 728 0831</a></span>
+      <a href="mailto:hello@gkim.digital">hello@gkim.digital</a>
+    </div>
+    <!-- UK Office -->
+    <div class="footer-col">
+      <strong>UK Office</strong>
+      <span>17 South Rd, Impington,<br>Cambridge CB24 9PB</span>
+      <a href="tel:+447385542874">(+44) 738 5542874</a>
+    </div>
+    <!-- Vietnam Office -->
+    <div class="footer-col">
+      <strong>Vietnam Office</strong>
+      <span>C00.07 Sarina Tower C1, Sala Residence<br>62 Hoang The Thien Street,<br>Thu Duc, Ho Chi Minh city</span>
+      <a href="tel:+84283511886">(+84) 28 3511 8866</a>
+    </div>
   </div>
   <div class="footer-bottom">
-    <span>© <span id="year"></span> GKIM. All rights reserved.</span>
-    <span>Design the business before you build the software.</span>
+    <span>© Copyright <span id="year"></span> GKIM Digital Ltd.</span>
   </div>
 </footer>
 
