@@ -116,8 +116,30 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
   padding:0 var(--space-6);
 }
 @media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
+.logo{display:flex;align-items:center;}
 .logo svg{height:28px;width:auto;}
-.header-cta{display:inline-flex;}
+.nav-desktop{display:none;align-items:center;gap:var(--space-5);}
+@media(min-width:1280px){.nav-desktop{display:flex;}}
+.nav-link{color:var(--text-on-dark);text-decoration:none;font-size:15px;font-weight:500;transition:color .15s;}
+.nav-link:hover{color:var(--bg-accent);}
+.header-cta{display:none;}
+@media(min-width:1280px){.header-cta{display:inline-flex;}}
+.hamburger{background:none;border:none;color:var(--text-on-dark);cursor:pointer;padding:var(--space-2);}
+.hamburger svg{display:block;width:24px;height:24px;}
+@media(min-width:1280px){.hamburger{display:none;}}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:99;background:var(--surface-dark);
+  display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+  transform:translateX(100%);transition:transform .28s ease;
+}
+.drawer.open{transform:translateX(0);}
+.drawer a{
+  color:var(--text-on-dark);text-decoration:none;font-size:24px;font-weight:600;
+  padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-dark);
+}
+.drawer a:hover{color:var(--bg-accent);}
 
 /* ---------- Hero ---------- */
 .hero{
@@ -284,7 +306,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 <!-- ============ HEADER ============ -->
 <header id="header">
   <div class="header-inner">
-    <div class="logo" aria-label="GKIM">
+    <a href="/en" class="logo" aria-label="GKIM home">
       <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
         <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
@@ -293,12 +315,28 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
         <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
       </svg>
-    </div>
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/en#proof" class="nav-link">Proof</a>
+      <a href="/foundry/" class="nav-link">Foundry</a>
+      <a href="/about" class="nav-link">About</a>
+    </nav>
     <a href="#signup" class="btn btn-primary btn-sm header-cta">Join the Foundry
       <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
   </div>
 </header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <a href="/en#proof">Proof</a>
+  <a href="/foundry/">Foundry</a>
+  <a href="/about">About</a>
+  <a href="#signup">Join the Foundry</a>
+</div>
 
 <main>
 
@@ -743,6 +781,19 @@ const header = document.getElementById('header');
 const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
 onScroll();
 window.addEventListener('scroll', onScroll, {passive:true});
+
+const burger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+function setDrawer(open){
+  drawer.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.innerHTML = open
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+}
+burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDrawer(false)));
 
 const revealEls = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver(entries => {
