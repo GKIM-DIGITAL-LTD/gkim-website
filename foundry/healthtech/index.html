@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthTech Foundry | GKIM GEARS™</title>
+<meta name="description" content="GKIM's HealthTech Foundry turns healthcare science, IP, and capability into commercial ventures, built on the operating knowledge behind a $1B genetics healthcare business.">
+<link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0A0A09;
+  --bg-light:#F2F2F2;
+  --bg-accent:#FFDD00;
+  --surface-white:#FFFFFF;
+  --surface-dark:#202020;
+  --surface-header-scrolled:#202020eb;
+  --text-on-dark:#FFFFFF;
+  --text-on-dark-muted:#D6D6D6;
+  --text-on-light:#202020;
+  --text-on-light-muted:#5C5C5C;
+  --border-on-dark:#5C5C5C;
+  --border-on-light:#D6D6D6;
+  --border-strong:#333533;
+
+  --container-max:1120px;
+  --header-h-desktop:116px;
+  --header-h-mobile:84px;
+  --grid-cell:72px;
+
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+  --space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+  --space-18:72px;--space-20:80px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:'Figtree',system-ui,-apple-system,sans-serif;
+  background:var(--bg-dark);
+  color:var(--text-on-dark);
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- Typography ---------- */
+.h-large{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.05;font-size:clamp(48px,9vw,80px);}
+.h2{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.05;font-size:clamp(38px,6vw,64px);}
+.h3{font-family:'League Gothic',Impact,sans-serif;font-weight:400;line-height:1.1;font-size:clamp(24px,3.4vw,34px);}
+.eyebrow{
+  font-family:'League Gothic',Impact,sans-serif;font-weight:400;
+  font-size:12px;line-height:1;letter-spacing:1.96px;text-transform:uppercase;
+  display:inline-block;margin-bottom:var(--space-5);
+}
+.accent{color:var(--bg-accent);}
+
+/* ---------- Layout ---------- */
+.section{position:relative;padding:var(--space-20) var(--space-6);overflow:hidden;}
+@media(min-width:768px){.section{padding:120px var(--space-12);}}
+.container{max-width:var(--container-max);margin:0 auto;position:relative;z-index:2;}
+
+.bg-dark{background:var(--bg-dark);color:var(--text-on-dark);}
+.bg-light{background:var(--bg-light);color:var(--text-on-light);}
+.bg-accent{background:var(--bg-accent);color:var(--text-on-light);}
+
+.grid-overlay::before{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.10) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.10) 1px, transparent 1px);
+  background-size:var(--grid-cell) var(--grid-cell);
+}
+.bg-light.grid-overlay::before{
+  background-image:
+    linear-gradient(to right, rgb(0 0 0 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(0 0 0 / 0.06) 1px, transparent 1px);
+  background-size:var(--grid-cell) var(--grid-cell);
+}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none;}}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-family:'Figtree',sans-serif;font-weight:600;font-size:15px;
+  padding:14px var(--space-6);border-radius:0;border:none;cursor:pointer;
+  text-decoration:none;transition:opacity .15s,background .15s;white-space:nowrap;
+}
+.btn-primary{background:var(--bg-accent);color:var(--text-on-light);}
+.btn-primary:hover{opacity:.88;}
+.btn-dark{background:transparent;color:var(--text-on-light);border:1.5px solid var(--text-on-light);}
+.btn-dark:hover{background:rgba(0,0,0,.08);}
+.btn-sec-dark{background:transparent;color:var(--text-on-dark);border:1.5px solid var(--border-on-dark);}
+.btn-sec-dark:hover{border-color:var(--text-on-dark);}
+.btn-sm{padding:10px var(--space-5);font-size:14px;}
+.arrow{width:16px;height:16px;flex-shrink:0;}
+:focus-visible{outline:2px solid var(--bg-accent);outline-offset:2px;}
+
+/* ---------- Header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--header-h-mobile);
+  transition:background .25s,backdrop-filter .25s;
+}
+@media(min-width:1280px){header{height:var(--header-h-desktop);}}
+header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.header-inner{
+  max-width:var(--container-max);margin:0 auto;
+  height:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--space-6);
+}
+@media(min-width:1280px){.header-inner{padding:0 var(--space-20);}}
+.logo{display:flex;align-items:center;}
+.logo svg{height:28px;width:auto;}
+.nav-desktop{display:none;align-items:center;gap:var(--space-5);}
+@media(min-width:1280px){.nav-desktop{display:flex;}}
+.nav-link{color:var(--text-on-dark);text-decoration:none;font-size:15px;font-weight:500;transition:color .15s;}
+.nav-link:hover{color:var(--bg-accent);}
+.header-cta{display:none;}
+@media(min-width:1280px){.header-cta{display:inline-flex;}}
+.hamburger{background:none;border:none;color:var(--text-on-dark);cursor:pointer;padding:var(--space-2);}
+.hamburger svg{display:block;width:24px;height:24px;}
+@media(min-width:1280px){.hamburger{display:none;}}
+
+/* mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:99;background:var(--surface-dark);
+  display:flex;flex-direction:column;padding:var(--header-h-mobile) var(--space-6) var(--space-6);
+  transform:translateX(100%);transition:transform .28s ease;
+}
+.drawer.open{transform:translateX(0);}
+.drawer a{
+  color:var(--text-on-dark);text-decoration:none;font-size:24px;font-weight:600;
+  padding:var(--space-4) 0;border-bottom:1px solid var(--border-on-dark);
+}
+.drawer a:hover{color:var(--bg-accent);}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:calc(var(--header-h-mobile) + var(--space-16));
+  padding-bottom:var(--space-20);
+  text-align:center;
+}
+.hero .container{display:flex;flex-direction:column;align-items:center;}
+@media(min-width:1280px){.hero{padding-top:calc(var(--header-h-desktop) + var(--space-16));}}
+.hero-bg-video{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;object-fit:cover;object-position:center;
+}
+.hero-bg-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg, rgba(10,10,9,.72) 0%, rgba(10,10,9,.78) 45%, rgba(10,10,9,.92) 100%);
+}
+.hero-lede{max-width:960px;font-size:18px;line-height:1.65;color:var(--text-on-dark-muted);margin:var(--space-6) auto 0;}
+.hero-ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-4);margin-top:var(--space-10);}
+.hero-note{
+  max-width:640px;margin:var(--space-12) auto 0;font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:18px;line-height:1.5;color:var(--text-on-dark-muted);
+}
+
+/* ---------- Section heads ---------- */
+.section-lede{max-width:680px;font-size:17px;line-height:1.7;margin-top:var(--space-6);}
+.section-lede + .section-lede{margin-top:var(--space-4);}
+.section-cta{margin-top:var(--space-8);}
+
+/* ---------- Machine rail (Inside this Foundry) ---------- */
+.machine{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:var(--space-12);}
+.machine-endpoint{flex:0 0 auto;align-self:center;text-align:center;padding:0 10px;min-width:78px;}
+.machine-dot{display:block;width:11px;height:11px;background:var(--bg-accent);margin:0 auto 8px;box-shadow:0 0 0 5px rgba(255,221,0,.14);}
+.machine-endpoint span:last-child{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-on-dark-muted);font-weight:600;}
+.machine-connector{flex:0 0 34px;align-self:center;display:flex;align-items:center;justify-content:center;color:var(--border-on-dark);}
+.machine-connector svg{width:34px;height:16px;}
+
+.machine-card{
+  flex:1 1 0;min-width:230px;background:var(--surface-dark);border:1px solid var(--border-on-dark);
+  padding:26px 24px 22px;display:flex;flex-direction:column;gap:14px;position:relative;
+}
+.machine-card-top{display:flex;align-items:center;justify-content:space-between;}
+.machine-icon{width:34px;height:34px;color:var(--text-on-dark);opacity:.9;}
+.machine-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.machine-card.featured .machine-icon{color:var(--bg-accent);opacity:1;}
+.machine-title{margin:0;color:var(--text-on-dark);font-size:20px;font-weight:700;letter-spacing:.01em;}
+.machine-oneline{margin:0;font-size:14.5px;line-height:1.5;color:var(--text-on-dark-muted);}
+
+.machine-xform{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:2px;}
+.machine-pill{font-size:11.5px;font-weight:600;color:var(--text-on-dark-muted);background:var(--bg-dark);border:1px solid var(--border-on-dark);padding:5px 11px;white-space:nowrap;}
+.machine-pill.out{color:var(--text-on-light);background:var(--bg-accent);border-color:var(--bg-accent);}
+.machine-arrow{color:var(--bg-accent);font-size:15px;line-height:1;}
+
+.machine-details{border-top:1px solid var(--border-on-dark);padding-top:12px;margin-top:2px;}
+.machine-details summary{list-style:none;cursor:pointer;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-on-dark-muted);display:flex;align-items:center;gap:7px;text-transform:uppercase;}
+.machine-details summary::-webkit-details-marker{display:none;}
+.machine-details summary .plus{color:var(--bg-accent);font-size:15px;transition:transform .2s;}
+.machine-details[open] summary .plus{transform:rotate(45deg);}
+.machine-details p{margin:11px 0 0;font-size:13.5px;line-height:1.6;color:var(--text-on-dark-muted);}
+
+.machine-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px;}
+.machine-tag{font-size:12px;color:var(--text-on-dark-muted);background:rgba(255,255,255,.06);padding:6px 11px;}
+
+@media(max-width:760px){
+  .machine-connector{display:none;}
+  .machine-endpoint{width:100%;display:flex;gap:10px;align-items:center;justify-content:flex-start;padding:6px 0;}
+  .machine-dot{margin:0;}
+  .machine-card{min-width:100%;}
+}
+
+/* ---------- HOIOS capability grid ---------- */
+.initiative-list{margin-top:var(--space-12);display:flex;flex-direction:column;}
+.initiative-row{
+  display:grid;grid-template-columns:1fr;gap:var(--space-6);align-items:center;
+  padding:var(--space-10) 0;border-top:1px solid var(--border-on-dark);
+}
+.initiative-row:last-child{border-bottom:1px solid var(--border-on-dark);}
+@media(min-width:860px){
+  .initiative-row{grid-template-columns:1fr 1.2fr;gap:var(--space-10);}
+  .initiative-row.reverse .initiative-visual{order:-1;}
+}
+.initiative-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bg-accent);margin-bottom:var(--space-3);}
+.initiative-body-col{max-width:520px;}
+.initiative-headline{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(24px,3.2vw,32px);line-height:1.15;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.initiative-text{font-size:15.5px;line-height:1.7;color:var(--text-on-dark-muted);}
+.initiative-visual{
+  background:var(--surface-dark);border:1px dashed var(--border-on-dark);
+  min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);
+  padding:var(--space-8);overflow:hidden;color:var(--text-on-dark-muted);
+}
+@media(min-width:860px){.initiative-visual{min-height:260px;}}
+.initiative-visual svg{width:36px;height:36px;opacity:.5;}
+.initiative-visual span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+
+/* ---------- Proof ---------- */
+.proof-card{background:var(--surface-dark);border:1px solid var(--border-on-dark);padding:var(--space-8);margin-top:var(--space-10);}
+.proof-title{font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(24px,3.4vw,32px);line-height:1.15;color:var(--text-on-dark);margin-bottom:var(--space-4);}
+.proof-body{font-size:15.5px;line-height:1.7;color:var(--text-on-dark-muted);margin-bottom:var(--space-5);}
+.proof-link{font-size:14px;font-weight:600;color:var(--bg-accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.proof-link:hover{opacity:.85;}
+.proof-link .arrow{width:14px;height:14px;}
+
+/* ---------- What we build together ---------- */
+.wbt-grid{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border-on-light);margin-top:var(--space-12);}
+@media(min-width:700px){.wbt-grid{grid-template-columns:repeat(2,1fr);}}
+.wbt-card{background:var(--surface-white);padding:var(--space-8);}
+.wbt-num{font-family:'League Gothic',Impact,sans-serif;font-size:28px;line-height:1;color:var(--text-on-light-muted);margin-bottom:var(--space-3);}
+.wbt-title{font-size:18px;font-weight:700;color:var(--text-on-light);margin-bottom:var(--space-3);}
+.wbt-body{font-size:14.5px;line-height:1.65;color:var(--text-on-light-muted);}
+
+/* ---------- Join / Sign-up ---------- */
+.join-copy{max-width:680px;margin-top:var(--space-6);}
+.join-copy p{font-size:17px;line-height:1.7;color:var(--text-on-dark-muted);}
+.signup-form{display:grid;grid-template-columns:1fr;gap:var(--space-5);max-width:680px;margin-top:var(--space-10);}
+@media(min-width:700px){.signup-form{grid-template-columns:1fr 1fr;}}
+.field{display:flex;flex-direction:column;gap:var(--space-2);}
+.field-wide{grid-column:1/-1;}
+.field label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-on-dark-muted);}
+.field input,.field textarea{
+  background:var(--surface-dark);border:1px solid var(--border-on-dark);color:var(--text-on-dark);
+  padding:14px var(--space-4);font-family:'Figtree',sans-serif;font-size:15px;border-radius:0;
+  transition:border-color .15s;
+}
+.field textarea{resize:vertical;min-height:100px;}
+.field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.35);}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--bg-accent);}
+.field-submit{grid-column:1/-1;margin-top:var(--space-2);}
+.signup-form .btn{width:100%;justify-content:center;}
+@media(min-width:520px){.signup-form .btn{width:auto;}}
+.form-note{font-size:13px;color:var(--text-on-dark-muted);margin-top:var(--space-4);}
+.form-error{display:none;font-size:14px;color:#FF8A80;margin-top:var(--space-4);}
+.cal-step{max-width:900px;margin-top:var(--space-10);}
+.cal-step p{font-size:15.5px;color:var(--text-on-dark-muted);margin-bottom:var(--space-6);}
+
+/* ---------- Footer ---------- */
+footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-16) var(--space-6) var(--space-12);}
+.footer-inner{max-width:var(--container-max);margin:0 auto;display:flex;flex-wrap:wrap;gap:var(--space-10);}
+.footer-brand{flex:0 0 160px;}
+.footer-logo svg{height:36px;width:auto;}
+.footer-socials{display:flex;gap:8px;margin-top:var(--space-5);}
+.footer-social-btn{display:flex;align-items:center;justify-content:center;width:34px;height:34px;background:rgba(255,255,255,.1);color:var(--text-on-dark-muted);text-decoration:none;transition:background .18s,color .18s;}
+.footer-social-btn:hover{background:var(--bg-accent);color:var(--bg-dark);}
+.footer-col{display:flex;flex-direction:column;gap:6px;flex:1;min-width:130px;}
+.footer-col strong{color:var(--text-on-dark);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:var(--space-2);display:block;}
+.footer-col a,.footer-col span{color:var(--text-on-dark-muted);font-size:13px;line-height:1.6;text-decoration:none;}
+.footer-col a:hover{color:var(--text-on-dark);}
+.footer-bottom{max-width:var(--container-max);margin:var(--space-12) auto 0;padding-top:var(--space-6);border-top:1px solid var(--border-on-dark);text-align:center;color:var(--text-on-dark-muted);font-size:12px;}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="header-inner">
+    <a href="/en" class="logo" aria-label="GKIM home">
+      <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+        <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+        <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+        <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        <path d="M210.203 21.4801V30.1258L217.327 30.2158C216.187 29.1351 215.617 27.6942 215.617 25.893C215.617 24.1819 216.187 22.7409 217.232 21.4801C218.277 20.2193 220.082 19.5889 222.456 19.5889H237.274C236.419 16.5269 233.475 14.2754 229.96 14.2754H217.707C213.623 14.2754 210.203 17.5175 210.203 21.4801Z" fill="#FFD400"/>
+        <path d="M220.841 25.5326C220.367 26.163 220.177 26.7934 220.177 27.4238C220.177 27.7841 220.272 28.2344 220.367 28.5046C220.461 28.8648 220.841 29.225 221.316 29.5853C221.886 29.9455 222.551 30.1256 223.501 30.1256H232.81C232.81 32.9174 230.435 35.0789 227.585 35.0789L210.583 34.9888C211.533 37.9607 214.382 40.1222 217.802 40.1222H230.055C234.234 40.1222 237.654 36.88 237.654 32.9174V24.4519H223.501C222.171 24.632 221.316 24.9022 220.841 25.5326Z" fill="#FFD400"/>
+      </svg>
+    </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/en#proof" class="nav-link">Proof</a>
+      <a href="/foundry/" class="nav-link">Foundries</a>
+      <a href="/about" class="nav-link">About</a>
+    </nav>
+    <a href="#signup" class="btn btn-primary btn-sm header-cta">Join the Founding Cohort
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <a href="/en#proof">Proof</a>
+  <a href="/foundry/">Foundries</a>
+  <a href="/about">About</a>
+  <a href="#signup">Join the Founding Cohort</a>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="section bg-dark hero">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="/foundry/healthtech/media/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="hero-bg-overlay"></div>
+  <div class="container">
+    <p class="eyebrow accent">HealthTech Foundry</p>
+    <h1 class="h-large reveal visible">From Scientific Possibility<br>to Commercial Venture</h1>
+    <p class="hero-lede">The HealthTech Foundry builds healthcare ventures from the science up: discovering what's possible, translating it into something clinically real, and assembling the right venture around it.</p>
+    <div class="hero-ctas">
+      <a href="#about" class="btn btn-primary">See How It Works
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#signup" class="btn btn-sec-dark">Join the Founding Cohort</a>
+    </div>
+    <p class="hero-note">Built on the operating knowledge behind a $1B genetics healthcare business.</p>
+  </div>
+</section>
+
+<!-- ============ THE OPPORTUNITY ============ -->
+<section class="section bg-light grid-overlay">
+  <div class="container">
+    <p class="eyebrow">The Opportunity</p>
+    <h2 class="h2 reveal">You can't spot what you can't see.<br>So we built the system that sees all of it.</h2>
+    <p class="section-lede">An opportunity in healthcare can be a new modality, an unmet pathway, a capability sitting unused, or an overlap between two markets nobody's connected. None of them show up from a single vantage point.</p>
+    <p class="section-lede">Spotting them means holding the whole industry in view at once.<br>In the AI age, that's finally within reach.</p>
+    <a href="#hoios" class="btn btn-dark section-cta">See what we're building
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============ ABOUT THIS FOUNDRY ============ -->
+<section class="section bg-dark grid-overlay" id="about">
+  <div class="container">
+    <p class="eyebrow accent">About this Foundry</p>
+    <h2 class="h2 reveal">The HealthTech Foundry</h2>
+    <p class="section-lede" style="color:var(--text-on-dark-muted);">The HealthTech Foundry is GKIM's engine for turning healthcare innovation into commercial ventures. You bring the science, the discovery, or the IP. We bring the operating knowledge, and we build the rest with you.</p>
+
+    <h3 class="h3" style="margin-top:var(--space-16);">Three Layers, One Machine. Discovery to Venture.</h3>
+
+    <div class="machine">
+      <div class="machine-endpoint"><span class="machine-dot"></span><span>Discovery</span></div>
+
+      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="machine-card reveal">
+        <div class="machine-card-top">
+          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 20V11M12 11l8-4.5M12 11L4 6.5"/></svg></span>
+        </div>
+        <h4 class="machine-title">Productisation</h4>
+        <p class="machine-oneline">Turn raw science into a product the market will adopt.</p>
+        <div class="machine-xform">
+          <span class="machine-pill">Science</span>
+          <span class="machine-arrow">→</span>
+          <span class="machine-pill out">Adoptable Product</span>
+        </div>
+        <details class="machine-details">
+          <summary><span class="plus">+</span> The hardest part</summary>
+          <p>The questions that kill most innovation live here: who's the patient, where it fits the pathway, who adopts, and who pays.</p>
+        </details>
+        <div class="machine-tags">
+          <span class="machine-tag">Patient journey</span>
+          <span class="machine-tag">Compliance</span>
+          <span class="machine-tag">Health economics</span>
+        </div>
+      </div>
+
+      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="machine-card featured reveal" id="hoios-card">
+        <div class="machine-card-top">
+          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M12 12a8 8 0 0 1 8-8"/><path d="M12 12a5 5 0 0 1 5-5"/><circle cx="12" cy="12" r="10"/></svg></span>
+        </div>
+        <h4 class="machine-title">Opportunity Intelligence · HOIOS</h4>
+        <p class="machine-oneline">See the whole market at once, and the opening in it.</p>
+        <div class="machine-xform">
+          <span class="machine-pill">Fragmented Views</span>
+          <span class="machine-arrow">→</span>
+          <span class="machine-pill out">Validated Opportunity</span>
+        </div>
+        <details class="machine-details">
+          <summary><span class="plus">+</span> The whole picture</summary>
+          <p>We're building HOIOS to hold every view together and surface where the real opportunity sits.</p>
+        </details>
+        <div class="machine-tags">
+          <span class="machine-tag">Opportunity mapping</span>
+          <span class="machine-tag">Market sizing</span>
+          <span class="machine-tag">Gap analysis</span>
+        </div>
+      </div>
+
+      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="machine-card reveal">
+        <div class="machine-card-top">
+          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><rect x="8" y="3" width="8" height="8" rx="1"/></svg></span>
+        </div>
+        <h4 class="machine-title">Venture Assembly</h4>
+        <p class="machine-oneline">Assemble the right venture around a validated opportunity.</p>
+        <div class="machine-xform">
+          <span class="machine-pill">Validated Opportunity</span>
+          <span class="machine-arrow">→</span>
+          <span class="machine-pill out">Live Venture</span>
+        </div>
+        <details class="machine-details">
+          <summary><span class="plus">+</span> The right structure</summary>
+          <p>Force an opportunity into the wrong vehicle and the value quietly leaks away. We assemble the venture around the opportunity, matching the structure to what it actually needs.</p>
+        </details>
+        <div class="machine-tags">
+          <span class="machine-tag">Networking</span>
+          <span class="machine-tag">Fundraising</span>
+          <span class="machine-tag">Partnership</span>
+        </div>
+      </div>
+
+      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+      <div class="machine-endpoint"><span class="machine-dot"></span><span>Venture</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOIOS ============ -->
+<section class="section bg-dark grid-overlay" id="hoios">
+  <div class="container">
+    <p class="eyebrow accent">HOIOS</p>
+    <h2 class="h2 reveal">Healthcare Opportunity Information Operating System</h2>
+    <p class="section-lede" style="color:var(--text-on-dark-muted);">Fragmentation is why good science gets backed badly, and why real opportunities get missed entirely. HOIOS is designed to close that by holding scientific possibility, clinical viability, reimbursement, capital, and competitive whitespace in one continuous view. Here's what it's being built to do:</p>
+
+    <div class="initiative-list">
+      <div class="initiative-row reveal">
+        <div class="initiative-body-col">
+          <p class="initiative-label">Opportunity discovery</p>
+          <h3 class="initiative-headline">It finds the opening.</h3>
+          <p class="initiative-text">Cross-references where the field is heading against what can actually be built and delivered — surfacing the opportunities worth entering, not just the ideas that sound exciting.</p>
+        </div>
+        <div class="initiative-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
+          <span>Visual coming soon</span>
+        </div>
+      </div>
+      <div class="initiative-row reverse reveal">
+        <div class="initiative-body-col">
+          <p class="initiative-label">Market sizing</p>
+          <h3 class="initiative-headline">It sizes it before you spend.</h3>
+          <p class="initiative-text">Puts a real shape on each opportunity — market size, competitive density, realistic addressable share — so the decision to commit is made on evidence, before a single hour or pound goes in.</p>
+        </div>
+        <div class="initiative-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
+          <span>Visual coming soon</span>
+        </div>
+      </div>
+      <div class="initiative-row reveal">
+        <div class="initiative-body-col">
+          <p class="initiative-label">Gap analysis</p>
+          <h3 class="initiative-headline">It flags exactly what's missing.</h3>
+          <p class="initiative-text">Names the gap that stands between the opportunity and entering it: a capability to build, a regulatory pathway to clear, an evidence base to generate, or a partner that has to be in place first.</p>
+        </div>
+        <div class="initiative-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
+          <span>Visual coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="system-join" style="display:flex;justify-content:center;margin-top:var(--space-12);">
+      <a href="#signup" class="btn btn-primary">Join the Founding Cohort
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE BUILD TOGETHER ============ -->
+<section class="section bg-light grid-overlay">
+  <div class="container">
+    <h2 class="h2 reveal">What We Will Do Together</h2>
+
+    <div class="wbt-grid">
+      <div class="wbt-card reveal">
+        <p class="wbt-num">01</p>
+        <p class="wbt-title">Find Where the Future is Worth Building</p>
+        <p class="wbt-body">With HOIOS, we look at the whole industry alongside you and surface the opening genuinely worth entering, sized and understood before you commit a single step.</p>
+      </div>
+      <div class="wbt-card reveal">
+        <p class="wbt-num">02</p>
+        <p class="wbt-title">Build the Venture the Opportunity Deserves</p>
+        <p class="wbt-body">Programme, JV, licence, spin-out, or partnership. We shape the right vehicle around what you have, so the opportunity becomes the company it was capable of being.</p>
+      </div>
+      <div class="wbt-card reveal">
+        <p class="wbt-num">03</p>
+        <p class="wbt-title">Move while The Window is Still Open</p>
+        <p class="wbt-body">Years of scattered specialist work become one continuous, compounding loop. So your idea becomes a venture in time to matter.</p>
+      </div>
+      <div class="wbt-card reveal">
+        <p class="wbt-num">04</p>
+        <p class="wbt-title">In It With You, The Whole Way</p>
+        <p class="wbt-body">We take a stake in what we build together. We only win when the venture does.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROOF ============ -->
+<section class="section bg-dark grid-overlay" id="proof">
+  <div class="container">
+    <p class="eyebrow accent">Proof</p>
+    <h2 class="h2 reveal">A $1B genetics healthcare business, built and run on this system.</h2>
+    <div class="proof-card reveal">
+      <p class="proof-title">dnainsights.ai</p>
+      <p class="proof-body">The first full-service genetic agency — where AI, science, medical, marketing, and operations move as one flow, carrying discovery all the way to a commercialised, scaled venture. It's the proof that the operating knowledge behind this Foundry is real, transferable, and repeatable. The next one is what we're building now.</p>
+      <a href="http://dnainsights.ai" class="proof-link" target="_blank" rel="noopener noreferrer">dnainsights.ai
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JOIN THIS FOUNDRY / SIGN UP ============ -->
+<section class="section bg-dark grid-overlay" id="signup">
+  <div class="container">
+    <p class="eyebrow accent">Join this Foundry</p>
+    <h2 class="h2 reveal">Found the Foundry With Us</h2>
+    <div class="join-copy">
+      <p>If you're holding healthcare science, IP, or capability you want to get to market — and you'd rather build the machine that does it than watch it stall — we'd like to talk. Tell us what you've got, and we'll show you what it could become.</p>
+    </div>
+
+    <div id="signupFormStep">
+      <form id="foundrySignupForm" class="signup-form" novalidate>
+        <div class="field">
+          <label for="leadName">Full name</label>
+          <input type="text" id="leadName" name="name" placeholder="Your name" required>
+        </div>
+        <div class="field">
+          <label for="leadEmail">Work email</label>
+          <input type="email" id="leadEmail" name="email" placeholder="you@yourorganisation.com" required>
+        </div>
+        <div class="field field-wide">
+          <label for="leadCompany">Organisation</label>
+          <input type="text" id="leadCompany" name="company" placeholder="Your organisation or venture" required>
+        </div>
+        <div class="field field-wide">
+          <label for="leadService">Tell us what you've got</label>
+          <textarea id="leadService" name="service" rows="4" placeholder="The science, IP, or capability you're looking to bring to market." required></textarea>
+        </div>
+        <div class="field-submit">
+          <button type="submit" class="btn btn-primary" id="foundrySubmitBtn">Join the Founding Cohort
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="form-note">We'll use your details only to arrange a call about the Foundry.</p>
+          <p class="form-error" id="foundryFormError"></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="cal-step" id="signupCalStep" hidden>
+      <p>Pick a time that works — we've already passed along your details.</p>
+      <div id="foundryCalInline" style="width:100%;overflow:scroll;min-height:600px;"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg viewBox="0 0 359 197" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="GKIM" role="img">
+          <path d="M94.7954 132.433C94.7954 132.703 94.6055 132.973 94.3205 133.153C92.5158 133.784 90.901 134.324 89.5712 134.774C88.1465 135.225 86.7217 135.675 85.3919 136.035C84.0621 136.395 82.1624 136.936 79.5978 137.476C75.3234 138.377 71.0491 139.097 66.7747 139.638C62.5004 140.088 58.0361 140.358 53.2868 140.358C43.7883 140.358 34.9546 138.737 26.7859 135.405C18.7121 132.073 12.2531 126.939 7.31388 120.005C2.37463 113.07 0 104.605 0 94.518C0 88.0338 1.23481 81.6396 3.79942 75.3355C6.26904 69.0314 10.1634 63.9881 15.2926 60.2957C19.567 57.1436 23.8413 54.8021 28.2107 53.091C32.58 51.4699 36.8543 50.2991 41.0337 49.7588C45.2131 49.2184 49.7723 48.9482 54.8066 48.9482C63.0703 48.9482 69.9093 49.5787 75.3234 50.7494C80.5476 51.9202 86.2467 53.3611 92.5158 55.2524C92.8007 55.3424 93.0857 55.6126 93.0857 55.9728V75.2454C93.0857 75.7858 92.4208 76.146 91.9459 75.8759C88.0515 73.8045 83.8721 72.0033 79.5978 70.5624C74.8485 68.9413 68.9594 68.2208 61.8355 68.2208C53.6667 68.2208 47.1128 69.6618 42.1735 72.6337C37.2343 75.6057 33.8148 79.118 31.9151 83.1706C30.0154 87.2233 29.0655 91.1859 29.0655 94.9683C29.0655 99.4713 30.2054 103.614 32.39 107.396C34.5747 111.179 37.9942 114.241 42.4585 116.492C46.9228 118.744 52.337 119.915 58.701 119.915C62.1204 119.915 65.8249 119.464 69.6243 118.654C70.0042 118.564 70.1942 118.294 70.1942 117.933V108.747C70.1942 108.387 69.8143 108.027 69.4343 108.027H58.0361C57.6561 108.027 57.2762 107.667 57.2762 107.306V90.8256C57.2762 90.4654 57.6561 90.1052 58.0361 90.1052H94.0355C94.4155 90.1052 94.7954 90.4654 94.7954 90.8256V132.433Z" fill="white"/>
+          <path d="M202.699 139.277H170.024C169.834 139.277 169.549 139.187 169.454 139.007L135.069 99.1109C134.594 98.5706 133.739 98.9308 133.739 99.5612V138.557C133.739 138.917 133.359 139.277 132.979 139.277H106.193C105.814 139.277 105.434 138.917 105.434 138.557V50.8394C105.434 50.4791 105.814 50.1189 106.193 50.1189H132.979C133.359 50.1189 133.739 50.4791 133.739 50.8394V87.9436C133.739 88.6641 134.689 88.9343 135.069 88.3939L167.554 50.3891C167.744 50.209 167.934 50.1189 168.124 50.1189H196.999C197.664 50.1189 198.044 50.8394 197.569 51.2897L163.945 91.3659C163.755 91.6361 163.755 91.9963 163.945 92.2665L203.269 138.016C203.648 138.557 203.269 139.277 202.699 139.277Z" fill="white"/>
+          <path d="M235.374 139.277H212.483C211.248 139.277 210.203 138.197 210.203 136.846V52.5507C210.203 51.1998 211.248 50.1191 212.483 50.1191H235.374C236.609 50.1191 237.654 51.1998 237.654 52.5507V136.846C237.559 138.197 236.609 139.277 235.374 139.277Z" fill="white"/>
+          <path d="M357.905 139.277H331.119C330.739 139.277 330.359 138.917 330.359 138.557V89.655C330.359 88.9345 329.409 88.6643 329.029 89.2047L305.568 116.673C305.093 117.213 304.428 117.483 303.763 117.483C303.098 117.483 302.433 117.213 301.958 116.673L278.402 89.2047C277.927 88.6643 277.072 88.9345 277.072 89.655V138.557C277.072 138.917 276.692 139.277 276.312 139.277H250.286C249.906 139.277 249.526 138.917 249.526 138.557V50.8396C249.526 50.4794 249.906 50.1191 250.286 50.1191H274.887C275.077 50.1191 275.362 50.2092 275.457 50.3893L303.573 82.9006C303.858 83.2608 304.428 83.2608 304.713 82.9006L332.924 50.3893C333.114 50.2092 333.303 50.1191 333.493 50.1191H358.095C358.475 50.1191 358.855 50.4794 358.855 50.8396V138.557C358.665 138.917 358.285 139.277 357.905 139.277Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/company/gkimdigital/posts/?feedView=all" class="footer-social-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.facebook.com/gkimdigital" class="footer-social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <strong>Get started</strong>
+      <a href="#signup">Join the Founding Cohort</a>
+    </div>
+    <div class="footer-col">
+      <strong>Ian Morrison</strong>
+      <span>Mobile &amp; WhatsApp:<br><a href="tel:+447385542874">(+44) 738 5542874</a><br><a href="tel:+84907280831">(+84) 90 728 0831</a></span>
+      <a href="mailto:hello@gkim.digital">hello@gkim.digital</a>
+    </div>
+    <div class="footer-col">
+      <strong>UK Office</strong>
+      <span>17 South Rd, Impington,<br>Cambridge CB24 9PB</span>
+      <a href="tel:+447385542874">(+44) 738 5542874</a>
+    </div>
+    <div class="footer-col">
+      <strong>Vietnam Office</strong>
+      <span>C00.07 Sarina Tower C1, Sala Residence<br>62 Hoang The Thien Street,<br>Thu Duc, Ho Chi Minh city</span>
+      <a href="tel:+84283511886">(+84) 28 3511 8866</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© Copyright <span id="year"></span> GKIM Digital Ltd.</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+const header = document.getElementById('header');
+const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+const burger = document.getElementById('hamburger');
+const drawer = document.getElementById('drawer');
+function setDrawer(open){
+  drawer.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  burger.innerHTML = open
+    ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>';
+}
+burger.addEventListener('click', () => setDrawer(!drawer.classList.contains('open')));
+drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setDrawer(false)));
+
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, {threshold:0.1});
+revealEls.forEach(el => observer.observe(el));
+
+// ---------- Foundry sign-up form ----------
+const foundryForm = document.getElementById('foundrySignupForm');
+const foundryFormStep = document.getElementById('signupFormStep');
+const foundryCalStep = document.getElementById('signupCalStep');
+const foundryErrEl = document.getElementById('foundryFormError');
+const foundrySubmitBtn = document.getElementById('foundrySubmitBtn');
+
+function showFoundryError(msg){
+  foundryErrEl.textContent = msg;
+  foundryErrEl.style.display = 'block';
+}
+
+function initFoundryCalEmbed(name, email, company, service){
+  (function(C,A,L){
+    let p=function(a,ar){a.q.push(ar)};let d=C.document;
+    C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;
+      if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true}
+      if(ar[0]===L){const api=function(){p(api,arguments)};const ns=ar[1];api.q=api.q||[];
+      if(typeof ns==="string"){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,[L,ns,ar[2]])}else p(cal,ar);return}p(cal,ar)
+    }
+  })(window,"https://app.cal.com/embed/embed.js","init");
+  Cal("init", {origin:"https://app.cal.com"});
+  Cal("inline", {
+    elementOrSelector: "#foundryCalInline",
+    calLink: "ian-morrison-ri6tnc/gkim-discovery-session",
+    layout: "month_view",
+    config: { name: name, email: email, notes: `Company: ${company}\nWhat they've got: ${service}` }
+  });
+  Cal("ui", {styles:{branding:{brandColor:"#FFDD00"}}, hideEventTypeDetails:true, layout:"month_view"});
+}
+
+foundryForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  foundryErrEl.style.display = 'none';
+
+  const name = document.getElementById('leadName').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const company = document.getElementById('leadCompany').value.trim();
+  const service = document.getElementById('leadService').value.trim();
+
+  if(!name){ showFoundryError('Please enter your name.'); return; }
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showFoundryError('Please enter a valid work email.'); return; }
+  if(!company){ showFoundryError('Please enter your organisation name.'); return; }
+  if(!service){ showFoundryError('Please tell us what you\'ve got.'); return; }
+
+  const originalLabel = foundrySubmitBtn.innerHTML;
+  foundrySubmitBtn.disabled = true;
+  foundrySubmitBtn.textContent = 'Sending…';
+
+  try{
+    const res = await fetch('/api/foundry-signup', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({name, email, role: service, company, foundry: 'HealthTech Foundry'})
+    });
+    const json = await res.json().catch(() => ({}));
+    if(!res.ok){
+      showFoundryError(json.error || 'Something went wrong. Please try again.');
+      foundrySubmitBtn.disabled = false;
+      foundrySubmitBtn.innerHTML = originalLabel;
+      return;
+    }
+    foundryFormStep.hidden = true;
+    foundryCalStep.hidden = false;
+    initFoundryCalEmbed(name, email, company, service);
+  }catch(err){
+    showFoundryError('Network error. Please check your connection and try again.');
+    foundrySubmitBtn.disabled = false;
+    foundrySubmitBtn.innerHTML = originalLabel;
+  }
+});
+</script>
+</body>
+</html>
