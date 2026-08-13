@@ -9,6 +9,16 @@
       "permanent": false
     }
   ],
+  "rewrites": [
+    {
+      "source": "/adora-gkim-board",
+      "destination": "/adora-gkim-board.html"
+    },
+    {
+      "source": "/adora/womens-health-intelligence-platform",
+      "destination": "/adora/womens-health-intelligence-platform.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
