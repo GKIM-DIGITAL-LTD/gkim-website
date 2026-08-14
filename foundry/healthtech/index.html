@@ -170,44 +170,52 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 .section-lede + .section-lede{margin-top:var(--space-4);}
 .section-cta{margin-top:var(--space-8);}
 
-/* ---------- Machine rail (Inside this Foundry) ---------- */
+/* ---------- About carousel ---------- */
+.about-carousel{margin-top:var(--space-12);overflow:hidden;position:relative;}
+.about-carousel::before,.about-carousel::after{content:"";position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;}
+.about-carousel::before{left:0;background:linear-gradient(90deg,var(--bg-dark),transparent);}
+.about-carousel::after{right:0;background:linear-gradient(270deg,var(--bg-dark),transparent);}
+.about-carousel-track{display:flex;gap:var(--space-5);width:max-content;animation:about-carousel-scroll 24s linear infinite;}
+.about-carousel-item{
+  flex:0 0 auto;width:240px;height:170px;
+  background:var(--surface-dark);border:1px dashed var(--border-on-dark);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-3);
+  color:var(--text-on-dark-muted);
+}
+.about-carousel-item svg{width:32px;height:32px;opacity:.5;}
+.about-carousel-item span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.about-carousel-item:has(img){border-style:solid;padding:0;}
+.about-carousel-item img{width:100%;height:100%;object-fit:cover;display:block;}
+.about-carousel-note{
+  max-width:640px;margin:var(--space-6) 0 0;font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:15px;line-height:1.5;color:var(--text-on-dark-muted);
+}
+@keyframes about-carousel-scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+@media(prefers-reduced-motion: reduce){
+  .about-carousel-track{animation:none;}
+}
+
+/* ---------- Machine rail (Three Layers) ---------- */
 .machine{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin-top:var(--space-12);}
-.machine-endpoint{flex:0 0 auto;align-self:center;text-align:center;padding:0 10px;min-width:78px;}
-.machine-dot{display:block;width:11px;height:11px;background:var(--bg-accent);margin:0 auto 8px;box-shadow:0 0 0 5px rgba(255,221,0,.14);}
-.machine-endpoint span:last-child{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-on-dark-muted);font-weight:600;}
-.machine-connector{flex:0 0 34px;align-self:center;display:flex;align-items:center;justify-content:center;color:var(--border-on-dark);}
+.machine-connector{flex:0 0 34px;align-self:center;display:flex;align-items:center;justify-content:center;color:var(--border-on-light);}
 .machine-connector svg{width:34px;height:16px;}
 
 .machine-card{
-  flex:1 1 0;min-width:230px;background:var(--surface-dark);border:1px solid var(--border-on-dark);
+  flex:1 1 0;min-width:230px;background:var(--surface-white);border:1px solid var(--border-on-light);
   padding:26px 24px 22px;display:flex;flex-direction:column;gap:14px;position:relative;
 }
-.machine-card-top{display:flex;align-items:center;justify-content:space-between;}
-.machine-icon{width:34px;height:34px;color:var(--text-on-dark);opacity:.9;}
-.machine-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-.machine-card.featured .machine-icon{color:var(--bg-accent);opacity:1;}
-.machine-title{margin:0;color:var(--text-on-dark);font-size:20px;font-weight:700;letter-spacing:.01em;}
-.machine-oneline{margin:0;font-size:14.5px;line-height:1.5;color:var(--text-on-dark-muted);}
-
-.machine-xform{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:2px;}
-.machine-pill{font-size:11.5px;font-weight:600;color:var(--text-on-dark-muted);background:var(--bg-dark);border:1px solid var(--border-on-dark);padding:5px 11px;white-space:nowrap;}
-.machine-pill.out{color:var(--text-on-light);background:var(--bg-accent);border-color:var(--bg-accent);}
-.machine-arrow{color:var(--bg-accent);font-size:15px;line-height:1;}
-
-.machine-details{border-top:1px solid var(--border-on-dark);padding-top:12px;margin-top:2px;}
-.machine-details summary{list-style:none;cursor:pointer;font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-on-dark-muted);display:flex;align-items:center;gap:7px;text-transform:uppercase;}
-.machine-details summary::-webkit-details-marker{display:none;}
-.machine-details summary .plus{color:var(--bg-accent);font-size:15px;transition:transform .2s;}
-.machine-details[open] summary .plus{transform:rotate(45deg);}
-.machine-details p{margin:11px 0 0;font-size:13.5px;line-height:1.6;color:var(--text-on-dark-muted);}
+.machine-title{margin:0;color:var(--text-on-light);font-size:20px;font-weight:700;letter-spacing:.01em;}
+.machine-transform{margin:0;font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;line-height:1.35;color:var(--text-on-light);}
+.machine-body{margin:0;font-size:14.5px;line-height:1.65;color:var(--text-on-light-muted);}
 
 .machine-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px;}
-.machine-tag{font-size:12px;color:var(--text-on-dark-muted);background:rgba(255,255,255,.06);padding:6px 11px;}
+.machine-tag{font-size:12px;color:var(--text-on-light-muted);background:var(--bg-light);padding:6px 11px;}
 
 @media(max-width:760px){
   .machine-connector{display:none;}
-  .machine-endpoint{width:100%;display:flex;gap:10px;align-items:center;justify-content:flex-start;padding:6px 0;}
-  .machine-dot{margin:0;}
   .machine-card{min-width:100%;}
 }
 
@@ -234,6 +242,99 @@ header.scrolled{background:var(--surface-header-scrolled);backdrop-filter:blur(1
 @media(min-width:860px){.initiative-visual{min-height:260px;}}
 .initiative-visual svg{width:36px;height:36px;opacity:.5;}
 .initiative-visual span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+
+/* ---------- HOIOS mock card ---------- */
+.initiative-visual.hoios-mock{padding:0;border-style:solid;align-items:stretch;justify-content:flex-start;}
+.hoios-mock-card{width:100%;}
+.hoios-mock-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border-on-dark);}
+.hoios-mock-brand{display:flex;align-items:center;gap:9px;}
+.hoios-mock-logo{width:16px;height:16px;background:var(--bg-accent);position:relative;flex-shrink:0;}
+.hoios-mock-logo::after{content:"";position:absolute;inset:4px;border:1.5px solid var(--bg-dark);}
+.hoios-mock-name{font-size:12.5px;font-weight:700;color:var(--text-on-dark);letter-spacing:.03em;}
+.hoios-mock-fn{font-size:11px;font-weight:500;color:var(--text-on-dark-muted);margin-left:2px;}
+.hoios-mock-scan{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-pulse{width:6px;height:6px;background:var(--bg-accent);animation:hoios-pulse 1.8s infinite;}
+@keyframes hoios-pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,221,0,.5);}
+  70%{box-shadow:0 0 0 6px rgba(255,221,0,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,221,0,0);}
+}
+
+.hoios-mock-sub{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border-on-dark);font-size:10.5px;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-sub strong{color:var(--text-on-dark);font-weight:600;}
+
+.hoios-mock-rows{position:relative;}
+.hoios-mock-scanline{position:absolute;left:0;right:0;height:36px;top:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,221,0,.07),transparent);animation:hoios-sweep 4s linear infinite;}
+@keyframes hoios-sweep{from{top:-36px;}to{top:280px;}}
+
+.hoios-mock-row{display:grid;grid-template-columns:1fr 58px 30px;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);opacity:.6;position:relative;}
+.hoios-mock-row:last-child{border-bottom:none;}
+.hoios-mock-rowname{font-size:12.5px;color:var(--text-on-dark-muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hoios-mock-dim{font-size:9.5px;color:var(--text-on-dark-muted);opacity:.7;margin-top:2px;letter-spacing:.03em;}
+.hoios-mock-verdict{font-size:9px;font-weight:700;letter-spacing:.08em;text-align:center;padding:3px 0;border:1px solid var(--border-on-dark);color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-score{font-size:12px;font-weight:700;color:var(--text-on-dark-muted);text-align:right;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-verdict.pass{opacity:.6;}
+
+.hoios-mock-row.open{opacity:1;background:linear-gradient(90deg,rgba(255,221,0,.1),transparent 72%);}
+.hoios-mock-row.open::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--bg-accent);}
+.hoios-mock-row.open .hoios-mock-rowname{color:var(--text-on-dark);}
+.hoios-mock-badge{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.1em;color:var(--bg-accent);border:1px solid var(--bg-accent);padding:1px 5px;margin-left:8px;vertical-align:middle;}
+.hoios-mock-row.open .hoios-mock-reason{font-size:9.5px;color:var(--bg-accent);opacity:.9;margin-top:3px;letter-spacing:.02em;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-row.open .hoios-mock-verdict{color:var(--text-on-light);background:var(--bg-accent);border-color:var(--bg-accent);}
+.hoios-mock-row.open .hoios-mock-score{color:var(--text-on-dark);}
+
+.hoios-mock-foot{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-top:1px solid var(--border-on-dark);font-size:10px;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-by{display:flex;align-items:center;gap:6px;}
+.hoios-mock-dot{width:5px;height:5px;background:var(--bg-accent);}
+
+.hoios-mock-subject{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border-on-dark);}
+.hoios-mock-subject-name{font-size:12.5px;color:var(--text-on-dark);font-weight:600;}
+.hoios-mock-subject-meta{font-size:10px;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+
+.hoios-mock-sizing-body{padding:18px 16px 14px;}
+.hoios-mock-frow{display:grid;grid-template-columns:92px 1fr 58px;align-items:center;gap:12px;margin-bottom:12px;}
+.hoios-mock-flab{font-size:10.5px;color:var(--text-on-dark-muted);letter-spacing:.02em;}
+.hoios-mock-fbar i{display:block;height:22px;transition:width .8s ease;}
+.hoios-mock-fval{font-size:12.5px;text-align:right;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-frow.som .hoios-mock-flab{color:var(--bg-accent);font-weight:600;}
+.hoios-mock-frow.som .hoios-mock-fval{color:var(--text-on-dark);font-weight:700;}
+.hoios-mock-frow.som .hoios-mock-fbar i{box-shadow:0 0 10px rgba(255,221,0,.45);}
+
+.hoios-mock-cap{font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.02em;margin:2px 0 16px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-cap strong{color:var(--text-on-dark-muted);font-weight:600;}
+
+.hoios-mock-density{display:flex;align-items:center;gap:12px;padding:12px 0 2px;border-top:1px solid rgba(255,255,255,.05);}
+.hoios-mock-density-label{font-size:11px;color:var(--text-on-dark-muted);}
+.hoios-mock-pips{display:flex;gap:4px;}
+.hoios-mock-pips i{width:16px;height:5px;background:rgba(255,255,255,.12);}
+.hoios-mock-pips i.on{background:rgba(255,255,255,.4);}
+.hoios-mock-density-value{font-size:11px;color:var(--text-on-dark-muted);font-weight:600;margin-left:auto;}
+.hoios-mock-density-value .x{color:rgba(255,255,255,.45);font-weight:400;}
+
+.hoios-mock-subject-count{font-size:10.5px;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+.hoios-mock-subject-count strong{color:var(--bg-accent);font-weight:700;}
+
+.hoios-mock-gaprow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:11px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);position:relative;}
+.hoios-mock-gaprow:last-child{border-bottom:none;}
+.hoios-mock-cat{font-size:8.5px;letter-spacing:.16em;color:var(--text-on-dark-muted);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin-bottom:3px;}
+.hoios-mock-itm{font-size:12.5px;color:var(--text-on-dark-muted);font-weight:600;}
+
+.hoios-mock-status{display:flex;align-items:baseline;gap:6px;white-space:nowrap;}
+.hoios-mock-pill{font-size:9px;font-weight:700;letter-spacing:.1em;padding:3px 7px;}
+.hoios-mock-verb{font-size:10px;color:var(--text-on-dark-muted);}
+
+.hoios-mock-gaprow.gap::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--bg-accent);}
+.hoios-mock-gaprow.gap .hoios-mock-itm{color:var(--text-on-dark);}
+.hoios-mock-status.g .hoios-mock-pill{color:var(--bg-accent);border:1px solid var(--bg-accent);}
+
+.hoios-mock-gaprow.rdy{opacity:.6;}
+.hoios-mock-status.r .hoios-mock-pill{color:var(--text-on-dark-muted);border:1px solid var(--border-on-dark);}
+.hoios-mock-status.r .hoios-mock-pill::before{content:"✓ ";}
+
+@media(prefers-reduced-motion: reduce){
+  .hoios-mock-pulse{animation:none;}
+  .hoios-mock-scanline{display:none;}
+}
 
 /* ---------- Proof ---------- */
 .proof-card{background:var(--surface-dark);border:1px solid var(--border-on-dark);padding:var(--space-8);margin-top:var(--space-10);}
@@ -338,7 +439,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   <div class="container">
     <p class="eyebrow accent">HealthTech Foundry</p>
     <h1 class="h-large reveal visible">From Scientific Possibility<br>to Commercial Venture</h1>
-    <p class="hero-lede">The HealthTech Foundry builds healthcare ventures from the science up: discovering what's possible, translating it into something clinically real, and assembling the right venture around it.</p>
+    <p class="hero-lede">The HealthTech Foundry helps you build healthcare ventures from the science up: discovering what's possible, translating it into something clinically real, and assembling the right venture around it.</p>
     <div class="hero-ctas">
       <a href="#about" class="btn btn-primary">See How It Works
         <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -369,28 +470,34 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
     <h2 class="h2 reveal">The HealthTech Foundry</h2>
     <p class="section-lede" style="color:var(--text-on-dark-muted);">The HealthTech Foundry is GKIM's engine for turning healthcare innovation into commercial ventures. You bring the science, the discovery, or the IP. We bring the operating knowledge, and we build the rest with you.</p>
 
-    <h3 class="h3" style="margin-top:var(--space-16);">Three Layers, One Machine. Discovery to Venture.</h3>
+    <div class="about-carousel">
+      <div class="about-carousel-track">
+        <div class="about-carousel-item"><img src="/foundry/healthtech/media/carousel-cambridge-science-centre.webp" alt="South Cambridge Science Centre, exterior view"></div>
+        <div class="about-carousel-item"><img src="/foundry/healthtech/media/carousel-networking-mixer.webp" alt="Founders and researchers networking at an event"></div>
+        <div class="about-carousel-item"><img src="/foundry/healthtech/media/carousel-cancer-research-institute.jpeg" alt="Cancer Research UK Cambridge Institute"></div>
+        <div class="about-carousel-item"><img src="/foundry/healthtech/media/carousel-park-rendering.webp" alt="Rendering of a landscaped park within the Cambridge biomedical campus"></div>
+        <div class="about-carousel-item"><img src="/foundry/healthtech/media/carousel-bradfield-centre.webp" alt="The Bradfield Centre, Cambridge"></div>
+        <div class="about-carousel-item" aria-hidden="true"><img src="/foundry/healthtech/media/carousel-cambridge-science-centre.webp" alt=""></div>
+        <div class="about-carousel-item" aria-hidden="true"><img src="/foundry/healthtech/media/carousel-networking-mixer.webp" alt=""></div>
+        <div class="about-carousel-item" aria-hidden="true"><img src="/foundry/healthtech/media/carousel-cancer-research-institute.jpeg" alt=""></div>
+        <div class="about-carousel-item" aria-hidden="true"><img src="/foundry/healthtech/media/carousel-park-rendering.webp" alt=""></div>
+        <div class="about-carousel-item" aria-hidden="true"><img src="/foundry/healthtech/media/carousel-bradfield-centre.webp" alt=""></div>
+      </div>
+    </div>
+    <p class="about-carousel-note">Built in Cambridge, inside the network the ventures need.</p>
+  </div>
+</section>
+
+<!-- ============ THREE LAYERS ============ -->
+<section class="section bg-light grid-overlay">
+  <div class="container">
+    <h2 class="h2 reveal">Three Layers, One Machine. Discovery to Venture.</h2>
 
     <div class="machine">
-      <div class="machine-endpoint"><span class="machine-dot"></span><span>Discovery</span></div>
-
-      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
       <div class="machine-card reveal">
-        <div class="machine-card-top">
-          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2z"/><path d="M12 20V11M12 11l8-4.5M12 11L4 6.5"/></svg></span>
-        </div>
         <h4 class="machine-title">Productisation</h4>
-        <p class="machine-oneline">Turn raw science into a product the market will adopt.</p>
-        <div class="machine-xform">
-          <span class="machine-pill">Science</span>
-          <span class="machine-arrow">→</span>
-          <span class="machine-pill out">Adoptable Product</span>
-        </div>
-        <details class="machine-details">
-          <summary><span class="plus">+</span> The hardest part</summary>
-          <p>The questions that kill most innovation live here: who's the patient, where it fits the pathway, who adopts, and who pays.</p>
-        </details>
+        <p class="machine-transform">From science to adoptable product</p>
+        <p class="machine-body">Between research and commercialisation sits the hardest part. Who is the patient? Where does this sit in the care pathway? Who adopts it, and who pays? This is where most healthcare innovation stalls, and where our operating knowledge matters most.</p>
         <div class="machine-tags">
           <span class="machine-tag">Patient journey</span>
           <span class="machine-tag">Compliance</span>
@@ -401,20 +508,9 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
       <div class="machine-card featured reveal" id="hoios-card">
-        <div class="machine-card-top">
-          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M12 12a8 8 0 0 1 8-8"/><path d="M12 12a5 5 0 0 1 5-5"/><circle cx="12" cy="12" r="10"/></svg></span>
-        </div>
         <h4 class="machine-title">Opportunity Intelligence · HOIOS</h4>
-        <p class="machine-oneline">See the whole market at once, and the opening in it.</p>
-        <div class="machine-xform">
-          <span class="machine-pill">Fragmented Views</span>
-          <span class="machine-arrow">→</span>
-          <span class="machine-pill out">Validated Opportunity</span>
-        </div>
-        <details class="machine-details">
-          <summary><span class="plus">+</span> The whole picture</summary>
-          <p>We're building HOIOS to hold every view together and surface where the real opportunity sits.</p>
-        </details>
+        <p class="machine-transform">From fragmented view to validated opportunity</p>
+        <p class="machine-body">Today, opportunity identification is fragmented. HOIOS, an AI-enabled opportunity intelligence system designed to hold every view together and surface where a real, enterable opportunity actually sits. It's in active development with our founding cohort.</p>
         <div class="machine-tags">
           <span class="machine-tag">Opportunity mapping</span>
           <span class="machine-tag">Market sizing</span>
@@ -425,30 +521,15 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
       <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 
       <div class="machine-card reveal">
-        <div class="machine-card-top">
-          <span class="machine-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/><rect x="8" y="3" width="8" height="8" rx="1"/></svg></span>
-        </div>
         <h4 class="machine-title">Venture Assembly</h4>
-        <p class="machine-oneline">Assemble the right venture around a validated opportunity.</p>
-        <div class="machine-xform">
-          <span class="machine-pill">Validated Opportunity</span>
-          <span class="machine-arrow">→</span>
-          <span class="machine-pill out">Live Venture</span>
-        </div>
-        <details class="machine-details">
-          <summary><span class="plus">+</span> The right structure</summary>
-          <p>Force an opportunity into the wrong vehicle and the value quietly leaks away. We assemble the venture around the opportunity, matching the structure to what it actually needs.</p>
-        </details>
+        <p class="machine-transform">From validated opportunity to live venture</p>
+        <p class="machine-body">An opportunity could become an internal programme, a research collaboration, a joint venture, a licensable technology, a spin-out, or a strategic programme with an existing pharma partner. We work with you to assemble the venture around the opportunity.</p>
         <div class="machine-tags">
           <span class="machine-tag">Networking</span>
           <span class="machine-tag">Fundraising</span>
           <span class="machine-tag">Partnership</span>
         </div>
       </div>
-
-      <div class="machine-connector"><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M2 8h26" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M24 3l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-
-      <div class="machine-endpoint"><span class="machine-dot"></span><span>Venture</span></div>
     </div>
   </div>
 </section>
@@ -467,9 +548,55 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <h3 class="initiative-headline">It finds the opening.</h3>
           <p class="initiative-text">Cross-references where the field is heading against what can actually be built and delivered — surfacing the opportunities worth entering, not just the ideas that sound exciting.</p>
         </div>
-        <div class="initiative-visual">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <span>Visual coming soon</span>
+        <div class="initiative-visual hoios-mock">
+          <div class="hoios-mock-card">
+            <div class="hoios-mock-head">
+              <div class="hoios-mock-brand">
+                <span class="hoios-mock-logo" aria-hidden="true"></span>
+                <span class="hoios-mock-name">HOIOS <span class="hoios-mock-fn">Discovery</span></span>
+              </div>
+              <div class="hoios-mock-scan"><span class="hoios-mock-pulse" aria-hidden="true"></span>scanning 2,140 market signals</div>
+            </div>
+            <div class="hoios-mock-sub">
+              <span>Market gaps <strong>×</strong> what you can deliver</span>
+              <span><strong>38</strong> markets surfaced</span>
+            </div>
+            <div class="hoios-mock-rows">
+              <div class="hoios-mock-scanline" aria-hidden="true"></div>
+              <div class="hoios-mock-row open">
+                <div>
+                  <div class="hoios-mock-rowname">IVF &amp; fertility clinics — UK<span class="hoios-mock-badge">OPENING</span></div>
+                  <div class="hoios-mock-reason">unmet demand · serviceable now · reimbursed</div>
+                </div>
+                <div class="hoios-mock-verdict">ENTER</div>
+                <div class="hoios-mock-score">92</div>
+              </div>
+              <div class="hoios-mock-row">
+                <div><div class="hoios-mock-rowname">Self-insured US employers</div><div class="hoios-mock-dim">Buyer segment</div></div>
+                <div class="hoios-mock-verdict">ENTER</div>
+                <div class="hoios-mock-score">80</div>
+              </div>
+              <div class="hoios-mock-row">
+                <div><div class="hoios-mock-rowname">Gulf private hospital groups</div><div class="hoios-mock-dim">Region</div></div>
+                <div class="hoios-mock-verdict watch">WATCH</div>
+                <div class="hoios-mock-score">71</div>
+              </div>
+              <div class="hoios-mock-row">
+                <div><div class="hoios-mock-rowname">Menopause telehealth apps</div><div class="hoios-mock-dim">Channel</div></div>
+                <div class="hoios-mock-verdict watch">WATCH</div>
+                <div class="hoios-mock-score">63</div>
+              </div>
+              <div class="hoios-mock-row">
+                <div><div class="hoios-mock-rowname">DTC consumer wellness</div><div class="hoios-mock-dim">Buyer segment · high reach cost, low conversion</div></div>
+                <div class="hoios-mock-verdict pass">PASS</div>
+                <div class="hoios-mock-score">38</div>
+              </div>
+            </div>
+            <div class="hoios-mock-foot">
+              <span>Updated 2m ago · 5 of 38</span>
+              <span class="hoios-mock-by"><span class="hoios-mock-dot" aria-hidden="true"></span>Surfaced by HOIOS</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="initiative-row reverse reveal">
@@ -478,9 +605,49 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <h3 class="initiative-headline">It sizes it before you spend.</h3>
           <p class="initiative-text">Puts a real shape on each opportunity — market size, competitive density, realistic addressable share — so the decision to commit is made on evidence, before a single hour or pound goes in.</p>
         </div>
-        <div class="initiative-visual">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <span>Visual coming soon</span>
+        <div class="initiative-visual hoios-mock">
+          <div class="hoios-mock-card">
+            <div class="hoios-mock-head">
+              <div class="hoios-mock-brand">
+                <span class="hoios-mock-logo" aria-hidden="true"></span>
+                <span class="hoios-mock-name">HOIOS <span class="hoios-mock-fn">Sizing</span></span>
+              </div>
+              <div class="hoios-mock-scan"><span class="hoios-mock-pulse" aria-hidden="true"></span>modelling</div>
+            </div>
+            <div class="hoios-mock-subject">
+              <div class="hoios-mock-subject-name">IVF &amp; fertility clinics — UK<span class="hoios-mock-badge">OPENING</span></div>
+              <div class="hoios-mock-subject-meta">1,240 sources</div>
+            </div>
+            <div class="hoios-mock-sizing-body">
+              <div class="hoios-mock-frow">
+                <div class="hoios-mock-flab">Total market</div>
+                <div class="hoios-mock-fbar"><i style="width:100%;background:rgba(255,255,255,.16)"></i></div>
+                <div class="hoios-mock-fval">£480M</div>
+              </div>
+              <div class="hoios-mock-frow">
+                <div class="hoios-mock-flab">Serviceable</div>
+                <div class="hoios-mock-fbar"><i style="width:48%;background:rgba(255,255,255,.3)"></i></div>
+                <div class="hoios-mock-fval">£150M</div>
+              </div>
+              <div class="hoios-mock-frow som">
+                <div class="hoios-mock-flab">Realistic share</div>
+                <div class="hoios-mock-fbar"><i style="width:22%;background:var(--bg-accent)"></i></div>
+                <div class="hoios-mock-fval">£26M</div>
+              </div>
+
+              <div class="hoios-mock-cap">≈ 5% of market — <strong>modelled, not aspirational</strong></div>
+
+              <div class="hoios-mock-density">
+                <span class="hoios-mock-density-label">Competitive density</span>
+                <span class="hoios-mock-pips"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>
+                <span class="hoios-mock-density-value">Low <span class="x">· 3 incumbents</span></span>
+              </div>
+            </div>
+            <div class="hoios-mock-foot">
+              <span>Updated 2m ago</span>
+              <span class="hoios-mock-by"><span class="hoios-mock-dot" aria-hidden="true"></span>Sized by HOIOS</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="initiative-row reveal">
@@ -489,9 +656,42 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
           <h3 class="initiative-headline">It flags exactly what's missing.</h3>
           <p class="initiative-text">Names the gap that stands between the opportunity and entering it: a capability to build, a regulatory pathway to clear, an evidence base to generate, or a partner that has to be in place first.</p>
         </div>
-        <div class="initiative-visual">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>
-          <span>Visual coming soon</span>
+        <div class="initiative-visual hoios-mock">
+          <div class="hoios-mock-card">
+            <div class="hoios-mock-head">
+              <div class="hoios-mock-brand">
+                <span class="hoios-mock-logo" aria-hidden="true"></span>
+                <span class="hoios-mock-name">HOIOS <span class="hoios-mock-fn">Gap analysis</span></span>
+              </div>
+              <div class="hoios-mock-scan"><span class="hoios-mock-pulse" aria-hidden="true"></span>checking</div>
+            </div>
+            <div class="hoios-mock-subject">
+              <div class="hoios-mock-subject-name">IVF &amp; fertility clinics — UK<span class="hoios-mock-badge">OPENING</span></div>
+              <div class="hoios-mock-subject-count"><strong>3 gaps</strong> · 1 ready</div>
+            </div>
+
+            <div class="hoios-mock-gaprow gap">
+              <div><div class="hoios-mock-cat">CAPABILITY</div><div class="hoios-mock-itm">Clinic ordering integration</div></div>
+              <div class="hoios-mock-status g"><span class="hoios-mock-pill">GAP</span><span class="hoios-mock-verb">to build</span></div>
+            </div>
+            <div class="hoios-mock-gaprow gap">
+              <div><div class="hoios-mock-cat">REGULATORY</div><div class="hoios-mock-itm">IVDR classification — Class C</div></div>
+              <div class="hoios-mock-status g"><span class="hoios-mock-pill">GAP</span><span class="hoios-mock-verb">to clear</span></div>
+            </div>
+            <div class="hoios-mock-gaprow gap">
+              <div><div class="hoios-mock-cat">EVIDENCE</div><div class="hoios-mock-itm">UK validation cohort (n≈400)</div></div>
+              <div class="hoios-mock-status g"><span class="hoios-mock-pill">GAP</span><span class="hoios-mock-verb">to generate</span></div>
+            </div>
+            <div class="hoios-mock-gaprow rdy">
+              <div><div class="hoios-mock-cat">PARTNER</div><div class="hoios-mock-itm">Accredited UK reference lab</div></div>
+              <div class="hoios-mock-status r"><span class="hoios-mock-pill">Ready</span></div>
+            </div>
+
+            <div class="hoios-mock-foot">
+              <span>Updated 2m ago</span>
+              <span class="hoios-mock-by"><span class="hoios-mock-dot" aria-hidden="true"></span>Checked by HOIOS</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
