@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Foundry | GKIM GEARS™</title>
-<meta name="description" content="A GKIM Foundry is a permanent team pointed at one industry, building the AI-native businesses, platforms, and systems that run it. Explore the Telehealth and Home Care Foundries.">
+<meta name="description" content="A GKIM Foundry is a permanent team pointed at one industry, building the AI-native businesses, platforms, and systems that run it. Explore the Telehealth, Home Care, and HealthTech Foundries.">
 <link rel="icon" href="/logo/official-favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -364,6 +364,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 /* ---------- Foundry video cards (hero + picker) ---------- */
 .foundry-cards{display:grid;grid-template-columns:1fr;gap:var(--space-4);margin-top:var(--space-10);width:100%;}
 @media(min-width:700px){.foundry-cards{grid-template-columns:repeat(2,1fr);gap:var(--space-5);}}
+@media(min-width:960px){.foundry-cards{grid-template-columns:repeat(3,1fr);}}
 .foundry-card{
   position:relative;display:flex;flex-direction:column;justify-content:flex-end;
   min-height:300px;overflow:hidden;text-decoration:none;text-align:left;
@@ -445,6 +446,16 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         <div class="foundry-card-body">
           <span class="foundry-card-name">Home Care Foundry</span>
           <p class="foundry-card-desc">More margin. More growth. Less overhead.</p>
+        </div>
+      </a>
+      <a href="/foundry/healthtech/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/healthtech/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">HealthTech Foundry</span>
+          <p class="foundry-card-desc">From scientific possibility to commercial venture.</p>
         </div>
       </a>
     </div>
@@ -737,6 +748,18 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         <div class="foundry-card-body">
           <span class="foundry-card-name">Home Care Foundry</span>
           <span class="foundry-card-cta">Explore the Home Care Foundry
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </a>
+      <a href="/foundry/healthtech/" class="foundry-card reveal">
+        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
+          <source src="/foundry/healthtech/media/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="foundry-card-overlay"></div>
+        <div class="foundry-card-body">
+          <span class="foundry-card-name">HealthTech Foundry</span>
+          <span class="foundry-card-cta">Explore the HealthTech Foundry
             <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </span>
         </div>
