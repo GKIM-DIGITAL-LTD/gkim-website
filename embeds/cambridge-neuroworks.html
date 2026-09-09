@@ -250,6 +250,24 @@ table.people tr:last-child th, table.people tr:last-child td{border-bottom:none}
 .contact a.wa{background:#fff; color:var(--ink); border:1px solid var(--line)}
 .contact a.wa:hover{border-color:var(--signal); color:var(--signal-deep)}
 .contact svg{width:17px; height:17px; flex:none}
+.contact a.gmail{background:var(--signal); color:#fff; border:1px solid var(--signal)}
+.contact a.gmail:hover{background:var(--signal-deep); border-color:var(--signal-deep)}
+.contact-details{
+  margin-top:18px; display:flex; flex-wrap:wrap; gap:10px 22px; align-items:center;
+  font-size:.94rem; color:var(--ink-soft);
+}
+.contact-details .cd{display:inline-flex; align-items:center; gap:8px}
+.contact-details .cd-value{
+  font-family:var(--sans); color:var(--ink); font-weight:600;
+  -webkit-user-select:all; user-select:all;
+}
+.contact-details button.copy{
+  font:inherit; font-size:.82rem; font-weight:500; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--ink-soft);
+  border-radius:999px; padding:3px 12px;
+}
+.contact-details button.copy:hover{border-color:var(--signal); color:var(--signal-deep)}
+.contact-details button.copy.copied{border-color:var(--signal); color:var(--signal-deep); background:var(--cam-tint)}
 .sig{margin-top:34px; font-family:var(--serif); font-size:1.25rem}
 footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:1px solid var(--line)}
 
@@ -513,14 +531,24 @@ footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:
     <p>This sits naturally at the intersection of my two working lives: GEARS, and fifteen years commercialising complex healthcare and life-science propositions. But the honest reason is simpler: what you described is one of the most interesting operating models I've encountered — a system for manufacturing opportunity itself — and I'd genuinely enjoy helping you make it visible to itself.</p>
     <p>No urgency on my side. If this resonates, a reply is all it takes — whichever way suits you:</p>
     <div class="contact">
+      <a class="gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ian@gkxim.com&amp;su=Continuing%20our%20conversation%20%E2%80%94%20Cambridge%20NeuroWorks" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email via Gmail
+      </a>
       <a class="mail" href="mailto:ian@gkxim.com?subject=Continuing%20our%20conversation%20%E2%80%94%20Cambridge%20NeuroWorks">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        Reply by email
+        Use my mail app
       </a>
       <a class="wa" href="https://wa.me/447385542874" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L4 20l.9-4.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
         WhatsApp me
       </a>
+    </div>
+    <div class="contact-details">
+      <span class="cd">Email: <span class="cd-value">ian@gkxim.com</span>
+        <button type="button" class="copy" data-copy="ian@gkxim.com">Copy</button></span>
+      <span class="cd">Phone: <span class="cd-value">+44 7385 542874</span>
+        <button type="button" class="copy" data-copy="+447385542874">Copy</button></span>
     </div>
     <p class="sig">Ian</p>
   </div>
@@ -543,6 +571,32 @@ footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:
       });
     });
   });
+
+  // Copy-to-clipboard for contact details (works with no mail client).
+  document.querySelectorAll('.contact-details button.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      var done = function(){
+        var original = 'Copy';
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function(){ btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
+  });
+  function fallbackCopy(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
 })();
 </script>
 </body>
