@@ -90,7 +90,7 @@ iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:blo
       <span class="gear-header__divider" aria-hidden="true"></span>
       <span class="gear-header__app-name" id="appName">Embedded View</span>
     </a>
-    <a class="gear-btn gear-btn--primary" href="mailto:ian@gkxim.com" id="ctaLink" rel="noopener">Reply to Ian</a>
+    <a class="gear-btn gear-btn--primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ian@gkxim.com" id="ctaLink" target="_blank" rel="noopener">Reply to Ian</a>
   </div>
 </header>
 
@@ -111,10 +111,13 @@ iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:blo
   var ctaLink = document.getElementById('ctaLink');
 
   // Configure the header CTA. Accepts:
-  //   contact=someone@example.com        -> mailto:
-  //   contact=https://wa.me/447...        -> used as-is (https only)
-  //   contact=mailto:someone@example.com  -> used as-is
+  //   contact=someone@example.com        -> Gmail compose (works with no mail client)
+  //   contact=mailto:someone@example.com  -> forces the OS mail app
+  //   contact=https://wa.me/447...        -> used as-is (WhatsApp / booking link)
   // Optional cta=Label overrides the button text.
+  function gmailCompose(email){
+    return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+  }
   function configureContact(params){
     var contact = params.get('contact');
     var label = params.get('cta');
@@ -122,16 +125,16 @@ iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:blo
       contact = contact.trim();
       var href = null;
       if(/^mailto:/i.test(contact)){
-        href = contact;
+        href = contact;                       // explicit: use OS mail app
+        if(!label) label = 'Reply by email';
       } else if(/^https:\/\//i.test(contact)){
         href = contact;                       // e.g. WhatsApp / booking link
+        if(!label) label = 'Get in touch';
       } else if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)){
-        href = 'mailto:' + contact;           // bare email address
+        href = gmailCompose(contact);         // bare email -> Gmail compose
+        if(!label) label = 'Reply by email';
       }
-      if(href){
-        ctaLink.setAttribute('href', href);
-        if(!label) label = /^mailto:/i.test(href) ? 'Reply by email' : 'Get in touch';
-      }
+      if(href){ ctaLink.setAttribute('href', href); }
     }
     if(label) ctaLink.textContent = label.slice(0,40);
   }
