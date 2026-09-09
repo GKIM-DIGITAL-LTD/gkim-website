@@ -53,11 +53,13 @@ body{
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;
 }
 .gear-btn{
-  font-family:var(--type-body);font-weight:600;font-size:.9rem;
+  font-family:var(--type-body);font-weight:600;font-size:.9rem;line-height:1;
   border-radius:0;border:1px solid transparent;padding:11px 20px;
   text-decoration:none;cursor:pointer;white-space:nowrap;
 }
+button.gear-btn{-webkit-appearance:none;appearance:none}
 .gear-btn--primary{background:var(--bg-accent);color:var(--text-on-light)}
+.gear-btn--primary.copied{background:#0A5245;color:#fff}
 
 /* ── Frame area ── */
 main{flex:1 1 auto;min-height:0;display:flex}
@@ -90,7 +92,8 @@ iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:blo
       <span class="gear-header__divider" aria-hidden="true"></span>
       <span class="gear-header__app-name" id="appName">ideas</span>
     </a>
-    <a class="gear-btn gear-btn--primary" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ian@gkxim.com" id="ctaLink" target="_blank" rel="noopener">Reply to Ian</a>
+    <button type="button" class="gear-btn gear-btn--primary" id="ctaBtn" data-copy="ian@gkxim.com" aria-label="Copy Ian's email address ian@gkxim.com">Copy email: ian@gkxim.com</button>
+    <a class="gear-btn gear-btn--primary" id="ctaLink" rel="noopener" hidden>Get in touch</a>
   </div>
 </header>
 
@@ -108,36 +111,68 @@ iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:blo
 
   var main = document.getElementById('main');
   var appName = document.getElementById('appName');
-  var ctaLink = document.getElementById('ctaLink');
+  var ctaBtn = document.getElementById('ctaBtn');    // copy-email button (default)
+  var ctaLink = document.getElementById('ctaLink');  // link, for mailto:/https: contacts
 
   // Configure the header CTA. Accepts:
-  //   contact=someone@example.com        -> Gmail compose (works with no mail client)
-  //   contact=mailto:someone@example.com  -> forces the OS mail app
-  //   contact=https://wa.me/447...        -> used as-is (WhatsApp / booking link)
-  // Optional cta=Label overrides the button text.
-  function gmailCompose(email){
-    return 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(email);
+  //   contact=someone@example.com        -> copy-to-clipboard button (default behaviour, no mail client needed)
+  //   contact=mailto:someone@example.com  -> link that opens the OS mail app
+  //   contact=https://wa.me/447...        -> link (WhatsApp / booking link)
+  // Optional cta=Label overrides the button/link text.
+  function useLink(href, label){
+    ctaBtn.hidden = true;
+    ctaLink.hidden = false;
+    ctaLink.setAttribute('href', href);
+    if(/^https:\/\//i.test(href)) ctaLink.setAttribute('target','_blank');
+    if(label) ctaLink.textContent = label.slice(0,40);
+  }
+  function useCopy(email, label){
+    ctaBtn.setAttribute('data-copy', email);
+    ctaBtn.setAttribute('aria-label', "Copy email address " + email);
+    ctaBtn.textContent = label ? label.slice(0,40) : ('Copy email: ' + email);
   }
   function configureContact(params){
     var contact = params.get('contact');
     var label = params.get('cta');
     if(contact){
       contact = contact.trim();
-      var href = null;
       if(/^mailto:/i.test(contact)){
-        href = contact;                       // explicit: use OS mail app
-        if(!label) label = 'Reply by email';
+        useLink(contact, label || 'Reply by email');
       } else if(/^https:\/\//i.test(contact)){
-        href = contact;                       // e.g. WhatsApp / booking link
-        if(!label) label = 'Get in touch';
+        useLink(contact, label || 'Get in touch');
       } else if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)){
-        href = gmailCompose(contact);         // bare email -> Gmail compose
-        if(!label) label = 'Reply by email';
+        useCopy(contact, label);              // bare email -> copyable button
+      } else if(label){
+        ctaBtn.textContent = label.slice(0,40);
       }
-      if(href){ ctaLink.setAttribute('href', href); }
+    } else if(label){
+      ctaBtn.textContent = label.slice(0,40);
     }
-    if(label) ctaLink.textContent = label.slice(0,40);
   }
+
+  function copyToClipboard(text, done){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+  ctaBtn.addEventListener('click', function(){
+    var original = ctaBtn.textContent;
+    copyToClipboard(ctaBtn.getAttribute('data-copy'), function(){
+      ctaBtn.textContent = 'Copied \u2713';
+      ctaBtn.classList.add('copied');
+      setTimeout(function(){ ctaBtn.textContent = original; ctaBtn.classList.remove('copied'); }, 1800);
+    });
+  });
 
   function showNotice(title, msg){
     main.innerHTML =

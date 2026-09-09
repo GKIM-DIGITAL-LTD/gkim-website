@@ -69,10 +69,12 @@ a:hover{color:var(--signal-deep)}
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;
 }
 .gkim-header__cta{
-  font-family:var(--gkim-type-body);font-weight:600;font-size:.9rem;
-  border-radius:0;border:1px solid transparent;padding:11px 20px;
+  font-family:var(--gkim-type-body);font-weight:600;font-size:.9rem;line-height:1;
+  border-radius:0;border:1px solid transparent;padding:11px 20px;cursor:pointer;
   text-decoration:none;background:var(--gkim-accent);color:#202020;white-space:nowrap;
 }
+button.gkim-header__cta{-webkit-appearance:none;appearance:none}
+.gkim-header__cta.copied{background:#0A5245;color:#fff}
 :focus-visible.gkim-header__cta,.gkim-header__cta:focus-visible{outline:2px solid var(--gkim-accent);outline-offset:3px}
 @media (max-width:640px){
   .gkim-header{height:64px}
@@ -291,7 +293,7 @@ footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:
       <span class="gkim-header__divider" aria-hidden="true"></span>
       <span class="gkim-header__name">ideas for Cambridge NeuroWorks</span>
     </a>
-    <a class="gkim-header__cta" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ian@gkxim.com&amp;su=Continuing%20our%20conversation%20%E2%80%94%20Cambridge%20NeuroWorks" target="_blank" rel="noopener">Reply to Ian</a>
+    <button type="button" class="gkim-header__cta" id="headerCopyEmail" data-copy="ian@gkxim.com" aria-label="Copy Ian's email address ian@gkxim.com">Copy email: ian@gkxim.com</button>
   </div>
 </header>
 
@@ -596,6 +598,25 @@ footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:
     document.body.appendChild(ta); ta.select();
     try { document.execCommand('copy'); done(); } catch(e){}
     document.body.removeChild(ta);
+  }
+
+  // Header CTA: copy email to clipboard (no mail client / popup needed).
+  var headerCopy = document.getElementById('headerCopyEmail');
+  if(headerCopy){
+    var headerLabel = headerCopy.textContent;
+    headerCopy.addEventListener('click', function(){
+      var text = headerCopy.getAttribute('data-copy');
+      var done = function(){
+        headerCopy.textContent = 'Copied \u2713';
+        headerCopy.classList.add('copied');
+        setTimeout(function(){ headerCopy.textContent = headerLabel; headerCopy.classList.remove('copied'); }, 1800);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+      } else {
+        fallbackCopy(text, done);
+      }
+    });
   }
 })();
 </script>
