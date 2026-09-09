@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GKIM — Embedded View</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/logo/official-favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-dark:#0A0A09;
+  --bg-accent:#FFDD00;
+  --surface-header:#0A0A09;
+  --text-on-dark:#FFFFFF;
+  --text-on-dark-muted:#D6D6D6;
+  --text-on-light:#202020;
+  --border-on-dark:#5C5C5C;
+  --type-display:'League Gothic', Impact, 'Arial Narrow', sans-serif;
+  --type-body:'Figtree','Helvetica Neue', Arial, sans-serif;
+  --header-h-desktop:84px;
+  --header-h-mobile:64px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--bg-dark);
+  color:var(--text-on-dark);
+  font-family:var(--type-body);
+  display:flex;flex-direction:column;
+}
+
+/* ── Header ── */
+.gear-header{
+  height:var(--header-h-desktop);
+  background:var(--surface-header);
+  border-bottom:1px solid var(--border-on-dark);
+  display:flex;align-items:center;
+  flex:none;
+}
+.gear-header__inner{
+  width:100%;max-width:1120px;margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.gear-header__brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.gear-header__gears-logo{height:30px;width:auto;display:block}
+.gear-header__divider{width:1px;height:28px;background:var(--border-on-dark)}
+.gear-header__app-name{
+  font-family:var(--type-display);font-size:1.5rem;line-height:1;
+  color:var(--text-on-dark);letter-spacing:0.04em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;
+}
+.gear-btn{
+  font-family:var(--type-body);font-weight:600;font-size:.9rem;
+  border-radius:0;border:1px solid transparent;padding:11px 20px;
+  text-decoration:none;cursor:pointer;white-space:nowrap;
+}
+.gear-btn--primary{background:var(--bg-accent);color:var(--text-on-light)}
+
+/* ── Frame area ── */
+main{flex:1 1 auto;min-height:0;display:flex}
+iframe{flex:1 1 auto;width:100%;height:100%;border:0;background:#fff;display:block}
+
+/* ── Fallback / error state ── */
+.notice{
+  flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px;
+}
+.notice__card{max-width:560px;text-align:center}
+.notice h1{font-family:var(--type-display);font-weight:400;font-size:clamp(1.6rem,4vw,2.4rem);margin:0 0 12px;letter-spacing:.02em}
+.notice p{color:var(--text-on-dark-muted);line-height:1.6;margin:0 0 8px}
+.notice code{background:#202020;padding:2px 6px;font-size:.85em}
+
+@media (max-width:640px){
+  .gear-header{height:var(--header-h-mobile)}
+  .gear-header__inner{padding:0 18px}
+  .gear-header__app-name{font-size:1.25rem;max-width:44vw}
+  .gear-btn{padding:9px 14px;font-size:.82rem}
+}
+:focus-visible{outline:2px solid var(--bg-accent);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<header class="gear-header">
+  <div class="gear-header__inner">
+    <a class="gear-header__brand" href="https://gkim.digital" aria-label="Back to GKIM">
+      <img src="/logo/inverted-logo-on-black-background.svg" alt="GKIM" class="gear-header__gears-logo">
+      <span class="gear-header__divider" aria-hidden="true"></span>
+      <span class="gear-header__app-name" id="appName">Embedded View</span>
+    </a>
+    <a class="gear-btn gear-btn--primary" href="https://gkim.digital" id="ctaLink">GKIM Digital</a>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<script>
+(function(){
+  // Origins allowed to be framed. GKIM/GMG family + Claude artifacts.
+  var ALLOWED_HOST_SUFFIXES = [
+    'gkim.digital',
+    'gmg.digital',
+    'claude.site',
+    'claude.ai'
+  ];
+
+  var main = document.getElementById('main');
+  var appName = document.getElementById('appName');
+
+  function showNotice(title, msg){
+    main.innerHTML =
+      '<div class="notice"><div class="notice__card">' +
+      '<h1></h1><p class="m"></p>' +
+      '<p>Usage: <code>/embed?url=https://claude.site/public/artifacts/…/embed</code></p>' +
+      '</div></div>';
+    main.querySelector('h1').textContent = title;
+    main.querySelector('.m').textContent = msg;
+  }
+
+  function hostAllowed(host){
+    host = host.toLowerCase();
+    return ALLOWED_HOST_SUFFIXES.some(function(suffix){
+      return host === suffix || host.endsWith('.' + suffix);
+    });
+  }
+
+  var params = new URLSearchParams(window.location.search);
+  var raw = params.get('url');
+  var titleParam = params.get('title');
+
+  if(!raw){
+    showNotice('No content specified', 'This page needs a ?url= parameter pointing to the content to display.');
+    return;
+  }
+
+  var target;
+  try { target = new URL(raw); }
+  catch(e){ showNotice('Invalid URL', 'The url parameter could not be parsed as a valid URL.'); return; }
+
+  if(target.protocol !== 'https:'){
+    showNotice('Insecure URL blocked', 'Only https:// URLs can be embedded.');
+    return;
+  }
+
+  if(!hostAllowed(target.hostname)){
+    showNotice('Origin not allowed', 'For safety, only approved GKIM, GMG and Claude sources can be embedded here.');
+    return;
+  }
+
+  if(titleParam){
+    var t = titleParam.slice(0,120);
+    appName.textContent = t;
+    document.title = 'GKIM — ' + t;
+  }
+
+  var frame = document.createElement('iframe');
+  frame.src = target.href;
+  frame.title = titleParam || 'Embedded content';
+  frame.setAttribute('allow', 'clipboard-write; fullscreen');
+  frame.setAttribute('allowfullscreen', '');
+  frame.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+  main.appendChild(frame);
+})();
+</script>
+</body>
+</html>

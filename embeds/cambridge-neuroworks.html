@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cambridge NeuroWorks — a thought following our conversation</title>
+<link rel="icon" href="/logo/official-favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Archivo:wght@400;500;600&family=League+Gothic&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F8F5;
+  --paper-2:#EEF3EE;
+  --ink:#142A2C;
+  --ink-soft:#3E5658;
+  --cam:#A9C5B4;          /* Cambridge duck-egg */
+  --cam-tint:#DCE8DF;
+  --signal:#0E6E5C;       /* interaction / links */
+  --signal-deep:#0A5245;
+  --amber:#B77E28;        /* value moments only */
+  --line:#C7D6CB;
+  --radius:10px;
+  --serif:"Fraunces", Georgia, serif;
+  --sans:"Archivo", -apple-system, system-ui, sans-serif;
+
+  /* GKIM header tokens */
+  --gkim-bg-dark:#0A0A09;
+  --gkim-accent:#FFDD00;
+  --gkim-text-on-dark:#FFFFFF;
+  --gkim-border-on-dark:#5C5C5C;
+  --gkim-type-display:'League Gothic', Impact, 'Arial Narrow', sans-serif;
+  --gkim-type-body:'Figtree','Helvetica Neue', Arial, sans-serif;
+  --gkim-header-h:84px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--signal); text-decoration-thickness:1px; text-underline-offset:3px}
+a:hover{color:var(--signal-deep)}
+:focus-visible{outline:2.5px solid var(--signal); outline-offset:2px; border-radius:3px}
+
+/* ── GKIM header bar ── */
+.gkim-header{
+  height:var(--gkim-header-h);
+  background:var(--gkim-bg-dark);
+  border-bottom:1px solid var(--gkim-border-on-dark);
+  display:flex;align-items:center;position:sticky;top:0;z-index:1000;
+}
+.gkim-header__inner{
+  width:100%;max-width:1120px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.gkim-header__brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.gkim-header__brand:hover{color:inherit}
+.gkim-header__logo{height:30px;width:auto;display:block}
+.gkim-header__divider{width:1px;height:28px;background:var(--gkim-border-on-dark)}
+.gkim-header__name{
+  font-family:var(--gkim-type-display);font-size:1.5rem;line-height:1;
+  color:var(--gkim-text-on-dark);letter-spacing:0.04em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52vw;
+}
+.gkim-header__cta{
+  font-family:var(--gkim-type-body);font-weight:600;font-size:.9rem;
+  border-radius:0;border:1px solid transparent;padding:11px 20px;
+  text-decoration:none;background:var(--gkim-accent);color:#202020;white-space:nowrap;
+}
+:focus-visible.gkim-header__cta,.gkim-header__cta:focus-visible{outline:2px solid var(--gkim-accent);outline-offset:3px}
+@media (max-width:640px){
+  .gkim-header{height:64px}
+  .gkim-header__inner{padding:0 18px}
+  .gkim-header__name{font-size:1.25rem;max-width:44vw}
+  .gkim-header__cta{padding:9px 14px;font-size:.82rem}
+}
+
+.wrap{max-width:920px; margin:0 auto; padding:0 28px}
+.narrow{max-width:680px}
+
+/* ---------- hero ---------- */
+header.hero{padding:84px 0 56px; border-bottom:1px solid var(--line)}
+.hello{font-family:var(--serif); font-size:1.05rem; color:var(--ink-soft); margin:0 0 22px}
+h1{
+  font-family:var(--serif); font-weight:500; letter-spacing:-0.01em;
+  font-size:clamp(2rem, 4.6vw, 3.1rem); line-height:1.14; margin:0 0 26px; max-width:20ch;
+}
+.hero p.lede{font-size:1.12rem; max-width:58ch; color:var(--ink-soft); margin:0 0 10px}
+.hero .from{margin-top:34px; font-size:.95rem; color:var(--ink-soft)}
+.hero .from strong{color:var(--ink); font-weight:600}
+
+/* ---------- section scaffolding ---------- */
+section{padding:64px 0}
+section + section{border-top:1px solid var(--line)}
+h2{
+  font-family:var(--serif); font-weight:500; font-size:clamp(1.45rem,2.6vw,1.9rem);
+  line-height:1.2; margin:0 0 18px; max-width:26ch;
+}
+p{max-width:66ch}
+.note{color:var(--ink-soft)}
+
+/* what I heard — the sentence */
+.sentence{
+  font-family:var(--serif); font-size:clamp(1.2rem,2.4vw,1.55rem); line-height:1.5;
+  border-left:3px solid var(--cam); padding:6px 0 6px 26px; margin:30px 0; max-width:34em;
+}
+.sentence em{font-style:normal; color:var(--signal-deep)}
+
+/* why it's hard — paired list */
+.hard{list-style:none; margin:26px 0 0; padding:0; display:grid; gap:14px}
+.hard li{
+  background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+  padding:16px 20px; max-width:66ch;
+}
+.hard li b{font-weight:600}
+
+/* ---------- lens toggle ---------- */
+.lens{display:flex; gap:8px; flex-wrap:wrap; margin:26px 0 34px}
+.lens button{
+  font:inherit; font-weight:500; font-size:.94rem; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--ink-soft);
+  border-radius:999px; padding:9px 18px;
+}
+.lens button[aria-pressed="true"]{
+  background:var(--ink); border-color:var(--ink); color:var(--paper);
+}
+.pane[hidden]{display:none}
+
+/* ---------- the chain (spine) ---------- */
+.chain{list-style:none; margin:0; padding:0; position:relative}
+.chain::before{
+  content:""; position:absolute; left:21px; top:14px; bottom:14px;
+  width:2px; background:linear-gradient(var(--cam), var(--signal));
+}
+.chain li{position:relative; padding:0 0 14px 62px}
+.chain li:last-child{padding-bottom:0}
+.chain .dot{
+  position:absolute; left:8px; top:14px; width:28px; height:28px; border-radius:50%;
+  background:var(--paper); border:2px solid var(--signal); color:var(--signal-deep);
+  font-weight:600; font-size:.85rem; display:grid; place-items:center;
+}
+.chain li.loop .dot{border-color:var(--amber); color:var(--amber)}
+details.stage{
+  border:1px solid var(--line); border-radius:var(--radius); background:#fff;
+  transition:border-color .18s ease;
+}
+details.stage[open]{border-color:var(--signal)}
+details.stage summary{
+  list-style:none; cursor:pointer; display:flex; align-items:baseline; gap:14px;
+  padding:15px 20px; font-weight:600; font-size:1.02rem;
+}
+details.stage summary::-webkit-details-marker{display:none}
+details.stage summary .sub{font-weight:400; color:var(--ink-soft); font-size:.95rem}
+details.stage summary::after{
+  content:"+"; margin-left:auto; font-family:var(--serif); font-size:1.25rem;
+  color:var(--signal); line-height:1; transform:translateY(2px);
+}
+details.stage[open] summary::after{content:"–"}
+.stage-body{padding:2px 20px 18px; border-top:1px dashed var(--line); margin-top:0}
+.stage-body p{margin:14px 0 0; font-size:.98rem}
+.stage-body .adds{color:var(--ink-soft)}
+.stage-body .out{margin-top:14px; font-size:.94rem}
+.stage-body .out b{color:var(--signal-deep); font-weight:600}
+
+/* value forms strip */
+.forms{display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 0; padding:0; list-style:none}
+.forms li{
+  border:1px solid var(--cam); background:var(--cam-tint); border-radius:999px;
+  padding:7px 16px; font-size:.92rem; font-weight:500; color:var(--ink);
+}
+.forms li:last-child{border-color:var(--amber); background:#F6ECD9; color:#6E4B14}
+
+/* rails pane */
+.rails{display:grid; gap:16px; margin-top:6px}
+.rail{
+  background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:20px 22px;
+}
+.rail h3{font-family:var(--serif); font-weight:500; font-size:1.18rem; margin:0 0 8px}
+.rail p{margin:0; font-size:.98rem; color:var(--ink-soft)}
+.rail .keeps{margin-top:12px; font-size:.94rem; color:var(--ink)}
+
+/* people pane */
+table.people{border-collapse:collapse; width:100%; max-width:760px; font-size:.97rem}
+table.people th, table.people td{
+  text-align:left; padding:12px 16px 12px 0; border-bottom:1px solid var(--line); vertical-align:top;
+}
+table.people th{font-weight:600; width:34%}
+table.people tr:last-child th, table.people tr:last-child td{border-bottom:none}
+
+/* method: GEARS */
+.arc{list-style:none; margin:26px 0 0; padding:0; display:grid; gap:10px; counter-reset:g}
+.arc li{
+  counter-increment:g; background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px 18px 14px 52px; position:relative; max-width:720px; font-size:.97rem;
+}
+.arc li::before{
+  content:counter(g); position:absolute; left:18px; top:13px;
+  font-family:var(--serif); font-size:1.15rem; color:var(--signal); font-weight:500;
+}
+.arc li b{font-weight:600}
+.arc li span{color:var(--ink-soft)}
+.anatomy{
+  margin:28px 0 0; padding:18px 22px; background:var(--cam-tint); border:1px solid var(--cam);
+  border-radius:var(--radius); max-width:720px; font-size:.95rem;
+}
+.anatomy b{font-weight:600}
+.anatomy ul{list-style:none; margin:10px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px}
+.anatomy ul li{background:#fff; border:1px solid var(--cam); border-radius:999px; padding:5px 14px}
+.grammar{
+  font-family:var(--serif); font-size:clamp(1.08rem,2vw,1.3rem); line-height:1.55;
+  border-left:3px solid var(--signal); padding:6px 0 6px 26px; margin:28px 0; max-width:36em;
+}
+
+/* four benefits */
+.four{list-style:none; margin:28px 0 0; padding:0; display:grid; gap:0; counter-reset:b}
+.four li{
+  counter-increment:b; padding:20px 0 20px 58px; position:relative; border-top:1px solid var(--line); max-width:70ch;
+}
+.four li:first-child{border-top:none; padding-top:6px}
+.four li::before{
+  content:counter(b); position:absolute; left:0; top:16px;
+  font-family:var(--serif); font-size:1.5rem; color:var(--cam); font-weight:500;
+}
+.four li:first-child::before{top:2px}
+.four b{font-weight:600; display:block; margin-bottom:4px}
+.four p{margin:0; font-size:.98rem; color:var(--ink-soft)}
+
+/* next steps + close */
+.steps{display:grid; gap:16px; margin-top:26px}
+.step{
+  background:#fff; border:1px solid var(--line); border-left:4px solid var(--signal);
+  border-radius:var(--radius); padding:20px 22px; max-width:720px;
+}
+.step b{font-weight:600}
+.step p{margin:8px 0 0; font-size:.98rem; color:var(--ink-soft)}
+.close p{font-size:1.05rem}
+.contact{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+.contact a{
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  font-weight:600; font-size:.98rem; border-radius:999px; padding:12px 22px;
+}
+.contact a.mail{background:var(--ink); color:var(--paper); border:1px solid var(--ink)}
+.contact a.mail:hover{background:var(--signal-deep); border-color:var(--signal-deep)}
+.contact a.wa{background:#fff; color:var(--ink); border:1px solid var(--line)}
+.contact a.wa:hover{border-color:var(--signal); color:var(--signal-deep)}
+.contact svg{width:17px; height:17px; flex:none}
+.sig{margin-top:34px; font-family:var(--serif); font-size:1.25rem}
+footer{padding:30px 0 60px; color:var(--ink-soft); font-size:.88rem; border-top:1px solid var(--line)}
+
+@media (min-width:760px){
+  .rails{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:560px){
+  body{font-size:15.5px}
+  .chain li{padding-left:52px}
+  .chain::before{left:17px}
+  .chain .dot{left:4px; width:26px; height:26px}
+}
+</style>
+</head>
+<body>
+
+<header class="gkim-header">
+  <div class="gkim-header__inner">
+    <a class="gkim-header__brand" href="https://gkim.digital" aria-label="Back to GKIM">
+      <img src="/logo/inverted-logo-on-black-background.svg" alt="GKIM" class="gkim-header__logo">
+      <span class="gkim-header__divider" aria-hidden="true"></span>
+      <span class="gkim-header__name">Cambridge NeuroWorks</span>
+    </a>
+    <a class="gkim-header__cta" href="mailto:ian@gkxim.com?subject=Continuing%20our%20conversation%20%E2%80%94%20Cambridge%20NeuroWorks">Reply to Ian</a>
+  </div>
+</header>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="hello">Ahmed — a short piece of thinking, following our conversation.</p>
+    <h1>What if Cambridge NeuroWorks could see itself working?</h1>
+    <p class="lede">You described an organisation that takes exceptional people and promising science, surrounds them with exactly the right resources, and converts possibility into patient and economic value. This page is my attempt to play that back — and to sketch one idea it suggested to me.</p>
+    <p class="lede">It is an interpretation, not a proposal. I have almost certainly got parts of it wrong, and the most useful thing you could do is tell me where.</p>
+    <p class="from">From <strong>Ian Morrison</strong> · GKIM Digital</p>
+  </div>
+</header>
+
+<main>
+
+<section id="heard">
+  <div class="wrap">
+    <h2>What I heard</h2>
+    <p>Cambridge NeuroWorks is not an accelerator in the conventional sense. It is a translation system: a nine-partner consortium that finds people and neurotechnology with real potential, and then assembles a bespoke combination of scientific, clinical, regulatory, product, investment and commercial capability around each one.</p>
+    <p class="sentence">An <em>opportunity</em> applies a proposed use of an <em>asset</em>, led by a <em>person or team</em>, to address a <em>need</em>, through a chosen <em>pathway</em>, using an assembled <em>support package</em> — in pursuit of defined clinical and commercial <em>outcomes</em>.</p>
+    <p class="note">Everything the organisation does seems to attach to that one sentence. The fellows change, the science changes, the routes to market change — but the sentence stays the same. That consistency is what makes the model powerful, and what makes it worth representing explicitly.</p>
+  </div>
+</section>
+
+<section id="hard">
+  <div class="wrap">
+    <h2>Why the model is genuinely hard to run</h2>
+    <p>None of this is a criticism — it is inherent in what you have chosen to build. A distributed, human, judgement-led system carries structural challenges that grow with scale:</p>
+    <ul class="hard">
+      <li><b>The knowledge lives in heads.</b> Who to call, what worked last time, why an opportunity was routed one way and not another — much of it is carried by a small number of central people.</li>
+      <li><b>Every pathway is bespoke.</b> That is the strength of the model, but it means consistency, comparability and institutional learning have to be fought for rather than falling out naturally.</li>
+      <li><b>Stalls are quiet.</b> An opportunity rarely announces that it has stopped progressing. Slipping milestones, unresolved regulatory questions and missing clinical engagement accumulate silently.</li>
+      <li><b>Value arrives before the metrics do.</b> Much of what Cambridge NeuroWorks creates — evidence gained, risk removed, options opened — happens long before revenue or valuation make it visible to funders.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="idea">
+  <div class="wrap">
+    <h2>The idea: a digital twin of the operating model</h2>
+    <p>Not a CRM, and not software imposed on the organisation. The starting point would be to understand and codify how the system really works — its people, assets, needs, opportunities, resources, decisions and outcomes, and the relationships between them — and only then explore where AI can make that model more systematic, more visible and more scalable, <b>without displacing the human judgement it depends on</b>.</p>
+    <p class="note">Three ways of looking at the same thing — choose a lens:</p>
+
+    <div class="lens" role="group" aria-label="Choose a view">
+      <button type="button" data-pane="chain" aria-pressed="true">The value chain</button>
+      <button type="button" data-pane="rails" aria-pressed="false">Where the AI sits</button>
+      <button type="button" data-pane="people" aria-pressed="false">What it means for people</button>
+    </div>
+
+    <div class="pane" id="pane-chain">
+      <ol class="chain">
+        <li><span class="dot" aria-hidden="true">1</span>
+          <details class="stage"><summary>Discover <span class="sub">people, needs, science and ideas</span></summary>
+            <div class="stage-body">
+              <p>Researchers, clinicians, unmet clinical needs, underused IP, findings and technologies enter the system from across the consortium and beyond.</p>
+              <p class="adds">The twin makes previously disconnected people and assets visible to each other — expanding the search space rather than just recording it.</p>
+              <p class="out"><b>Output:</b> a structured pool of people, needs, assets and ideas.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">2</span>
+          <details class="stage"><summary>Form opportunities <span class="sub">connect person, asset, need and use</span></summary>
+            <div class="stage-body">
+              <p>An idea is not yet an opportunity. Value is created by connecting a capable team, a defensible asset, an important need and a plausible route to impact — and by exploring several uses of the same science rather than committing to the inventor's first proposition.</p>
+              <p class="adds">AI can surface connections that would otherwise stay hidden: one lab's science answering another clinic's need; complementary teams worth combining.</p>
+              <p class="out"><b>Output:</b> explicit, testable opportunity hypotheses.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">3</span>
+          <details class="stage"><summary>Select and route <span class="sub">assess potential, choose the pathway</span></summary>
+            <div class="stage-body">
+              <p>Not accept/reject, but routing: blue-sky exploration, proof of concept, licensing, further research, referral — or a considered stop.</p>
+              <p class="adds">Consistent decision packs — evidence for and against, unresolved assumptions, comparative opportunities — so decisions rest on the same footing regardless of who is in the room.</p>
+              <p class="out"><b>Output:</b> a selected opportunity, a pathway, and a definition of success.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">4</span>
+          <details class="stage"><summary>Assemble <span class="sub">match experts, facilities, partners and funding</span></summary>
+            <div class="stage-body">
+              <p>Your most distinctive gear: configuring a bespoke support system from a distributed ecosystem — clinicians, engineers, regulators, IP counsel, facilities, funders, mentors.</p>
+              <p class="adds">Requirements matched against a living inventory of capability, with the reasoning shown — instead of relying mainly on who happens to know whom.</p>
+              <p class="out"><b>Output:</b> a resourced plan with named people, commitments and decision points.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">5</span>
+          <details class="stage"><summary>De-risk <span class="sub">resolve the largest uncertainties first</span></summary>
+            <div class="stage-body">
+              <p>Convert critical uncertainty into evidence in the right order — scientific validity, clinical need, feasibility, IP, adoption — rather than advancing every workstream at once.</p>
+              <p class="adds">An explicit model of what is known, assumed, uncertain and contradicted, with the next most valuable experiment or conversation recommended.</p>
+              <p class="out"><b>Output:</b> evidence, reduced risk, and an informed proceed / pivot / stop decision.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">6</span>
+          <details class="stage"><summary>Translate <span class="sub">build clinical, product and regulatory readiness</span></summary>
+            <div class="stage-body">
+              <p>Parallel tracks — science, clinical, patient, product, regulatory, IP, market, economics — that turn together: a change of intended use ripples through study design, classification, funding and commercial model.</p>
+              <p class="adds">The twin keeps those tracks coherent, flags the ripple effects, and preserves the reasoning behind every decision.</p>
+              <p class="out"><b>Output:</b> a clinically, technically and commercially coherent proposition.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">7</span>
+          <details class="stage"><summary>Mobilise <span class="sub">venture, licence, partnership or programme</span></summary>
+            <div class="stage-body">
+              <p>Not every success should become a start-up. The system chooses among venture creation, licensing, industry partnership, NHS-led implementation, further funding — or stopping while preserving the learning.</p>
+              <p class="adds">Route options compared on evidence, with investor, partner and funding matches drawn from the same living inventory.</p>
+              <p class="out"><b>Output:</b> a committed vehicle, team, capital source and plan.</p>
+            </div>
+          </details>
+        </li>
+        <li><span class="dot" aria-hidden="true">8</span>
+          <details class="stage"><summary>Scale impact <span class="sub">adoption, investment and patient benefit</span></summary>
+            <div class="stage-body">
+              <p>Patient testing, approvals, adoption, revenue, follow-on investment, UK-retained technology — with Cambridge NeuroWorks' contribution remaining attributable even where others capture the commercial value.</p>
+              <p class="out"><b>Output:</b> clinical, commercial, scientific and ecosystem value.</p>
+            </div>
+          </details>
+        </li>
+        <li class="loop"><span class="dot" aria-hidden="true">9</span>
+          <details class="stage"><summary>Compound <span class="sub">every journey strengthens the next</span></summary>
+            <div class="stage-body">
+              <p>Playbooks, precedents, failure patterns, benchmarks, relationships and better selection criteria — retained by the organisation rather than dispersing when people move on.</p>
+              <p class="adds">This is where the twin earns its keep long-term: Cambridge NeuroWorks builds a proprietary, improving understanding of how neurotechnology translation actually works.</p>
+              <p class="out"><b>Output:</b> a system that gets measurably better at cycle <i>n</i>+1.</p>
+            </div>
+          </details>
+        </li>
+      </ol>
+
+      <ul class="forms" aria-label="Forms of value manufactured along the chain">
+        <li>Possibility value</li><li>Option value</li><li>Evidence value</li><li>Execution value</li><li>Outcome value</li><li>System value</li>
+      </ul>
+      <p class="note" style="margin-top:14px">Most of these forms of value are created <b>before</b> conventional financial metrics can see them. A twin that tracks evidence gained, risk removed and option value created is a more faithful measure of early-stage progress than revenue alone.</p>
+    </div>
+
+    <div class="pane" id="pane-rails" hidden>
+      <p>The nine stages sit on three organisation-wide rails. This is where the AI lives — observing, representing, recommending and learning — while scientific, clinical and investment decisions stay under accountable human control.</p>
+      <div class="rails">
+        <div class="rail">
+          <h3>Knowledge &amp; evidence</h3>
+          <p>Every claim, assumption, experiment, decision and its provenance — a complete organisational memory that survives staff, adviser and fellow turnover.</p>
+          <p class="keeps">Answers: <i>what do we know, and why do we believe it?</i></p>
+        </div>
+        <div class="rail">
+          <h3>Ecosystem &amp; resources</h3>
+          <p>A living map of experts, partners, facilities, funders, datasets and relationships across the consortium — matched to each opportunity's current requirements.</p>
+          <p class="keeps">Answers: <i>who and what could help this, now?</i></p>
+        </div>
+        <div class="rail">
+          <h3>Governance &amp; portfolio</h3>
+          <p>Selection, stage gates, conflicts, resource allocation and attribution — giving leadership a live view of where the portfolio is progressing, stalling or concentrating.</p>
+          <p class="keeps">Answers: <i>where should our attention and capital go next?</i></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-people" hidden>
+      <p>A system like this only matters if it makes the humans in it more effective. In each case the pattern is the same: less time assembling information, more time on judgement, relationships and science.</p>
+      <table class="people">
+        <tbody>
+          <tr><th>Fellows &amp; founders</th><td>A clearer, personalised route to impact — and earlier, kinder redirection when a path is not working.</td></tr>
+          <tr><th>Clinicians &amp; patients</th><td>Earlier involvement, and solutions shaped around real needs rather than retrofitted to them.</td></tr>
+          <tr><th>Experts &amp; partners</th><td>Better-defined requests, so scarce specialist time lands where it creates the most marginal value.</td></tr>
+          <tr><th>Leadership</th><td>Portfolio visibility, earlier warnings, and decisions informed by consistent evidence rather than presentation quality.</td></tr>
+          <tr><th>ARIA &amp; funders</th><td>Demonstrable additionality — time saved, risk removed, capital mobilised — not just activity counts.</td></tr>
+          <tr><th>Cambridge NeuroWorks</th><td>Scale without proportional headcount, institutional memory, and an operating model that could one day be exported to other domains.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>The method behind the idea</h2>
+    <p>It is fair to ask where the confidence comes from. Digitising business ideas is the specific thing I do — through a method and platform I have been developing called <b>GEARS™</b>, refined over fifteen years of building systems in healthcare, fintech and logistics.</p>
+    <p class="grammar">GEARS treats a business as a governed system of named capabilities — gears. Each gear can be described in plain language, assigned to a human, an AI agent, a workflow or a service, and instrumented with its own knowledge, application and dashboard. Leadership sees the whole system through a cockpit that compares <b>design intent</b> with <b>runtime reality</b> — how the business is meant to work against how it is actually working.</p>
+    <p>Digitising an idea is never "build software for it". It follows one arc, and it starts with knowledge, not code:</p>
+    <ol class="arc">
+      <li><b>Discover the opportunity.</b> <span>Define the problem, the market, the stakeholders and the outcome the whole system exists to produce — for Cambridge NeuroWorks, something like "convert exceptional people and science into patient and economic value".</span></li>
+      <li><b>Build the knowledge brain.</b> <span>Capture what the organisation actually knows — documents, decisions, relationships, the things your best people carry in their heads — into a knowledge base every gear can draw on.</span></li>
+      <li><b>Design the capability system.</b> <span>Decompose the outcome into named gears — a hierarchy, a dependency graph, bounded partitions — and decide, gear by gear, what stays human, what becomes agentic, and what is mixed.</span></li>
+      <li><b>Operate with AI assistance.</b> <span>Each gear gets its working surface: an app for the people running it, an assistant over its knowledge, and a dashboard showing its health.</span></li>
+      <li><b>Evolve through evidence.</b> <span>Change is governed, not ad hoc: investigations tied to specific gears, hypotheses with confidence levels, bounded experiments, and a decision memory of what was tried and why.</span></li>
+    </ol>
+    <div class="anatomy">
+      <b>Every gear carries the same five things:</b>
+      <ul>
+        <li>a plain-language contract</li>
+        <li>an execution mode — human, agent, workflow or service</li>
+        <li>its own knowledge</li>
+        <li>its own app</li>
+        <li>its own dashboard</li>
+      </ul>
+    </div>
+    <p style="margin-top:28px">The grammar has proved repeatable across wholly different businesses — our own go-to-market engine, a biotech commercialisation strategy, and a live multi-entity telehealth operation. That repeatability is what gives me confidence it would hold for a translation system.</p>
+    <p>Read back through this lens, the nine stages above stop being a diagram. Each is a gear: describable, resourceable, assignable and governed. The <b>opportunity</b> is the object that flows through them. The three rails are the knowledge brain, the living inventory and the governance cockpit. And the "design intent versus runtime reality" comparison answers a question every distributed organisation struggles with — <i>is the system actually working the way we believe it works?</i></p>
+    <p class="note">The important consequence: Cambridge NeuroWorks would not be adopting someone else's software. It would be expressing its own distinctive operating model in a form that can be run, measured and continuously improved — with the human judgement kept exactly where you decide it belongs.</p>
+  </div>
+</section>
+
+<section id="benefits">
+  <div class="wrap">
+    <h2>If it works, four things change</h2>
+    <ol class="four">
+      <li><b>You can see the whole system.</b><p>People, opportunities, resources, decisions and value flows become visible in one place — including the quiet stalls that currently surface late.</p></li>
+      <li><b>Better connections get made.</b><p>The right science, people, needs and resources meet at the right time — by design, not only by fortunate introduction.</p></li>
+      <li><b>Translation accelerates.</b><p>The biggest uncertainties are resolved earliest, so evidence arrives sooner, capital works harder and weak ideas are retired kindly and fast.</p></li>
+      <li><b>Intelligence compounds.</b><p>Every completed, pivoted or stopped opportunity makes the next one more likely to succeed. The operating model itself becomes a strategic asset.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="next">
+  <div class="wrap">
+    <h2>Two suggested next steps — both small</h2>
+    <div class="steps">
+      <div class="step">
+        <b>Walk one or two real fellows through the model.</b>
+        <p>From entry, through assessment and resource assembly, to intended outcome. An afternoon's conversation would quickly show which parts of this interpretation hold, where the real friction sits, and where AI would add value first.</p>
+      </div>
+      <div class="step">
+        <b>Continue the conversation with your colleagues.</b>
+        <p>You kindly introduced me to two of them. I would welcome the chance to have this picture challenged by the people who run the system day to day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="close" class="close">
+  <div class="wrap narrow">
+    <h2>Why I'm interested</h2>
+    <p>This sits naturally at the intersection of my two working lives: GEARS, and fifteen years commercialising complex healthcare and life-science propositions. But the honest reason is simpler: what you described is one of the most interesting operating models I've encountered — a system for manufacturing opportunity itself — and I'd genuinely enjoy helping you make it visible to itself.</p>
+    <p>No urgency on my side. If this resonates, a reply is all it takes — whichever way suits you:</p>
+    <div class="contact">
+      <a class="mail" href="mailto:ian@gkxim.com?subject=Continuing%20our%20conversation%20%E2%80%94%20Cambridge%20NeuroWorks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Reply by email
+      </a>
+      <a class="wa" href="https://wa.me/447385542874" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L4 20l.9-4.4A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+        WhatsApp me
+      </a>
+    </div>
+    <p class="sig">Ian</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">Prepared by Ian Morrison, GKIM Digital · <a href="mailto:ian@gkxim.com">ian@gkxim.com</a> · <a href="https://wa.me/447385542874" target="_blank" rel="noopener">+44 7385 542874</a> · September 2026 · An interpretation for discussion, not a formal proposal.</div>
+</footer>
+
+<script>
+(function(){
+  var buttons = document.querySelectorAll('.lens button');
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){ b.setAttribute('aria-pressed', String(b===btn)); });
+      document.querySelectorAll('.pane').forEach(function(p){
+        p.hidden = (p.id !== 'pane-' + btn.dataset.pane);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

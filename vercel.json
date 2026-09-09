@@ -21,7 +21,33 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/embed",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://*.gkim.digital https://*.gmg.digital"
+        }
+      ]
+    },
+    {
+      "source": "/embeds/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://*.gkim.digital https://*.gmg.digital"
+        }
+      ]
+    },
+    {
+      "source": "/((?!embed$|embed\\?|embeds/).*)",
       "headers": [
         {
           "key": "X-Content-Type-Options",
