@@ -9,6 +9,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital@1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+#password-gate{position:fixed;inset:0;z-index:9999;background:#FCFAF6;display:flex;align-items:center;justify-content:center;padding:24px}
+.password-card{width:min(460px,100%);background:#fff;border:1px solid #DADFE3;border-radius:14px;padding:30px;box-shadow:0 18px 50px rgba(11,43,95,.12);text-align:center}
+.password-logo{width:260px;max-width:82%;height:auto;margin-bottom:22px}
+.password-card h2{margin:0 0 8px;color:#0B2B5F;font-size:1.65rem}
+.password-card p{margin:0 0 18px;color:#565E69}
+.password-input{width:100%;height:46px;border:1px solid #DADFE3;border-radius:8px;padding:0 12px;font:inherit;background:#fff;color:#2C333D}
+.password-input:focus{outline:3px solid #2B5591;outline-offset:2px;border-color:#2B5591}
+.password-submit{width:100%;height:46px;margin-top:10px;border:0;border-radius:8px;background:#0B2B5F;color:#fff;font-weight:700;cursor:pointer}
+.password-submit:hover{background:#2B5591}
+.password-error{min-height:20px;margin-top:10px!important;color:#A92A2A!important;font-size:.86rem}
+.page-locked{display:none!important}
 :root{
   --navy:#0B2B5F;--navy-soft:#2B5591;--sky:#DBEEFE;--cream:#FCFAF6;
   --slate:#2C333D;--hairline:#DADFE3;--muted:#EDF2F7;--muted-fg:#565E69;
@@ -82,6 +93,17 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
 </style>
 </head>
 <body>
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="password-title">
+  <form class="password-card" id="password-form">
+    <img class="password-logo" src="/GMG/assets/PMG_Logo_Horizontal.svg" alt="Precision Medical Group">
+    <h2 id="password-title">Protected compliance framework</h2>
+    <p>Enter the password to view this page.</p>
+    <input class="password-input" id="password-input" type="password" autocomplete="current-password" aria-label="Password" autofocus>
+    <button class="password-submit" type="submit">View framework</button>
+    <p class="password-error" id="password-error" role="alert" aria-live="polite"></p>
+  </form>
+</div>
+<div id="protected-content" class="page-locked">
 <header class="site-header">
   <div class="container header-inner">
     <img class="logo" src="/GMG/assets/PMG_Logo_Horizontal.svg" alt="Precision Medical Group">
@@ -358,7 +380,42 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
   <div class="gkim-chip"><strong>Powered by GKIM</strong> · technology & operating infrastructure</div>
 </div>
 </footer>
+</div>
 <script>
+(function(){
+  const PASSWORD="compliance";
+  const KEY="pmg-gmg-compliance-access";
+  const gate=document.getElementById("password-gate");
+  const content=document.getElementById("protected-content");
+  const form=document.getElementById("password-form");
+  const input=document.getElementById("password-input");
+  const error=document.getElementById("password-error");
+
+  function unlock(){
+    gate.style.display="none";
+    content.classList.remove("page-locked");
+    sessionStorage.setItem(KEY,"granted");
+  }
+
+  if(sessionStorage.getItem(KEY)==="granted"){
+    unlock();
+  } else {
+    input.focus();
+  }
+
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(input.value===PASSWORD){
+      error.textContent="";
+      unlock();
+    } else {
+      error.textContent="Incorrect password.";
+      input.value="";
+      input.focus();
+    }
+  });
+})();
+
 const tabs=[...document.querySelectorAll(".tab")];
 const panels=[...document.querySelectorAll(".panel")];
 tabs.forEach(btn=>btn.addEventListener("click",()=>{
