@@ -117,7 +117,7 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
   <div class="container">
     <div class="eyebrow">Precision Medical Group · Compliance Architecture</div>
     <h1>Patient admission without compromising clinical independence</h1>
-    <p class="serif-lead">A controlled hand-off from informed marketing interest to independent medical care.</p>
+    <p class="serif-lead">Proposed final shared model for Kiro, PMG operations, compliance, clinicians and Marketing Groups to review.</p>
     <p class="hero-copy">The AI Patient Support Specialist / Patient Care Coordinator verifies identity, patient understanding, voluntary intent and acquisition compliance before a patient enters Precision Medical Group's clinical workflow. It does not diagnose, determine medical necessity, select a laboratory, or approve coverage.</p>
     <span class="badge">AI PSS = admission control, not medical approval</span>
   </div>
@@ -139,6 +139,8 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
 <div class="tabs-shell">
 <nav class="tabs" aria-label="Framework audiences">
   <button class="tab active" data-target="overview">Overview</button>
+  <button class="tab" data-target="strategy">Final Strategy</button>
+  <button class="tab" data-target="legacy">Legacy Questions</button>
   <button class="tab" data-target="mg">Marketing Groups</button>
   <button class="tab" data-target="doctor">Doctors</button>
   <button class="tab" data-target="lab">Laboratories</button>
@@ -175,6 +177,126 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
     <div class="warning"><div class="label">Separate outcomes</div>An MG compliance failure does not automatically determine patient admission. The approved RED-rule severity policy controls whether the event is recordable-only or admission-invalidating.</div>
   </article>
 </div>
+</section>
+
+<section id="strategy" class="panel">
+<article class="card">
+  <div class="eyebrow">Proposed final operating strategy</div>
+  <h2>Keep the live PSS short, intelligent and evidence-preserving</h2>
+  <p>The recommended design is not a long compliance questionnaire. It is a conversational admission-control system that asks only what it must ask, reuses already-verified information, preserves what the patient arrived believing, and separates patient admission from MG governance.</p>
+
+  <div class="grid" style="margin-top:20px">
+    <div>
+      <h3>1. Four hard gates only</h3>
+      <div class="callout"><strong>Identity → Purpose &amp; Voluntary Intent → Acquisition Attestation → Care-Entry Eligibility</strong></div>
+      <ul>
+        <li><strong>Identity:</strong> match-don't-fetch verification; never voice stored values back to the caller unnecessarily.</li>
+        <li><strong>Purpose &amp; Voluntary Intent:</strong> affirmative desire to speak with a PMG clinician; silence or mere non-objection never passes.</li>
+        <li><strong>Acquisition Attestation:</strong> establish provenance, what the patient was told, inducements, impersonation, predetermined care, coverage promises, coaching and MG interference.</li>
+        <li><strong>Care-Entry Eligibility:</strong> administrative/non-clinical prerequisites only. Never infer medical necessity, test eligibility, AWV entitlement, treatment eligibility or coverage.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>2. Mandatory education, but not 14 more gates</h3>
+      <p>The AI must ensure the patient understands:</p>
+      <ul>
+        <li>the practice is <strong>Precision Medical Group</strong>;</li>
+        <li>PMG is independent of the Marketing Group;</li>
+        <li>PMG may complement an existing bricks-and-mortar PCP rather than automatically replace them;</li>
+        <li>the clinician independently decides diagnosis, testing, treatment and follow-up;</li>
+        <li>no outcome, test, prescription, AWV or coverage is guaranteed;</li>
+        <li>ongoing longitudinal PMG care is optional and need not be chosen today.</li>
+      </ul>
+      <div class="info"><div class="label">Remediation loop</div>Ask unaided → preserve the answer → educate if appropriate → reverify. HOLD exists only while the AI performs this in-call remediation.</div>
+    </div>
+  </div>
+
+  <h3>3. Ask once, verify once, reuse everywhere</h3>
+  <p>The AI PSS and legacy EHR should share state. If DOB, address, callback permission, communication preference or another fact has already been reliably verified, do not ask the patient again merely because a second workflow contains the same field. Fresh consent or reverification is required only where law, policy or patient safety requires it.</p>
+  <div class="success"><div class="label">Design rule</div><strong>Ask once, verify once, reuse everywhere.</strong> The PSS should populate the EHR; the EHR should not then repeat the same questions.</div>
+
+  <h3>4. The small additional PSS layer from the legacy EHR</h3>
+  <table>
+    <thead><tr><th>Interaction</th><th>Recommended treatment</th></tr></thead>
+    <tbody>
+      <tr><td>Consent to today's telehealth encounter</td><td><strong>KEEP / MERGE</strong> into Purpose &amp; Voluntary Intent. Remove genetics-specific wording.</td></tr>
+      <tr><td>Name, DOB, address</td><td><strong>VERIFY ONCE</strong> as part of Identity. Do not recollect if already reliably verified.</td></tr>
+      <tr><td>Permission to call back if disconnected</td><td><strong>KEEP.</strong> Important for the live hand-off and callback architecture.</td></tr>
+      <tr><td>Patient vs authorised representative</td><td><strong>KEEP, REWRITE.</strong> Establish who is making decisions; do not ask the AI to make a capacity diagnosis.</td></tr>
+      <tr><td>Facility / hospice status</td><td><strong>CONDITIONAL.</strong> Ask only where PMG policy says it changes care-entry or routing.</td></tr>
+      <tr><td>Audio/video preference</td><td><strong>OPERATIONAL.</strong> Capture as visit modality, not acquisition compliance.</td></tr>
+      <tr><td>SMS / email / voice reminders</td><td><strong>PREFERENCE.</strong> Capture compactly, outside the admission gate.</td></tr>
+      <tr><td>Future health-services contact</td><td><strong>OPTIONAL / SEPARATE.</strong> A No must never prejudice today's care.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5. Strengthen Acquisition Attestation with the useful legacy questions</h3>
+  <p>Two legacy questions add material value once they are generalised beyond genetics:</p>
+  <div class="rule-grid">
+    <div class="rule blue">
+      <h3>Open-ended provenance first</h3>
+      <div class="quote">“Before we continue, tell me how you first heard about Precision Medical Group and what you were told about the care you could receive.”</div>
+      <p>Capture substantially verbatim before corrective education.</p>
+    </div>
+    <div class="rule red">
+      <h3>Targeted checks if not already answered</h3>
+      <ul>
+        <li>“Did anyone offer you money, a gift, reward or anything else of value for speaking with PMG or receiving healthcare?”</li>
+        <li>“Did anyone say or suggest that they worked for Medicare, your insurance company, Precision Medical Group, your doctor, a laboratory or another healthcare organisation?”</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warning"><div class="label">Do not turn signals into automatic declines</div>A reported inducement, misleading representation or other RED signal is evidence. The approved severity policy determines whether it is recordable-only, an MG failure, or admission-invalidating because a hard gate cannot be satisfied.</div>
+
+  <h3>6. Keep AWV out of generic compliance</h3>
+  <p>Questions about whether a patient has completed a Medicare wellness visit, or when, may be useful in an AWV eligibility/pre-visit workflow. They should not be generic acquisition-compliance questions and should never be used by an MG or the PSS to tell the patient that they “qualify” for an AWV.</p>
+
+  <h3>7. Four machine outputs</h3>
+  <table>
+    <thead><tr><th>Field</th><th>Values</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="code">PATIENT_ADMISSION_STATUS</td><td>CLEAR / DECLINE</td><td>Terminal admission result.</td></tr>
+      <tr><td class="code">PATIENT_WORKFLOW_STATE</td><td>CHECKING / HOLD / COMPLETE</td><td>Execution state only; HOLD never waits on a human.</td></tr>
+      <tr><td class="code">MG_COMPLIANCE_EVENT</td><td>NONE / WARNING / MATERIAL_FAILURE</td><td>Independent governance signal about acquisition conduct.</td></tr>
+      <tr><td class="code">CLINICAL_ROUTING</td><td>NORMAL / URGENT / EMERGENCY</td><td>Safety routing independent of compliance.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8. Canonical RED/BLUE policy across every channel</h3>
+  <p>The same source of truth should govern MG humans, MG AI, PMG outbound AI, PMG inbound PSS, SMS, landing pages and prerecorded messages. Different channels may have different permissions, but they must not teach contradictory expectations.</p>
+
+  <div class="danger"><div class="label">Before production sign-off</div>The RED-rule severity matrix—specifically which acquisition defects are merely recordable versus which invalidate knowing and voluntary care entry—should be expressly approved by PMG compliance/healthcare counsel and encoded as policy. The runtime model should never improvise that legal threshold.</div>
+</article>
+</section>
+
+<section id="legacy" class="panel">
+<article class="card">
+  <div class="eyebrow">Legacy EHR / checklist reconciliation</div>
+  <h2>What survives, what moves, and what should disappear</h2>
+  <p>Genetics-specific references should be removed from the generic PMG admission flow. The remaining legacy controls should be mapped to the correct owner rather than repeated as a long spoken checklist.</p>
+  <table>
+    <thead><tr><th>Legacy item</th><th>Decision</th><th>Where it belongs</th></tr></thead>
+    <tbody>
+      <tr><td>Agree to speak with a licensed telehealth provider today</td><td><strong>KEEP / GENERALISE</strong></td><td>Purpose &amp; Voluntary Intent gate</td></tr>
+      <tr><td>Full name, DOB and address</td><td><strong>KEEP / DEDUPLICATE</strong></td><td>Identity gate; shared state with EHR</td></tr>
+      <tr><td>May PMG call back if disconnected?</td><td><strong>KEEP</strong></td><td>Operational consent / callback workflow</td></tr>
+      <tr><td>Can you make your own medical decisions?</td><td><strong>REWRITE</strong></td><td>Determine patient vs authorised representative</td></tr>
+      <tr><td>Consent to provider billing insurance</td><td><strong>MOVE</strong></td><td>Administrative / financial consent, not PSS hard gate</td></tr>
+      <tr><td>Hospice / nursing home / care facility</td><td><strong>CONDITIONAL</strong></td><td>Care-entry or clinical routing only if PMG policy requires it</td></tr>
+      <tr><td>Ever had genetic screening?</td><td><strong>DROP</strong></td><td>Genetics-specific clinical history, not generic PSS</td></tr>
+      <tr><td>Offered money or incentive for genetic test</td><td><strong>KEEP / GENERALISE</strong></td><td>Acquisition Attestation: inducement</td></tr>
+      <tr><td>Sales agent represented themselves as Medicare</td><td><strong>KEEP / BROADEN</strong></td><td>Acquisition Attestation: impersonation / false affiliation</td></tr>
+      <tr><td>Ever completed Medicare wellness visit?</td><td><strong>MOVE</strong></td><td>AWV eligibility/pre-visit workflow</td></tr>
+      <tr><td>Medicare wellness visit in past year?</td><td><strong>MOVE</strong></td><td>AWV eligibility/pre-visit workflow; verify against available history where possible</td></tr>
+      <tr><td>Future contact about other health services</td><td><strong>KEEP SEPARATE / OPTIONAL</strong></td><td>Future communications preference; never affects today's care</td></tr>
+      <tr><td>Confirm all above is true and accurate</td><td><strong>DROP</strong></td><td>Low incremental value once individual facts are verified and timestamped</td></tr>
+      <tr><td>SMS / email / voice notifications</td><td><strong>COMBINE</strong></td><td>One communication-preference interaction, outside compliance gating</td></tr>
+      <tr><td>Video vs audio-only / reason</td><td><strong>CONDITIONAL</strong></td><td>Visit modality and documentation, not acquisition compliance</td></tr>
+    </tbody>
+  </table>
+
+  <div class="success"><div class="label">Net effect</div>The legacy screen can still be fully populated, but the patient should experience only a small number of meaningful conversational interactions. Most fields should be inherited from prior verified state, inferred from the live workflow, or captured as preferences—not re-asked as separate “compliance questions.”</div>
+</article>
 </section>
 
 <section id="mg" class="panel">
@@ -376,7 +498,7 @@ th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute
 
 <footer class="footer">
 <div class="container footer-inner">
-  <div>© Precision Medical Group. Clinical accountability remains with PMG physicians. Framework draft for policy, training and system-design use; final severity thresholds and applicable federal/state requirements require qualified healthcare counsel review.</div>
+  <div>© Precision Medical Group. Clinical accountability remains with PMG physicians. Proposed shared operating model for Kiro, PMG operations, compliance and clinical review; final severity thresholds and applicable federal/state requirements require qualified healthcare counsel review.</div>
   <div class="gkim-chip"><strong>Powered by GKIM</strong> · technology & operating infrastructure</div>
 </div>
 </footer>
