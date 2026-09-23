@@ -370,9 +370,9 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
   min-height:300px;overflow:hidden;text-decoration:none;text-align:left;
 }
 @media(min-width:700px){.foundry-card{min-height:360px;}}
-.foundry-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s ease;}
+.foundry-card video,.foundry-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s ease;}
 .foundry-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,10,9,.72) 0%, rgba(10,10,9,.78) 50%, rgba(10,10,9,.94) 100%);}
-.foundry-card:hover video{transform:scale(1.06);}
+.foundry-card:hover video,.foundry-card:hover img{transform:scale(1.06);}
 .foundry-card-body{position:relative;z-index:1;padding:var(--space-8);}
 .foundry-card-name{display:block;font-family:'League Gothic',Impact,sans-serif;font-weight:400;font-size:clamp(26px,3.2vw,34px);line-height:1.1;color:#fff;margin-bottom:var(--space-2);}
 .foundry-card-desc{font-size:15px;line-height:1.6;color:var(--text-on-dark-muted);max-width:360px;}
@@ -429,9 +429,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 
     <div class="foundry-cards">
       <a href="/foundry/telehealth/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/telehealth/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/telehealth/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">Telehealth Foundry</span>
@@ -439,9 +437,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         </div>
       </a>
       <a href="/foundry/homecare/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/homecare/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/homecare/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">Home Care Foundry</span>
@@ -449,9 +445,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         </div>
       </a>
       <a href="/foundry/healthtech/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/healthtech/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/healthtech/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">HealthTech Foundry</span>
@@ -729,9 +723,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
 
     <div class="foundry-cards">
       <a href="/foundry/telehealth/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/telehealth/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/telehealth/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">Telehealth Foundry</span>
@@ -741,9 +733,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         </div>
       </a>
       <a href="/foundry/homecare/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/homecare/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/homecare/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">Home Care Foundry</span>
@@ -753,9 +743,7 @@ footer{background:var(--bg-dark);color:var(--text-on-dark);padding:var(--space-1
         </div>
       </a>
       <a href="/foundry/healthtech/" class="foundry-card reveal">
-        <video class="foundry-card-video" muted loop playsinline preload="auto" aria-hidden="true">
-          <source src="/foundry/healthtech/media/hero-bg.mp4" type="video/mp4">
-        </video>
+        <img class="foundry-card-img" src="/foundry/healthtech/media/hero-bg.jpg" alt="" loading="lazy">
         <div class="foundry-card-overlay"></div>
         <div class="foundry-card-body">
           <span class="foundry-card-name">HealthTech Foundry</span>
