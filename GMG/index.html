@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PMG Compliance AI — Patient Admission & Clinical Independence Framework</title>
+<meta name="description" content="Precision Medical Group compliance framework for Marketing Groups, AI PSS/PCC, clinicians and laboratories.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital@1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+#password-gate{position:fixed;inset:0;z-index:9999;background:#FCFAF6;display:flex;align-items:center;justify-content:center;padding:24px}
+.password-card{width:min(460px,100%);background:#fff;border:1px solid #DADFE3;border-radius:14px;padding:30px;box-shadow:0 18px 50px rgba(11,43,95,.12);text-align:center}
+.password-logo{width:260px;max-width:82%;height:auto;margin-bottom:22px}
+.password-card h2{margin:0 0 8px;color:#0B2B5F;font-size:1.65rem}
+.password-card p{margin:0 0 18px;color:#565E69}
+.password-input{width:100%;height:46px;border:1px solid #DADFE3;border-radius:8px;padding:0 12px;font:inherit;background:#fff;color:#2C333D}
+.password-input:focus{outline:3px solid #2B5591;outline-offset:2px;border-color:#2B5591}
+.password-submit{width:100%;height:46px;margin-top:10px;border:0;border-radius:8px;background:#0B2B5F;color:#fff;font-weight:700;cursor:pointer}
+.password-submit:hover{background:#2B5591}
+.password-error{min-height:20px;margin-top:10px!important;color:#A92A2A!important;font-size:.86rem}
+.page-locked{display:none!important}
+:root{
+  --navy:#0B2B5F;--navy-soft:#2B5591;--sky:#DBEEFE;--cream:#FCFAF6;
+  --slate:#2C333D;--hairline:#DADFE3;--muted:#EDF2F7;--muted-fg:#565E69;
+  --white:#fff;--red:#A92A2A;--red-bg:#FFF3F1;--green:#17633F;--green-bg:#EDF8F1;
+  --amber:#855600;--amber-bg:#FFF7E7;--gkim-ink:#0A0908;--gkim-yellow:#FFDE0B;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--slate);font-family:"Plus Jakarta Sans",system-ui,sans-serif;line-height:1.62}
+button{font:inherit}
+a{color:inherit}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+.site-header{background:rgba(252,250,246,.96);border-bottom:1px solid var(--hairline);position:sticky;top:0;z-index:30;backdrop-filter:blur(10px)}
+.header-inner{height:76px;display:flex;align-items:center;gap:24px}
+.logo{width:255px;max-width:45vw;height:auto}
+.header-rule{width:1px;height:30px;background:var(--hairline)}
+.header-title{font-size:14px;font-weight:600;color:var(--navy)}
+.powered{margin-left:auto;font-size:12px;color:var(--muted-fg);white-space:nowrap}
+.hero{padding:72px 0 54px;border-bottom:1px solid var(--hairline)}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:700;color:var(--muted-fg)}
+h1,h2,h3{color:var(--navy);letter-spacing:-.02em;margin-top:0}
+h1{font-size:clamp(2.35rem,5.2vw,4.7rem);line-height:1.02;max-width:970px;margin:.55rem 0 1.2rem}
+h2{font-size:clamp(1.7rem,3vw,2.45rem);line-height:1.12;margin-bottom:.8rem}
+h3{font-size:1.03rem;margin:1.6rem 0 .55rem}
+.hero-copy{font-size:1.13rem;max-width:890px;color:var(--muted-fg)}
+.serif-lead{font-family:"Fraunces",serif;font-style:italic;font-size:1.35rem;color:var(--navy-soft);max-width:800px}
+.badge{display:inline-flex;margin-top:22px;padding:8px 12px;border-radius:999px;background:var(--sky);color:var(--navy);font-size:.78rem;font-weight:700}
+main{padding:38px 0 70px}
+.card{background:var(--white);border:1px solid var(--hairline);border-radius:.75rem;padding:26px}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.flow{margin-bottom:28px}
+.flow-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin-top:18px}
+.step{border:1px solid var(--hairline);border-radius:.625rem;padding:16px;text-align:center;font-weight:700;color:var(--navy);background:#fff}
+.step small{display:block;color:var(--muted-fg);font-weight:500;margin-top:4px;line-height:1.35}
+.arrow{color:var(--navy-soft);font-size:22px}
+.callout,.info,.warning,.danger,.success{padding:15px 17px;border-radius:.625rem;margin-top:16px;border:1px solid var(--hairline)}
+.callout,.info{background:var(--sky);border-color:#BDDDF7}
+.warning{background:var(--amber-bg);border-color:#ECD6A6}
+.danger{background:var(--red-bg);border-color:#EFC8C1}
+.success{background:var(--green-bg);border-color:#C9E4D3}
+.label{font-size:.69rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.info .label,.callout .label{color:var(--navy-soft)} .warning .label{color:var(--amber)}
+.danger .label{color:var(--red)} .success .label{color:var(--green)}
+.tabs-shell{margin-top:28px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;padding:7px;background:var(--muted);border-radius:.75rem;border:1px solid var(--hairline)}
+.tab{border:0;background:transparent;color:var(--muted-fg);font-weight:600;padding:11px 15px;border-radius:.5rem;cursor:pointer;min-height:44px}
+.tab:hover{background:var(--sky);color:var(--navy)}
+.tab.active{background:var(--navy);color:#fff}
+.tab:focus-visible{outline:3px solid var(--navy-soft);outline-offset:2px}
+.panel{display:none;padding-top:20px}.panel.active{display:block}
+ul,ol{padding-left:21px;margin:10px 0}li{margin:7px 0}
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule{padding:19px;border-radius:.625rem;border:1px solid var(--hairline)}
+.rule.blue{background:var(--sky);border-color:#BDDDF7}.rule.red{background:var(--red-bg);border-color:#EFC8C1}
+.quote{font-family:"Fraunces",serif;font-style:italic;color:var(--navy);background:var(--cream);border-left:3px solid var(--navy);padding:17px 18px;margin-top:12px}
+table{border-collapse:collapse;width:100%;margin-top:14px;font-size:.9rem}
+th,td{border-bottom:1px solid var(--hairline);padding:12px 10px;text-align:left;vertical-align:top}
+th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-fg);background:var(--cream)}
+.status{display:inline-block;border-radius:999px;padding:5px 9px;font-size:.7rem;font-weight:700}
+.clear{background:#E7F5ED;color:var(--green)}.hold{background:#FFF0DE;color:#8B4B00}.decline{background:#FFE9E9;color:#9F2626}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.84rem}
+.footer{border-top:1px solid var(--hairline);padding:30px 0 45px;color:var(--muted-fg);font-size:.82rem}
+.footer-inner{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.gkim-chip{background:var(--gkim-ink);color:#fff;padding:7px 10px;border-radius:.35rem;font-size:.72rem}
+.gkim-chip strong{color:var(--gkim-yellow)}
+@media(max-width:850px){
+ .container{padding:0 20px}.header-title,.header-rule{display:none}.logo{width:220px}.powered{font-size:10px}
+ .grid,.rule-grid,.flow-row{grid-template-columns:1fr}.arrow{text-align:center;transform:rotate(90deg)}
+ .hero{padding-top:48px}.card{padding:21px}
+}
+</style>
+</head>
+<body>
+<div id="password-gate" role="dialog" aria-modal="true" aria-labelledby="password-title">
+  <form class="password-card" id="password-form">
+    <img class="password-logo" src="/GMG/assets/PMG_Logo_Horizontal.svg" alt="Precision Medical Group">
+    <h2 id="password-title">Protected compliance framework</h2>
+    <p>Enter the password to view this page.</p>
+    <input class="password-input" id="password-input" type="password" autocomplete="current-password" aria-label="Password" autofocus>
+    <button class="password-submit" type="submit">View framework</button>
+    <p class="password-error" id="password-error" role="alert" aria-live="polite"></p>
+  </form>
+</div>
+<div id="protected-content" class="page-locked">
+<header class="site-header">
+  <div class="container header-inner">
+    <img class="logo" src="/GMG/assets/PMG_Logo_Horizontal.svg" alt="Precision Medical Group">
+    <span class="header-rule" aria-hidden="true"></span>
+    <div class="header-title">Compliance AI · Patient Admission & Clinical Independence</div>
+    <div class="powered">Technology & operating infrastructure by GKIM</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Precision Medical Group · Compliance Architecture</div>
+    <h1>Patient admission without compromising clinical independence</h1>
+    <p class="serif-lead">Proposed final shared model for Kiro, PMG operations, compliance, clinicians and Marketing Groups to review.</p>
+    <p class="hero-copy">The AI Patient Support Specialist / Patient Care Coordinator verifies identity, patient understanding, voluntary intent and acquisition compliance before a patient enters Precision Medical Group's clinical workflow. It does not diagnose, determine medical necessity, select a laboratory, or approve coverage.</p>
+    <span class="badge">AI PSS = admission control, not medical approval</span>
+  </div>
+</section>
+
+<main>
+<div class="container">
+<section class="card flow">
+  <div class="eyebrow">Operating model</div>
+  <div class="flow-row">
+    <div class="step">Marketing Group<small>Awareness & education</small></div><div class="arrow">→</div>
+    <div class="step">AI PSS / PCC<small>Identity, PMG awareness & compliance gate</small></div><div class="arrow">→</div>
+    <div class="step">PMG Clinician<small>Issue assessment & independent clinical decision</small></div><div class="arrow">→</div>
+    <div class="step">Care / Laboratory<small>Only when clinically appropriate</small></div>
+  </div>
+  <div class="callout"><div class="label">Core boundary</div><strong>CLEAR means the patient may enter the clinical workflow.</strong> It does not mean the patient has qualified for a test, treatment, prescription, insurance benefit, AWV, or laboratory service.</div>
+</section>
+
+<div class="tabs-shell">
+<nav class="tabs" aria-label="Framework audiences">
+  <button class="tab active" data-target="overview">Overview</button>
+  <button class="tab" data-target="strategy">Final Strategy</button>
+  <button class="tab" data-target="legacy">Legacy Questions</button>
+  <button class="tab" data-target="mg">Marketing Groups</button>
+  <button class="tab" data-target="doctor">Doctors</button>
+  <button class="tab" data-target="lab">Laboratories</button>
+  <button class="tab" data-target="pss">AI PSS</button>
+</nav>
+
+<section id="overview" class="panel active">
+<div class="grid">
+  <article class="card">
+    <div class="eyebrow">Shared control model</div>
+    <h2>One system, separate responsibilities</h2>
+    <p>Marketing expectations are defined in advance, independently tested with the patient, recorded, monitored and fed back into governance.</p>
+    <ul>
+      <li><strong>MG:</strong> creates informed interest, names <strong>Precision Medical Group (PMG)</strong>, and explains the immediate-care and optional longitudinal-care model.</li>
+      <li><strong>AI PSS:</strong> verifies identity, PMG awareness, purpose, voluntary intent, existing-PCP context, acquisition provenance and compliance.</li>
+      <li><strong>Clinician:</strong> assesses the issue that brought the patient to PMG and independently determines diagnosis, treatment, testing and follow-up where appropriate.</li>
+      <li><strong>Longitudinal care:</strong> may be offered after the encounter. It is optional and is not a condition of today's assessment.</li>
+      <li><strong>Laboratory:</strong> performs testing only after appropriate clinical ordering.</li>
+    </ul>
+    <div class="success"><div class="label">Design principle</div>MGs create informed interest. The AI PSS establishes informed care entry. Clinicians determine medical necessity.</div>
+  </article>
+  <article class="card">
+    <div class="eyebrow">Live call state</div>
+    <h2>Admission dispositions</h2>
+    <table>
+      <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status clear">CLEAR</span></td><td>Identity, patient understanding, voluntary intent and acquisition checks are satisfactory. Patient may enter the clinical workflow.</td></tr>
+        <tr><td><span class="status hold">HOLD</span></td><td>Temporary machine state only. A correctable requirement needs education, authentication or reverification during the same call.</td></tr>
+        <tr><td><span class="status decline">DECLINE</span></td><td>A required condition remains unsatisfied, or approved RED-rule policy says the acquisition defect invalidates knowing and voluntary care entry.</td></tr>
+      </tbody>
+    </table>
+    <div class="info"><div class="label">No human review queue</div>HOLD is never a routing destination. The AI resolves the call to CLEAR or DECLINE.</div>
+    <div class="warning"><div class="label">Separate outcomes</div>An MG compliance failure does not automatically determine patient admission. The approved RED-rule severity policy controls whether the event is recordable-only or admission-invalidating.</div>
+  </article>
+</div>
+</section>
+
+<section id="strategy" class="panel">
+<article class="card">
+  <div class="eyebrow">Proposed final operating strategy</div>
+  <h2>Keep the live PSS short, intelligent and evidence-preserving</h2>
+  <p>The recommended design is not a long compliance questionnaire. It is a conversational admission-control system that asks only what it must ask, reuses already-verified information, preserves what the patient arrived believing, and separates patient admission from MG governance.</p>
+
+  <div class="grid" style="margin-top:20px">
+    <div>
+      <h3>1. Four hard gates only</h3>
+      <div class="callout"><strong>Identity → Purpose &amp; Voluntary Intent → Acquisition Attestation → Care-Entry Eligibility</strong></div>
+      <ul>
+        <li><strong>Identity:</strong> match-don't-fetch verification; never voice stored values back to the caller unnecessarily.</li>
+        <li><strong>Purpose &amp; Voluntary Intent:</strong> affirmative desire to speak with a PMG clinician; silence or mere non-objection never passes.</li>
+        <li><strong>Acquisition Attestation:</strong> establish provenance, what the patient was told, inducements, impersonation, predetermined care, coverage promises, coaching and MG interference.</li>
+        <li><strong>Care-Entry Eligibility:</strong> administrative/non-clinical prerequisites only. Never infer medical necessity, test eligibility, AWV entitlement, treatment eligibility or coverage.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>2. Mandatory education, but not 14 more gates</h3>
+      <p>The AI must ensure the patient understands:</p>
+      <ul>
+        <li>the practice is <strong>Precision Medical Group</strong>;</li>
+        <li>PMG is independent of the Marketing Group;</li>
+        <li>PMG may complement an existing bricks-and-mortar PCP rather than automatically replace them;</li>
+        <li>the clinician independently decides diagnosis, testing, treatment and follow-up;</li>
+        <li>no outcome, test, prescription, AWV or coverage is guaranteed;</li>
+        <li>ongoing longitudinal PMG care is optional and need not be chosen today.</li>
+      </ul>
+      <div class="info"><div class="label">Remediation loop</div>Ask unaided → preserve the answer → educate if appropriate → reverify. HOLD exists only while the AI performs this in-call remediation.</div>
+    </div>
+  </div>
+
+  <h3>3. Ask once, verify once, reuse everywhere</h3>
+  <p>The AI PSS and legacy EHR should share state. If DOB, address, callback permission, communication preference or another fact has already been reliably verified, do not ask the patient again merely because a second workflow contains the same field. Fresh consent or reverification is required only where law, policy or patient safety requires it.</p>
+  <div class="success"><div class="label">Design rule</div><strong>Ask once, verify once, reuse everywhere.</strong> The PSS should populate the EHR; the EHR should not then repeat the same questions.</div>
+
+  <h3>4. The small additional PSS layer from the legacy EHR</h3>
+  <table>
+    <thead><tr><th>Interaction</th><th>Recommended treatment</th></tr></thead>
+    <tbody>
+      <tr><td>Consent to today's telehealth encounter</td><td><strong>KEEP / MERGE</strong> into Purpose &amp; Voluntary Intent. Remove genetics-specific wording.</td></tr>
+      <tr><td>Name, DOB, address</td><td><strong>VERIFY ONCE</strong> as part of Identity. Do not recollect if already reliably verified.</td></tr>
+      <tr><td>Permission to call back if disconnected</td><td><strong>KEEP.</strong> Important for the live hand-off and callback architecture.</td></tr>
+      <tr><td>Patient vs authorised representative</td><td><strong>KEEP, REWRITE.</strong> Establish who is making decisions; do not ask the AI to make a capacity diagnosis.</td></tr>
+      <tr><td>Facility / hospice status</td><td><strong>CONDITIONAL.</strong> Ask only where PMG policy says it changes care-entry or routing.</td></tr>
+      <tr><td>Audio/video preference</td><td><strong>OPERATIONAL.</strong> Capture as visit modality, not acquisition compliance.</td></tr>
+      <tr><td>SMS / email / voice reminders</td><td><strong>PREFERENCE.</strong> Capture compactly, outside the admission gate.</td></tr>
+      <tr><td>Future health-services contact</td><td><strong>OPTIONAL / SEPARATE.</strong> A No must never prejudice today's care.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5. Strengthen Acquisition Attestation with the useful legacy questions</h3>
+  <p>Two legacy questions add material value once they are generalised beyond genetics:</p>
+  <div class="rule-grid">
+    <div class="rule blue">
+      <h3>Open-ended provenance first</h3>
+      <div class="quote">“Before we continue, tell me how you first heard about Precision Medical Group and what you were told about the care you could receive.”</div>
+      <p>Capture substantially verbatim before corrective education.</p>
+    </div>
+    <div class="rule red">
+      <h3>Targeted checks if not already answered</h3>
+      <ul>
+        <li>“Did anyone offer you money, a gift, reward or anything else of value for speaking with PMG or receiving healthcare?”</li>
+        <li>“Did anyone say or suggest that they worked for Medicare, your insurance company, Precision Medical Group, your doctor, a laboratory or another healthcare organisation?”</li>
+      </ul>
+    </div>
+  </div>
+  <div class="warning"><div class="label">Do not turn signals into automatic declines</div>A reported inducement, misleading representation or other RED signal is evidence. The approved severity policy determines whether it is recordable-only, an MG failure, or admission-invalidating because a hard gate cannot be satisfied.</div>
+
+  <h3>6. Keep AWV out of generic compliance</h3>
+  <p>Questions about whether a patient has completed a Medicare wellness visit, or when, may be useful in an AWV eligibility/pre-visit workflow. They should not be generic acquisition-compliance questions and should never be used by an MG or the PSS to tell the patient that they “qualify” for an AWV.</p>
+
+  <h3>7. Four machine outputs</h3>
+  <table>
+    <thead><tr><th>Field</th><th>Values</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="code">PATIENT_ADMISSION_STATUS</td><td>CLEAR / DECLINE</td><td>Terminal admission result.</td></tr>
+      <tr><td class="code">PATIENT_WORKFLOW_STATE</td><td>CHECKING / HOLD / COMPLETE</td><td>Execution state only; HOLD never waits on a human.</td></tr>
+      <tr><td class="code">MG_COMPLIANCE_EVENT</td><td>NONE / WARNING / MATERIAL_FAILURE</td><td>Independent governance signal about acquisition conduct.</td></tr>
+      <tr><td class="code">CLINICAL_ROUTING</td><td>NORMAL / URGENT / EMERGENCY</td><td>Safety routing independent of compliance.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>8. Canonical RED/BLUE policy across every channel</h3>
+  <p>The same source of truth should govern MG humans, MG AI, PMG outbound AI, PMG inbound PSS, SMS, landing pages and prerecorded messages. Different channels may have different permissions, but they must not teach contradictory expectations.</p>
+
+  <div class="danger"><div class="label">Before production sign-off</div>The RED-rule severity matrix—specifically which acquisition defects are merely recordable versus which invalidate knowing and voluntary care entry—should be expressly approved by PMG compliance/healthcare counsel and encoded as policy. The runtime model should never improvise that legal threshold.</div>
+</article>
+</section>
+
+<section id="legacy" class="panel">
+<article class="card">
+  <div class="eyebrow">Legacy EHR / checklist reconciliation</div>
+  <h2>What survives, what moves, and what should disappear</h2>
+  <p>Genetics-specific references should be removed from the generic PMG admission flow. The remaining legacy controls should be mapped to the correct owner rather than repeated as a long spoken checklist.</p>
+  <table>
+    <thead><tr><th>Legacy item</th><th>Decision</th><th>Where it belongs</th></tr></thead>
+    <tbody>
+      <tr><td>Agree to speak with a licensed telehealth provider today</td><td><strong>KEEP / GENERALISE</strong></td><td>Purpose &amp; Voluntary Intent gate</td></tr>
+      <tr><td>Full name, DOB and address</td><td><strong>KEEP / DEDUPLICATE</strong></td><td>Identity gate; shared state with EHR</td></tr>
+      <tr><td>May PMG call back if disconnected?</td><td><strong>KEEP</strong></td><td>Operational consent / callback workflow</td></tr>
+      <tr><td>Can you make your own medical decisions?</td><td><strong>REWRITE</strong></td><td>Determine patient vs authorised representative</td></tr>
+      <tr><td>Consent to provider billing insurance</td><td><strong>MOVE</strong></td><td>Administrative / financial consent, not PSS hard gate</td></tr>
+      <tr><td>Hospice / nursing home / care facility</td><td><strong>CONDITIONAL</strong></td><td>Care-entry or clinical routing only if PMG policy requires it</td></tr>
+      <tr><td>Ever had genetic screening?</td><td><strong>DROP</strong></td><td>Genetics-specific clinical history, not generic PSS</td></tr>
+      <tr><td>Offered money or incentive for genetic test</td><td><strong>KEEP / GENERALISE</strong></td><td>Acquisition Attestation: inducement</td></tr>
+      <tr><td>Sales agent represented themselves as Medicare</td><td><strong>KEEP / BROADEN</strong></td><td>Acquisition Attestation: impersonation / false affiliation</td></tr>
+      <tr><td>Ever completed Medicare wellness visit?</td><td><strong>MOVE</strong></td><td>AWV eligibility/pre-visit workflow</td></tr>
+      <tr><td>Medicare wellness visit in past year?</td><td><strong>MOVE</strong></td><td>AWV eligibility/pre-visit workflow; verify against available history where possible</td></tr>
+      <tr><td>Future contact about other health services</td><td><strong>KEEP SEPARATE / OPTIONAL</strong></td><td>Future communications preference; never affects today's care</td></tr>
+      <tr><td>Confirm all above is true and accurate</td><td><strong>DROP</strong></td><td>Low incremental value once individual facts are verified and timestamped</td></tr>
+      <tr><td>SMS / email / voice notifications</td><td><strong>COMBINE</strong></td><td>One communication-preference interaction, outside compliance gating</td></tr>
+      <tr><td>Video vs audio-only / reason</td><td><strong>CONDITIONAL</strong></td><td>Visit modality and documentation, not acquisition compliance</td></tr>
+    </tbody>
+  </table>
+
+  <div class="success"><div class="label">Net effect</div>The legacy screen can still be fully populated, but the patient should experience only a small number of meaningful conversational interactions. Most fields should be inherited from prior verified state, inferred from the live workflow, or captured as preferences—not re-asked as separate “compliance questions.”</div>
+</article>
+</section>
+
+<section id="mg" class="panel">
+<div class="grid">
+  <article class="card">
+    <div class="eyebrow">Marketing Groups</div>
+    <h2>Create informed interest, not medical demand</h2>
+    <p>Before transfer, the patient should know the medical practice is <strong>Precision Medical Group</strong>, understand why they are being connected, know PMG is independent of the Marketing Group, and understand that PMG can complement rather than automatically replace an existing bricks-and-mortar PCP.</p>
+    <div class="rule-grid">
+      <div class="rule blue">
+        <h3>BLUE — Required / permitted</h3>
+        <ul>
+          <li>Name <strong>Precision Medical Group (PMG)</strong>.</li>
+          <li>Explain PMG is an independent primary-care medical practice, separate from the MG.</li>
+          <li>Use approved educational materials and explain the service accurately.</li>
+          <li>Explain PMG may complement and, when appropriate and authorised, collaborate with the patient's existing PCP.</li>
+          <li>Explain today's encounter is to assess the issue that brought the patient to PMG.</li>
+          <li>Explain diagnosis, treatment, testing and follow-up depend on the PMG clinician's independent assessment.</li>
+          <li>Explain ongoing PMG primary care is optional and can be considered later.</li>
+          <li>Confirm the patient voluntarily wants to speak with PMG.</li>
+        </ul>
+      </div>
+      <div class="rule red">
+        <h3>RED — Prohibited</h3>
+        <ul>
+          <li>Tell a patient they “qualify” for a test or service.</li>
+          <li>Guarantee Medicare, insurance coverage or zero out-of-pocket cost.</li>
+          <li>Tell the patient what the clinician will diagnose, prescribe or order.</li>
+          <li>Give clinical advice or determine medical necessity.</li>
+          <li>Say the patient must change or abandon an existing PCP.</li>
+          <li>Represent PMG as already being the patient's PCP merely because today's encounter was accepted.</li>
+          <li>Pressure the patient to enrol in longitudinal care or make it a condition of today's care.</li>
+          <li>Promise a specific laboratory.</li>
+          <li>Coach the patient on how to answer the AI PSS.</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Expected patient understanding</h3>
+    <div class="quote">“I understand I am being connected to Precision Medical Group to discuss my health. PMG can work alongside my existing doctor if I have one. I understand the clinician decides what is medically appropriate, and I do not have to sign up for ongoing PMG care today.”</div>
+  </article>
+  <article class="card">
+    <div class="eyebrow">After transfer</div>
+    <h2>The PSS independently tests what actually happened</h2>
+    <ul>
+      <li>Does the patient know this is Precision Medical Group?</li>
+      <li>Can the patient explain, in their own words, why they are on the call?</li>
+      <li>Do they understand PMG is independent of the MG?</li>
+      <li>Do they understand PMG may complement rather than replace an existing PCP?</li>
+      <li>Do they understand longitudinal care is optional?</li>
+      <li>Were promises, inducements, coaching or predetermined outcomes introduced?</li>
+    </ul>
+    <div class="info"><div class="label">Do not coach to the test</div>MGs receive the standards and required educational outcomes, but not the PSS's exact gate logic, trigger phrases, thresholds or required answers.</div>
+    <div class="warning"><div class="label">MG conduct while PSS questions the patient</div>The AI controls the compliance portion. Questions directed to the patient must be answered by the patient. If the MG answers, prompts, coaches or materially interrupts, the AI instructs the MG not to intervene and repeats the question. Repeated or substantive interference is a compliance event and may cause Acquisition Attestation to fail.</div>
+  </article>
+</div>
+</section>
+
+<section id="doctor" class="panel">
+<div class="grid">
+  <article class="card">
+    <div class="eyebrow">PMG clinicians</div>
+    <h2>The PSS protects the encounter; it does not replace it</h2>
+    <p>By clinical hand-off, the system should have independently established patient identity, voluntary intent, awareness of PMG, acquisition provenance, the patient's relationship to any existing PCP, and relevant marketing concerns.</p>
+    <h3>What the clinician may rely on administratively</h3>
+    <ul>
+      <li>Identity has been checked.</li>
+      <li>The patient knows they are interacting with Precision Medical Group.</li>
+      <li>The patient has voluntarily chosen to continue.</li>
+      <li>The patient understands PMG may complement an existing PCP.</li>
+      <li>The patient understands ongoing PMG care is optional.</li>
+      <li>Acquisition provenance and material RED-rule signals have been recorded.</li>
+    </ul>
+  </article>
+  <article class="card">
+    <div class="eyebrow">Clinical independence</div>
+    <h2>What remains entirely clinical</h2>
+    <ul>
+      <li>Diagnosis and differential diagnosis.</li>
+      <li>Medical necessity.</li>
+      <li>Whether testing is appropriate.</li>
+      <li>Whether medication or treatment is appropriate.</li>
+      <li>Which test, if any, should be ordered.</li>
+      <li>Whether another form or level of care is more appropriate.</li>
+    </ul>
+    <div class="info"><div class="label">Immediate to longitudinal</div>“Precision Medical Group also offers ongoing primary care if you would like continued support after today's issue. You do not need to decide about that now, and choosing not to receive ongoing care will not affect today's medical assessment.” Conversational variation is acceptable if this meaning is preserved.</div>
+    <div class="warning"><div class="label">Clinical urgency is separate</div>Urgent or emergency routing is not a compliance DECLINE. Clinical safety routing is represented independently.</div>
+  </article>
+</div>
+</section>
+
+<section id="lab" class="panel">
+<div class="grid">
+  <article class="card">
+    <div class="eyebrow">Laboratories</div>
+    <h2>Acquisition, medicine and laboratory services remain separated</h2>
+    <ul>
+      <li>Patient acquisition is independent of the laboratory.</li>
+      <li>The AI PSS does not authorise laboratory testing.</li>
+      <li>Medical necessity remains with the treating clinician.</li>
+      <li>Patients are not promised a particular laboratory during marketing.</li>
+      <li>Commercial arrangements do not determine clinical ordering.</li>
+      <li>Orders arise only after appropriate clinical assessment.</li>
+    </ul>
+  </article>
+  <article class="card">
+    <div class="eyebrow">Desired pathway</div>
+    <h2>Defensible separation</h2>
+    <div class="success"><div class="label">Intended</div><strong>Marketing → Patient → Precision Medical Group → Clinical Decision → Laboratory</strong></div>
+    <div class="danger"><div class="label">Not acceptable</div><strong>Laboratory → Marketer → Patient → Predetermined Test</strong></div>
+    <p>The PSS creates a time-stamped admission record covering provenance, patient understanding, PMG awareness, disposition and subsequent clinical hand-off.</p>
+  </article>
+</div>
+</section>
+
+<section id="pss" class="panel">
+<article class="card">
+  <div class="eyebrow">AI PSS / PCC</div>
+  <h2>Four hard gates, plus mandatory education checks</h2>
+  <div class="callout"><strong>Identity → Purpose & Voluntary Intent → Acquisition Attestation → Care-Entry Eligibility</strong><br>Care-Entry Eligibility is administrative/non-clinical only. It never determines medical necessity, test eligibility, treatment eligibility, insurance coverage or entitlement to a reimbursable service.</div>
+  <div class="grid" style="margin-top:20px">
+    <div>
+      <h3>Patient-admission sequence</h3>
+      <ol>
+        <li><strong>Identity:</strong> establish that the person is the patient or appropriately authorised representative.</li>
+        <li><strong>PMG awareness:</strong> ask unaided which medical practice the patient expected to speak with.</li>
+        <li><strong>Purpose:</strong> ask in the patient's own words what they expect PMG to help with today.</li>
+        <li><strong>Acquisition provenance:</strong> establish how the patient came to PMG and what they were told, before substantial corrective education.</li>
+        <li><strong>Voluntary intent:</strong> confirm knowing and voluntary desire to continue.</li>
+        <li><strong>Existing PCP:</strong> establish existing PCP context and explain PMG may complement rather than automatically replace that relationship.</li>
+        <li><strong>Clinical expectation:</strong> confirm that diagnosis, testing, treatment and follow-up depend on independent clinical assessment.</li>
+        <li><strong>Longitudinal option:</strong> explain ongoing PMG care is optional, need not be chosen now, and declining it does not affect today's assessment.</li>
+        <li><strong>RED-rule checks:</strong> test for promises, inducements, coaching, predetermined services or misleading coverage claims.</li>
+        <li><strong>Corrective education:</strong> where genuinely correctable, educate and reverify without overwriting the original answer.</li>
+        <li><strong>Disposition:</strong> resolve to CLEAR or DECLINE; HOLD is transient only.</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Ask → record → assess → educate → reverify</h3>
+      <p>Open-ended questions come before correction. The system records what the patient arrived believing, then separately records what the patient understands after PMG education.</p>
+      <div class="danger"><div class="label">Do not remediate away evidence</div>Corrective education never erases or overwrites the original response. A patient becoming adequately informed later does not change the historical acquisition event.</div>
+      <div class="success"><div class="label">Separate patient and MG outcomes</div>A patient may ultimately CLEAR after an innocent misunderstanding while the MG still receives a compliance event. Conversely, patient CLEAR does not prove the preceding marketing interaction was compliant.</div>
+    </div>
+  </div>
+
+  <h3>Three independent decision dimensions</h3>
+  <table>
+    <thead><tr><th>Output</th><th>Values</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td class="code">PATIENT_ADMISSION_STATUS</td><td>CLEAR / DECLINE</td><td>Terminal patient admission result.</td></tr>
+      <tr><td class="code">PATIENT_WORKFLOW_STATE</td><td>CHECKING / HOLD / COMPLETE</td><td>Execution state only; HOLD never waits on a human.</td></tr>
+      <tr><td class="code">MG_COMPLIANCE_EVENT</td><td>NONE / WARNING / MATERIAL_FAILURE</td><td>Independent record of acquisition quality.</td></tr>
+      <tr><td class="code">CLINICAL_ROUTING</td><td>NORMAL / URGENT / EMERGENCY</td><td>Clinical safety routing, independent of compliance.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Structured understanding fields</h3>
+  <table>
+    <thead><tr><th>Field</th><th>Example values</th></tr></thead>
+    <tbody>
+      <tr><td class="code">PRACTICE_NAME_AWARENESS</td><td>UNAIDED_CORRECT / AIDED_CORRECT / NOT_UNDERSTOOD</td></tr>
+      <tr><td class="code">EXPECTED_PURPOSE_OF_CALL</td><td>Patient's substantially verbatim explanation</td></tr>
+      <tr><td class="code">EXISTING_PCP</td><td>YES / NO / UNKNOWN</td></tr>
+      <tr><td class="code">PMG_RELATIONSHIP_UNDERSTOOD</td><td>COMPLEMENTARY / REPLACEMENT_EXPECTED / UNCLEAR</td></tr>
+      <tr><td class="code">TODAY_CARE_EXPECTATION</td><td>APPROPRIATE / PREDETERMINED_TEST / PREDETERMINED_TREATMENT / INSURANCE_DRIVEN / UNCLEAR</td></tr>
+      <tr><td class="code">LONGITUDINAL_OPTION_EXPLAINED</td><td>YES / NO</td></tr>
+      <tr><td class="code">LONGITUDINAL_CARE_INTEREST</td><td>YES / NO / UNDECIDED / NOT_ASKED</td></tr>
+      <tr><td class="code">LONGITUDINAL_CARE_PRESSURE</td><td>NONE / POSSIBLE / REPORTED</td></tr>
+      <tr><td class="code">SOURCE_OF_MISUNDERSTANDING</td><td>MG / PATIENT_ASSUMPTION / OTHER / UNKNOWN</td></tr>
+      <tr><td class="code">UNAIDED_RESPONSE_PRESERVED</td><td>YES / NO</td></tr>
+    </tbody>
+  </table>
+
+  <h3>RED-rule severity matrix</h3>
+  <table>
+    <thead><tr><th>Finding class</th><th>Patient consequence</th><th>MG consequence</th></tr></thead>
+    <tbody>
+      <tr><td>Innocent misunderstanding / education gap</td><td>Educate → reverify → may CLEAR</td><td>Observation or warning as policy requires</td></tr>
+      <tr><td>RED breach that does not invalidate voluntary care entry</td><td>May still CLEAR once independently informed, subject to approved policy</td><td>MG compliance failure</td></tr>
+      <tr><td>RED breach that undermines knowing or voluntary acquisition</td><td>DECLINE because a hard gate cannot be satisfied</td><td>Material MG compliance failure</td></tr>
+    </tbody>
+  </table>
+  <div class="danger"><div class="label">Policy boundary</div>The AI must not invent severity at runtime. Which RED events are recordable-only versus admission-invalidating must be expressly defined in approved legal/compliance policy.</div>
+
+  <h3>Annual Wellness Visit language</h3>
+  <p>An AWV is an encounter/service concept, not a predetermined laboratory test. Generic compliance language should not seed an expectation of a specific reimbursable encounter unless the patient actually entered through an AWV-specific pathway.</p>
+  <div class="info"><div class="label">Default wording</div>“The PMG clinician will assess your individual circumstances and determine what care is appropriate.”</div>
+</article>
+
+<article class="card" style="margin-top:20px">
+  <div class="eyebrow">End-to-end acquisition</div>
+  <h2>One RED/BLUE source of truth</h2>
+  <p>The same policy governs all pre-clinical patient communications: MG humans, MG AI, PMG outbound AI, PMG inbound PSS, SMS, landing pages and prerecorded messaging. Roles may have different permissions, but factual and compliance rules remain canonical.</p>
+  <div class="warning"><div class="label">Outbound audit required</div>Objection handling, cost/coverage reassurance and urgency language must be audited against the same RED/BLUE policy so outbound engagement never teaches expectations that inbound compliance later treats as suspicious.</div>
+</article>
+</section>
+</div>
+</div>
+</main>
+
+<footer class="footer">
+<div class="container footer-inner">
+  <div>© Precision Medical Group. Clinical accountability remains with PMG physicians. Proposed shared operating model for Kiro, PMG operations, compliance and clinical review; final severity thresholds and applicable federal/state requirements require qualified healthcare counsel review.</div>
+  <div class="gkim-chip"><strong>Powered by GKIM</strong> · technology & operating infrastructure</div>
+</div>
+</footer>
+</div>
+<script>
+(function(){
+  const PASSWORD="compliance";
+  const KEY="pmg-gmg-compliance-access";
+  const gate=document.getElementById("password-gate");
+  const content=document.getElementById("protected-content");
+  const form=document.getElementById("password-form");
+  const input=document.getElementById("password-input");
+  const error=document.getElementById("password-error");
+
+  function unlock(){
+    gate.style.display="none";
+    content.classList.remove("page-locked");
+    sessionStorage.setItem(KEY,"granted");
+  }
+
+  if(sessionStorage.getItem(KEY)==="granted"){
+    unlock();
+  } else {
+    input.focus();
+  }
+
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    if(input.value===PASSWORD){
+      error.textContent="";
+      unlock();
+    } else {
+      error.textContent="Incorrect password.";
+      input.value="";
+      input.focus();
+    }
+  });
+})();
+
+const tabs=[...document.querySelectorAll(".tab")];
+const panels=[...document.querySelectorAll(".panel")];
+tabs.forEach(btn=>btn.addEventListener("click",()=>{
+  tabs.forEach(b=>b.classList.remove("active"));
+  panels.forEach(p=>p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.target).classList.add("active");
+  btn.setAttribute("aria-selected","true");
+  tabs.filter(b=>b!==btn).forEach(b=>b.setAttribute("aria-selected","false"));
+}));
+</script>
+</body>
+</html>
